@@ -502,8 +502,8 @@ internal fun BmapPacket.describeForLog(): String {
  * Where a payload may be logged. Everything else is logged by size only: block 4 lists every
  * device paired to the headset by MAC and name and holds this phone's own Bluetooth address
  * (`[4.9]`, which Android hides from apps), `[5.1]` names the streaming device and `[5.6]` the
- * track playing, `[0.7]`/`[0.12]` are the headset's serial number and GUID, `[0.17]` a component
- * address, `[1.2]` the name the user gave the headset, block 18 holds keys and block 22 is the
+ * track playing, `[0.6]` is the headset's own address, `[0.7]`/`[0.12]` are its serial number and
+ * GUID, `[0.17]` a component address, `[1.2]` the name the user gave the headset, block 18 holds keys and block 22 is the
  * firmware's own console. Blocks not listed here (the Lab walks them) stay size-only until known.
  */
 private fun payloadIsLoggable(block: Int, function: Int): Boolean = when (block) {
@@ -514,8 +514,12 @@ private fun payloadIsLoggable(block: Int, function: Int): Boolean = when (block)
     else -> false
 }
 
-/** `[0.x]`: FblockInfo, BMAP version, block list, product id, firmware version, the headset's own MAC, product name, LE Audio support. */
-private val LOGGABLE_PRODUCT_INFO = setOf(0, 1, 2, 3, 5, 6, 15, 23)
+/**
+ * `[0.x]`: FblockInfo, BMAP version, block list, product id, firmware version, product name, LE
+ * Audio support. Not `[0.6]`, the headphones' own Bluetooth address: the report promises that
+ * addresses never appear in it, and a payload is logged as bare hex the report's mask can't see.
+ */
+private val LOGGABLE_PRODUCT_INFO = setOf(0, 1, 2, 3, 5, 15, 23)
 
 /** `[5.x]`: transport controls, play state, volume, latency. */
 private val LOGGABLE_AUDIO_MANAGEMENT = setOf(3, 4, 5, 7)

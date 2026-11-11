@@ -135,4 +135,18 @@ class HeadsetControllerTest {
         assertFalse(Regex("(?i)\\b[0-9a-f]{2}(:[0-9a-f]{2}){5}\\b").containsMatchIn(text.replace("xx:xx:xx:xx:xx:xx", "")))
         assertTrue(text.startsWith("Ruru 0.0.0 on Test"))
     }
+
+    @Test
+    fun `connection report after connecting holds no address of the headphones in any form`() = runBlocking {
+        val device = VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1)
+        val c = controller(FlakyPlatform(device))
+        val s = c.await { it.phase == Phase.Connected }
+        val text = ConnectionReport.build(s, "0.0.0")
+        c.stop()
+        val colons = device.macAddress.lowercase()
+        val bare = colons.replace(":", "")
+        assertTrue(text.contains("Recent log:"), text)
+        assertFalse(text.lowercase().contains(colons), "the headphones' address with colons is in the report")
+        assertFalse(text.lowercase().contains(bare), "the headphones' address as bare hex is in the report")
+    }
 }

@@ -85,6 +85,7 @@ class BmapConnectionAuditTest {
             BmapPacket(4, 9, BmapOperator.STATUS, "aabbcc000002".hexToBytes()),                  // this phone's address
             BmapPacket(4, 12, BmapOperator.START, "82 $laptop".hexToBytes()),                    // routing
             BmapPacket(5, 1, BmapOperator.STATUS, "000f01 $laptop".hexToBytes()),                // active source
+            BmapPacket(0, 6, BmapOperator.STATUS, "c40f08aabbcc".hexToBytes()),                  // the headphones' own address
             BmapPacket(0, 7, BmapOperator.STATUS, "SN123456".toByteArray()),                     // serial number
             BmapPacket(1, 2, BmapOperator.STATUS, byteArrayOf(0) + "Jane's QC".toByteArray()),  // the user's name for it
             BmapPacket(18, 24, BmapOperator.STATUS, ByteArray(16) { 0x5a }),                     // a key
