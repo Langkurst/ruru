@@ -59,7 +59,8 @@ jobs:
       - run: ./gradlew :app:desktop:packageDeb :app:desktop:packageRpm :app:desktop:createDistributable --console=plain
       - name: Check the app starts (on a virtual screen, demo mode)
         run: |
-          launcher=app/desktop/build/compose/binaries/main/app/ruru/bin/ruru
+          # The app folder uses the main package name (Ruru); only the .deb/.rpm are lower case.
+          launcher=app/desktop/build/compose/binaries/main/app/Ruru/bin/Ruru
           test -x "$launcher" || { echo "No app at $launcher"; ls -R app/desktop/build/compose/binaries/main | head -40; exit 1; }
           Xvfb :99 -screen 0 1280x800x24 &
           xvfb=$!
