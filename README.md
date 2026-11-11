@@ -47,6 +47,11 @@ Download the file for your system from [Releases](../../releases):
 | Android | `ruru-<version>.apk` |
 | iPhone | `Ruru-<version>.ipa` (unsigned, for your sideloading tool) |
 
+The desktop apps aren't code-signed, so Windows SmartScreen and macOS Gatekeeper warn the first
+time you open them. On Windows choose **More info**, then **Run anyway**. On macOS open
+**System Settings > Privacy & Security** and choose **Open Anyway**. Each file's SHA-256 is
+listed in `SHA256SUMS.txt` on the release.
+
 Close the Bose app on the same device first: only one app can control the headphones at a time.
 Ruru doesn't install firmware updates; use the Bose app for those.
 
