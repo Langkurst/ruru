@@ -18,7 +18,10 @@ Bose protocol code; see CREDITS.md.
 - Desktop app: `gradlew :app:desktop:run` (`--args=--demo` for demo mode)
 - Screenshot of the real app: `gradlew :app:desktop:snapshot -Pout=<png> [-Pdemo] [-Plight] [-Pheight=1600]`
 - Real headphones: `gradlew :app:desktop:hardwareCheck` changes the mode and bass through the
-  app's controller, confirms each on a new connection, then puts both back
+  app's controller, confirms each on a new connection, then puts both back. The headphones must
+  be worn while it runs (they switch off when taken off); if a run is cut short, the next run
+  starts by undoing what it changed. `gradlew :tools:probe:run` reads every setting and changes
+  nothing
 - Android: `gradlew :app:android:assembleRelease` (signed only when `keystore.properties` exists)
 - iOS Kotlin compiles on Windows: `gradlew :app:shared:compileKotlinIosArm64`
 

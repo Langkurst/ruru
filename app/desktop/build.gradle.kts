@@ -114,4 +114,6 @@ tasks.register<JavaExec>("hardwareCheck") {
     description = "Change and restore settings on connected headphones through the app's controller"
     mainClass.set("io.github.langkurst.ruru.desktop.HardwareCheckKt")
     classpath = sourceSets["main"].runtimeClasspath
+    // The check notes here what it is about to change, so the next run can undo a run that was cut short.
+    args(layout.buildDirectory.file("hardware-check-pending.txt").get().asFile.path)
 }
