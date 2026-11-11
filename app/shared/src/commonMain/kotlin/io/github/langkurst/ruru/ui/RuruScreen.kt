@@ -164,12 +164,11 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
     val c = Ruru.colors
     val (title, body) = when (val p = state.phase) {
         Phase.Starting -> "Looking for your headphones" to "Ruru checks the Bluetooth devices paired with this ${noun(state)}."
-        // iOS only shows an app accessories whose private protocol name the app already lists, so
-        // "nothing found" there can't tell paired from unpaired.
-        is Phase.NoHeadset -> if (state.platformName == "iPhone") {
-            "Headphone control isn't ready on iPhone yet" to "iOS only lets an app see headphones if the app already knows Bose's private name for their control channel, and that name isn't public. Ruru tries the likely names, and none has matched yet. Demo mode shows how the app works."
-        } else if (p.blocked != null) {
+        is Phase.NoHeadset -> if (p.blocked != null) {
             "Ruru can't see your headphones yet" to p.blocked
+        } else if (state.platformName == "iPhone") {
+            // The iPhone finds headphones over Bluetooth LE, not from the paired list.
+            "No Bose headphones found" to "Ruru looks for Bose headphones over Bluetooth. Turn them on and connect them to this iPhone, then come back. If iPhone asks to pair them with Ruru, choose Pair. Ruru connects by itself."
         } else if (p.pairedName != null) {
             // The 1st Gen sleeps about 5 minutes after its wear sensor reads "off your head" with
             // nothing playing (firmware 1.6.7), which owners take for a dropped connection.

@@ -20,7 +20,7 @@ private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 // "--demo" on the launch arguments starts in demo mode (CI uses it for the simulator screenshot).
 private val model by lazy {
     val demo = NSProcessInfo.processInfo.arguments.any { it == "--demo" }
-    AppModel(IosHeadsetPlatform(), scope, startInDemo = demo).also { it.start() }
+    AppModel(IosPlatform(), scope, startInDemo = demo).also { it.start() }
 }
 
 /** Called from the Swift app (iosApp/Ruru/RuruApp.swift). */

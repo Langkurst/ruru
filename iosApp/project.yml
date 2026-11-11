@@ -27,5 +27,5 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ENABLE_USER_SCRIPT_SANDBOXING: NO
         FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../app/shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
-        OTHER_LDFLAGS: -framework RuruShared -framework ExternalAccessory
+        OTHER_LDFLAGS: -framework RuruShared -framework ExternalAccessory -framework CoreBluetooth
         CODE_SIGNING_ALLOWED: NO
