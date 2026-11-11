@@ -18,7 +18,7 @@ Android app has no internet permission at all.
 | Android 9 and newer | Built from the same code; not yet tested on a phone. 2.4 MB. |
 | macOS 12 and newer, Apple silicon | Built and started on GitHub's Macs; not yet tested with headphones. |
 | Linux (BlueZ) | Built; not yet tested. Uses `bluetoothctl` to find the headphones. |
-| iPhone | Demo mode works. Controlling the headphones isn't built yet, explained below. |
+| iPhone | Demo mode works. It can't control headphones yet, explained below. |
 
 Every app has a demo mode that runs a simulated QC Ultra Headphones, so you can see it without
 headphones.
@@ -59,7 +59,7 @@ SmartScreen warning also comes back once for each new version.
 Close the Bose app on the same device first: only one app can control the headphones at a time.
 Ruru doesn't install firmware updates; use the Bose app for those.
 
-## Stop or remove Ruru
+## Stopping and removing Ruru
 
 Closing the window leaves Ruru running in the tray (the menu bar on a Mac), with the battery level
 and a mode switch. To stop it, choose **Quit** from its menu there. Windows 11 may tuck the owl
