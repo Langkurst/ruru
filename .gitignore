@@ -1,0 +1,17 @@
+# Build output
+.gradle/
+.kotlin/
+build/
+**/build/
+local.properties
+*.iml
+.idea/
+.DS_Store
+
+# .NET spikes
+spikes/**/bin/
+spikes/**/obj/
+
+# Private notes and reference clones: never published
+_private/
+PLAN.md
