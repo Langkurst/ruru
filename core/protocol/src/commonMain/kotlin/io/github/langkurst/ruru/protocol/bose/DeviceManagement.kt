@@ -32,7 +32,7 @@ data class PairedDevices(
 
 /**
  * `[4.4]` GET → `[header, mac(6) × N]`; all-zero addresses are padding and skipped
- * (capture `03 c40f08…… 9445608505a7` → two devices).
+ * (capture `03 c40f08…… 944560XXXXXX` → two devices).
  */
 object PairedDeviceList {
     fun parse(payload: ByteArray): PairedDevices? {

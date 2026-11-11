@@ -205,7 +205,7 @@ class CaptureParsersTest {
         assertTrue(base.isMasked(QcUltra2.PAIRED_DEVICES))
         val list = PairedDeviceList.parse(base.bytes(QcUltra2.PAIRED_DEVICES))!!
         assertEquals(3, list.header)
-        assertEquals(listOf("C4:0F:08:00:00:00", "94:45:60:85:05:A7"), list.macs)
+        assertEquals(listOf("C4:0F:08:00:00:00", "94:45:60:00:00:00"), list.macs)
         // zero padding is skipped
         val padded = PairedDeviceList.parse("01 c40f08112233 000000000000".hexToBytes())!!
         assertEquals(listOf("C4:0F:08:11:22:33"), padded.macs)
