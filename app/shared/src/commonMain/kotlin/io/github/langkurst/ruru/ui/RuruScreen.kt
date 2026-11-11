@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,17 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -159,7 +171,9 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
         } else if (p.blocked != null) {
             "Ruru can't see your headphones yet" to p.blocked
         } else if (p.pairedName != null) {
-            "${p.pairedName} is not connected" to "Turn the headphones on. If they connect to another device first, choose this ${noun(state)} in their Bluetooth list. Ruru connects by itself."
+            // The 1st Gen sleeps about 5 minutes after its wear sensor reads "off your head" with
+            // nothing playing (firmware 1.6.7), which owners take for a dropped connection.
+            "Waiting for ${p.pairedName}" to "Turn the headphones on, or put them on if they've gone to sleep. If they connect to another device first, choose this ${noun(state)} in their Bluetooth list. Ruru connects by itself."
         } else {
             // Ruru finds headphones by name, so renamed ones don't show up.
             "No Bose headphones found" to "Ruru looks for a paired Bluetooth device with Bose in its name. Pair your headphones in this ${noun(state)}'s Bluetooth settings. If you renamed them, put Bose back in their name. Ruru connects by itself."
@@ -257,7 +271,8 @@ private fun ModeList(modes: List<ListeningMode>, current: Int?, onSelect: (Int) 
                 val selected = i == selectedRow
                 val interaction = remember { MutableInteractionSource() }
                 val hovered by interaction.collectIsHoveredAsState()
-                val tint by animateColorAsState(if (hovered && !selected) c.bark else Color.Transparent, hoverSpec())
+                val pressed by interaction.collectIsPressedAsState() // a tap on a phone, where there is no hover
+                val tint by animateColorAsState(if ((hovered || pressed) && !selected) c.bark else Color.Transparent, hoverSpec())
                 val ink by animateColorAsState(if (selected) c.onEye else c.ink, hoverSpec())
                 Row(
                     Modifier
@@ -295,6 +310,10 @@ private fun NewModeEditor(onSave: (String) -> Unit, onCancel: () -> Unit) {
     val c = Ruru.colors
     var name by remember { mutableStateOf("") }
     val shape = RoundedCornerShape(7.dp)
+    val focus = remember { FocusRequester() }
+    fun save() { if (name.isNotBlank()) onSave(name.trim()) }
+    // Typing can start straight away; Enter saves and Escape cancels, as in any small form.
+    LaunchedEffect(Unit) { runCatching { focus.requestFocus() } }
     Txt("Name for the new mode. It starts with the current noise settings.", Ruru.type.small, c.ink3)
     Spacer(Modifier.height(6.dp))
     BasicTextField(
@@ -303,7 +322,20 @@ private fun NewModeEditor(onSave: (String) -> Unit, onCancel: () -> Unit) {
         singleLine = true,
         textStyle = Ruru.type.body.copy(color = c.ink),
         cursorBrush = SolidColor(c.ink),
-        modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Name for the new mode" },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { save() }),
+        modifier = Modifier
+            .fillMaxWidth()
+            .focusRequester(focus)
+            .onPreviewKeyEvent { e ->
+                if (e.type != KeyEventType.KeyDown) return@onPreviewKeyEvent false
+                when (e.key) {
+                    Key.Enter, Key.NumPadEnter -> { save(); true }
+                    Key.Escape -> { onCancel(); true }
+                    else -> false
+                }
+            }
+            .semantics { contentDescription = "Name for the new mode" },
         decorationBox = { field ->
             Box(Modifier.fillMaxWidth().clip(shape).background(c.night).border(1.dp, c.line, shape).padding(horizontal = 12.dp, vertical = 9.dp)) {
                 if (name.isEmpty()) Txt("For example, Commute", Ruru.type.body, c.ink3)
@@ -313,7 +345,7 @@ private fun NewModeEditor(onSave: (String) -> Unit, onCancel: () -> Unit) {
     )
     Spacer(Modifier.height(8.dp))
     ButtonRow {
-        QuietButton("Save", { onSave(name.trim()) }, enabled = name.isNotBlank())
+        QuietButton("Save", { save() }, enabled = name.isNotBlank())
         QuietButton("Cancel", onCancel)
     }
 }

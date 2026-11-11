@@ -2,6 +2,7 @@ package io.github.langkurst.ruru.desktop
 
 import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.AppState
+import io.github.langkurst.ruru.app.BatteryNotices
 import io.github.langkurst.ruru.app.Phase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -49,6 +50,35 @@ internal class TrayMenu(
                 .distinctUntilChanged()
                 .collectLatest { view -> SwingUtilities.invokeLater { render(view) } }
         }
+        // A system notification when a charge finishes or the battery runs low, once each.
+        val notices = BatteryNotices()
+        scope.launch {
+            model.controller
+                .flatMapLatest { c -> c.state.map { BatteryReading.of(it) } }
+                .distinctUntilChanged()
+                .collect { r ->
+                    when (notices.next(r.percent, r.charging)) {
+                        BatteryNotices.Notice.CHARGED -> notify("Charged", "${r.name} are fully charged.", TrayIcon.MessageType.INFO)
+                        BatteryNotices.Notice.LOW -> notify("Battery low", "${r.name} are at ${r.percent}%.", TrayIcon.MessageType.WARNING)
+                        null -> Unit
+                    }
+                }
+        }
+    }
+
+    private fun notify(title: String, text: String, type: TrayIcon.MessageType) =
+        SwingUtilities.invokeLater { runCatching { icon.displayMessage(title, text, type) } }
+
+    /** What the battery notices need; no reading while the headphones aren't connected. */
+    private data class BatteryReading(val percent: Int?, val charging: Boolean?, val name: String) {
+        companion object {
+            fun of(state: AppState): BatteryReading {
+                val h = state.headset
+                if (state.phase != Phase.Connected) return BatteryReading(null, null, "")
+                val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName ?: "Your headphones"
+                return BatteryReading(h.batteryPercent, h.isCharging, name)
+            }
+        }
     }
 
     private fun render(view: TrayView) {
@@ -77,9 +107,10 @@ internal class TrayMenu(
                     Phase.Connected -> {
                         val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName ?: "Headphones"
                         val current = h.modes.firstOrNull { it.index == h.currentModeIndex }?.name
+                        val charging = if (h.isCharging == true) ", charging" else ""
                         TrayView(
-                            tooltip = listOfNotNull(name, h.batteryPercent?.let { "battery $it%" }, current).joinToString(", "),
-                            status = h.batteryPercent?.let { "Battery $it%" } ?: name,
+                            tooltip = listOfNotNull(name, h.batteryPercent?.let { "battery $it%$charging" }, current).joinToString(", "),
+                            status = h.batteryPercent?.let { "Battery $it%$charging" } ?: name,
                             modes = h.modes.filter { it.isPreset || (it.isConfigured && it.name.isNotBlank()) }
                                 .map { Triple(it.index, it.name, it.index == h.currentModeIndex) },
                         )

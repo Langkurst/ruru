@@ -47,9 +47,9 @@ private const val QC35_NOTE = "These headphones use Bose's older app (Bose Conne
 private const val BRUSSELS_NOTE =
     "These earbuds use the separate Bose QC Earbuds app. Ruru can't control them."
 private const val NC700_NOTE =
-    "Basic support: battery, EQ, settings and the noise cancelling level. These headphones have no listening modes."
+    "Basic support: battery, equaliser, settings and the noise cancelling level. These headphones have no listening modes."
 private const val LANDO_NOTE =
-    "Basic support: battery, EQ, settings, the noise cancelling level and switching modes. Saving custom modes is untested on these earbuds."
+    "Basic support: battery, equaliser, settings, the noise cancelling level and switching modes. Saving your own modes is untested on these earbuds."
 
 /** Over-ear, in-ear or open-ear; the core maps it to `FormFactor`. */
 enum class ProductForm { HEADPHONES, EARBUDS, OPEN_EARBUDS }
@@ -141,7 +141,7 @@ enum class BoseModel(
     /** User-visible note for [SupportTier.BASIC] and [SupportTier.UNSUPPORTED] products. */
     val supportNote: String? = null,
     /**
-     * Earshot itself has run on this model's real hardware, so the app labels it Tested. Stronger
+     * Ruru has run on this model's real hardware, so the app doesn't call it untested. Stronger
      * than [verified], which bosectl's captures also earn. Owners' reports add models here.
      */
     val tested: Boolean = false,
@@ -153,8 +153,9 @@ enum class BoseModel(
         hasNoiseCancelling = true, hasWindBlock = true, directCnc = false, presetNames = ULTRA_PRESETS,
         presetSlots = QcUltra2.PRESET_MODE_SLOTS, editableSlots = QcUltra2.EDITABLE_MODE_SLOTS,
         slotCount = QcUltra2.MODE_SLOT_COUNT, knownAbsent = emptySet(), verified = true,
-        // A real pair, firmware 10.12.12 (2026-10-16).
-        tested = true,
+        // Earshot ran on a real pair (firmware 10.12.12, 2026-10-16); Ruru hasn't yet, so its
+        // owners are told so. A Headphones report from a 2nd Gen owner sets this.
+        tested = false,
     ),
 
     /**

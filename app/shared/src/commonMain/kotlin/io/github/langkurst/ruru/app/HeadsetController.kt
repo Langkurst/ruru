@@ -256,10 +256,10 @@ class HeadsetController(
                 text.isEmpty() -> NOT_ACCEPTED
                 text.contains("no reply", ignoreCase = true) -> "The headphones did not answer. Try again."
                 text in DISCONNECTED || text.endsWith("is not connected") -> "The headphones disconnected. Ruru reconnects by itself."
-                text.startsWith("Slot ") && " is empty" in text -> "That custom mode is empty. Add a mode first, then choose it."
-                text.startsWith("Only custom slots") -> "Only custom modes can be removed."
+                text.startsWith("Slot ") && " is empty" in text -> "That mode is empty. Add a mode first, then choose it."
+                text.startsWith("Only custom slots") -> "Only your own modes can be removed."
                 " is a built-in mode and cannot be changed" in text ->
-                    "${text.substringBefore(" is a built-in mode")} is built into the headphones and can't be changed. Add a custom mode instead."
+                    "${text.substringBefore(" is a built-in mode")} is built into the headphones and can't be changed. Add a mode of your own instead."
                 text.startsWith("[") || text.startsWith("Unexpected reply") || text == "Command failed" -> NOT_ACCEPTED
                 else -> text
             }

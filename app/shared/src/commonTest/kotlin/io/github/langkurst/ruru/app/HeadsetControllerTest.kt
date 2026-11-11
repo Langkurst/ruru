@@ -106,10 +106,10 @@ class HeadsetControllerTest {
         }
         assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("Connection to the headphones was lost"))
         assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("The headphones stopped answering"))
-        assertEquals("That custom mode is empty. Add a mode first, then choose it.", HeadsetController.plainMessage("Slot 7 is empty: save a custom mode there before selecting it"))
-        assertEquals("Only custom modes can be removed.", HeadsetController.plainMessage("Only custom slots (4-10) can be reset"))
+        assertEquals("That mode is empty. Add a mode first, then choose it.", HeadsetController.plainMessage("Slot 7 is empty: save a custom mode there before selecting it"))
+        assertEquals("Only your own modes can be removed.", HeadsetController.plainMessage("Only custom slots (4-10) can be reset"))
         assertEquals(
-            "Quiet is built into the headphones and can't be changed. Add a custom mode instead.",
+            "Quiet is built into the headphones and can't be changed. Add a mode of your own instead.",
             HeadsetController.plainMessage("Quiet is a built-in mode and cannot be changed; save to a custom slot instead"),
         )
         assertEquals("Ruru can't control these headphones", HeadsetController.plainMessage("Ruru can't control these headphones"))

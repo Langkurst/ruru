@@ -15,6 +15,7 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -361,7 +362,8 @@ fun <T> ChoiceRow(
                     val isSelected = value == selected
                     val rowInteraction = remember { MutableInteractionSource() }
                     val hovered by rowInteraction.collectIsHoveredAsState()
-                    val tint by animateColorAsState(if (isSelected || hovered) c.bark else Color.Transparent, hoverSpec())
+                    val pressed by rowInteraction.collectIsPressedAsState()
+                    val tint by animateColorAsState(if (isSelected || hovered || pressed) c.bark else Color.Transparent, hoverSpec())
                     Row(
                         Modifier
                             .fillMaxWidth()
@@ -401,7 +403,8 @@ fun QuietButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
     val c = Ruru.colors
     val interaction = remember { MutableInteractionSource() }
     val hovered by interaction.collectIsHoveredAsState()
-    val bg by animateColorAsState(if (hovered && enabled) c.bark else Color.Transparent, hoverSpec())
+    val pressed by interaction.collectIsPressedAsState()
+    val bg by animateColorAsState(if ((hovered || pressed) && enabled) c.bark else Color.Transparent, hoverSpec())
     Box(
         modifier
             .heightIn(min = 32.dp)
