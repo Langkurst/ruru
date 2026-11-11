@@ -143,7 +143,11 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
     val c = Ruru.colors
     val (title, body) = when (val p = state.phase) {
         Phase.Starting -> "Looking for your headphones" to "Ruru checks the Bluetooth devices paired with this ${noun(state)}."
-        is Phase.NoHeadset -> if (p.pairedName != null) {
+        // iOS only shows an app accessories whose private protocol name the app already lists, so
+        // "nothing found" there can't tell paired from unpaired.
+        is Phase.NoHeadset -> if (state.platformName == "iPhone") {
+            "Headphone control isn't ready on iPhone yet" to "iOS only lets an app see headphones if the app already knows Bose's private name for their control channel, and that name isn't public. Ruru tries the likely names, and none has matched yet. Demo mode shows how the app works."
+        } else if (p.pairedName != null) {
             "${p.pairedName} is not connected" to "Turn the headphones on. If they connect to another device first, choose this ${noun(state)} in their Bluetooth list. Ruru connects by itself."
         } else {
             "No Bose headphones paired" to "Pair your headphones in this ${noun(state)}'s Bluetooth settings, then come back. Ruru connects by itself."

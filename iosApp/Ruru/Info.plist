@@ -24,8 +24,9 @@
     <false/>
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>Ruru talks to your Bose headphones over Bluetooth to show and change their settings.</string>
-    <!-- Candidate protocol names for Bose's accessory channel. Unconfirmed: the connection report
-         lists what the headphones really offer, and confirmed names replace these. -->
+    <!-- Candidate protocol names for Bose's accessory channel, unconfirmed. iOS hides accessories
+         whose names aren't listed here, so the confirmed name (from the Bose app's own
+         Info.plist) replaces these when someone finds it. -->
     <key>UISupportedExternalAccessoryProtocols</key>
     <array>
         <string>com.bose.bmap</string>

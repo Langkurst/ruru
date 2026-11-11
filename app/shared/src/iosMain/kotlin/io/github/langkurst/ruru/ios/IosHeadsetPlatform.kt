@@ -27,8 +27,10 @@ import kotlin.concurrent.Volatile
  * iPhone: Bose headphones reached through Apple's accessory channel (External Accessory, iAP2).
  * iOS has no Serial Port access, and the 1st Gen QC Ultra does not answer BMAP over Bluetooth
  * LE (checked on a real unit), so this is the remaining route. The protocol name Bose uses is not
- * public yet: the app declares the candidates in Info.plist and the connection report lists what
- * the headphones actually offer, so an owner's report can confirm it.
+ * public yet. Since iOS 10 an app only sees accessories that offer a protocol named in its own
+ * Info.plist, so Ruru declares the likely candidates; if none matches, iOS shows it nothing at
+ * all. The confirmed name would come from the UISupportedExternalAccessoryProtocols entry in the
+ * Bose app's Info.plist.
  */
 class IosHeadsetPlatform : HeadsetPlatform {
     override val name: String = "iPhone"
@@ -43,7 +45,7 @@ class IosHeadsetPlatform : HeadsetPlatform {
 
     override suspend fun headsets(): List<HeadsetCandidate> {
         val all = accessories()
-        // What iOS shows Ruru goes into the connection report, for owners to send in.
+        // What iOS shows Ruru goes into the connection report (only accessories with a declared name).
         all.forEach { LogRing.add('I', "iOS", "accessory '${it.name}' by '${it.manufacturer}' offers ${it.protocolStrings}") }
         return all.filter { it.manufacturer.contains("Bose", ignoreCase = true) || it.name.contains("Bose", ignoreCase = true) }
             .map { HeadsetCandidate(key = it.connectionID.toString(), name = it.name, connected = it.connected) }
