@@ -78,6 +78,11 @@ Ruru talks only to your headphones. It sends nothing anywhere: no account, no an
 crash reporting, no update checks. The connection report is text you copy yourself; it masks
 Bluetooth addresses and leaves out the names of your other devices. See [PRIVACY.md](PRIVACY.md).
 
+## Support
+
+Ruru is free. If it helps you, you can [shout me a coffee on Ko-fi](https://ko-fi.com/keaclip).
+It helps me keep making it better. The app has the same link at the bottom of its window.
+
 ## Build it
 
 You need JDK 21.

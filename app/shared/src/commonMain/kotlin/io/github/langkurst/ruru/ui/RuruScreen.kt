@@ -39,6 +39,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
@@ -52,6 +53,7 @@ import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.ConnectionReport
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
+import io.github.langkurst.ruru.app.SUPPORT_URL
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.ListeningMode
@@ -474,6 +476,7 @@ private fun InfoRow(label: String, value: String?) {
 private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, onCopyReport: () -> Unit) {
     val c = Ruru.colors
     var copied by remember { mutableStateOf(false) }
+    val browser = LocalUriHandler.current
     Panel(null) {
         extras.forEach { extra ->
             var on by remember(extra) { mutableStateOf(extra.isOn()) }
@@ -488,6 +491,12 @@ private fun Footer(state: AppState, model: AppModel, appVersion: String, extras:
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Txt("Ruru $appVersion. Not affiliated with Bose.", Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
             QuietButton(if (copied) "Copied" else "Copy connection report", { onCopyReport(); copied = true })
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Txt("Ruru is free. If it helps you, you can shout the developer a coffee on Ko-fi.", Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
+            // Opens the page in the browser. With no browser to hand, the button does nothing.
+            QuietButton("Support Ruru", { runCatching { browser.openUri(SUPPORT_URL) } })
         }
     }
 }
