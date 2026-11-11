@@ -15,5 +15,4 @@ kotlin {
 
 dependencies {
     api(project(":core:session"))
-    implementation(libs.jna)
 }
