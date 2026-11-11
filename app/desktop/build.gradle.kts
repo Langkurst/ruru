@@ -67,6 +67,12 @@ compose.desktop {
             }
             macOS {
                 bundleID = "io.github.langkurst.ruru"
+                // macOS refuses a bundle version that starts with 0, so before 1.0 the bundle says 1.0.0.
+                // The app's About panel and the file name on GitHub show the real version.
+                if (ruruVersion.startsWith("0.")) {
+                    packageVersion = "1.0.0"
+                    dmgPackageVersion = "1.0.0"
+                }
                 iconFile.set(rootProject.file("art/ruru.icns"))
                 infoPlist {
                     extraKeysRawXml = """

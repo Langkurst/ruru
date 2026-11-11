@@ -104,8 +104,15 @@ jobs:
           lipo -create /tmp/ruru-bt-arm64 /tmp/ruru-bt-x64 -output app/desktop/resources/macos/ruru-bt-mac
           chmod +x app/desktop/resources/macos/ruru-bt-mac
       - run: ./gradlew :app:desktop:packageDmg --console=plain
+      - name: Packaging log
+        if: failure()
+        run: cat app/desktop/build/compose/logs/*/*.txt || true
+      - name: Name the file after the real version
+        run: |
+          v=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
+          mkdir -p out && mv app/desktop/build/compose/binaries/main/dmg/*.dmg "out/Ruru-$v-macos.dmg"
       - uses: actions/upload-artifact@v7
-        with: { name: macos, path: app/desktop/build/compose/binaries/main/dmg/*.dmg }
+        with: { name: macos, path: out/*.dmg }
 
   ios:
     needs: test
