@@ -178,7 +178,6 @@ private fun Connected(h: HeadphoneState, controller: HeadsetController) {
             Panel("Shortcut button") {
                 ChoiceRow(
                     label = button.eventLabel ?: "Press",
-                    hint = "What the headphones do when you use the shortcut",
                     options = button.supportedActions.map { it to it.label },
                     selected = button.action,
                     onSelect = controller::setShortcut,
@@ -430,7 +429,8 @@ private fun AboutPanel(h: HeadphoneState) {
     val c = Ruru.colors
     Panel("About these headphones") {
         InfoRow("Model", info.modelName)
-        InfoRow("Firmware", info.firmwareVersion)
+        // Firmware reads like "1.6.7+g6ebabd2"; the part after + is a build tag, kept for the report.
+        InfoRow("Firmware", info.firmwareVersion?.substringBefore('+'))
         InfoRow("Control protocol", info.bmapVersion?.let { "BMAP $it" })
         if (!h.capabilities.verified) {
             Spacer(Modifier.height(6.dp))

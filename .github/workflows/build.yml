@@ -16,7 +16,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.ref }}
+  # A push cancels the previous push build, but never a hand-started (macOS and iPhone) build.
+  group: build-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
