@@ -18,7 +18,7 @@ analytics, and the Android app has no internet permission at all.
 | Android 9 and newer | Built from the same code; not yet tested on a phone. 2.4 MB. |
 | macOS 12 and newer, Apple silicon | Built and started on GitHub's Macs; not yet tested with headphones. |
 | Linux (BlueZ) | Built; not yet tested. Uses `bluetoothctl` to find the headphones. |
-| iPhone | Demo mode works. Controlling the headphones needs one missing name, explained below. |
+| iPhone | Demo mode works. Controlling the headphones isn't built yet, explained below. |
 
 Every app has a demo mode that runs a simulated QC Ultra Headphones, so you can see it without
 headphones.
@@ -58,11 +58,15 @@ Ruru doesn't install firmware updates; use the Bose app for those.
 ## The iPhone
 
 iOS doesn't let apps open a Bluetooth serial channel, which is how Ruru talks to the headphones
-everywhere else. The QC Ultra Headphones (1st Gen) also don't answer Bose's protocol over
-Bluetooth LE (checked on a real pair). That leaves Apple's accessory channel, which needs the
-protocol name Bose uses there, and that name isn't public. iOS only lets an app see an
-accessory whose name the app already lists, so Ruru tries the likely names; none has matched so
-far, and the iPhone app says so plainly.
+everywhere else. Two routes remain, and the iPhone app doesn't control headphones through either
+yet:
+
+- Bluetooth LE, which iOS allows. The QC Ultra Headphones (1st Gen) answer Bose's protocol this
+  way when each message starts with a one-byte header (checked on a real pair from a Windows PC).
+  The iPhone app doesn't use this route yet.
+- Apple's accessory channel, which needs the protocol name Bose uses there, and that name isn't
+  public. iOS only lets an app see an accessory whose name the app already lists, so Ruru tries
+  the likely names; none has matched so far, and the iPhone app says so plainly.
 
 The name is in the `UISupportedExternalAccessoryProtocols` entry of the Bose app's `Info.plist`.
 If you can read that entry (for example from the Bose app's IPA), please open an issue with it:
