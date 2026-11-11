@@ -23,6 +23,12 @@ include(":core:session")
 
 // Platform Bluetooth for the desktop app.
 include(":platform:windows")
+include(":platform:linux")
+include(":platform:macos")
+
+// The apps: shared screens, and the desktop app (Windows, macOS, Linux).
+include(":app:shared")
+include(":app:desktop")
 
 // Command-line tools for checking a real headset from a PC.
 include(":tools:probe")

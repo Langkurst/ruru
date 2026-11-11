@@ -27,7 +27,8 @@ object Logging {
  * The last few hundred connection and protocol log lines, kept in memory for the connection
  * report a user can paste into a bug report. Nothing is written to disk.
  */
-object LogRing : SynchronizedObject() {
+object LogRing {
+    private val lock = SynchronizedObject()
     private const val CAPACITY = 400
     private val lines = ArrayDeque<String>(CAPACITY)
 
@@ -35,15 +36,15 @@ object LogRing : SynchronizedObject() {
     fun add(level: Char, tag: String, msg: String) {
         // "2026-11-11T00:12:34.567Z" -> "00:12:34.567" (UTC)
         val time = Clock.System.now().toString().substringAfter('T').take(12)
-        synchronized(this) {
+        synchronized(lock) {
             if (lines.size >= CAPACITY) lines.removeFirst()
             lines.addLast("$time $level $tag $msg")
         }
     }
 
-    fun tail(n: Int = 150): List<String> = synchronized(this) { lines.toList().takeLast(n) }
+    fun tail(n: Int = 150): List<String> = synchronized(lock) { lines.toList().takeLast(n) }
 
-    fun clear() { synchronized(this) { lines.clear() } }
+    fun clear() { synchronized(lock) { lines.clear() } }
 }
 
 /** Transport-layer log. No personal data beyond the headphones' Bluetooth address. */

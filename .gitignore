@@ -8,6 +8,9 @@ local.properties
 .idea/
 .DS_Store
 
+# Built by CI into the macOS app bundle
+app/desktop/resources/macos/ruru-bt-mac
+
 # .NET spikes
 spikes/**/bin/
 spikes/**/obj/
