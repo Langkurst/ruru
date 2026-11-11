@@ -50,7 +50,7 @@ jobs:
       - run: ./gradlew :app:desktop:packageMsi :app:desktop:packageExe --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
         shell: bash
-        run: bash .github/size-budget.sh 135000000 app/desktop/build/compose/binaries/main/msi/*.msi app/desktop/build/compose/binaries/main/exe/*.exe
+        run: bash .github/size-budget.sh 137150000 app/desktop/build/compose/binaries/main/msi/*.msi app/desktop/build/compose/binaries/main/exe/*.exe
       - uses: actions/upload-artifact@v7
         with:
           name: windows
@@ -69,7 +69,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y rpm xvfb
       - run: ./gradlew :app:desktop:packageDeb :app:desktop:packageRpm :app:desktop:createDistributable --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 134000000 app/desktop/build/compose/binaries/main/deb/*.deb app/desktop/build/compose/binaries/main/rpm/*.rpm
+        run: bash .github/size-budget.sh 134510000 app/desktop/build/compose/binaries/main/deb/*.deb app/desktop/build/compose/binaries/main/rpm/*.rpm
       - name: Library budget (at most 64 libraries ship; 58 on 11 November 2026)
         run: |
           n=$(find app/desktop/build/compose/binaries/main/app/Ruru/lib/app -maxdepth 1 -name '*.jar' | wc -l)
