@@ -159,8 +159,10 @@ private class WindowHost(private val model: AppModel) {
         // "always on top". Hold that for a moment so it takes effect, then let it go.
         val lift = os.startsWith("Windows")
         if (lift) shown.isAlwaysOnTop = true
+        // toFront() activates the window and hands keyboard focus back to its content. Don't call
+        // requestFocus() on the frame: that gives focus to the frame itself, and the keyboard then
+        // does nothing until the window is clicked.
         shown.toFront()
-        shown.requestFocus()
         if (lift) Timer(RAISE_HOLD_MS) { if (shown.isDisplayable) shown.isAlwaysOnTop = false }.apply { isRepeats = false }.start()
     }
 
