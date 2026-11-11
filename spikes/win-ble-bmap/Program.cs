@@ -1,5 +1,9 @@
 // BMAP over Bluetooth LE GATT (service 0xFEBE), the route an iPhone, Mac or Linux app can use.
 // Sends GET requests only (operator 1), which read and never change a setting. No addresses printed.
+// Every write starts with a one-byte segment header (high nibble: last segment, low nibble: this
+// segment, so 0x00 for a single-segment message), and every notification starts with one too.
+// Without it the headphones accept the write and never answer. With it, the QC Ultra Headphones
+// (1st Gen, firmware 1.6.7) answer on the encrypted characteristic (11 November 2026).
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Channels;
@@ -20,11 +24,25 @@ w.Received += (_, e) => { if (e.Advertisement.LocalName.Contains("Bose", StringC
 w.Start();
 for (int i = 0; i < 100 && found == 0; i++) await Task.Delay(100);
 w.Stop();
-if (found == 0) { Console.WriteLine("RESULT: no LE broadcast seen"); return 2; }
 
-using var dev = await BluetoothLEDevice.FromBluetoothAddressAsync(found);
+// Headphones already linked to this PC over LE stop broadcasting, so also look among the paired ones.
+BluetoothLEDevice? dev = found != 0 ? await BluetoothLEDevice.FromBluetoothAddressAsync(found) : null;
+if (dev is null)
+{
+    var paired = await Windows.Devices.Enumeration.DeviceInformation.FindAllAsync(BluetoothLEDevice.GetDeviceSelectorFromPairingState(true));
+    var bose = paired.FirstOrDefault(d => d.Name.Contains("Bose", StringComparison.OrdinalIgnoreCase));
+    if (bose is not null) { dev = await BluetoothLEDevice.FromIdAsync(bose.Id); Console.WriteLine("(no broadcast; using the headphones already paired over LE)"); }
+}
+if (dev is null) { Console.WriteLine("RESULT: no LE broadcast seen and no Bose headphones paired over LE"); return 2; }
+using var _dev = dev;
 var svcs = await dev.GetGattServicesForUuidAsync(febe, BluetoothCacheMode.Uncached);
-var svc = svcs.Services.Single();
+if (svcs.Status != GattCommunicationStatus.Success || svcs.Services.Count == 0)
+{
+    // Seen after a successful run: the headphones stop broadcasting and take no new LE link for a while.
+    Console.WriteLine($"RESULT: could not reach the LE service ({svcs.Status}). Turn the headphones off and on, then run this again.");
+    return 3;
+}
+var svc = svcs.Services[0];
 var chars = (await svc.GetCharacteristicsAsync(BluetoothCacheMode.Uncached)).Characteristics;
 var clock = Stopwatch.StartNew();
 
@@ -43,7 +61,7 @@ foreach (var (label, uuid) in targets)
     async Task<byte[]?> Get(int block, int fn)
     {
         while (inbox.Reader.TryRead(out _)) { }
-        var req = CryptographicBuffer.CreateFromByteArray(new byte[] { (byte)block, (byte)fn, 0x01, 0x00 });
+        var req = CryptographicBuffer.CreateFromByteArray(new byte[] { 0x00, (byte)block, (byte)fn, 0x01, 0x00 });
         var wr = await c.WriteValueWithResultAsync(req, GattWriteOption.WriteWithResponse);
         if (wr.Status != GattCommunicationStatus.Success) { Console.WriteLine($"   write {wr.Status} protoErr={wr.ProtocolError}"); return null; }
         using var cts = new CancellationTokenSource(2500);
@@ -51,9 +69,12 @@ foreach (var (label, uuid) in targets)
         {
             while (true)
             {
-                var f = await inbox.Reader.ReadAsync(cts.Token);
+                var raw = await inbox.Reader.ReadAsync(cts.Token);
+                if (raw.Length < 1) continue;
+                if (raw[0] != 0x00) Console.WriteLine($"   (segment header 0x{raw[0]:x2}: a multi-part reply; only the first part is shown)");
+                var f = raw[1..];
                 if (f.Length >= 4 && f[0] == block && f[1] == fn) return f;
-                Console.WriteLine($"   (other frame {Convert.ToHexString(f)})");
+                Console.WriteLine($"   (other frame {Convert.ToHexString(raw)})");
             }
         }
         catch (OperationCanceledException) { return null; }
