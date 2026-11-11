@@ -23,10 +23,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Tests (protocol, EQ, session, app controller)
         run: ./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :app:shared:desktopTest --console=plain
 
@@ -34,12 +34,12 @@ jobs:
     needs: test
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew :app:desktop:packageMsi :app:desktop:packageExe --console=plain
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows
           path: |
@@ -50,13 +50,13 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: sudo apt-get update && sudo apt-get install -y rpm
       - run: ./gradlew :app:desktop:packageDeb :app:desktop:packageRpm --console=plain
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux
           path: |
@@ -67,10 +67,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Release signing key (from repository secrets, when set)
         env:
           KEYSTORE_BASE64: ${{ secrets.RURU_KEYSTORE_BASE64 }}
@@ -84,7 +84,7 @@ jobs:
           version=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
           mkdir -p out
           cp app/android/build/outputs/apk/release/*.apk "out/ruru-$version.apk"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: android, path: out/*.apk }
 
   macos:
@@ -92,10 +92,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && inputs.apple)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - name: Bluetooth helper (universal binary)
         run: |
           mkdir -p app/desktop/resources/macos
@@ -104,7 +104,7 @@ jobs:
           lipo -create /tmp/ruru-bt-arm64 /tmp/ruru-bt-x64 -output app/desktop/resources/macos/ruru-bt-mac
           chmod +x app/desktop/resources/macos/ruru-bt-mac
       - run: ./gradlew :app:desktop:packageDmg --console=plain
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: macos, path: app/desktop/build/compose/binaries/main/dmg/*.dmg }
 
   ios:
@@ -112,10 +112,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') || (github.event_name == 'workflow_dispatch' && inputs.apple)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew :app:shared:linkReleaseFrameworkIosArm64 --console=plain
       - run: brew install xcodegen
       - name: Unsigned IPA (sign it with your own sideloading tool)
@@ -128,7 +128,7 @@ jobs:
           mkdir -p Payload out
           cp -R build/Build/Products/Release-iphoneos/Ruru.app Payload/
           zip -qr "out/Ruru-$version.ipa" Payload
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with: { name: ios, path: iosApp/out/*.ipa }
 
   release:
@@ -138,10 +138,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { path: dist, merge-multiple: true }
       - run: ls -la dist && (cd dist && sha256sum * > SHA256SUMS.txt)
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           draft: true
           files: dist/*

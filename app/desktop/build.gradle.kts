@@ -36,6 +36,12 @@ compose.desktop {
             "-Xms16m", "-Xmx128m", "-Xss512k",
             "-XX:+UseSerialGC", "-XX:MinHeapFreeRatio=10", "-XX:MaxHeapFreeRatio=30",
             "-XX:TieredStopAtLevel=1", "-XX:ReservedCodeCacheSize=48m", "-XX:MaxMetaspaceSize=128m",
+            // Java2D's Direct3D pipeline costs ~80 MB just to draw the tray icon; the window draws with
+            // Compose's own renderer, so the old pipeline is switched off.
+            "-Dsun.java2d.d3d=false", "-Dsun.java2d.noddraw=true",
+            // A small settings window draws fine in software: measured on Windows, 125 MB with the
+            // window open against 198 MB on DirectX and 374 MB on OpenGL, and less CPU.
+            "-Dskiko.renderApi=SOFTWARE_FAST",
             "-Dfile.encoding=UTF-8",
         )
 

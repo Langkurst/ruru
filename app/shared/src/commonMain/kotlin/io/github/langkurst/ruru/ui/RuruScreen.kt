@@ -56,9 +56,12 @@ import io.github.langkurst.ruru.core.Sidetone
 import io.github.langkurst.ruru.core.SpatialAudio
 import io.github.langkurst.ruru.protocol.bose.AutoOffOptions
 
+/** A switch only some platforms have, such as "Start with Windows". */
+class PlatformSwitch(val label: String, val hint: String?, val isOn: () -> Boolean, val set: (Boolean) -> Unit)
+
 /** The whole app on one scrolling column; the same on desktop and phone. */
 @Composable
-fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifier) {
+fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifier, extras: List<PlatformSwitch> = emptyList()) {
     val controller by model.controller.collectAsState()
     val state by controller.state.collectAsState()
     val c = Ruru.colors
@@ -76,7 +79,7 @@ fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifie
             Header(state)
             state.message?.let { MessageBar(it, controller::dismissMessage) }
             if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
-            Footer(state, model, appVersion) { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
+            Footer(state, model, appVersion, extras) { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
         }
     }
 }
@@ -447,10 +450,16 @@ private fun InfoRow(label: String, value: String?) {
 }
 
 @Composable
-private fun Footer(state: AppState, model: AppModel, appVersion: String, onCopyReport: () -> Unit) {
+private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, onCopyReport: () -> Unit) {
     val c = Ruru.colors
     var copied by remember { mutableStateOf(false) }
     Panel(null) {
+        extras.forEach { extra ->
+            var on by remember(extra) { mutableStateOf(extra.isOn()) }
+            SettingRow(extra.label, extra.hint) {
+                Toggle(on, { extra.set(it); on = extra.isOn() }, extra.label)
+            }
+        }
         SettingRow("Demo mode", "A simulated QC Ultra Headphones, for trying Ruru without headphones") {
             Toggle(state.demo, model::setDemo, "Demo mode")
         }
