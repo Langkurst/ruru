@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.1 (unreleased)
+
+- iPhone: controls the headphones over Bluetooth LE, Bose's control service with the one-byte
+  segment header the QC Ultra Headphones (1st Gen) answered from a PC. Built and compiled; not
+  yet tried on a real iPhone, so it isn't released.
+
+## 0.1.0 (11 November 2026)
 
 First version.
 

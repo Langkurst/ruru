@@ -18,7 +18,7 @@ Android app has no internet permission at all.
 | Android 9 and newer | Built from the same code; not yet tested on a phone. 2.4 MB. |
 | macOS 12 and newer, Apple silicon | Built and started on GitHub's Macs; not yet tested with headphones. |
 | Linux (BlueZ) | Built; not yet tested. Uses `bluetoothctl` to find the headphones. |
-| iPhone | Demo mode works. It can't control headphones yet, explained below. |
+| iPhone | Demo mode works. Control over Bluetooth LE is built for the next version and still needs trying on a real iPhone, explained below. |
 
 Every app has a demo mode that runs a simulated QC Ultra Headphones, so you can see it without
 headphones.
@@ -73,12 +73,11 @@ package on Linux. On Android and iPhone, delete the app as usual.
 ## The iPhone
 
 iOS doesn't let apps open a Bluetooth serial channel, which is how Ruru talks to the headphones
-everywhere else. Two routes remain, and the iPhone app doesn't control headphones through either
-yet:
+everywhere else. Two routes remain, and version 0.1.0 doesn't control headphones through either:
 
 - Bluetooth LE, which iOS allows. The QC Ultra Headphones (1st Gen) answer Bose's protocol this
   way when each message starts with a one-byte header (checked on a real pair from a Windows PC).
-  The iPhone app doesn't use this route yet.
+  The next version uses this route; it hasn't been tried on a real iPhone yet.
 - Apple's accessory channel, which needs the protocol name Bose uses there, and that name isn't
   public. iOS only lets an app see an accessory whose name the app already lists, so Ruru tries
   the likely names; none has matched so far, and the iPhone app says so plainly.
