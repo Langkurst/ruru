@@ -30,6 +30,8 @@ class MainActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= 31 && checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
             askBluetooth.launch(Manifest.permission.BLUETOOTH_CONNECT)
         }
+        // "--ez demo true" on the launch intent starts in demo mode (CI uses it on an emulator).
+        if (intent?.getBooleanExtra("demo", false) == true) app.model.setDemo(true)
         app.model.start()
         // Android's "Remove animations" (animator duration scale 0) turns Ruru's motion off too.
         val reduceMotion = Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f

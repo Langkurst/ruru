@@ -16,7 +16,7 @@ analytics, and the Android app has no internet permission at all.
 |---|---|
 | Windows 10 and 11 | Tested with QC Ultra Headphones (1st Gen). Sits in the tray with the battery level and a quick mode switch. |
 | Android 9 and newer | Built from the same code; not yet tested on a phone. 2.4 MB. |
-| macOS 12 and newer | Built; not yet tested on a Mac. |
+| macOS 12 and newer, Apple silicon | Built and started on GitHub's Macs; not yet tested with headphones. |
 | Linux (BlueZ) | Built; not yet tested. Uses `bluetoothctl` to find the headphones. |
 | iPhone | Demo mode works. Controlling the headphones needs one more finding, explained below. |
 
@@ -42,8 +42,8 @@ Download the file for your system from [Releases](../../releases):
 | System | File |
 |---|---|
 | Windows | `Ruru-<version>.msi` or `.exe` |
-| macOS | `Ruru-<version>.dmg` (not notarised) |
-| Linux | `ruru_<version>.deb` or `ruru-<version>.rpm` |
+| macOS (Apple silicon) | `Ruru-<version>-macos-arm64.dmg` (not notarised) |
+| Linux | `ruru_<version>_amd64.deb` or `ruru-<version>-1.x86_64.rpm` |
 | Android | `ruru-<version>.apk` |
 | iPhone | `Ruru-<version>.ipa` (unsigned, for your sideloading tool) |
 
