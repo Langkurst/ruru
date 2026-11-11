@@ -39,7 +39,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -67,7 +71,9 @@ fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifie
     val c = Ruru.colors
     @Suppress("DEPRECATION")
     val clipboard = LocalClipboardManager.current
-    Box(modifier.fillMaxSize().background(c.night), contentAlignment = Alignment.TopCenter) {
+    // The page colour goes on before the caller's modifier, so it also fills the strips behind a
+    // phone's status and navigation bars that the safe-area padding in [modifier] leaves.
+    Box(Modifier.fillMaxSize().background(c.night).then(modifier), contentAlignment = Alignment.TopCenter) {
         Column(
             Modifier
                 .widthIn(max = 520.dp)
@@ -130,7 +136,8 @@ private fun MessageBar(text: String, onDismiss: () -> Unit) {
     val c = Ruru.colors
     val shape = RoundedCornerShape(11.dp)
     Row(
-        Modifier.fillMaxWidth().clip(shape).background(c.bough).border(1.dp, c.alarm.copy(alpha = 0.5f), shape).padding(horizontal = 16.dp, vertical = 10.dp),
+        Modifier.fillMaxWidth().clip(shape).background(c.bough).border(1.dp, c.alarm.copy(alpha = 0.5f), shape).padding(horizontal = 16.dp, vertical = 10.dp)
+            .semantics { liveRegion = LiveRegionMode.Polite }, // screen readers announce it when it appears
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Txt(text, Ruru.type.body, c.ink, Modifier.weight(1f).padding(end = 12.dp))
@@ -147,10 +154,13 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
         // "nothing found" there can't tell paired from unpaired.
         is Phase.NoHeadset -> if (state.platformName == "iPhone") {
             "Headphone control isn't ready on iPhone yet" to "iOS only lets an app see headphones if the app already knows Bose's private name for their control channel, and that name isn't public. Ruru tries the likely names, and none has matched yet. Demo mode shows how the app works."
+        } else if (p.blocked != null) {
+            "Ruru can't see your headphones yet" to p.blocked
         } else if (p.pairedName != null) {
             "${p.pairedName} is not connected" to "Turn the headphones on. If they connect to another device first, choose this ${noun(state)} in their Bluetooth list. Ruru connects by itself."
         } else {
-            "No Bose headphones paired" to "Pair your headphones in this ${noun(state)}'s Bluetooth settings, then come back. Ruru connects by itself."
+            // Ruru finds headphones by name, so renamed ones don't show up.
+            "No Bose headphones found" to "Ruru looks for a paired Bluetooth device with Bose in its name. Pair your headphones in this ${noun(state)}'s Bluetooth settings. If you renamed them, put Bose back in their name. Ruru connects by itself."
         }
         is Phase.Connecting -> "Connecting to ${p.name}" to "This takes a few seconds."
         is Phase.Failed -> "Could not connect to ${p.name}" to p.reason
@@ -251,7 +261,8 @@ private fun ModeList(modes: List<ListeningMode>, current: Int?, onSelect: (Int) 
                     Modifier
                         .fillMaxWidth()
                         .height(rowHeight)
-                        .focusRing(interaction, shape)
+                        // On the yellow marker the usual ring disappears; the marker's own ink shows.
+                        .focusRing(interaction, shape, if (selected) c.onEye else null)
                         .clip(shape)
                         .background(tint)
                         .selectable(selected, role = Role.RadioButton, interactionSource = interaction, indication = null) { onSelect(mode.index) }
@@ -290,10 +301,10 @@ private fun NewModeEditor(onSave: (String) -> Unit, onCancel: () -> Unit) {
         singleLine = true,
         textStyle = Ruru.type.body.copy(color = c.ink),
         cursorBrush = SolidColor(c.ink),
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Name for the new mode" },
         decorationBox = { field ->
             Box(Modifier.fillMaxWidth().clip(shape).background(c.night).border(1.dp, c.line, shape).padding(horizontal = 12.dp, vertical = 9.dp)) {
-                if (name.isEmpty()) Txt("For example, Commute", Ruru.type.body, c.ink4)
+                if (name.isEmpty()) Txt("For example, Commute", Ruru.type.body, c.ink3)
                 field()
             }
         },
@@ -436,7 +447,13 @@ private fun AboutPanel(h: HeadphoneState) {
         // Firmware reads like "1.6.7+g6ebabd2"; the part after + is a build tag, kept for the report.
         InfoRow("Firmware", info.firmwareVersion?.substringBefore('+'))
         InfoRow("Control protocol", info.bmapVersion?.let { "BMAP $it" })
-        if (!h.capabilities.verified) {
+        // "Tested" means the code has run on this model's real hardware; "verified" only that its
+        // layout matches captures, which is not the same promise.
+        h.capabilities.supportNote?.let {
+            Spacer(Modifier.height(6.dp))
+            Txt(it, Ruru.type.small, c.ink3)
+        }
+        if (!h.capabilities.tested) {
             Spacer(Modifier.height(6.dp))
             Txt("Ruru has not been tested on this model yet. If something looks wrong, a connection report helps.", Ruru.type.small, c.ink3)
         }

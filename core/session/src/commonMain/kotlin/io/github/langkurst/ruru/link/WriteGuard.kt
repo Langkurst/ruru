@@ -23,7 +23,7 @@ object WriteGuard {
         if (packet.operator == BmapOperator.GET) return null
         if (packet.block in readOnlyBlocks) {
             val what = if (packet.block == 3) "firmware update" else "authentication"
-            return "Blocked for safety: Earshot never writes to the $what block (${packet.address})"
+            return "Blocked for safety: Ruru never writes to the $what block (${packet.address})"
         }
         if ((packet.block to packet.function) in forbiddenFunctions) {
             return "Blocked for safety: ${packet.address} would reset or wipe the headphones"

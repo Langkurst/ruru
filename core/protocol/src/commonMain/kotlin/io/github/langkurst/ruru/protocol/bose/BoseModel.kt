@@ -43,9 +43,9 @@ private val ULTRA_PRESETS = listOf("Quiet", "Aware", "Immersion", "Cinema")
 /** Open-ear presets (docs/bose-models.md §A11, §A12): Stereo p35, Immersion p34, Cinema p36 on the 2nd Gen. */
 private val OPEN_PRESETS = listOf("Stereo", "Immersion", "Cinema")
 
-private const val QC35_NOTE = "These headphones use Bose's older app (Bose Connect); Earshot shows the battery only."
+private const val QC35_NOTE = "These headphones use Bose's older app (Bose Connect). Ruru shows their battery only."
 private const val BRUSSELS_NOTE =
-    "These earbuds use the separate Bose QC Earbuds app and a different protocol; Earshot can't control them."
+    "These earbuds use the separate Bose QC Earbuds app. Ruru can't control them."
 private const val NC700_NOTE =
     "Basic support: battery, EQ, settings and the noise cancelling level. These headphones have no listening modes."
 private const val LANDO_NOTE =

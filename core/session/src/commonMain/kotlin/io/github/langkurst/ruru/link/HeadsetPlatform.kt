@@ -12,6 +12,12 @@ interface HeadsetPlatform {
     /** False when this system cannot open the control channel at all. */
     val supported: Boolean
 
+    /**
+     * Why the system shows Ruru no headphones right now, in words for the user (Android without
+     * the Nearby devices permission, say), or null when nothing is in the way.
+     */
+    val blocked: String? get() = null
+
     /** Paired headsets that look like Bose products, connected ones first. */
     suspend fun headsets(): List<HeadsetCandidate>
 

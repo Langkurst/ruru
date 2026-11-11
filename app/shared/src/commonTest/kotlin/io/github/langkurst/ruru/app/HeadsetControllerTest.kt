@@ -88,7 +88,45 @@ class HeadsetControllerTest {
         c.await { it.phase == Phase.Connected && it.headset.currentModeIndex == 0 }
         c.setNoise(NoiseSettings(cancellingLevel = 3))
         val s = c.await { it.message != null }
-        assertTrue(s.message!!.isNotBlank())
+        val message = s.message!!
+        assertTrue(message.isNotBlank())
+        assertFalse("[" in message, "protocol text reached the screen: $message")
+        assertFalse("slot" in message.lowercase(), "the word slot reached the screen: $message")
+        c.stop()
+    }
+
+    @Test
+    fun `refused changes are explained in plain words`() {
+        assertEquals("The headphones did not answer. Try again.", HeadsetController.plainMessage("[1.7]: no reply from the headphones"))
+        assertEquals("The headphones did not answer. Try again.", HeadsetController.plainMessage("[31.3]: no reply"))
+        for (raw in listOf("[31.6]: Invalid length", "[1.7]: error code 9", "Unexpected reply from the headphones ([1.7]): short", "Command failed", null, "")) {
+            val shown = HeadsetController.plainMessage(raw)
+            assertTrue(shown.startsWith("The headphones did not accept that change"), "for $raw: $shown")
+            assertFalse("[" in shown, shown)
+        }
+        assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("Connection to the headphones was lost"))
+        assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("The headphones stopped answering"))
+        assertEquals("That custom mode is empty. Add a mode first, then choose it.", HeadsetController.plainMessage("Slot 7 is empty: save a custom mode there before selecting it"))
+        assertEquals("Only custom modes can be removed.", HeadsetController.plainMessage("Only custom slots (4-10) can be reset"))
+        assertEquals(
+            "Quiet is built into the headphones and can't be changed. Add a custom mode instead.",
+            HeadsetController.plainMessage("Quiet is a built-in mode and cannot be changed; save to a custom slot instead"),
+        )
+        assertEquals("Ruru can't control these headphones", HeadsetController.plainMessage("Ruru can't control these headphones"))
+    }
+
+    @Test
+    fun `a platform that shows nothing says why, instead of saying nothing is paired`() = runBlocking {
+        val blocked = object : HeadsetPlatform {
+            override val name = "Android"
+            override val supported = true
+            override val blocked = "Ruru needs Android's Nearby devices permission"
+            override suspend fun headsets() = emptyList<HeadsetCandidate>()
+            override suspend fun open(candidate: HeadsetCandidate): ByteTransport = error("never opened")
+        }
+        val c = controller(blocked)
+        val s = c.await { it.phase is Phase.NoHeadset }
+        assertEquals("Ruru needs Android's Nearby devices permission", (s.phase as Phase.NoHeadset).blocked)
         c.stop()
     }
 

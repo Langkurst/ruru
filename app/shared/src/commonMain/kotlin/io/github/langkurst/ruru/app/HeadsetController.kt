@@ -40,7 +40,8 @@ sealed interface Phase {
     data object Starting : Phase
     data object Unsupported : Phase
     /** No paired Bose headset is connected; [pairedName] is one that is paired but off or elsewhere. */
-    data class NoHeadset(val pairedName: String?) : Phase
+    /** [blocked] is the system's reason for showing Ruru nothing (a missing permission), in words for the user. */
+    data class NoHeadset(val pairedName: String?, val blocked: String? = null) : Phase
     data class Connecting(val name: String) : Phase
     data object Connected : Phase
     data class Failed(val name: String, val reason: String) : Phase
@@ -131,7 +132,7 @@ class HeadsetController(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: HeadphoneCommandException) {
-                message.value = e.message ?: "The headphones did not accept that change"
+                message.value = plainMessage(e.message)
             }
         }
     }
@@ -153,7 +154,7 @@ class HeadsetController(
             }
             val target = seen.firstOrNull { it.connected }
             if (target == null) {
-                phase.value = Phase.NoHeadset(seen.firstOrNull()?.name)
+                phase.value = Phase.NoHeadset(seen.firstOrNull()?.name, platform.blocked)
                 failures = 0
                 waitOrRetry(SEARCH_MS)
                 continue
@@ -235,11 +236,42 @@ class HeadsetController(
         else "$name stopped answering. Ruru will keep trying."
 
     private fun busy(name: String) =
-        "$name did not answer. If the Bose app is open on this ${platformNoun()}, close it: only one app can control the headphones at a time."
+        if (platformNoun() == "phone") {
+            "$name did not answer. If the Bose app is open on this phone, close it. Only one app can control the headphones at a time."
+        } else {
+            // There is no Bose app for computers, but other tools for these headphones exist.
+            "$name did not answer. Close any other app on this computer that controls the headphones, then try again. Only one app can control them at a time."
+        }
 
     private fun platformNoun() = if (platform.name == "Android" || platform.name == "iPhone") "phone" else "computer"
 
     companion object {
+        /**
+         * The words shown when a change fails. The shared code's messages are written for the log
+         * and the tests ("[31.6]: Invalid length"); people see what happened and what to do.
+         */
+        fun plainMessage(raw: String?): String {
+            val text = raw?.trim().orEmpty()
+            return when {
+                text.isEmpty() -> NOT_ACCEPTED
+                text.contains("no reply", ignoreCase = true) -> "The headphones did not answer. Try again."
+                text in DISCONNECTED || text.endsWith("is not connected") -> "The headphones disconnected. Ruru reconnects by itself."
+                text.startsWith("Slot ") && " is empty" in text -> "That custom mode is empty. Add a mode first, then choose it."
+                text.startsWith("Only custom slots") -> "Only custom modes can be removed."
+                " is a built-in mode and cannot be changed" in text ->
+                    "${text.substringBefore(" is a built-in mode")} is built into the headphones and can't be changed. Add a custom mode instead."
+                text.startsWith("[") || text.startsWith("Unexpected reply") || text == "Command failed" -> NOT_ACCEPTED
+                else -> text
+            }
+        }
+
+        private const val NOT_ACCEPTED =
+            "The headphones did not accept that change. If it keeps happening, press Copy connection report below and open an issue on GitHub."
+        private val DISCONNECTED = setOf(
+            "Connection to the headphones was lost", "The headphones stopped answering",
+            "Headphones not connected", "The headphones are not connected",
+        )
+
         const val NOT_CONNECTED = "The headphones are not connected"
         private const val SEARCH_MS = 4_000L
         private const val AFTER_DROP_MS = 1_500L

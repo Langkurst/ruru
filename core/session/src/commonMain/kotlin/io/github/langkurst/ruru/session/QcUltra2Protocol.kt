@@ -1445,6 +1445,6 @@ class QcUltra2Protocol(
         /** `[1.5]` SET_GET refused and no listening modes to fall back on. */
         const val NOISE_READ_ONLY_MESSAGE = "These headphones' firmware doesn't let other apps change the noise cancelling level"
         const val NO_FAVORITES_MESSAGE = "These headphones don't have favourite modes"
-        const val UNSUPPORTED_MESSAGE = "Earshot can't control these headphones"
+        const val UNSUPPORTED_MESSAGE = "Ruru can't control these headphones"
     }
 }

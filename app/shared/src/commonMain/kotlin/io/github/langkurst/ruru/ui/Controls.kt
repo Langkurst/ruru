@@ -65,10 +65,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.disabled
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.progressBarRangeInfo
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,10 +101,34 @@ fun Txt(
     )
 }
 
-/** A visible ring while the control has keyboard focus. */
-fun Modifier.focusRing(interaction: MutableInteractionSource, shape: Shape): Modifier = composed {
+/**
+ * A visible ring while the control has keyboard focus, in [colour] (ink-2 unless given). With
+ * [outside] it is drawn 3 dp outside a pill-shaped control, for controls whose own fill is ink,
+ * where a ring on top would vanish (a switch that is on).
+ */
+fun Modifier.focusRing(
+    interaction: MutableInteractionSource,
+    shape: Shape,
+    colour: Color? = null,
+    outside: Boolean = false,
+): Modifier = composed {
     val focused by interaction.collectIsFocusedAsState()
-    if (focused) border(2.dp, Ruru.colors.ink2, shape) else this
+    val ring = colour ?: Ruru.colors.ink2
+    when {
+        !focused -> this
+        outside -> drawBehind {
+            val width = 2.dp.toPx()
+            val inset = 3.dp.toPx() + width / 2
+            drawRoundRect(
+                ring,
+                topLeft = Offset(-inset, -inset),
+                size = Size(size.width + 2 * inset, size.height + 2 * inset),
+                cornerRadius = CornerRadius(size.height / 2 + inset),
+                style = Stroke(width),
+            )
+        }
+        else -> border(2.dp, ring, shape)
+    }
 }
 
 @Composable
@@ -144,7 +171,7 @@ fun Toggle(checked: Boolean, onChange: (Boolean) -> Unit, label: String, enabled
     Box(
         Modifier
             .size(width = 36.dp, height = 20.dp)
-            .focusRing(interaction, CircleShape)
+            .focusRing(interaction, CircleShape, outside = true)
             .clip(CircleShape)
             .background(if (enabled) track else track.copy(alpha = track.alpha * 0.5f))
             .toggleable(value = checked, enabled = enabled, role = Role.Switch, interactionSource = interaction, indication = null, onValueChange = onChange)
@@ -188,8 +215,9 @@ fun LevelSlider(
             .height(28.dp)
             .semantics {
                 contentDescription = label
+                stateDescription = shown.toString() // read out as the number shown, not a percentage
                 progressBarRangeInfo = ProgressBarRangeInfo(shown.toFloat(), range.first.toFloat()..range.last.toFloat(), steps - 1)
-                if (enabled) setProgress { target -> onCommit(target.roundToInt().coerceIn(range)); true }
+                if (enabled) setProgress { target -> onCommit(target.roundToInt().coerceIn(range)); true } else disabled()
             }
             .focusable(enabled, interaction)
             .onKeyEvent { e ->

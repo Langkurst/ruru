@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.Ruru" parent="android:Theme.Material.NoActionBar">
+    <!-- Light, matching Ruru's light page, so the first frame and the strips behind the system
+         bars match the screen. values-night has the dark pair. -->
+    <style name="Theme.Ruru" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:windowBackground">@color/night</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
-    <color name="night">#FF0B0C0A</color>
+    <!-- "night" is the page colour (docs/DESIGN.md): F4F5F3 in light, 0B0C0A in dark. -->
+    <color name="night">#FFF4F5F3</color>
     <color name="owl_face">#FF3A3127</color>
 </resources>
