@@ -46,6 +46,11 @@ android {
         }
     }
 
+    // Ruru's own text is English only; the libraries' translations of their few strings are not shipped.
+    androidResources {
+        localeFilters += "en"
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

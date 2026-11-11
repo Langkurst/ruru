@@ -48,6 +48,9 @@ jobs:
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
       - run: ./gradlew :app:desktop:packageMsi :app:desktop:packageExe --console=plain
+      - name: Size budget (the installers can shrink, not quietly grow)
+        shell: bash
+        run: bash .github/size-budget.sh 135000000 app/desktop/build/compose/binaries/main/msi/*.msi app/desktop/build/compose/binaries/main/exe/*.exe
       - uses: actions/upload-artifact@v7
         with:
           name: windows
@@ -65,6 +68,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
       - run: sudo apt-get update && sudo apt-get install -y rpm xvfb
       - run: ./gradlew :app:desktop:packageDeb :app:desktop:packageRpm :app:desktop:createDistributable --console=plain
+      - name: Size budget (the installers can shrink, not quietly grow)
+        run: bash .github/size-budget.sh 134000000 app/desktop/build/compose/binaries/main/deb/*.deb app/desktop/build/compose/binaries/main/rpm/*.rpm
       - name: Check the app starts (on a virtual screen, demo mode)
         run: |
           # The app folder uses the main package name (Ruru); only the .deb/.rpm are lower case.
@@ -114,6 +119,8 @@ jobs:
           else
             cp app/android/build/outputs/apk/release/*.apk "out/ruru-$version-unsigned.apk"
           fi
+      - name: Size budget (the APK can shrink, not quietly grow)
+        run: bash .github/size-budget.sh 2650000 out/*.apk
       - name: Let the emulator use hardware acceleration
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         run: |
@@ -176,6 +183,8 @@ jobs:
         run: |
           v=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
           mkdir -p out && mv app/desktop/build/compose/binaries/main/dmg/*.dmg "out/Ruru-$v-macos-arm64.dmg"
+      - name: Size budget (the DMG can shrink, not quietly grow)
+        run: bash .github/size-budget.sh 78500000 out/*.dmg
       - uses: actions/upload-artifact@v7
         with: { name: macos, path: out/*.dmg }
 
@@ -202,6 +211,8 @@ jobs:
           mkdir -p Payload out
           cp -R "$app" Payload/
           zip -qr "out/Ruru-$version.ipa" Payload
+      - name: Size budget (the IPA can shrink, not quietly grow)
+        run: bash .github/size-budget.sh 13500000 iosApp/out/*.ipa
       - name: Open it on a virtual iPhone in demo mode
         run: |
           cd iosApp
