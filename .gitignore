@@ -18,3 +18,8 @@ spikes/**/obj/
 # Private notes and reference clones: never published
 _private/
 PLAN.md
+
+# Release signing: never committed (CI reads it from secrets)
+keystore.properties
+*.jks
+*.keystore

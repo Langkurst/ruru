@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The owl mark (same geometry as OwlMark.kt) inside the adaptive icon's 72dp safe zone. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#E8C547" android:pathData="M42.8,51.9m-10.9,0a10.9,10.9 0,1 1,21.8 0a10.9,10.9 0,1 1,-21.8 0" />
+    <path android:fillColor="#E8C547" android:pathData="M65.2,51.9m-10.9,0a10.9,10.9 0,1 1,21.8 0a10.9,10.9 0,1 1,-21.8 0" />
+    <path android:fillColor="#0B0C0A" android:pathData="M42.8,52.6m-5.7,0a5.7,5.7 0,1 1,11.4 0a5.7,5.7 0,1 1,-11.4 0" />
+    <path android:fillColor="#0B0C0A" android:pathData="M65.2,52.6m-5.7,0a5.7,5.7 0,1 1,11.4 0a5.7,5.7 0,1 1,-11.4 0" />
+    <path android:fillColor="#3A3127" android:pathData="M29.2,41.6 L54,49.7 L78.8,41.6 L78.8,30.1 L29.2,30.1 Z" />
+    <path android:fillColor="#B8935A" android:pathData="M50.3,58.0 L57.7,58.0 L54,65.5 Z" />
+</vector>

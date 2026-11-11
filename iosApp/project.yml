@@ -1,0 +1,23 @@
+# Generated into Ruru.xcodeproj by XcodeGen. Build the shared framework first:
+#   ./gradlew :app:shared:linkReleaseFrameworkIosArm64
+# CI does both (see .github/workflows/build.yml).
+name: Ruru
+options:
+  bundleIdPrefix: io.github.langkurst
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  Ruru:
+    type: application
+    platform: iOS
+    sources: [Ruru]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.langkurst.ruru
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Ruru/Info.plist
+        FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../app/shared/build/bin/iosArm64/releaseFramework
+        OTHER_LDFLAGS: -framework RuruShared -framework ExternalAccessory
+        CODE_SIGNING_ALLOWED: NO

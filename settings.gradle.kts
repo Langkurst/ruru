@@ -29,6 +29,7 @@ include(":platform:macos")
 // The apps: shared screens, and the desktop app (Windows, macOS, Linux).
 include(":app:shared")
 include(":app:desktop")
+include(":app:android")
 
 // Command-line tools for checking a real headset from a PC.
 include(":tools:probe")
