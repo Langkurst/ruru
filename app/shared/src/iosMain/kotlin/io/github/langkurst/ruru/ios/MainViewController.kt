@@ -12,11 +12,16 @@ import io.github.langkurst.ruru.ui.RuruTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIAccessibilityIsReduceMotionEnabled
 import platform.UIKit.UIViewController
 
 private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-private val model by lazy { AppModel(IosHeadsetPlatform(), scope).also { it.start() } }
+// "--demo" on the launch arguments starts in demo mode (CI uses it for the simulator screenshot).
+private val model by lazy {
+    val demo = NSProcessInfo.processInfo.arguments.any { it == "--demo" }
+    AppModel(IosHeadsetPlatform(), scope, startInDemo = demo).also { it.start() }
+}
 
 /** Called from the Swift app (iosApp/Ruru/RuruApp.swift). */
 @Suppress("FunctionName", "unused")

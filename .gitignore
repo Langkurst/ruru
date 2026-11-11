@@ -8,6 +8,13 @@ local.properties
 .idea/
 .DS_Store
 
+# Xcode project and outputs (the project is generated from iosApp/project.yml)
+iosApp/Ruru.xcodeproj/
+iosApp/build-sim/
+iosApp/Payload/
+iosApp/out/
+iosApp/shots/
+
 # Built by CI into the macOS app bundle
 app/desktop/resources/macos/ruru-bt-mac
 

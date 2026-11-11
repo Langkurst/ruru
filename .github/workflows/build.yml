@@ -124,20 +124,39 @@ jobs:
       - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
-      - run: ./gradlew :app:shared:linkReleaseFrameworkIosArm64 --console=plain
       - run: brew install xcodegen
       - name: Unsigned IPA (sign it with your own sideloading tool)
         run: |
           cd iosApp
           xcodegen generate
           xcodebuild -project Ruru.xcodeproj -scheme Ruru -configuration Release -sdk iphoneos \
-            -derivedDataPath build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+            -derivedDataPath build ARCHS=arm64 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+          app=build/Build/Products/Release-iphoneos/Ruru.app
+          find "$app" -name 'monasans_regular.ttf' | grep -q . || { echo "The fonts are missing from the app"; exit 1; }
+          test -f "$app/Assets.car" || { echo "The app icon is missing"; exit 1; }
           version=$(grep '^ruru.version=' ../gradle.properties | cut -d= -f2)
           mkdir -p Payload out
-          cp -R build/Build/Products/Release-iphoneos/Ruru.app Payload/
+          cp -R "$app" Payload/
           zip -qr "out/Ruru-$version.ipa" Payload
+      - name: Open it on a virtual iPhone in demo mode
+        run: |
+          cd iosApp
+          xcodebuild -project Ruru.xcodeproj -scheme Ruru -configuration Debug -sdk iphonesimulator \
+            -derivedDataPath build-sim ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO build
+          udid=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin)["devices"]; print(next(x["udid"] for k,v in sorted(d.items(), reverse=True) if "iOS" in k for x in v if x["name"].startswith("iPhone")))')
+          xcrun simctl boot "$udid"
+          xcrun simctl bootstatus "$udid" -b
+          xcrun simctl install "$udid" build-sim/Build/Products/Debug-iphonesimulator/Ruru.app
+          xcrun simctl launch "$udid" io.github.langkurst.ruru --demo
+          sleep 20
+          mkdir -p shots
+          xcrun simctl io "$udid" screenshot shots/iphone-demo.png
+          xcrun simctl spawn "$udid" launchctl list | grep -q 'io.github.langkurst.ruru' || { echo "Ruru stopped after launch (a crash)"; exit 1; }
       - uses: actions/upload-artifact@v7
         with: { name: ios, path: iosApp/out/*.ipa }
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: ios-simulator-screenshot, path: iosApp/shots/*.png, if-no-files-found: ignore }
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
@@ -148,6 +167,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v8
         with: { path: dist, merge-multiple: true }
+      - run: rm -f dist/*.png
       - run: ls -la dist && (cd dist && sha256sum * > SHA256SUMS.txt)
       - uses: softprops/action-gh-release@v3
         with:

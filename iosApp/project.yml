@@ -1,6 +1,6 @@
-# Generated into Ruru.xcodeproj by XcodeGen. Build the shared framework first:
-#   ./gradlew :app:shared:linkReleaseFrameworkIosArm64
-# CI does both (see .github/workflows/build.yml).
+# Generated into Ruru.xcodeproj by XcodeGen (`xcodegen` in this folder). Building the app also
+# builds the shared Kotlin framework and copies its fonts into the app, so Gradle needs JAVA_HOME
+# set to a JDK 21. CI does all of this (see .github/workflows/build.yml).
 name: Ruru
 options:
   bundleIdPrefix: io.github.langkurst
@@ -11,6 +11,12 @@ targets:
     type: application
     platform: iOS
     sources: [Ruru]
+    preBuildScripts:
+      - name: Kotlin framework and Compose resources
+        basedOnDependencyAnalysis: false
+        script: |
+          cd "$SRCROOT/.."
+          ./gradlew :app:shared:embedAndSignAppleFrameworkForXcode --console=plain --no-configuration-cache
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.langkurst.ruru
@@ -18,6 +24,8 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: Ruru/Info.plist
-        FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../app/shared/build/bin/iosArm64/releaseFramework
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        FRAMEWORK_SEARCH_PATHS: $(SRCROOT)/../app/shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)
         OTHER_LDFLAGS: -framework RuruShared -framework ExternalAccessory
         CODE_SIGNING_ALLOWED: NO
