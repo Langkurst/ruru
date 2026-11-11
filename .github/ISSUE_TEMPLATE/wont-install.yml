@@ -1,0 +1,36 @@
+name: Ruru won't install or open
+description: The installer or the app stops before Ruru's window appears
+labels: ["install"]
+body:
+  - type: dropdown
+    id: file
+    attributes:
+      label: Which file
+      options:
+        - .msi (Windows)
+        - .exe (Windows)
+        - .dmg (Mac)
+        - .deb (Linux)
+        - .rpm (Linux)
+        - .apk (Android)
+        - .ipa (iPhone)
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: System and version
+      placeholder: Windows 11 24H2, macOS 15.3, Ubuntu 24.04, Android 16
+    validations:
+      required: true
+  - type: textarea
+    id: message
+    attributes:
+      label: What you saw
+      description: The warning or error, word for word, or a screenshot. The README's Install section covers the usual Windows and Mac warnings.
+    validations:
+      required: true
+  - type: textarea
+    id: clicked
+    attributes:
+      label: What you clicked

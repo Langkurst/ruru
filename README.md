@@ -32,8 +32,8 @@ Expected to work, from Earshot's research and bosectl's captures: QC Ultra Headp
 QC Ultra Earbuds (1st and 2nd Gen), QC Headphones (1st and 2nd Gen), QC SC, QC45, QC SE,
 QC Earbuds II, QC Earbuds (2020), Ultra Open Earbuds and Noise Cancelling Headphones 700.
 
-If you have any of these, a report helps a lot: open an issue with the **Headset report**
-template and paste the connection report from the bottom of the app.
+If you have any of these, a report helps a lot: open an issue with the **Headphones report**
+form and paste the connection report from the bottom of the app.
 
 ## Install
 
@@ -52,8 +52,23 @@ time you open them. On Windows choose **More info**, then **Run anyway**. On mac
 **System Settings > Privacy & Security** and choose **Open Anyway**. Each file's SHA-256 is
 listed in `SHA256SUMS.txt` on the release.
 
+If Windows says **Smart App Control** blocked Ruru, it can't run on that PC: Smart App Control
+only lets signed apps through and has no way to allow one app. Until Ruru is signed, the
+SmartScreen warning also comes back once for each new version.
+
 Close the Bose app on the same device first: only one app can control the headphones at a time.
 Ruru doesn't install firmware updates; use the Bose app for those.
+
+## Stop or remove Ruru
+
+Closing the window leaves Ruru running in the tray (the menu bar on a Mac), with the battery level
+and a mode switch. To stop it, choose **Quit** from its menu there. Windows 11 may tuck the owl
+under the **^** arrow; drag it onto the taskbar to keep it in sight. On Linux desktops without a
+tray, closing the window quits Ruru.
+
+To remove it, turn off **Start with Windows** first if you turned it on, then uninstall Ruru from
+**Settings > Apps > Installed apps** on Windows, move it to the Bin on a Mac, or remove the `ruru`
+package on Linux. On Android and iPhone, delete the app as usual.
 
 ## The iPhone
 
