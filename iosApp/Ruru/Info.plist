@@ -22,6 +22,10 @@
     <dict/>
     <key>UIRequiresFullScreen</key>
     <false/>
+    <!-- Compose Multiplatform needs this to draw at the screen's full refresh rate, and stops at
+         launch without it. -->
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>Ruru talks to your Bose headphones over Bluetooth to show and change their settings.</string>
     <!-- Candidate protocol names for Bose's accessory channel, unconfirmed. iOS hides accessories
