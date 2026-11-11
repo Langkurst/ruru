@@ -1,9 +1,9 @@
 # Ruru
 
 Ruru is a free, open-source app for Bose headphones on Windows, macOS, Linux, Android and iPhone.
-It changes the same settings as the Bose app: listening modes, noise cancelling, Wind Block,
-Immersive Audio, the equaliser, multipoint and the rest. There is no account, no cloud and no
-analytics, and the Android app has no internet permission at all.
+It changes listening modes, noise cancelling, Wind Block, Immersive Audio, the equaliser,
+multipoint and other everyday settings. There is no account, no cloud and no analytics, and the
+Android app has no internet permission at all.
 
 <p align="center">
   <img src="docs/screenshots/ruru-dark.png" width="46%" alt="Ruru in the dark theme: listening modes, noise and equaliser">
@@ -90,9 +90,9 @@ You need JDK 21.
 | Android | `./gradlew :app:android:assembleRelease` (Android SDK required) |
 | iPhone (on a Mac) | `./gradlew :app:shared:linkReleaseFrameworkIosArm64`, then `xcodegen` in `iosApp/` |
 
-The code is Kotlin Multiplatform with Compose Multiplatform. `core/` holds the Bose protocol, the
-session logic and the equaliser maths, shared by every app; `platform/` has one small Bluetooth
-connection per system; `app/` has the screens and the apps. `tools/probe` checks a headset from a
+The code is Kotlin Multiplatform with Compose Multiplatform. `core/` holds the Bose protocol and
+the session logic, shared by every app, and equaliser maths that no app uses yet; `platform/` has
+one small Bluetooth connection per system; `app/` has the screens and the apps. `tools/probe` checks a headset from a
 Windows PC (read-only by default).
 
 ## Credits
