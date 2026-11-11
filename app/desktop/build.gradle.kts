@@ -107,3 +107,11 @@ tasks.register<JavaExec>("snapshot") {
         ),
     )
 }
+
+// Checks the app's controller against real headphones (changes the mode and bass, then puts them back).
+tasks.register<JavaExec>("hardwareCheck") {
+    group = "ruru"
+    description = "Change and restore settings on connected headphones through the app's controller"
+    mainClass.set("io.github.langkurst.ruru.desktop.HardwareCheckKt")
+    classpath = sourceSets["main"].runtimeClasspath
+}
