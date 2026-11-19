@@ -44,6 +44,12 @@ private val os: String = System.getProperty("os.name").orEmpty()
  * closed. The headphone connection lives in [AppModel] the whole time.
  */
 fun main(args: Array<String>) {
+    // A small settings window draws fine in software: measured on Windows, 125 MB with the window
+    // open against 198 MB on DirectX and 374 MB on OpenGL, and less CPU. Not on macOS: it has no
+    // SOFTWARE_FAST, and the window failed to open there when this was set for every system.
+    if (!os.startsWith("Mac") && System.getProperty("skiko.renderApi") == null) {
+        System.setProperty("skiko.renderApi", "SOFTWARE_FAST")
+    }
     if (System.getenv("RURU_DEBUG") == "1") {
         Logging.sink = { _, tag, msg, t -> System.err.println("$tag $msg${t?.let { " (${it.message})" } ?: ""}") }
     }

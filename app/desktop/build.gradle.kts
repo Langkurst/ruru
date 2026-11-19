@@ -39,9 +39,8 @@ compose.desktop {
             // Java2D's Direct3D pipeline costs ~80 MB just to draw the tray icon; the window draws with
             // Compose's own renderer, so the old pipeline is switched off.
             "-Dsun.java2d.d3d=false", "-Dsun.java2d.noddraw=true",
-            // A small settings window draws fine in software: measured on Windows, 125 MB with the
-            // window open against 198 MB on DirectX and 374 MB on OpenGL, and less CPU.
-            "-Dskiko.renderApi=SOFTWARE_FAST",
+            // The software renderer for the window is chosen in Main.kt, on every system but macOS:
+            // macOS has no SOFTWARE_FAST, and the window failed to open there when it was set here.
             "-Dfile.encoding=UTF-8",
         )
 
@@ -84,7 +83,9 @@ compose.desktop {
             linux {
                 packageName = "ruru"
                 iconFile.set(rootProject.file("art/ruru.png"))
-                debMaintainer = "Langkurst <145878628+Langkurst@users.noreply.github.com>"
+                // jpackage adds the vendor and the angle brackets itself, so this is the address alone.
+                debMaintainer = "145878628+Langkurst@users.noreply.github.com"
+                rpmLicenseType = "MIT"
                 menuGroup = "AudioVideo"
             }
         }

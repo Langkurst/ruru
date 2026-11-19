@@ -88,6 +88,8 @@ jobs:
           pid=$!
           sleep 15
           if ! kill -0 "$pid" 2>/dev/null; then echo "Ruru stopped after launch"; cat ruru-start.log; exit 1; fi
+          # Staying alive isn't enough: the tray keeps the process up even if the window fails.
+          if grep -q -e "Exception in thread" -e "Error was captured in composition" ruru-start.log; then echo "Ruru failed at launch:"; cat ruru-start.log; kill "$pid" "$xvfb" || true; exit 1; fi
           kill "$pid" "$xvfb" || true
       - uses: actions/upload-artifact@v7
         with:
@@ -180,10 +182,12 @@ jobs:
           codesign --verify --deep --strict --verbose=2 "$app"
           helper=$(find "$app" -name ruru-bt-mac -type f | head -1)
           test -n "$helper" && file "$helper" || { echo "The Bluetooth helper is missing from the app"; exit 1; }
-          "$app/Contents/MacOS/Ruru" --demo &
+          "$app/Contents/MacOS/Ruru" --demo > ruru-start.log 2>&1 &
           pid=$!
           sleep 15
-          kill -0 $pid || { echo "Ruru stopped after launch"; exit 1; }
+          kill -0 $pid || { echo "Ruru stopped after launch"; cat ruru-start.log; exit 1; }
+          # Staying alive isn't enough: the tray keeps the process up even if the window fails.
+          if grep -q -e "Exception in thread" -e "Error was captured in composition" ruru-start.log; then echo "Ruru failed at launch:"; cat ruru-start.log; kill $pid || true; exit 1; fi
           kill $pid
       - name: Name the file after the real version
         run: |

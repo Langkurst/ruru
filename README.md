@@ -43,7 +43,7 @@ Download the file for your system from [Releases](../../releases):
 |---|---|
 | Windows | `Ruru-<version>.msi` or `.exe` |
 | macOS (Apple silicon) | `Ruru-<version>-macos-arm64.dmg` (not notarised) |
-| Linux | `ruru_<version>_amd64.deb` or `ruru-<version>-1.x86_64.rpm` |
+| Linux | `ruru_<version>_amd64.deb` (Ubuntu 24.04, Debian 13 or newer) or `ruru-<version>-1.x86_64.rpm` |
 | Android | `ruru-<version>.apk` |
 | iPhone | `Ruru-<version>.ipa` (unsigned, for your sideloading tool) |
 
