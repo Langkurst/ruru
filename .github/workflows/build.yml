@@ -25,12 +25,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: A release tag must match the version in gradle.properties
+      - name: A release tag must match the version in gradle.properties and the iPhone project
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           version=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
           if [ "$GITHUB_REF_NAME" != "v$version" ]; then
             echo "::error::The tag is $GITHUB_REF_NAME but gradle.properties says ruru.version=$version. Tag v$version, or change the version first."
+            exit 1
+          fi
+          ios_version=$(sed -n 's/^ *MARKETING_VERSION: *"\{0,1\}\([^"]*\)"\{0,1\} *$/\1/p' iosApp/project.yml)
+          if [ "$ios_version" != "$version" ]; then
+            echo "::error::iosApp/project.yml says MARKETING_VERSION $ios_version but gradle.properties says ruru.version=$version. Change both."
             exit 1
           fi
       - uses: actions/setup-java@v6
@@ -60,7 +65,8 @@ jobs:
 
   linux:
     needs: test
-    runs-on: ubuntu-latest
+    # The .deb's dependencies come from the build machine; 24.04 keeps it installable there.
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-java@v6

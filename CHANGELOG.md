@@ -2,11 +2,13 @@
 
 ## 0.1.1 (25 November 2026)
 
-- iPhone: controls the headphones over Bluetooth LE, Bose's control service with the one-byte
-  segment header the QC Ultra Headphones (1st Gen) answered from a PC. It opens only headphones
-  this iPhone is playing through or has used before, checks their own Bluetooth address where
-  iOS gives one, and says in plain words when pairing, permission or Bluetooth stops it. Not
-  yet tried on a real iPhone.
+The first release: everything under 0.1.0, plus these changes.
+
+- iPhone: control over Bluetooth LE is built. The QC Ultra Headphones (1st Gen) answer this way
+  from a Windows PC, but the iPhone app hasn't been tried on a real iPhone yet, so it may not
+  work. It opens only headphones this iPhone is playing through or has used before, checks their
+  own Bluetooth address where iOS gives one, and says in plain words when pairing, permission or
+  Bluetooth stops it.
 - iPhone: Ruru no longer tries Apple's accessory channel (iAP2), which needs a protocol name Bose
   hasn't published. It uses Bluetooth LE instead.
 - macOS: the window opens again. In 0.1.0 a renderer setting meant for Windows stopped it opening

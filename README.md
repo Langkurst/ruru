@@ -14,11 +14,11 @@ Android app has no internet permission at all.
 
 | | Status |
 |---|---|
-| Windows 10 and 11 | Tested with QC Ultra Headphones (1st Gen). Sits in the tray with the battery level and a quick mode switch. |
-| Android 9 and newer | Built from the same code; not yet tested on a phone. 2.4 MB. |
+| Windows 10 and 11 | Tested on Windows 11 with QC Ultra Headphones (1st Gen). Sits in the tray with the battery level and a quick mode switch. |
+| Android 9 and newer | Built from the same code and opened in demo mode on an emulator; not yet tested on a phone. 2.4 MB. |
 | macOS 12 and newer, Apple silicon | Built and started on GitHub's Macs; not yet tested with headphones. |
-| Linux (BlueZ) | Built; not yet tested. Uses `bluetoothctl` to find the headphones. |
-| iPhone | Controls the headphones over Bluetooth LE, not yet tried on a real iPhone (explained below). Demo mode works. |
+| Linux (BlueZ) | Built and opened in demo mode on GitHub's Linux machines; not yet tested with headphones. Uses `bluetoothctl` to find the headphones. |
+| iPhone, iOS 16 and newer | Control over Bluetooth LE is built; not yet tried on a real iPhone (explained below). Demo mode works. |
 
 Every app has a demo mode that runs a simulated QC Ultra Headphones, so you can see it without
 headphones.
@@ -49,7 +49,8 @@ Download the file for your system from [Releases](../../releases):
 
 The desktop apps aren't code-signed, so Windows SmartScreen and macOS Gatekeeper warn the first
 time you open them. On Windows choose **More info**, then **Run anyway**. On macOS open
-**System Settings > Privacy & Security** and choose **Open Anyway**. Each file's SHA-256 is
+**System Settings > Privacy & Security** (on macOS 12, **System Preferences > Security & Privacy**)
+and choose **Open Anyway**. Each file's SHA-256 is
 listed in `SHA256SUMS.txt` on the release.
 
 If Windows says **Smart App Control** blocked Ruru, it can't run on that PC: Smart App Control
