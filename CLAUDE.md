@@ -38,7 +38,7 @@ Bose protocol code; see CREDITS.md.
   setting and puts it back. Never send anything on the Apple accessory (iAP2) channel. No firmware
   updates, ever.
 - Design follows `docs/DESIGN.md`. Wording is plain NZ English.
-- CI: a push runs tests, Windows, Linux and Android. A hand-started run with `apple=true`, or a
-  `v*` tag, adds macOS, iPhone and the Android emulator check. macOS minutes are expensive on
-  a private repo, so start Apple runs only when something there needs checking.
+- CI: every push runs tests and builds every app: Windows, Linux, Android (with the emulator check),
+  macOS and iPhone. A `v*` tag also makes the draft release; a hand-started run rehearses it. The
+  repo is public, so GitHub doesn't charge for these minutes.
 - Line endings come from `.gitattributes` (`gradlew` and shell scripts stay LF).
