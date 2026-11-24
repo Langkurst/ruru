@@ -3,8 +3,10 @@
 ## 0.1.1 (unreleased)
 
 - iPhone: controls the headphones over Bluetooth LE, Bose's control service with the one-byte
-  segment header the QC Ultra Headphones (1st Gen) answered from a PC. Built and compiled; not
-  yet tried on a real iPhone, so it isn't released.
+  segment header the QC Ultra Headphones (1st Gen) answered from a PC. It opens only headphones
+  this iPhone is playing through or has used before, checks their own Bluetooth address where
+  iOS gives one, and says in plain words when pairing, permission or Bluetooth stops it. Built
+  and compiled; not yet tried on a real iPhone, so it isn't released.
 - macOS: the window opens again. In 0.1.0 a renderer setting meant for Windows stopped it opening
   on a Mac, while the menu bar icon kept running.
 - Linux: the .deb has a proper Maintainer line and the .rpm states its licence (MIT). The .deb

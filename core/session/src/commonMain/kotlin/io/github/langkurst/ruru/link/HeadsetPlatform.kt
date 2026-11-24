@@ -18,11 +18,24 @@ interface HeadsetPlatform {
      */
     val blocked: String? get() = null
 
+    /**
+     * True when [confirm] must be called after [open] to prove the headphones' identity before
+     * Ruru sends anything but the address read.
+     */
+    val checksIdentity: Boolean get() = false
+
     /** Paired headsets that look like Bose products, connected ones first. */
     suspend fun headsets(): List<HeadsetCandidate>
 
     /** Opens the control channel to [candidate]. Throws when it cannot. */
     suspend fun open(candidate: HeadsetCandidate): ByteTransport
+
+    /**
+     * Called after [open()] and before Ruru sends anything but the address read. Returns null when
+     * [candidate] is the person's headphones or cannot be checked, or the words to show when they
+     * are someone else's.
+     */
+    suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? = null
 }
 
 /** A headset the platform can see. [key] identifies it to the platform and is never shown or logged. */

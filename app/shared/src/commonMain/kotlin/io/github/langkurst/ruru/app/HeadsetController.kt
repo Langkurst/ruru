@@ -10,6 +10,7 @@ import io.github.langkurst.ruru.core.NoiseSettings
 import io.github.langkurst.ruru.core.Sidetone
 import io.github.langkurst.ruru.core.VoicePrompts
 import io.github.langkurst.ruru.link.BmapConnection
+import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.RfcommConnectException
@@ -21,6 +22,7 @@ import io.github.langkurst.ruru.session.StateCommands
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -147,7 +149,9 @@ class HeadsetController(
             val seen = try {
                 platform.headsets()
             } catch (e: CancellationException) {
-                throw e
+                if (!currentCoroutineContext().isActive) throw e
+                log.w("listing headsets failed", e)
+                emptyList()
             } catch (e: Exception) {
                 log.w("listing headsets failed", e)
                 emptyList()
@@ -160,14 +164,15 @@ class HeadsetController(
                 continue
             }
             phase.value = Phase.Connecting(target.name)
-            val problem = session(target)
-            if (problem == null) {
+            val attempt = session(target)
+            if (attempt.problem == null) {
                 failures = 0
                 waitOrRetry(AFTER_DROP_MS)
             } else {
                 failures++
-                phase.value = Phase.Failed(target.name, problem)
-                waitOrRetry(minOf(MAX_BACKOFF_MS, FIRST_BACKOFF_MS shl (failures - 1).coerceAtMost(4)))
+                phase.value = Phase.Failed(target.name, attempt.problem)
+                if (attempt.waitForRetry) awaitRetry()
+                else waitOrRetry(minOf(MAX_BACKOFF_MS, FIRST_BACKOFF_MS shl (failures - 1).coerceAtMost(4)))
             }
         }
     }
@@ -176,15 +181,27 @@ class HeadsetController(
         withTimeoutOrNull(ms) { poke.receive() }
     }
 
-    /** One session. Null once it was connected and has ended; otherwise why it never connected. */
-    private suspend fun session(target: HeadsetCandidate): String? {
+    /** The platform says trying again cannot help until the person asks: wait for Try again. */
+    private suspend fun awaitRetry() {
+        // A tap made before the failure is already queued and must not count as the answer.
+        poke.tryReceive()
+        poke.receive()
+    }
+
+    /** One session. [Attempt.problem] is null once it was connected and has ended. */
+    private data class Attempt(val problem: String?, val waitForRetry: Boolean = false)
+
+    /** One session. Null problem once it was connected and has ended; otherwise why it never connected. */
+    private suspend fun session(target: HeadsetCandidate): Attempt {
         val transport = try {
             platform.open(target)
         } catch (e: CancellationException) {
-            throw e
+            if (!currentCoroutineContext().isActive) throw e
+            log.w("open failed for ${target.name}", e)
+            return Attempt(openProblem(target.name, e))
         } catch (e: Exception) {
             log.w("open failed for ${target.name}", e)
-            return openProblem(target.name, e)
+            return Attempt(openProblem(target.name, e), waitForRetry = e is ExplainedConnectException && !e.retry)
         }
         val conn = BmapConnection(transport, scope)
         protocol = QcUltra2Protocol()
@@ -194,6 +211,11 @@ class HeadsetController(
         val pushes = scope.launch { conn.unsolicited.collect { commands.push(it) } }
         var connected = false
         try {
+            if (platform.checksIdentity) {
+                val address = protocol.readAddress(conn)
+                val words = platform.confirm(target, address)
+                if (words != null) return Attempt(words)
+            }
             commands.run("connect", showBusy = false) { c, s -> protocol.refresh(c, protocol.onConnected(c, s)) }
             connected = true
             headset.update { it.copy(connection = ConnectionState(status = ConnectionStatus.CONNECTED, deviceName = target.name)) }
@@ -213,12 +235,14 @@ class HeadsetController(
             }
             conn.awaitClosed()
             poll.cancel()
-            return null
+            return Attempt(null)
         } catch (e: CancellationException) {
-            throw e
+            if (!currentCoroutineContext().isActive) throw e
+            log.w("session with ${target.name} ended", e)
+            return Attempt(if (connected) null else sessionProblem(target.name, e))
         } catch (e: Exception) {
             log.w("session with ${target.name} ended", e)
-            return if (connected) null else sessionProblem(target.name, e)
+            return Attempt(if (connected) null else sessionProblem(target.name, e))
         } finally {
             connection = null
             pushes.cancel()
@@ -227,9 +251,14 @@ class HeadsetController(
         }
     }
 
-    private fun openProblem(name: String, e: Exception): String =
-        if (e is RfcommConnectException && e.looksBusy) busy(name)
-        else "Could not open the control channel to $name. Check that it is connected to this ${platformNoun()}, then try again."
+    private fun openProblem(name: String, e: Exception): String = when {
+        e is ExplainedConnectException -> e.message ?: genericOpenProblem(name)
+        e is RfcommConnectException && e.looksBusy -> busy(name)
+        else -> genericOpenProblem(name)
+    }
+
+    private fun genericOpenProblem(name: String) =
+        "Could not open the control channel to $name. Check that it is connected to this ${platformNoun()}, then try again."
 
     private fun sessionProblem(name: String, e: Exception): String =
         if (e is UnresponsiveLinkException || e.cause is UnresponsiveLinkException || e is HeadphoneCommandException) busy(name)

@@ -277,6 +277,19 @@ class QcUltra2Protocol(
         return s
     }
 
+    /**
+     * The `[0.6]` MAC_ADDRESS GET only: the headphones' own Bluetooth address, parsed, or null
+     * when there is no answer. Sends nothing else and does not reset the session.
+     */
+    suspend fun readAddress(c: BmapRequester): String? = try {
+        ProductInfo.parseMac(c.get(QcUltra2.MAC_ADDRESS).payload)
+    } catch (e: HeadphoneCommandException) {
+        if (!c.isOpen) throw e
+        null
+    } catch (e: BmapException) {
+        null
+    }
+
     /** `[2.2]` only; the repository calls it every 60 s while [HeadphoneState.livePushEnabled] is false. */
     override suspend fun pollBattery(c: BmapRequester, current: HeadphoneState): HeadphoneState {
         var s = current

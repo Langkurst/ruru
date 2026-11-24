@@ -7,7 +7,8 @@ import io.github.langkurst.ruru.link.HeadsetPlatform
 /**
  * The iPhone's way to the headphones: Bluetooth LE first ([IosLeHeadsetPlatform]), and Apple's
  * accessory channel ([IosHeadsetPlatform]) only if LE finds nothing, for the day Bose's name for
- * that channel is known. Each candidate's key carries its route, so [open] uses the same one.
+ * that channel is known. Each candidate's key carries its route, so [open] uses the same one, and
+ * the LE route's identity check is asked before anything but the address read.
  */
 class IosPlatform(
     private val le: HeadsetPlatform = IosLeHeadsetPlatform(),
@@ -16,6 +17,7 @@ class IosPlatform(
     override val name: String = "iPhone"
     override val supported: Boolean = true
     override val blocked: String? get() = le.blocked
+    override val checksIdentity: Boolean get() = le.checksIdentity
 
     override suspend fun headsets(): List<HeadsetCandidate> =
         le.headsets().map { it.via(LE) }.ifEmpty { accessory.headsets().map { it.via(ACCESSORY) } }
@@ -23,6 +25,12 @@ class IosPlatform(
     override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
         val inner = HeadsetCandidate(candidate.key.substringAfter(':'), candidate.name, candidate.connected)
         return if (candidate.key.startsWith("$ACCESSORY:")) accessory.open(inner) else le.open(inner)
+    }
+
+    override suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? {
+        if (!candidate.key.startsWith("$LE:")) return null
+        val inner = HeadsetCandidate(candidate.key.substringAfter(':'), candidate.name, candidate.connected)
+        return le.confirm(inner, address)
     }
 
     private fun HeadsetCandidate.via(route: String) = HeadsetCandidate("$route:$key", name, connected)

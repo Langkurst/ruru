@@ -163,12 +163,16 @@ private fun MessageBar(text: String, onDismiss: () -> Unit) {
 private fun NotConnected(state: AppState, controller: HeadsetController, model: AppModel) {
     val c = Ruru.colors
     val (title, body) = when (val p = state.phase) {
-        Phase.Starting -> "Looking for your headphones" to "Ruru checks the Bluetooth devices paired with this ${noun(state)}."
+        Phase.Starting -> "Looking for your headphones" to if (state.platformName == "iPhone") {
+            "Ruru is looking for the Bose headphones this iPhone is playing through."
+        } else {
+            "Ruru checks the Bluetooth devices paired with this ${noun(state)}."
+        }
         is Phase.NoHeadset -> if (p.blocked != null) {
             "Ruru can't see your headphones yet" to p.blocked
         } else if (state.platformName == "iPhone") {
             // The iPhone finds headphones over Bluetooth LE, not from the paired list.
-            "No Bose headphones found" to "Ruru looks for Bose headphones over Bluetooth. Turn them on and connect them to this iPhone, then come back. If iPhone asks to pair them with Ruru, choose Pair. Ruru connects by itself."
+            "No Bose headphones found" to "Ruru connects to the Bose headphones this iPhone is playing through. Connect them in Settings > Bluetooth. If iPhone asks to pair them with Ruru, choose Pair. After the Bose app has used them, they can take a few minutes to show up. If you renamed them in iPhone Settings, change the name back. Ruru connects by itself."
         } else if (p.pairedName != null) {
             // The 1st Gen sleeps about 5 minutes after its wear sensor reads "off your head" with
             // nothing playing (firmware 1.6.7), which owners take for a dropped connection.
@@ -177,7 +181,11 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
             // Ruru finds headphones by name, so renamed ones don't show up.
             "No Bose headphones found" to "Ruru looks for a paired Bluetooth device with Bose in its name. Pair your headphones in this ${noun(state)}'s Bluetooth settings. If you renamed them, put Bose back in their name. Ruru connects by itself."
         }
-        is Phase.Connecting -> "Connecting to ${p.name}" to "This takes a few seconds."
+        is Phase.Connecting -> "Connecting to ${p.name}" to if (state.platformName == "iPhone") {
+            "If iPhone asks to pair them with Ruru, choose Pair."
+        } else {
+            "This takes a few seconds."
+        }
         is Phase.Failed -> "Could not connect to ${p.name}" to p.reason
         Phase.Unsupported -> "Not available on this system yet" to "Ruru can't open the headphones' control channel here. Demo mode shows how the app works."
         Phase.Connected -> "" to ""

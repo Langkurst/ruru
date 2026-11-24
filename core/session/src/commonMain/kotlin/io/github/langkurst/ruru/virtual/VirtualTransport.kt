@@ -48,6 +48,7 @@ class VirtualTransport(
 ) : ByteTransport {
 
     private val requests = Channel<BmapPacket>(Channel.UNLIMITED)
+    private val sent = ArrayList<BmapPacket>()
     private val closed = AtomicBoolean(false)
     private val collected = AtomicBoolean(false)
 
@@ -99,9 +100,14 @@ class VirtualTransport(
         send(bytes.copyOfRange(cut, bytes.size))
     }
 
+    /** Every request the app wrote to this transport, in order (tests inspect what crossed the wire). */
+    @JvmSynchronized
+    fun sentRequests(): List<BmapPacket> = sent.toList()
+
     override suspend fun write(bytes: ByteArray) {
         if (!isConnected) throw IOException("Virtual transport is not connected")
         val packets = BmapPacket.decodeAll(bytes)
+        sent += packets
         try {
             for (p in packets) requests.send(p)
         } catch (e: ClosedSendChannelException) {

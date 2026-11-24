@@ -3,16 +3,22 @@ package io.github.langkurst.ruru.app
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.NoiseSettings
 import io.github.langkurst.ruru.link.ByteTransport
+import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
+import io.github.langkurst.ruru.protocol.BmapOperator
+import io.github.langkurst.ruru.protocol.bose.QcUltra2
 import io.github.langkurst.ruru.virtual.VirtualProfile
 import io.github.langkurst.ruru.virtual.VirtualQcUltra2
 import io.github.langkurst.ruru.virtual.VirtualTransport
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -49,6 +55,71 @@ class HeadsetControllerTest {
             opens++
             device.powerOn()
             return VirtualTransport(device).also { last = it }
+        }
+    }
+
+    /** Fails the first open with the given explanation, then connects like FlakyPlatform. */
+    private class ExplainedPlatform(
+        val device: VirtualQcUltra2,
+        private val explanation: String,
+        private val retry: Boolean,
+    ) : HeadsetPlatform {
+        override val name = "Test"
+        override val supported = true
+        var opens = 0
+        override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
+        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+            opens++
+            if (opens == 1) throw ExplainedConnectException(explanation, retry)
+            device.powerOn()
+            return VirtualTransport(device)
+        }
+    }
+
+    /** Holds the first open() until the test lets it fail with the given explanation. */
+    private class HeldOpenPlatform(
+        val device: VirtualQcUltra2,
+        private val explanation: String,
+    ) : HeadsetPlatform {
+        override val name = "Test"
+        override val supported = true
+        var opens = 0
+        val holding = CompletableDeferred<Unit>()
+        val release = CompletableDeferred<Unit>()
+        override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
+        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+            opens++
+            if (opens == 1) {
+                holding.complete(Unit)
+                release.await()
+                throw ExplainedConnectException(explanation, retry = false)
+            }
+            device.powerOn()
+            return VirtualTransport(device)
+        }
+    }
+
+    /** Asks for an identity check and decides with [verdict]; records what confirm was given. */
+    private class IdentityPlatform(
+        val device: VirtualQcUltra2,
+        private val checks: Boolean,
+        private val verdict: (String?) -> String?,
+    ) : HeadsetPlatform {
+        override val name = "Test"
+        override val supported = true
+        override val checksIdentity = checks
+        var confirms = 0
+        var confirmedAddress: String? = null
+        var last: VirtualTransport? = null
+        override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
+        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+            device.powerOn()
+            return VirtualTransport(device).also { last = it }
+        }
+        override suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? {
+            confirms++
+            confirmedAddress = address
+            return verdict(address)
         }
     }
 
@@ -151,6 +222,122 @@ class HeadsetControllerTest {
         c.await { it.phase != Phase.Connected }
         c.await { it.phase == Phase.Connected }
         assertTrue(platform.opens >= 2)
+        c.stop()
+    }
+
+    @Test
+    fun `a timeout inside open is a failed attempt, not the end of the loop`() = runBlocking {
+        val device = VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1)
+        val platform = object : HeadsetPlatform {
+            override val name = "Test"
+            override val supported = true
+            var opens = 0
+            override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
+            override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+                opens++
+                if (opens == 1) withTimeout(10) { awaitCancellation() }
+                device.powerOn()
+                return VirtualTransport(device)
+            }
+        }
+        val c = controller(platform)
+        c.await { it.phase == Phase.Connected }
+        assertTrue(platform.opens >= 2)
+        c.stop()
+    }
+
+    @Test
+    fun `stop still ends the loop`() = runBlocking {
+        val platform = object : HeadsetPlatform {
+            override val name = "Test"
+            override val supported = true
+            var opens = 0
+            override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
+            override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+                opens++
+                awaitCancellation()
+            }
+        }
+        val c = controller(platform)
+        withTimeout(5_000) { while (platform.opens == 0) delay(10) }
+        c.stop()
+        delay(250)
+        assertEquals(1, platform.opens)
+        c.start()
+        withTimeout(5_000) { while (platform.opens < 2) delay(10) }
+        c.stop()
+    }
+
+    @Test
+    fun `a pairing problem is shown as explained and waits for Try again`() = runBlocking {
+        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message", retry = false)
+        val c = controller(platform)
+        val failed = c.await { it.phase is Phase.Failed }
+        assertEquals("Pair message", (failed.phase as Phase.Failed).reason)
+        delay(2_500) // longer than the first backoff, so a retry would already have happened
+        assertEquals(1, platform.opens)
+        c.retryNow()
+        c.await { it.phase == Phase.Connected }
+        assertTrue(platform.opens >= 2)
+        c.stop()
+    }
+
+    @Test
+    fun `a Try again tap made before a failure doesn't skip the wait`() = runBlocking {
+        val platform = HeldOpenPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message")
+        val c = controller(platform)
+        platform.holding.await()
+        c.retryNow() // made while open() is still waiting, before the failure is known
+        platform.release.complete(Unit)
+        val failed = c.await { it.phase is Phase.Failed }
+        assertEquals("Pair message", (failed.phase as Phase.Failed).reason)
+        delay(2_500) // longer than the first backoff, so a stale tap would have reopened by now
+        assertEquals(1, platform.opens)
+        c.retryNow()
+        c.await { it.phase == Phase.Connected }
+        assertTrue(platform.opens >= 2)
+        c.stop()
+    }
+
+    @Test
+    fun `an explained retryable failure retries by itself`() = runBlocking {
+        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message", retry = true)
+        val c = controller(platform)
+        c.await { it.phase == Phase.Connected }
+        assertTrue(platform.opens >= 2)
+        c.stop()
+    }
+
+    @Test
+    fun `a platform that asks for identity is only sent the address read before a mismatch ends the attempt`() = runBlocking {
+        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = true) { "Not these" }
+        val c = controller(platform)
+        val failed = c.await { it.phase is Phase.Failed }
+        assertEquals("Not these", (failed.phase as Phase.Failed).reason)
+        assertEquals(1, platform.confirms)
+        val sent = platform.last!!.sentRequests()
+        assertEquals(listOf(QcUltra2.MAC_ADDRESS), sent.map { it.address })
+        assertTrue(sent.all { it.operator == BmapOperator.GET })
+        c.stop()
+    }
+
+    @Test
+    fun `a platform that asks for identity connects when confirm accepts and gets the headphones' address`() = runBlocking {
+        val device = VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1)
+        val platform = IdentityPlatform(device, checks = true) { null }
+        val c = controller(platform)
+        c.await { it.phase == Phase.Connected }
+        assertEquals(device.macAddress, platform.confirmedAddress)
+        assertEquals(1, platform.confirms)
+        c.stop()
+    }
+
+    @Test
+    fun `a platform that does not ask for identity never has confirm called`() = runBlocking {
+        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = false) { "Not these" }
+        val c = controller(platform)
+        c.await { it.phase == Phase.Connected }
+        assertEquals(0, platform.confirms)
         c.stop()
     }
 
