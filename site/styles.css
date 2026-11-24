@@ -186,8 +186,11 @@ tbody td { color: var(--ink-2); }
 tbody td:nth-child(2) { color: var(--ink); }
 .after-table { margin-top: 16px; }
 @media (max-width: 519px) {
-  th, td { padding: 10px 10px; }
-  thead td { width: 31%; }
+  /* Columns size to their words, so none is narrower than its longest word. */
+  table { table-layout: auto; font-size: 13px; }
+  th, td { padding: 10px 8px; }
+  th:first-child, td:first-child { padding-left: 12px; }
+  thead td { width: auto; }
 }
 
 /* Footer */
