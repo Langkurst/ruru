@@ -62,6 +62,42 @@
       .then(function (data) { writeCache(data); return data; });
   }
 
+  var VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
+
+  // Returns 1 if a is newer than b, -1 if older, 0 if equal. Both are "1.2.3" strings.
+  function compareVersions(a, b) {
+    var x = a.split(".");
+    var y = b.split(".");
+    for (var i = 0; i < 3; i++) {
+      var d = parseInt(x[i], 10) - parseInt(y[i], 10);
+      if (d !== 0) return d > 0 ? 1 : -1;
+    }
+    return 0;
+  }
+
+  // The app's "Check for updates" button opens this page with ?have=<its version>.
+  function readHaveVersion() {
+    try {
+      var have = new URLSearchParams(window.location.search).get("have");
+      return have && VERSION_PATTERN.test(have) ? have : "";
+    } catch (e) { return ""; }
+  }
+
+  function showUpdateNotice(have, newest) {
+    var panel = document.querySelector("#download .panel");
+    if (!panel || !have || !VERSION_PATTERN.test(newest)) return;
+    var note = document.createElement("p");
+    note.className = "notice";
+    note.setAttribute("role", "status");
+    panel.parentNode.insertBefore(note, panel);
+    // Fill it after it is in the page, so screen readers announce the text.
+    window.setTimeout(function () {
+      note.textContent = compareVersions(newest, have) > 0
+        ? "You have version " + have + ". The newest is " + newest + "."
+        : "You have the newest version.";
+    }, 100);
+  }
+
   function formatDate(iso) {
     var d = new Date(iso);
     if (isNaN(d.getTime())) return "";
@@ -120,6 +156,8 @@
       version.textContent = "Version " + tag + (date ? ", released " + date : "");
     }
 
+    showUpdateNotice(readHaveVersion(), tag);
+
     var hero = document.getElementById("hero-button");
     var choice = HERO[system];
     if (hero && choice) {
@@ -139,6 +177,9 @@
     });
   }
 
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  if (typeof document !== "undefined") {
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+  }
+  if (typeof module !== "undefined" && module.exports) module.exports = { compareVersions: compareVersions };
 })();

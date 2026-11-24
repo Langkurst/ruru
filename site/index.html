@@ -4,17 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ruru, a free app for Bose headphones</title>
-<meta name="description" content="A free, open-source app for Bose headphones on Windows, macOS, Linux, Android and iPhone. It changes listening modes, noise cancelling, the equaliser and other settings from the device you're using.">
+<meta name="description" content="Ruru changes the settings on your Bose headphones. It works on your computer and on your phone.">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="#0B0C0A" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
 <meta property="og:title" content="Ruru">
-<meta property="og:description" content="A free, open-source app for Bose headphones on Windows, macOS, Linux, Android and iPhone. It changes listening modes, noise cancelling, the equaliser and other settings from the device you're using.">
+<meta property="og:description" content="Ruru changes the settings on your Bose headphones. It works on your computer and on your phone.">
 <meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
 <link rel="icon" href="img/owl-64.png">
 <link rel="apple-touch-icon" href="img/owl-180.png">
-<link rel="preload" href="fonts/MonaSans-Regular.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="preload" href="fonts/MonaSans-SemiBold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <script src="app.js" defer></script>
 </head>
@@ -23,7 +23,7 @@
   <a class="brand" href="#top"><img src="img/owl-64.png" width="28" height="28" alt="">Ruru</a>
   <nav class="nav">
     <a href="#download">Download</a>
-    <a class="optional" href="#headphones">Headphones</a>
+    <a class="optional" href="#compare">Compare</a>
     <a class="optional" href="#privacy">Privacy</a>
     <a href="https://github.com/Langkurst/ruru">GitHub</a>
   </nav>
@@ -33,8 +33,8 @@
   <section class="intro">
     <div class="intro-text">
       <h1>Ruru</h1>
-      <p>A free, open-source app for Bose headphones on Windows, macOS, Linux, Android and iPhone. It changes listening modes, noise cancelling, the equaliser and other settings from the device you're using.</p>
-      <p>There is no account, no cloud and no analytics.</p>
+      <p>Ruru changes the settings on your Bose headphones. It works on your computer and on your phone.</p>
+      <p>It's free. You don't need an account, and it doesn't use the internet.</p>
       <div class="actions">
         <a class="button" id="hero-button" href="#download">Download</a>
         <a class="textlink" href="#download">Other systems</a>
@@ -42,19 +42,32 @@
       <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">The latest version is on GitHub.</a></p>
     </div>
     <picture class="shot">
+      <source media="(prefers-color-scheme: light)" type="image/avif" srcset="img/ruru-light.avif">
+      <source media="(prefers-color-scheme: light)" type="image/webp" srcset="img/ruru-light.webp">
       <source media="(prefers-color-scheme: light)" srcset="img/ruru-light.png">
+      <source type="image/avif" srcset="img/ruru-dark.avif">
+      <source type="image/webp" srcset="img/ruru-dark.webp">
       <img src="img/ruru-dark.png" width="800" height="1400" alt="Ruru's main screen in demo mode: listening modes and noise cancelling">
     </picture>
   </section>
 
+  <section id="how">
+    <h2>How it works</h2>
+    <ol class="list steps">
+      <li>Download Ruru for your computer or phone.</li>
+      <li>Connect your headphones with Bluetooth, the way you always do.</li>
+      <li>Open Ruru. It finds your headphones and shows their settings.</li>
+    </ol>
+  </section>
+
   <section id="download">
     <h2>Download</h2>
-    <p>Each file comes from the latest release on GitHub. The release lists the SHA-256 of every file in SHA256SUMS.txt.</p>
+    <p>Pick your computer or phone. Each button gets the newest version.</p>
     <ul class="panel">
       <li class="row" data-os="windows">
         <div class="row-text">
-          <p class="name"><span>Windows 10 and 11</span><span class="you" hidden>Your system</span></p>
-          <p class="status">Tested on Windows 11 with QC Ultra Headphones (1st Gen).</p>
+          <p class="name"><span>Windows</span><span class="you" hidden>Your system</span></p>
+          <p class="status">Windows 10 and 11. Tested with real Bose headphones.</p>
         </div>
         <div class="files">
           <a class="file" data-asset="msi" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.msi</span><span class="size" aria-hidden="true">00.0 MB</span></a>
@@ -63,8 +76,8 @@
       </li>
       <li class="row" data-os="mac">
         <div class="row-text">
-          <p class="name"><span>macOS 12 and newer, Apple silicon</span><span class="you" hidden>Your system</span></p>
-          <p class="status">Built and started on GitHub's Macs. Not yet tried with headphones.</p>
+          <p class="name"><span>Mac</span><span class="you" hidden>Your system</span></p>
+          <p class="status">Mac with an Apple chip, macOS 12 or newer. It opens and works in demo mode. Nobody has tried it with headphones yet.</p>
         </div>
         <div class="files">
           <a class="file" data-asset="dmg" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.dmg</span><span class="size" aria-hidden="true">00.0 MB</span></a>
@@ -72,8 +85,8 @@
       </li>
       <li class="row" data-os="linux">
         <div class="row-text">
-          <p class="name"><span>Linux with BlueZ</span><span class="you" hidden>Your system</span></p>
-          <p class="status">Built and opened in demo mode on GitHub's Linux machines. Not yet tried with headphones. The .deb needs Ubuntu 24.04, Debian 13 or newer.</p>
+          <p class="name"><span>Linux</span><span class="you" hidden>Your system</span></p>
+          <p class="status">Linux. It opens and works in demo mode. Nobody has tried it with headphones yet. The .deb file needs Ubuntu 24.04 or Debian 13, or newer.</p>
         </div>
         <div class="files">
           <a class="file" data-asset="deb" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.deb</span><span class="size" aria-hidden="true">00.0 MB</span></a>
@@ -82,8 +95,8 @@
       </li>
       <li class="row" data-os="android">
         <div class="row-text">
-          <p class="name"><span>Android 9 and newer</span><span class="you" hidden>Your system</span></p>
-          <p class="status">Opened in demo mode on an emulator. Not yet tried on a phone.</p>
+          <p class="name"><span>Android</span><span class="you" hidden>Your system</span></p>
+          <p class="status">Android 9 or newer. It opens and works in demo mode. Nobody has tried it on a real phone yet.</p>
         </div>
         <div class="files">
           <a class="file" data-asset="apk" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.apk</span><span class="size" aria-hidden="true">00.0 MB</span></a>
@@ -91,40 +104,67 @@
       </li>
       <li class="row" data-os="ios">
         <div class="row-text">
-          <p class="name"><span>iPhone, iOS 16 and newer</span><span class="you" hidden>Your system</span></p>
-          <p class="status">The file is unsigned, so install it with your sideloading tool. Control over Bluetooth LE is built but hasn't been tried on a real iPhone yet.</p>
+          <p class="name"><span>iPhone</span><span class="you" hidden>Your system</span></p>
+          <p class="status">iPhone with iOS 16 or newer. You need a sideloading tool to install it. Nobody has tried it on a real iPhone yet, so it might not work.</p>
         </div>
         <div class="files">
           <a class="file" data-asset="ipa" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.ipa</span><span class="size" aria-hidden="true">00.0 MB</span></a>
         </div>
       </li>
     </ul>
-    <p class="small after-panel">Every app has a demo mode with a simulated QC Ultra Headphones (1st Gen), so you can look around without headphones.</p>
+    <p class="small after-panel">Every version has a demo mode with pretend headphones, so you can look around first.</p>
   </section>
 
   <section>
-    <h2>Opening Ruru the first time</h2>
-    <p>The Windows and Mac apps aren't code-signed yet, so Windows SmartScreen and macOS Gatekeeper warn the first time you open them. On Windows choose More info, then Run anyway. On a Mac open System Settings, then Privacy &amp; Security, and choose Open Anyway. On macOS 12 it's System Preferences, then Security &amp; Privacy.</p>
-    <p>If Windows says Smart App Control blocked Ruru, it can't run on that PC. Smart App Control only lets signed apps through and has no way to allow one app.</p>
-    <p>Close the Bose app on the same device first, because only one app can control the headphones at a time.</p>
-  </section>
-
-  <section>
-    <h2>What it changes</h2>
+    <h2>Opening it the first time</h2>
+    <p>Windows and Mac may warn you the first time, because Ruru isn't signed by Microsoft or Apple yet.</p>
     <ul class="list">
-      <li>Listening modes, including adding and removing your own</li>
-      <li>Noise cancelling level, Wind Block and Immersive Audio</li>
-      <li>The headphones' equaliser</li>
-      <li>The shortcut button</li>
-      <li>Self voice, multipoint, auto-off, auto play and pause, auto-answer and voice prompts</li>
+      <li>On Windows, choose More info, then Run anyway.</li>
+      <li>On a Mac, open System Settings, then Privacy &amp; Security, and choose Open Anyway. On macOS 12 it's System Preferences, then Security &amp; Privacy.</li>
     </ul>
-    <p>On a computer, Ruru sits in the tray with the battery level and switches mode without opening the window. It doesn't install firmware updates. Use the Bose app for those.</p>
+    <p>If Windows says Smart App Control blocked Ruru, Ruru can't run on that computer. Smart App Control only allows signed apps.</p>
+    <p>Close the Bose app first. Only one app can talk to the headphones at a time.</p>
+  </section>
+
+  <section>
+    <h2>What it can change</h2>
+    <ul class="list">
+      <li>Listening modes, and your own modes</li>
+      <li>How much noise cancelling you get</li>
+      <li>Wind Block and Immersive Audio</li>
+      <li>Bass, mid and treble</li>
+      <li>What the shortcut button does</li>
+      <li>Self voice, multipoint, auto-off and more</li>
+    </ul>
+    <p>On a computer, Ruru sits in the corner by the clock and shows the battery level.</p>
+    <p>Ruru doesn't update the headphones' firmware. Use the Bose app for that.</p>
+  </section>
+
+  <section id="compare">
+    <h2>Ruru and the Bose app</h2>
+    <div class="table-panel">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">Ruru</th><th scope="col">Bose app</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Works on</th><td>Windows, Mac, Linux, Android and iPhone</td><td>iPhone and Android</td></tr>
+          <tr><th scope="row">Account</th><td>Not needed</td><td>Optional</td></tr>
+          <tr><th scope="row">Internet</th><td>Not used</td><td>Used</td></tr>
+          <tr><th scope="row">Size on iPhone</th><td>12 MB</td><td>1.15 GB</td></tr>
+          <tr><th scope="row">Firmware updates</th><td>No</td><td>Yes</td></tr>
+          <tr><th scope="row">Headphones tested</th><td>QC Ultra Headphones (1st Gen)</td><td>All Bose headphones</td></tr>
+          <tr><th scope="row">Price</th><td>Free, and the code is open</td><td>Free</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="after-table">Other free Bose tools, like Earshot for Android and bosectl for Linux and Mac, each run on fewer systems. Ruru uses Earshot's research.</p>
   </section>
 
   <section id="headphones">
     <h2>Headphones</h2>
-    <p>Ruru has been tested with QC Ultra Headphones (1st Gen) on firmware 1.6.7.</p>
-    <p>These models are expected to work, based on Earshot's research and bosectl's captures, but haven't been tried with Ruru yet.</p>
+    <p>Ruru has been tested with QC Ultra Headphones (1st Gen).</p>
+    <p>These should work too, but nobody has tried them with Ruru yet.</p>
     <ul class="list">
       <li>QC Ultra Headphones (2nd Gen)</li>
       <li>QC Ultra Earbuds (1st and 2nd Gen)</li>
@@ -134,23 +174,24 @@
       <li>Ultra Open Earbuds</li>
       <li>Noise Cancelling Headphones 700</li>
     </ul>
-    <p>If you try Ruru with any of these, please open a <a href="https://github.com/Langkurst/ruru/issues/new/choose">Headphones report on GitHub</a> and paste the connection report from the bottom of the app.</p>
+    <p>Tried Ruru with one of these? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Tell me on GitHub</a>. Use the Headphones report form, and paste the report from the bottom of the app.</p>
   </section>
 
   <section id="privacy">
     <h2>Privacy</h2>
-    <p>Ruru talks only to your headphones. It sends nothing anywhere, and it has no crash reporting and no update checks. The Android app has no internet permission. The connection report is text you copy yourself; it masks Bluetooth addresses and leaves out the names of your other devices.</p>
-    <p>This website has no cookies and no analytics. When it loads, it asks GitHub for the latest version and its files.</p>
+    <p>Ruru only talks to your headphones. It doesn't send anything anywhere.</p>
+    <p>There's no account, no tracking and no crash reports. The Android app can't use the internet at all.</p>
+    <p>This website has no cookies and no tracking. It asks GitHub which version is the newest.</p>
   </section>
 
   <section id="support">
     <h2>Support</h2>
-    <p>Ruru is free and open source under the MIT licence. If it helps you, you can <a href="https://ko-fi.com/keaclip">shout me a coffee on Ko-fi</a>.</p>
+    <p>Ruru is free. If you like it, you can <a href="https://ko-fi.com/keaclip">buy me a coffee on Ko-fi</a>.</p>
   </section>
 </main>
 
 <footer class="footer">
-  <p class="small">Ruru isn't affiliated with Bose. The Bose protocol code comes from Earshot (MIT).</p>
+  <p class="small">Ruru isn't made by Bose. Parts of it come from Earshot, another free project.</p>
   <nav class="footer-links">
     <a href="https://github.com/Langkurst/ruru">Source code</a>
     <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">Changelog</a>

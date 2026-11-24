@@ -1,6 +1,6 @@
-@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Medium.ttf") format("truetype"); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-SemiBold.ttf") format("truetype"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 
 :root {
   color-scheme: dark light;
@@ -47,7 +47,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; height: auto; }
-h1, h2, p, ul { margin: 0; }
+h1, h2, p, ul, ol { margin: 0; }
 p { margin-bottom: 16px; }
 [hidden] { display: none !important; }
 
@@ -141,6 +141,10 @@ section > p:last-child, .list:last-child { margin-bottom: 0; }
   content: ""; position: absolute; left: 4px; top: .6em;
   width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3);
 }
+.steps { list-style: decimal; padding-left: 20px; }
+.steps li { padding-left: 4px; }
+.steps li::before { content: none; }
+.steps li::marker { color: var(--ink-3); }
 
 /* Download panel */
 .panel { list-style: none; padding: 0; margin: 24px 0 0; background: var(--panel); border: 1px solid var(--line); border-radius: 11px; }
@@ -164,9 +168,26 @@ section > p:last-child, .list:last-child { margin-bottom: 0; }
 .size.ready { visibility: visible; }
 @media (scripting: none) { .size { display: none; } }
 .after-panel { margin: 12px 0 0; max-width: 40rem; }
+.notice { margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: var(--ink-2); max-width: 40rem; }
 @media (max-width: 639px) {
   .row { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 16px; }
   .files { justify-content: flex-start; }
+}
+
+/* Comparison table */
+.table-panel { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; overflow: hidden; max-width: 40rem; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; line-height: 1.5; text-align: left; }
+th, td { padding: 12px 20px; vertical-align: top; }
+thead th { font-weight: 600; color: var(--ink); }
+tbody tr { border-top: 1px solid var(--line-soft); }
+thead td { width: 32%; }
+tbody th { font-weight: 400; color: var(--ink-3); }
+tbody td { color: var(--ink-2); }
+tbody td:nth-child(2) { color: var(--ink); }
+.after-table { margin-top: 16px; }
+@media (max-width: 519px) {
+  th, td { padding: 10px 10px; }
+  thead td { width: 31%; }
 }
 
 /* Footer */
