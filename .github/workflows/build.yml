@@ -52,16 +52,29 @@ jobs:
       - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
-      - run: ./gradlew :app:desktop:packageMsi :app:desktop:packageExe --console=plain
+      - run: ./gradlew :app:desktop:packageReleaseMsi :app:desktop:packageReleaseExe :app:desktop:createReleaseDistributable --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
         shell: bash
-        run: bash .github/size-budget.sh 137150000 app/desktop/build/compose/binaries/main/msi/*.msi app/desktop/build/compose/binaries/main/exe/*.exe
+        run: bash .github/size-budget.sh 107900000 app/desktop/build/compose/binaries/main-release/msi/*.msi app/desktop/build/compose/binaries/main-release/exe/*.exe
+      - name: Check the app starts (demo mode)
+        shell: pwsh
+        run: |
+          $exe = "app/desktop/build/compose/binaries/main-release/app/Ruru/Ruru.exe"
+          if (-not (Test-Path $exe)) { Write-Error "No app at $exe"; exit 1 }
+          $p = Start-Process -FilePath $exe -ArgumentList "--demo" -WindowStyle Minimized -PassThru -RedirectStandardOutput ruru-start.log -RedirectStandardError ruru-start-err.log
+          Start-Sleep -Seconds 15
+          $stopped = $p.HasExited
+          $output = (Get-Content ruru-start.log, ruru-start-err.log -ErrorAction SilentlyContinue) -join "`n"
+          Get-Process -Name Ruru -ErrorAction SilentlyContinue | Stop-Process -Force
+          if ($stopped) { Write-Host "Ruru stopped after launch"; Write-Host $output; exit 1 }
+          # Staying alive isn't enough: the tray keeps the process up even if the window fails.
+          if ($output -match "Exception in thread|Error was captured in composition") { Write-Host "Ruru failed at launch:"; Write-Host $output; exit 1 }
       - uses: actions/upload-artifact@v7
         with:
           name: windows
           path: |
-            app/desktop/build/compose/binaries/main/msi/*.msi
-            app/desktop/build/compose/binaries/main/exe/*.exe
+            app/desktop/build/compose/binaries/main-release/msi/*.msi
+            app/desktop/build/compose/binaries/main-release/exe/*.exe
 
   linux:
     needs: test
@@ -73,20 +86,20 @@ jobs:
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
       - run: sudo apt-get update && sudo apt-get install -y rpm xvfb
-      - run: ./gradlew :app:desktop:packageDeb :app:desktop:packageRpm :app:desktop:createDistributable --console=plain
+      - run: ./gradlew :app:desktop:packageReleaseDeb :app:desktop:packageReleaseRpm :app:desktop:createReleaseDistributable --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 134510000 app/desktop/build/compose/binaries/main/deb/*.deb app/desktop/build/compose/binaries/main/rpm/*.rpm
+        run: bash .github/size-budget.sh 107780000 app/desktop/build/compose/binaries/main-release/deb/*.deb app/desktop/build/compose/binaries/main-release/rpm/*.rpm
       - name: Library budget (at most 64 libraries ship; 58 on 11 November 2026)
         run: |
-          n=$(find app/desktop/build/compose/binaries/main/app/Ruru/lib/app -maxdepth 1 -name '*.jar' | wc -l)
+          n=$(find app/desktop/build/compose/binaries/main-release/app/Ruru/lib/app -maxdepth 1 -name '*.jar' | wc -l)
           echo "$n libraries in the app"
           [ "$n" -gt 0 ] || { echo "::error::No libraries found; the app folder has moved"; exit 1; }
           [ "$n" -le 64 ] || { echo "::error::$n libraries ship, over the budget of 64"; exit 1; }
       - name: Check the app starts (on a virtual screen, demo mode)
         run: |
           # The app folder uses the main package name (Ruru); only the .deb/.rpm are lower case.
-          launcher=app/desktop/build/compose/binaries/main/app/Ruru/bin/Ruru
-          test -x "$launcher" || { echo "No app at $launcher"; ls -R app/desktop/build/compose/binaries/main | head -40; exit 1; }
+          launcher=app/desktop/build/compose/binaries/main-release/app/Ruru/bin/Ruru
+          test -x "$launcher" || { echo "No app at $launcher"; ls -R app/desktop/build/compose/binaries/main-release | head -40; exit 1; }
           Xvfb :99 -screen 0 1280x800x24 &
           xvfb=$!
           sleep 2
@@ -101,8 +114,8 @@ jobs:
         with:
           name: linux
           path: |
-            app/desktop/build/compose/binaries/main/deb/*.deb
-            app/desktop/build/compose/binaries/main/rpm/*.rpm
+            app/desktop/build/compose/binaries/main-release/deb/*.deb
+            app/desktop/build/compose/binaries/main-release/rpm/*.rpm
 
   android:
     needs: test
@@ -178,13 +191,13 @@ jobs:
           swiftc -O -target x86_64-apple-macos12 platform/macos/helper/main.swift -o /tmp/ruru-bt-x64
           lipo -create /tmp/ruru-bt-arm64 /tmp/ruru-bt-x64 -output app/desktop/resources/macos/ruru-bt-mac
           chmod +x app/desktop/resources/macos/ruru-bt-mac
-      - run: ./gradlew :app:desktop:packageDmg --console=plain
+      - run: ./gradlew :app:desktop:packageReleaseDmg --console=plain
       - name: Packaging log
         if: failure()
         run: cat app/desktop/build/compose/logs/*/*.txt || true
       - name: Check the app is signed consistently, has its helper, and starts
         run: |
-          app=app/desktop/build/compose/binaries/main/app/Ruru.app
+          app=app/desktop/build/compose/binaries/main-release/app/Ruru.app
           codesign --verify --deep --strict --verbose=2 "$app"
           helper=$(find "$app" -name ruru-bt-mac -type f | head -1)
           test -n "$helper" && file "$helper" || { echo "The Bluetooth helper is missing from the app"; exit 1; }
@@ -198,9 +211,9 @@ jobs:
       - name: Name the file after the real version
         run: |
           v=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
-          mkdir -p out && mv app/desktop/build/compose/binaries/main/dmg/*.dmg "out/Ruru-$v-macos-arm64.dmg"
+          mkdir -p out && mv app/desktop/build/compose/binaries/main-release/dmg/*.dmg "out/Ruru-$v-macos-arm64.dmg"
       - name: Size budget (the DMG can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 78500000 out/*.dmg
+        run: bash .github/size-budget.sh 62900000 out/*.dmg
       - uses: actions/upload-artifact@v7
         with: { name: macos, path: out/*.dmg }
 

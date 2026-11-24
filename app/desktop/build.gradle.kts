@@ -44,6 +44,16 @@ compose.desktop {
             "-Dfile.encoding=UTF-8",
         )
 
+        // Release builds (createReleaseDistributable, packageRelease*) shrink the app with ProGuard:
+        // unused library code is dropped, nothing is renamed, so a crash report still reads clearly.
+        // The rules say what must stay (Ruru's own code, the Windows Bluetooth calls through JNA).
+        buildTypes.release.proguard {
+            isEnabled.set(true)
+            obfuscate.set(false)
+            optimize.set(true)
+            configurationFiles.from(project.file("proguard-rules.pro"))
+        }
+
         nativeDistributions {
             targetFormats(TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Dmg, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "Ruru"
