@@ -24,6 +24,9 @@ Bose protocol code; see CREDITS.md.
   nothing
 - Android: `gradlew :app:android:assembleRelease` (signed only when `keystore.properties` exists)
 - iOS Kotlin compiles on Windows: `gradlew :app:shared:compileKotlinIosArm64`
+- Website (`site/`, plain HTML, live at https://ruru-app.pages.dev): `npx wrangler pages deploy site
+  --project-name ruru-app --branch main`. Its download links and version come from GitHub's latest
+  release when the page loads, so a new release needs no redeploy
 
 ## Rules
 
