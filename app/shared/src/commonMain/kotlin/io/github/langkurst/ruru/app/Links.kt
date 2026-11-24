@@ -6,3 +6,6 @@ package io.github.langkurst.ruru.app
  * (a test checks all three).
  */
 const val SUPPORT_URL = "https://ko-fi.com/keaclip"
+
+/** The download page. Ruru never connects to it; the Check for updates button opens it in the browser. */
+const val WEBSITE_URL = "https://ruru-app.pages.dev"

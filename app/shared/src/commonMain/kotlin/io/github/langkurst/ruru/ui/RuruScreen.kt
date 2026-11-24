@@ -66,6 +66,7 @@ import io.github.langkurst.ruru.app.ConnectionReport
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.app.SUPPORT_URL
+import io.github.langkurst.ruru.app.WEBSITE_URL
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.ListeningMode
@@ -125,8 +126,8 @@ private fun Header(state: AppState) {
         OwlMark(36.dp)
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
-            Txt(name, t.title, c.ink, maxLines = 1)
-            Txt(if (state.demo) "$line, demo mode" else line, t.small, c.ink2, maxLines = 1)
+            Txt(name, t.title, c.ink, maxLines = 2)
+            Txt(if (state.demo) "$line, demo mode" else line, t.small, c.ink2, maxLines = 2)
         }
     }
     if (state.phase == Phase.Connected) h.batteryPercent?.let { Battery(it, h.isCharging == true) }
@@ -529,6 +530,12 @@ private fun Footer(state: AppState, model: AppModel, appVersion: String, extras:
         Spacer(Modifier.height(8.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Txt("Ruru $appVersion. Not affiliated with Bose.", Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
+            // Opens the download page in the browser, which says whether this version is the newest.
+            QuietButton("Check for updates", { runCatching { browser.openUri("$WEBSITE_URL/?have=$appVersion") } })
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Txt("The report helps fix problems. It leaves out Bluetooth addresses.", Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
             QuietButton(if (copied) "Copied" else "Copy connection report", { onCopyReport(); copied = true })
         }
         Spacer(Modifier.height(8.dp))

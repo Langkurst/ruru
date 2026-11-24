@@ -68,7 +68,7 @@ fun main(args: Array<String>) {
     val hasTray = runCatching { SystemTray.isSupported() }.getOrDefault(false)
     val window = WindowHost(model)
     show.set(window::open)
-    openOnDockClick(window::open)
+    macAppHooks(window::open)
 
     if (hasTray) {
         TrayMenu(model, scope, onOpen = window::open, onQuit = {
@@ -84,12 +84,18 @@ fun main(args: Array<String>) {
     }
 }
 
-/** macOS: clicking the Dock icon while the window is closed opens it again. */
-private fun openOnDockClick(open: () -> Unit) {
+/**
+ * macOS: clicking the Dock icon while the window is closed opens it again, and the menu's
+ * "About Ruru" opens the window, whose footer shows the real version, instead of the system panel.
+ */
+private fun macAppHooks(open: () -> Unit) {
     runCatching {
         val desktop = Desktop.getDesktop()
         if (desktop.isSupported(Desktop.Action.APP_EVENT_REOPENED)) {
             desktop.addAppEventListener(AppReopenedListener { open() })
+        }
+        if (desktop.isSupported(Desktop.Action.APP_ABOUT)) {
+            desktop.setAboutHandler { open() }
         }
     }
 }

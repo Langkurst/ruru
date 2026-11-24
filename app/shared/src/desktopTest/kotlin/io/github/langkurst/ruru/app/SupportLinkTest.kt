@@ -19,4 +19,9 @@ class SupportLinkTest {
         val funding = File(root, ".github/FUNDING.yml").readLines().map { it.trim() }.firstOrNull { it.startsWith("ko_fi:") }
         assertEquals("ko_fi: $page", funding)
     }
+
+    @Test
+    fun `the README links the website the app opens`() {
+        assertTrue(WEBSITE_URL in File(root, "README.md").readText(), "README.md does not link $WEBSITE_URL")
+    }
 }
