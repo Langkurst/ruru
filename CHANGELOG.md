@@ -7,6 +7,8 @@
   this iPhone is playing through or has used before, checks their own Bluetooth address where
   iOS gives one, and says in plain words when pairing, permission or Bluetooth stops it. Built
   and compiled; not yet tried on a real iPhone, so it isn't released.
+- iPhone: Ruru no longer tries Apple's accessory channel (iAP2), which needs a protocol name Bose
+  hasn't published. It uses Bluetooth LE instead.
 - macOS: the window opens again. In 0.1.0 a renderer setting meant for Windows stopped it opening
   on a Mac, while the menu bar icon kept running.
 - Linux: the .deb has a proper Maintainer line and the .rpm states its licence (MIT). The .deb

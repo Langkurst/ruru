@@ -73,18 +73,10 @@ package on Linux. On Android and iPhone, delete the app as usual.
 ## The iPhone
 
 iOS doesn't let apps open a Bluetooth serial channel, which is how Ruru talks to the headphones
-everywhere else. Two routes remain, and version 0.1.0 doesn't control headphones through either:
-
-- Bluetooth LE, which iOS allows. The QC Ultra Headphones (1st Gen) answer Bose's protocol this
-  way when each message starts with a one-byte header (checked on a real pair from a Windows PC).
-  The next version uses this route; it hasn't been tried on a real iPhone yet.
-- Apple's accessory channel, which needs the protocol name Bose uses there, and that name isn't
-  public. iOS only lets an app see an accessory whose name the app already lists, so Ruru tries
-  the likely names; none has matched so far, and the iPhone app says so plainly.
-
-The name is in the `UISupportedExternalAccessoryProtocols` entry of the Bose app's `Info.plist`.
-If you can read that entry (for example from the Bose app's IPA), please open an issue with it:
-that one line is all the iPhone app needs.
+everywhere else. It does allow Bluetooth LE, and the QC Ultra Headphones (1st Gen) answer Bose's
+protocol over LE when each message starts with a one-byte header (checked on a real pair from a
+Windows PC). Version 0.1.0 can't control headphones from an iPhone. The next version can, over
+Bluetooth LE, but it hasn't been tried on a real iPhone yet.
 
 ## Privacy
 
