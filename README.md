@@ -37,7 +37,7 @@ form and paste the connection report from the bottom of the app.
 
 ## Install
 
-Download the file for your system from [Releases](../../releases):
+Download the file for your system from [ruru-app.pages.dev](https://ruru-app.pages.dev) or from [Releases](../../releases):
 
 | System | File |
 |---|---|
