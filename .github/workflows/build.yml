@@ -42,7 +42,7 @@ jobs:
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
       - name: Tests (protocol, EQ, session, app controller)
-        run: ./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :app:shared:desktopTest --console=plain
+        run: ./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :platform:windows:test :app:shared:desktopTest --console=plain
 
   windows:
     needs: test
@@ -52,7 +52,20 @@ jobs:
       - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
+      # The Bluetooth LE helper (C++/WinRT, about 280 KB), built into the app's Windows resources so the
+      # MSI and the setup program carry it. The build runs its self-test (no Bluetooth needed).
+      - name: Bluetooth LE helper
+        shell: pwsh
+        run: ./platform/windows/helper/build.ps1 -Out app/desktop/resources/windows/ruru-ble-win.exe
       - run: ./gradlew :app:desktop:packageReleaseMsi :app:desktop:createReleaseDistributable --console=plain
+      - name: Check the app carries its Bluetooth LE helper
+        shell: pwsh
+        run: |
+          $helper = Get-ChildItem app/desktop/build/compose/binaries/main-release/app/Ruru -Recurse -Filter ruru-ble-win.exe | Select-Object -First 1
+          if (-not $helper) { Write-Error "ruru-ble-win.exe is missing from the app folder"; exit 1 }
+          $answer = & $helper.FullName version
+          if ($answer -ne 'ruru-ble-win 1') { Write-Error "The helper answered '$answer'"; exit 1 }
+          Write-Host ("{0} ({1:N0} KB): {2}" -f $helper.FullName, ($helper.Length / 1KB), $answer)
       # The setup program (Inno Setup is on GitHub's Windows images; installed here only if it is missing).
       - name: Build the setup program
         shell: pwsh

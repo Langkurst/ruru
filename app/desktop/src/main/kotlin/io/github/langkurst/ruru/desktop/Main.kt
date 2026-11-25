@@ -31,6 +31,7 @@ import io.github.langkurst.ruru.desktop.chrome.TitleBarHeight
 import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.app.update.DesktopUpdates
+import io.github.langkurst.ruru.app.settings.createSettingsStore
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
 import io.github.langkurst.ruru.platform.linux.LinuxHeadsetPlatform
@@ -366,7 +367,8 @@ private fun macTitleBar(window: Frame) {
 }
 
 private fun platformForThisSystem(): HeadsetPlatform = when {
-    os.startsWith("Windows") -> WindowsHeadsetPlatform()
+    // Bose over Bluetooth LE instead of RFCOMM: an internal setting, off by default (0.3 B2, not yet tried on hardware).
+    os.startsWith("Windows") -> WindowsHeadsetPlatform(boseOverLe = createSettingsStore().getBoolean("windows.boseOverLe", false))
     os.startsWith("Linux") -> LinuxHeadsetPlatform().takeIf { it.supported } ?: UnsupportedPlatform("Linux without BlueZ")
     os.startsWith("Mac") -> MacHeadsetPlatform().takeIf { it.supported } ?: UnsupportedPlatform("macOS")
     else -> UnsupportedPlatform(os.ifBlank { "this system" })

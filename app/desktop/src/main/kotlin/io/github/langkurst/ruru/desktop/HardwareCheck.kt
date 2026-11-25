@@ -5,6 +5,8 @@ import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
+import io.github.langkurst.ruru.platform.windows.WinAdverts
+import io.github.langkurst.ruru.platform.windows.WinBleHelper
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
 import io.github.langkurst.ruru.ui.resolve
 import kotlinx.coroutines.CoroutineScope
@@ -25,9 +27,23 @@ import kotlin.system.exitProcess
  * Headphones that are not being worn switch themselves off, which can cut a run short. So before
  * anything changes, the run notes what it is about to change in a file, and removes the note only
  * once everything is confirmed back. A run that finds a note undoes that change first.
+ *
+ * `--le` (`./gradlew :app:desktop:hardwareCheck --args=--le`) runs over Bluetooth LE through
+ * ruru-ble-win.exe instead of RFCOMM, and changes the bass only. The note is the same file, so a
+ * plain run can undo an LE run that was cut short.
  */
 fun main(args: Array<String>) {
-    val note = File(args.firstOrNull() ?: "build/hardware-check-pending.txt")
+    overLe = "--le" in args
+    // Gradle's --args replaces the task's own arguments, so the note's path may be missing.
+    val note = File(args.firstOrNull { !it.startsWith("--") } ?: "build/hardware-check-pending.txt")
+    if (overLe) {
+        val helper = WinBleHelper.find() ?: run {
+            println("FAIL the Bluetooth LE helper ${WinBleHelper.EXE} was not found (build it with pwsh platform/windows/helper/build.ps1)")
+            exitProcess(1)
+        }
+        val heard = runCatching { WinAdverts.summary(helper.scan(4, active = true)) }.getOrElse { "listening failed: ${it.message}" }
+        println("over Bluetooth LE; adverts (4 s): $heard")
+    }
     var failed = false
 
     /** [why] is null when the step worked, otherwise the reason it didn't. */
@@ -74,13 +90,16 @@ fun main(args: Array<String>) {
     val originalMode = start.currentModeIndex
     val originalEq = start.eq
     println("connected: ${start.info?.modelName ?: "headphones"}, mode ${start.currentMode?.name}, eq $originalEq")
-    val target = start.modes.firstOrNull { it.isConfigured && it.index != originalMode && it.name == "Aware" }
+    // Over LE only the bass changes (one setting per write test).
+    val target = if (overLe) null else start.modes.firstOrNull { it.isConfigured && it.index != originalMode && it.name == "Aware" }
         ?: start.modes.firstOrNull { it.isConfigured && it.index != originalMode }
     val nudged = originalEq?.let { it.copy(bass = if (it.bass < 10) it.bass + 1 else it.bass - 1) }
     PlannedChanges(originalMode, target?.index, originalEq, nudged).write(note)
 
     var allBack = true
-    if (target != null && originalMode != null) {
+    if (overLe) {
+        println("SKIP mode: over Bluetooth LE this check changes the bass only")
+    } else if (target != null && originalMode != null) {
         check(
             confirm({ it.setMode(target.index) }) { it.currentModeIndex == target.index },
             "mode changed to ${target.name} (read back on a new connection)",
@@ -185,18 +204,24 @@ private fun command(action: (HeadsetController) -> Unit): Boolean =
         true
     } ?: false
 
+/** Set by `--le`: every connection goes over Bluetooth LE through the helper. */
+private var overLe = false
+
 private fun <T> withController(block: (HeadsetController, AppState) -> T): T? {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    val controller = HeadsetController(WindowsHeadsetPlatform(), scope, demo = false)
+    val controller = HeadsetController(WindowsHeadsetPlatform(boseOverLe = overLe), scope, demo = false)
     controller.start()
     return try {
         val state = runBlocking {
-            withTimeoutOrNull(30_000) { controller.state.first { it.phase == Phase.Connected && it.headset.modes.isNotEmpty() } }
+            withTimeoutOrNull(if (overLe) 45_000 else 30_000) {
+                controller.state.first { it.phase == Phase.Connected && it.headset.modes.isNotEmpty() }
+            }
         } ?: return null
         block(controller, state)
     } finally {
         controller.stop()
         scope.cancel()
-        Thread.sleep(800)
+        // Over LE the helper switches notifications off and exits first, so the next link starts clean.
+        Thread.sleep(if (overLe) 4_000 else 800)
     }
 }

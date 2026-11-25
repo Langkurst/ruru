@@ -18,6 +18,9 @@ iosApp/shots/
 # Built by CI into the macOS app bundle
 app/desktop/resources/macos/ruru-bt-mac
 
+# Built by CI (platform/windows/helper/build.ps1) into the Windows app
+app/desktop/resources/windows/ruru-ble-win.exe
+
 # .NET spikes
 spikes/**/bin/
 spikes/**/obj/

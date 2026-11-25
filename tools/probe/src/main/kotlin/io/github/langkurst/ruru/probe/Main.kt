@@ -38,32 +38,43 @@ fun main(args: Array<String>) {
     val started = System.nanoTime()
     fun ms() = (System.nanoTime() - started) / 1_000_000
 
-    val bose = WinBluetooth.pairedDevices()
-        .filter { it.name.contains("Bose", ignoreCase = true) }
-        .sortedByDescending { it.connected }
-    val device = bose.firstOrNull() ?: run {
-        println("RESULT: no paired Bose headset found in Windows' Bluetooth list")
-        exitProcess(2)
-    }
-    println("Headset: ${device.name} (${if (device.connected) "connected" else "paired, not connected"})")
+    // --le: the same reads over Bluetooth LE (Bose's FEBE service) through ruru-ble-win.exe. Reads only.
+    val socket: ProbeLink = if ("--le" in args) {
+        if ("--session" in args || "--write-test" in args) {
+            println("RESULT: --le runs the read-only check only")
+            exitProcess(2)
+        }
+        LeLink.open() ?: exitProcess(3)
+    } else {
+        val bose = WinBluetooth.pairedDevices()
+            .filter { it.name.contains("Bose", ignoreCase = true) }
+            .sortedByDescending { it.connected }
+        val device = bose.firstOrNull() ?: run {
+            println("RESULT: no paired Bose headset found in Windows' Bluetooth list")
+            exitProcess(2)
+        }
+        println("Headset: ${device.name} (${if (device.connected) "connected" else "paired, not connected"})")
 
-    if ("--session" in args) {
-        SessionCheck.run(device, listenMs = 8_000)
-        return
-    }
+        if ("--session" in args) {
+            SessionCheck.run(device, listenMs = 8_000)
+            return
+        }
 
-    val socket = try {
-        WinBluetooth.openSerialPort(device, readTimeoutMs = 300)
-    } catch (e: Exception) {
-        println("RESULT: ${e.message}")
-        exitProcess(3)
+        val rfcomm = try {
+            WinBluetooth.openSerialPort(device, readTimeoutMs = 300)
+        } catch (e: Exception) {
+            println("RESULT: ${e.message}")
+            exitProcess(3)
+        }
+
+        if ("--write-test" in args) {
+            println("Control channel open [${ms()} ms]")
+            rfcomm.use { WriteTest(ProbeClient(it)).run() }
+            return
+        }
+        RfcommLink(rfcomm)
     }
     println("Control channel open [${ms()} ms]")
-
-    if ("--write-test" in args) {
-        socket.use { WriteTest(ProbeClient(it)).run() }
-        return
-    }
 
     socket.use { s ->
         val frames = BmapFrameBuffer()
