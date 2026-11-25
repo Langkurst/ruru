@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Słuchawki Sony, polski: tytuły ustawień, które Ruru pokazuje dla nich (klucz = vendor_ plus identyfikator kontrolki), opcje i uwagi. -->
+    <string name="vendor_sony_ambient_level">Poziom dźwięku otoczenia</string>
+    <string name="vendor_sony_ambient_level_hint">Ile dźwięków z otoczenia słyszysz w trybie dźwięku otoczenia</string>
+    <string name="vendor_sony_focus_on_voice">Skupienie na głosach</string>
+    <string name="vendor_sony_focus_on_voice_hint">Dźwięk otoczenia przepuszcza głosy i tłumi inne hałasy</string>
+    <string name="vendor_sony_auto_ambient">Automatyczny poziom otoczenia</string>
+    <string name="vendor_sony_auto_ambient_hint">Słuchawki ustawiają poziom według głośności wokół ciebie</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">Czułość automatycznego poziomu</string>
+    <string name="vendor_sony_eq_preset">Korektor</string>
+    <string name="vendor_sony_eq_preset_hint">Własne ustawienia korektora w słuchawkach</string>
+    <string name="vendor_sony_auto_power_off">Automatyczne wyłączanie</string>
+    <string name="vendor_sony_speak_to_chat">Speak-to-chat</string>
+    <string name="vendor_sony_speak_to_chat_hint">Gdy mówisz, muzyka się zatrzymuje i słychać otoczenie</string>
+    <string name="vendor_sony_pause_when_taken_off">Pauza po zdjęciu</string>
+    <string name="vendor_sony_dsee_hint">Poprawia jakość skompresowanej muzyki</string>
+    <string name="vendor_sony_connection_priority">Połączenie Bluetooth</string>
+    <string name="vendor_sony_voice_guidance">Komunikaty głosowe</string>
+
+    <!-- Opcje -->
+    <string name="sony_option_low">Niska</string>
+    <string name="sony_option_standard">Standardowa</string>
+    <string name="sony_option_high">Wysoka</string>
+    <string name="sony_option_sound_quality">Jakość dźwięku</string>
+    <string name="sony_option_stable_connection">Stabilne połączenie</string>
+    <string name="sony_option_when_taken_off">Po zdjęciu</string>
+
+    <!-- Uwagi i problemy -->
+    <string name="sony_note_experimental">Eksperymentalne: zbudowane na podstawie opublikowanych badań i wirtualnych słuchawek, jeszcze niewypróbowane na prawdziwym sprzęcie.</string>
+    <string name="sony_note_read_only">Eksperymentalne, tylko odczyt: te słuchawki Sony zgłaszają wersję protokołu, której Ruru nie zna, więc tylko odczytuje ich ustawienia.</string>
+    <string name="sony_v1_only">Te słuchawki Sony używają starszego protokołu Sony (MDR v1), którym Ruru nie steruje.</string>
+</resources>

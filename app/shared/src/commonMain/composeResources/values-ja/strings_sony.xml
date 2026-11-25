@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ソニーのヘッドホン、日本語: Ruru が表示する設定の見出し (キー = vendor_ + コントロールの ID)、選択肢、注意書き。 -->
+    <string name="vendor_sony_ambient_level">外音取り込みのレベル</string>
+    <string name="vendor_sony_ambient_level_hint">外音取り込みで周囲の音をどれだけ聞くか</string>
+    <string name="vendor_sony_focus_on_voice">ボイスにフォーカス</string>
+    <string name="vendor_sony_focus_on_voice_hint">外音取り込みで人の声を通し、ほかの騒音を抑えます</string>
+    <string name="vendor_sony_auto_ambient">外音レベルの自動調整</string>
+    <string name="vendor_sony_auto_ambient_hint">周囲の騒音の大きさに合わせてヘッドホンがレベルを決めます</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">自動調整の感度</string>
+    <string name="vendor_sony_eq_preset">イコライザー</string>
+    <string name="vendor_sony_eq_preset_hint">ヘッドホン本体のイコライザープリセット</string>
+    <string name="vendor_sony_auto_power_off">自動電源オフ</string>
+    <string name="vendor_sony_speak_to_chat">スピーク・トゥ・チャット</string>
+    <string name="vendor_sony_speak_to_chat_hint">話すと音楽が止まり、周囲の音が聞こえます</string>
+    <string name="vendor_sony_pause_when_taken_off">外したら一時停止</string>
+    <string name="vendor_sony_dsee_hint">圧縮された音楽を高音質化します</string>
+    <string name="vendor_sony_connection_priority">Bluetooth 接続</string>
+    <string name="vendor_sony_voice_guidance">音声ガイダンス</string>
+
+    <!-- 選択肢 -->
+    <string name="sony_option_low">低</string>
+    <string name="sony_option_standard">標準</string>
+    <string name="sony_option_high">高</string>
+    <string name="sony_option_sound_quality">音質優先</string>
+    <string name="sony_option_stable_connection">接続優先</string>
+    <string name="sony_option_when_taken_off">外したとき</string>
+
+    <!-- 注意書きと問題 -->
+    <string name="sony_note_experimental">実験的: 公開されている調査結果と仮想のヘッドセットをもとに作られており、実機ではまだ試していません。</string>
+    <string name="sony_note_read_only">実験的 (読み取り専用): このソニーのヘッドホンは Ruru が知らないプロトコルのバージョンを報告したため、設定の読み取りのみ行います。</string>
+    <string name="sony_v1_only">このソニーのヘッドホンは旧式のプロトコル (MDR v1) を使っており、Ruru は操作できません。</string>
+</resources>

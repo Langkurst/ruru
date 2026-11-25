@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlin.test.AfterTest
+import io.github.langkurst.ruru.vendors.DeviceFamily
+import io.github.langkurst.ruru.vendors.VendorRegistry
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -439,6 +441,9 @@ class HeadsetControllerTest {
             HeadsetCandidate("6", "AirPods Pro", true),
         )
         for (candidate in names) {
+            // A maker that has since got a real session is opened (its own end-to-end test covers it).
+            val family = DeviceFamily.resolve(null, null, candidate.name, candidate.uuids)
+            if (VendorRegistry.forFamily(family)?.sessionReady == true) continue
             val platform = CountingPlatform(listOf(candidate), VirtualQcUltra2())
             val c = controller(platform)
             val failed = c.await { it.phase is Phase.Failed }
@@ -452,7 +457,7 @@ class HeadsetControllerTest {
     fun `a Bose headset is chosen over a connected headset Ruru can't drive`() = runBlocking {
         val device = VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1)
         val platform = CountingPlatform(
-            listOf(HeadsetCandidate("s", "WH-1000XM5", true), HeadsetCandidate("b", "Bose QC Ultra Headphones", true)),
+            listOf(HeadsetCandidate("s", "Pixel Buds Pro", true), HeadsetCandidate("b", "Bose QC Ultra Headphones", true)),
             device,
         )
         val c = controller(platform)

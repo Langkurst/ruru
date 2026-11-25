@@ -7,13 +7,13 @@ import io.github.langkurst.ruru.link.RouteKind
 import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.HeadsetSession
 import io.github.langkurst.ruru.vendors.Vendor
-import io.github.langkurst.ruru.vendors.notYet
+import io.github.langkurst.ruru.vendors.VirtualHeadset
 import kotlinx.coroutines.CoroutineScope
 
 /**
  * Sony MDR v2 (Earshot's SonyModel and SonyLinkFactory, MIT; research from SonyHeadphonesClient).
  * The control service is found by SDP UUID, never by channel: many Sony models are Airoha-based
- * and also expose the Airoha RACE debug channel, which Ruru must never open. Session: milestone C1.
+ * and also expose the Airoha RACE debug channel, which Ruru must never open.
  */
 object SonyVendor : Vendor {
     override val family: DeviceFamily get() = DeviceFamily.SONY
@@ -61,7 +61,14 @@ object SonyVendor : Vendor {
         return LinkRoute.RfcommService(SERVICE_V2)
     }
 
-    override val sessionReady: Boolean get() = false
+    override val sessionReady: Boolean get() = true
 
-    override fun session(transport: ByteTransport, scope: CoroutineScope): HeadsetSession = notYet(family)
+    override fun session(transport: ByteTransport, scope: CoroutineScope): HeadsetSession =
+        SonySession(SonyConnection(transport, scope), scope)
+
+    /** One shared unit, so the demo's settings survive a reconnect; a new link re-attaches it. */
+    override fun virtual(): VirtualHeadset {
+        val unit = VirtualSony()
+        return VirtualHeadset(VirtualSony.NAME) { VirtualSonyTransport(unit) }
+    }
 }

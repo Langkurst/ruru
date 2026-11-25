@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 소니 헤드폰, 한국어: Ruru가 보여 주는 설정의 제목(키 = vendor_ + 컨트롤 ID), 선택지, 안내 문구. -->
+    <string name="vendor_sony_ambient_level">주변 소리 수준</string>
+    <string name="vendor_sony_ambient_level_hint">주변 소리 모드에서 주변 소리를 얼마나 들을지</string>
+    <string name="vendor_sony_focus_on_voice">음성에 집중</string>
+    <string name="vendor_sony_focus_on_voice_hint">주변 소리 모드에서 목소리는 들려주고 다른 소음은 줄입니다</string>
+    <string name="vendor_sony_auto_ambient">주변 소리 자동 조절</string>
+    <string name="vendor_sony_auto_ambient_hint">주변 소음 크기에 맞춰 헤드폰이 수준을 정합니다</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">자동 조절 민감도</string>
+    <string name="vendor_sony_eq_preset">이퀄라이저</string>
+    <string name="vendor_sony_eq_preset_hint">헤드폰에 내장된 EQ 프리셋</string>
+    <string name="vendor_sony_auto_power_off">자동 전원 끄기</string>
+    <string name="vendor_sony_speak_to_chat">스피크 투 챗</string>
+    <string name="vendor_sony_speak_to_chat_hint">말을 하면 음악이 멈추고 주변 소리가 들립니다</string>
+    <string name="vendor_sony_pause_when_taken_off">벗으면 일시 정지</string>
+    <string name="vendor_sony_dsee_hint">압축된 음악의 음질을 높입니다</string>
+    <string name="vendor_sony_connection_priority">블루투스 연결</string>
+    <string name="vendor_sony_voice_guidance">음성 안내</string>
+
+    <!-- 선택지 -->
+    <string name="sony_option_low">낮음</string>
+    <string name="sony_option_standard">표준</string>
+    <string name="sony_option_high">높음</string>
+    <string name="sony_option_sound_quality">음질 우선</string>
+    <string name="sony_option_stable_connection">안정적인 연결</string>
+    <string name="sony_option_when_taken_off">벗었을 때</string>
+
+    <!-- 안내와 문제 -->
+    <string name="sony_note_experimental">실험적: 공개된 연구와 가상 헤드셋을 바탕으로 만들었으며 실제 기기에서는 아직 시험하지 않았습니다.</string>
+    <string name="sony_note_read_only">실험적, 읽기 전용: 이 소니 헤드폰은 Ruru가 모르는 프로토콜 버전을 알려 와서 설정을 읽기만 합니다.</string>
+    <string name="sony_v1_only">이 소니 헤드폰은 소니의 이전 프로토콜(MDR v1)을 사용하며, Ruru는 이를 제어하지 않습니다.</string>
+</resources>

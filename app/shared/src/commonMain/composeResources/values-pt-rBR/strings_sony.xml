@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fones Sony, português (Brasil): títulos dos ajustes que o Ruru mostra para eles (chave = vendor_ mais o id do controle), as opções e as notas. -->
+    <string name="vendor_sony_ambient_level">Nível do som ambiente</string>
+    <string name="vendor_sony_ambient_level_hint">Quanto do ambiente ao redor você ouve no Som ambiente</string>
+    <string name="vendor_sony_focus_on_voice">Foco em vozes</string>
+    <string name="vendor_sony_focus_on_voice_hint">O som ambiente deixa as vozes passarem e reduz os outros ruídos</string>
+    <string name="vendor_sony_auto_ambient">Nível ambiente automático</string>
+    <string name="vendor_sony_auto_ambient_hint">Os fones ajustam o nível conforme o barulho ao seu redor</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">Sensibilidade do nível automático</string>
+    <string name="vendor_sony_eq_preset">Equalizador</string>
+    <string name="vendor_sony_eq_preset_hint">As predefinições de EQ dos próprios fones</string>
+    <string name="vendor_sony_auto_power_off">Desligar automaticamente</string>
+    <string name="vendor_sony_speak_to_chat">Speak-to-chat</string>
+    <string name="vendor_sony_speak_to_chat_hint">Ao falar, a música pausa e o som do ambiente entra</string>
+    <string name="vendor_sony_pause_when_taken_off">Pausar ao tirar</string>
+    <string name="vendor_sony_dsee_hint">Melhora músicas comprimidas</string>
+    <string name="vendor_sony_connection_priority">Conexão Bluetooth</string>
+    <string name="vendor_sony_voice_guidance">Orientação por voz</string>
+
+    <!-- Opções -->
+    <string name="sony_option_low">Baixa</string>
+    <string name="sony_option_standard">Padrão</string>
+    <string name="sony_option_high">Alta</string>
+    <string name="sony_option_sound_quality">Qualidade do som</string>
+    <string name="sony_option_stable_connection">Conexão estável</string>
+    <string name="sony_option_when_taken_off">Ao tirar</string>
+
+    <!-- Notas e problemas -->
+    <string name="sony_note_experimental">Experimental: feito a partir de pesquisas publicadas e de um fone virtual, ainda não testado em aparelhos reais.</string>
+    <string name="sony_note_read_only">Experimental, somente leitura: estes fones Sony informam uma versão de protocolo que o Ruru não conhece, então ele só lê os ajustes.</string>
+    <string name="sony_v1_only">Estes fones Sony usam o protocolo antigo da Sony (MDR v1), que o Ruru não controla.</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 索尼耳机，简体中文：Ruru 为它们显示的设置标题（键 = vendor_ 加控件 ID）、选项和说明。 -->
+    <string name="vendor_sony_ambient_level">环境音级别</string>
+    <string name="vendor_sony_ambient_level_hint">在环境音模式下能听到多少周围的声音</string>
+    <string name="vendor_sony_focus_on_voice">突出人声</string>
+    <string name="vendor_sony_focus_on_voice_hint">环境音模式让人声通过，并降低其他噪音</string>
+    <string name="vendor_sony_auto_ambient">自动环境音级别</string>
+    <string name="vendor_sony_auto_ambient_hint">耳机根据周围的噪音大小自动设定级别</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">自动级别灵敏度</string>
+    <string name="vendor_sony_eq_preset">均衡器</string>
+    <string name="vendor_sony_eq_preset_hint">耳机自带的均衡器预设</string>
+    <string name="vendor_sony_auto_power_off">自动关机</string>
+    <string name="vendor_sony_speak_to_chat">说话即对话</string>
+    <string name="vendor_sony_speak_to_chat_hint">一开口说话，音乐就暂停并放入环境声</string>
+    <string name="vendor_sony_pause_when_taken_off">摘下时暂停</string>
+    <string name="vendor_sony_dsee_hint">提升压缩音乐的音质</string>
+    <string name="vendor_sony_connection_priority">蓝牙连接</string>
+    <string name="vendor_sony_voice_guidance">语音提示</string>
+
+    <!-- 选项 -->
+    <string name="sony_option_low">低</string>
+    <string name="sony_option_standard">标准</string>
+    <string name="sony_option_high">高</string>
+    <string name="sony_option_sound_quality">音质优先</string>
+    <string name="sony_option_stable_connection">连接稳定优先</string>
+    <string name="sony_option_when_taken_off">摘下时</string>
+
+    <!-- 说明与问题 -->
+    <string name="sony_note_experimental">实验性：依据已公开的研究和虚拟耳机制作，尚未在真实设备上试过。</string>
+    <string name="sony_note_read_only">实验性，只读：这款索尼耳机报告的协议版本 Ruru 不认识，所以只读取它的设置。</string>
+    <string name="sony_v1_only">这款索尼耳机使用索尼较早的协议（MDR v1），Ruru 无法控制。</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sony-Kopfhörer, Deutsch: Titel der Einstellungen, die Ruru dafür zeigt (Schlüssel = vendor_ plus Steuerungs-ID), die Auswahlmöglichkeiten und die Hinweise. -->
+    <string name="vendor_sony_ambient_level">Umgebungsgeräusch-Pegel</string>
+    <string name="vendor_sony_ambient_level_hint">Wie viel von Ihrer Umgebung Sie im Umgebungsmodus hören</string>
+    <string name="vendor_sony_focus_on_voice">Fokus auf Stimmen</string>
+    <string name="vendor_sony_focus_on_voice_hint">Der Umgebungsmodus lässt Stimmen durch und dämpft anderen Lärm</string>
+    <string name="vendor_sony_auto_ambient">Automatischer Umgebungspegel</string>
+    <string name="vendor_sony_auto_ambient_hint">Die Kopfhörer stellen den Pegel nach der Lautstärke um Sie herum ein</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">Empfindlichkeit der Automatik</string>
+    <string name="vendor_sony_eq_preset">Equalizer</string>
+    <string name="vendor_sony_eq_preset_hint">Die EQ-Voreinstellungen der Kopfhörer selbst</string>
+    <string name="vendor_sony_auto_power_off">Automatisch ausschalten</string>
+    <string name="vendor_sony_speak_to_chat">Speak-to-Chat</string>
+    <string name="vendor_sony_speak_to_chat_hint">Beim Sprechen pausiert die Musik und Umgebungsgeräusche kommen durch</string>
+    <string name="vendor_sony_pause_when_taken_off">Pause beim Abnehmen</string>
+    <string name="vendor_sony_dsee_hint">Verbessert komprimierte Musik</string>
+    <string name="vendor_sony_connection_priority">Bluetooth-Verbindung</string>
+    <string name="vendor_sony_voice_guidance">Sprachführung</string>
+
+    <!-- Auswahl -->
+    <string name="sony_option_low">Niedrig</string>
+    <string name="sony_option_standard">Standard</string>
+    <string name="sony_option_high">Hoch</string>
+    <string name="sony_option_sound_quality">Klangqualität</string>
+    <string name="sony_option_stable_connection">Stabile Verbindung</string>
+    <string name="sony_option_when_taken_off">Beim Abnehmen</string>
+
+    <!-- Hinweise und Probleme -->
+    <string name="sony_note_experimental">Experimentell: nach veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="sony_note_read_only">Experimentell, nur lesend: Diese Sony-Kopfhörer melden eine Protokollversion, die Ruru nicht kennt, deshalb liest es nur ihre Einstellungen.</string>
+    <string name="sony_v1_only">Diese Sony-Kopfhörer nutzen Sonys älteres Protokoll (MDR v1), das Ruru nicht ansteuert.</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Auriculares Sony, español (Latinoamérica): títulos de los ajustes que Ruru dibuja para ellos (clave = vendor_ más el id del control), las opciones y las notas. -->
+    <string name="vendor_sony_ambient_level">Nivel de sonido ambiente</string>
+    <string name="vendor_sony_ambient_level_hint">Cuánto de tu entorno oyes en Sonido ambiente</string>
+    <string name="vendor_sony_focus_on_voice">Enfocar en voces</string>
+    <string name="vendor_sony_focus_on_voice_hint">Sonido ambiente deja pasar las voces y baja el resto del ruido</string>
+    <string name="vendor_sony_auto_ambient">Nivel ambiente automático</string>
+    <string name="vendor_sony_auto_ambient_hint">Los auriculares ajustan el nivel según el ruido a tu alrededor</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">Sensibilidad del nivel automático</string>
+    <string name="vendor_sony_eq_preset">Ecualizador</string>
+    <string name="vendor_sony_eq_preset_hint">Los ajustes de EQ propios de los auriculares</string>
+    <string name="vendor_sony_auto_power_off">Apagado automático</string>
+    <string name="vendor_sony_speak_to_chat">Speak-to-chat</string>
+    <string name="vendor_sony_speak_to_chat_hint">Al hablar, la música se pausa y entra el sonido del entorno</string>
+    <string name="vendor_sony_pause_when_taken_off">Pausar al quitárselos</string>
+    <string name="vendor_sony_dsee_hint">Mejora la música comprimida</string>
+    <string name="vendor_sony_connection_priority">Conexión Bluetooth</string>
+    <string name="vendor_sony_voice_guidance">Guía de voz</string>
+
+    <!-- Opciones -->
+    <string name="sony_option_low">Baja</string>
+    <string name="sony_option_standard">Estándar</string>
+    <string name="sony_option_high">Alta</string>
+    <string name="sony_option_sound_quality">Calidad de sonido</string>
+    <string name="sony_option_stable_connection">Conexión estable</string>
+    <string name="sony_option_when_taken_off">Al quitárselos</string>
+
+    <!-- Notas y problemas -->
+    <string name="sony_note_experimental">Experimental: creado a partir de investigación publicada y unos auriculares virtuales, aún no probado en equipos reales.</string>
+    <string name="sony_note_read_only">Experimental, solo lectura: estos auriculares Sony informan una versión de protocolo que Ruru no conoce, así que solo lee sus ajustes.</string>
+    <string name="sony_v1_only">Estos auriculares Sony usan el protocolo anterior de Sony (MDR v1), que Ruru no controla.</string>
+</resources>

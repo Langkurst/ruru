@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sony-koptelefoons, Nederlands: titels van de instellingen die Ruru ervoor toont (sleutel = vendor_ plus de id van de regeling), de keuzes en de opmerkingen. -->
+    <string name="vendor_sony_ambient_level">Niveau omgevingsgeluid</string>
+    <string name="vendor_sony_ambient_level_hint">Hoeveel van je omgeving je hoort bij Omgevingsgeluid</string>
+    <string name="vendor_sony_focus_on_voice">Focus op stemmen</string>
+    <string name="vendor_sony_focus_on_voice_hint">Omgevingsgeluid laat stemmen door en dempt ander lawaai</string>
+    <string name="vendor_sony_auto_ambient">Automatisch omgevingsniveau</string>
+    <string name="vendor_sony_auto_ambient_hint">De koptelefoon stelt het niveau in op hoe luid het om je heen is</string>
+    <string name="vendor_sony_auto_ambient_sensitivity">Gevoeligheid automatisch niveau</string>
+    <string name="vendor_sony_eq_preset">Equalizer</string>
+    <string name="vendor_sony_eq_preset_hint">De eigen EQ-voorinstellingen van de koptelefoon</string>
+    <string name="vendor_sony_auto_power_off">Automatisch uitschakelen</string>
+    <string name="vendor_sony_speak_to_chat">Speak-to-chat</string>
+    <string name="vendor_sony_speak_to_chat_hint">Als je praat, pauzeert de muziek en hoor je de omgeving</string>
+    <string name="vendor_sony_pause_when_taken_off">Pauzeren bij afdoen</string>
+    <string name="vendor_sony_dsee_hint">Verbetert gecomprimeerde muziek</string>
+    <string name="vendor_sony_connection_priority">Bluetooth-verbinding</string>
+    <string name="vendor_sony_voice_guidance">Stemgeleiding</string>
+
+    <!-- Keuzes -->
+    <string name="sony_option_low">Laag</string>
+    <string name="sony_option_standard">Standaard</string>
+    <string name="sony_option_high">Hoog</string>
+    <string name="sony_option_sound_quality">Geluidskwaliteit</string>
+    <string name="sony_option_stable_connection">Stabiele verbinding</string>
+    <string name="sony_option_when_taken_off">Bij afdoen</string>
+
+    <!-- Opmerkingen en problemen -->
+    <string name="sony_note_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele koptelefoon, nog niet op echte apparatuur geprobeerd.</string>
+    <string name="sony_note_read_only">Experimenteel, alleen lezen: deze Sony-koptelefoon meldt een protocolversie die Ruru niet kent, dus Ruru leest alleen de instellingen.</string>
+    <string name="sony_v1_only">Deze Sony-koptelefoon gebruikt het oudere protocol van Sony (MDR v1), dat Ruru niet aanstuurt.</string>
+</resources>

@@ -53,11 +53,11 @@ class VendorRegistryTest {
     }
 
     @Test
-    fun `only Bose has a session in this release, and the stubs refuse to build one and write nothing`() {
+    fun `a vendor with a session has a demo headset, and the stubs refuse to build one and write nothing`() {
+        assertTrue(VendorRegistry.forFamily(DeviceFamily.BOSE)!!.sessionReady)
         for (vendor in VendorRegistry.vendors) {
-            if (vendor.family == DeviceFamily.BOSE) {
-                assertTrue(vendor.sessionReady)
-                assertNotNull(vendor.virtual())
+            if (vendor.sessionReady) {
+                assertNotNull(vendor.virtual(), vendor.family.name)
                 continue
             }
             assertFalse(vendor.sessionReady, vendor.family.name)

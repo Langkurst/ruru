@@ -42,13 +42,20 @@ class StringsTest {
     /** One entry of a strings.xml: a plain string (one item, quantity ""), or a plural (one item per quantity). */
     private class Entry(val items: Map<String, String>)
 
+    /** strings.xml plus the files a maker adds next to it (strings_sony.xml, ...): one set of keys, none defined twice. */
     private fun load(folder: String): Map<String, Entry> {
-        val file = File(resources, "$folder/strings.xml")
-        assertTrue(file.isFile, "$folder/strings.xml is missing")
+        val main = File(resources, "$folder/strings.xml")
+        assertTrue(main.isFile, "$folder/strings.xml is missing")
+        val extra = File(resources, folder).listFiles { f -> f.isFile && f.name.startsWith("strings_") && f.extension == "xml" }!!.sortedBy { it.name }
+        val out = LinkedHashMap<String, Entry>()
+        for (file in listOf(main) + extra) loadFile(folder, file, out)
+        return out
+    }
+
+    private fun loadFile(folder: String, file: File, out: MutableMap<String, Entry>) {
         val factory = DocumentBuilderFactory.newInstance()
         factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true)
         val doc = factory.newDocumentBuilder().parse(file) // not well-formed XML (a bare & or <) fails here
-        val out = LinkedHashMap<String, Entry>()
         val nodes = doc.documentElement.childNodes
         for (i in 0 until nodes.length) {
             val e = nodes.item(i) as? Element ?: continue
@@ -64,7 +71,6 @@ class StringsTest {
                 else -> error("$folder: <${e.tagName} name=$name> is not supported")
             }
         }
-        return out
     }
 
     private val english = load("values")
