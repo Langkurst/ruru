@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.3 (25 November 2026)
+
+- Ruru now speaks 11 languages: English, German, French, Spanish, Italian, Dutch, Portuguese
+  (Brazil), Japanese, Chinese (Simplified), Korean and Polish. It uses your computer's or phone's
+  language.
+- The website is in the same languages.
+
 ## 0.1.2 (25 November 2026)
 
 - A new owl icon: a friendlier ruru face, in the app, the tray, the installers and on phones.
