@@ -218,8 +218,12 @@ data class DeviceInfo(
 /** Over-ear headphones, in-ear earbuds or open-ear earbuds: picks the icon, battery layout and wording. */
 enum class FormFactor { HEADPHONES, EARBUDS, OPEN_EARBUDS }
 
-/** One battery in the set: a level and, when the firmware estimates it, the listening time left. */
-data class BatteryLevel(val percent: Int?, val minutesLeft: Int? = null)
+/**
+ * One battery in the set: a level and, when the firmware estimates it, the listening time left.
+ * [charging] is that part's own charging flag where the headset reports one per part (AirPods and
+ * Beats adverts do); null when it doesn't.
+ */
+data class BatteryLevel(val percent: Int?, val minutesLeft: Int? = null, val charging: Boolean? = null)
 
 /**
  * The batteries behind [HeadphoneState.batteryPercent], from the `[2.2]` records: headphones

@@ -64,6 +64,8 @@ class WindowsHeadsetPlatform(
         }
     }
 
+    override val listensForAdverts: Boolean get() = ble != null
+
     override suspend fun adverts(): List<HeadsetAdvert> = withContext(Dispatchers.IO) {
         val helper = ble ?: return@withContext emptyList()
         runCatching { WinAdverts.toHeadsetAdverts(helper.scan(ADVERT_SECONDS)) }.getOrElse { emptyList() }

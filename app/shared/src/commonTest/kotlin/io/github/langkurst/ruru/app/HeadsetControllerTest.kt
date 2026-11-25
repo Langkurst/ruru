@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlin.test.AfterTest
+import io.github.langkurst.ruru.vendors.AdvertVendor
 import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.VendorRegistry
 import kotlin.test.BeforeTest
@@ -447,7 +448,9 @@ class HeadsetControllerTest {
             val platform = CountingPlatform(listOf(candidate), VirtualQcUltra2())
             val c = controller(platform)
             val failed = c.await { it.phase is Phase.Failed }
-            assertEquals(Words("message_unsupported"), (failed.phase as Phase.Failed).reason, candidate.name)
+            // AirPods and Beats are only listened to: a system that cannot hear their adverts says so.
+            val expected = (VendorRegistry.forFamily(family) as? AdvertVendor)?.let { Words(it.notPossibleKey) } ?: Words("message_unsupported")
+            assertEquals(expected, (failed.phase as Phase.Failed).reason, candidate.name)
             assertEquals(emptyList(), platform.opened, candidate.name)
             c.stop()
         }

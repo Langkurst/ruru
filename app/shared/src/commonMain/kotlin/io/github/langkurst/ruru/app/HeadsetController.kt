@@ -19,6 +19,7 @@ import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.session.QcUltra2Protocol
 import io.github.langkurst.ruru.session.SinkSessionLog
 import io.github.langkurst.ruru.session.StateCommands
+import io.github.langkurst.ruru.vendors.AdvertVendor
 import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.HeadsetCommand
 import io.github.langkurst.ruru.vendors.HeadsetSession
@@ -74,6 +75,8 @@ class HeadsetController(
     private val platform: HeadsetPlatform,
     private val scope: CoroutineScope,
     val demo: Boolean = false,
+    /** The wait between two listening windows for a headset read from adverts alone (tests make it short). */
+    private val advertPauseMs: Long = ADVERT_PAUSE_MS,
 ) {
     private val headset = MutableStateFlow(HeadphoneState())
     private val phase = MutableStateFlow<Phase>(Phase.Starting)
@@ -197,7 +200,7 @@ class HeadsetController(
                 continue
             }
             phase.value = Phase.Connecting(target.name)
-            val attempt = session(target)
+            val attempt = advertVendor(target)?.let { advertSession(target, it) } ?: session(target)
             if (attempt.problem == null) {
                 failures = 0
                 waitOrRetry(AFTER_DROP_MS)
@@ -232,7 +235,60 @@ class HeadsetController(
         return vendor to route
     }
 
-    private fun drivable(candidate: HeadsetCandidate) = plan(candidate) != null
+    /** The maker of [candidate] when its headsets are only listened to (AirPods, Beats): nothing is opened for them. */
+    private fun advertVendor(candidate: HeadsetCandidate): AdvertVendor? =
+        VendorRegistry.forFamily(DeviceFamily.resolve(override = null, learned = null, name = candidate.name, uuids = candidate.uuids)) as? AdvertVendor
+
+    private fun drivable(candidate: HeadsetCandidate) = plan(candidate) != null || advertVendor(candidate) != null
+
+    /**
+     * A headset read from adverts alone: no link is opened and nothing is sent, [platform] only
+     * listens. The battery is folded into the state after each listening window; there is no session,
+     * so every command answers "not connected". Ends (null problem) when the headset is no longer
+     * connected. A system that cannot hear the adverts gets the vendor's "not possible here" words.
+     */
+    private suspend fun advertSession(target: HeadsetCandidate, vendor: AdvertVendor): Attempt {
+        if (!platform.listensForAdverts) {
+            log.i("${target.name}: ${platform.name} cannot hear its adverts; not opened")
+            return Attempt(Words(vendor.notPossibleKey))
+        }
+        val reader = vendor.reader(target.name)
+        pushTarget = null
+        commands.reset()
+        session = null
+        headset.value = HeadphoneState(connection = ConnectionState(status = ConnectionStatus.CONNECTING, deviceName = target.name))
+        try {
+            var first = true
+            while (scope.isActive) {
+                val heard = try {
+                    platform.adverts()
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    log.w("listening for adverts failed", e)
+                    emptyList()
+                }
+                headset.update { reader.fold(heard, it).copy(connection = ConnectionState(status = ConnectionStatus.CONNECTED, deviceName = target.name)) }
+                if (first) {
+                    first = false
+                    message.value = null
+                    phase.value = Phase.Connected
+                }
+                delay(advertPauseMs)
+                val stillThere = try {
+                    platform.headsets().any { it.connected && it.name == target.name }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    true
+                }
+                if (!stillThere) return Attempt(null)
+            }
+            return Attempt(null)
+        } finally {
+            headset.update { it.copy(connection = ConnectionState(status = ConnectionStatus.DISCONNECTED, deviceName = target.name)) }
+        }
+    }
 
     /** One session. Null problem once it was connected and has ended; otherwise why it never connected. */
     private suspend fun session(target: HeadsetCandidate): Attempt {
@@ -368,5 +424,6 @@ class HeadsetController(
         private const val VOLUME_DEBOUNCE_MS = 250L
         private const val POLL_MS = 60_000L
         private const val LIVE_POLL_MS = 300_000L
+        private const val ADVERT_PAUSE_MS = 20_000L
     }
 }

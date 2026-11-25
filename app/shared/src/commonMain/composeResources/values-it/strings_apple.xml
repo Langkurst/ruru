@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- AirPods and Beats: Ruru only listens to their Bluetooth adverts. The note shown with the battery, and what is said where the adverts can't be heard. -->
+    <string name="apple_note_battery_only">Ruru legge la batteria dai segnali che i tuoi AirPods o Beats trasmettono. Non invia nulla e non può cambiare le loro impostazioni.</string>
+    <string name="apple_note_not_possible">Ruru non può leggere la batteria di AirPods o Beats su questo sistema. Su Mac o iPhone Apple non lo consente.</string>
+</resources>

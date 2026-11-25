@@ -52,6 +52,13 @@ interface HeadsetPlatform {
      * empty list on a system that cannot listen. Listening sends nothing.
      */
     suspend fun adverts(): List<HeadsetAdvert> = emptyList()
+
+    /**
+     * True when [adverts] really listens on this system (Windows with its Bluetooth LE helper).
+     * False where it cannot (Mac and iPhone never hand an app Apple's adverts) or has not been
+     * written yet: a headset that is read from adverts alone is then not listed as readable.
+     */
+    val listensForAdverts: Boolean get() = false
 }
 
 /** How a headset is reachable: classic Bluetooth (RFCOMM) or Bluetooth LE only. */
@@ -75,8 +82,10 @@ class HeadsetCandidate(
 /**
  * One Bluetooth LE advert: [manufacturerId] (0x004C for Apple) and its manufacturer-specific
  * [data] with the company id stripped, the advertised [name] if any, and an opaque [key] for the
- * advertiser that is never an address and never shown or logged.
+ * advertiser that is never an address and never shown or logged. [rssi] is the signal strength in
+ * dBm when the platform reports it (null when it doesn't): a stranger's AirPods across the room are
+ * weaker than yours.
  */
-class HeadsetAdvert(val manufacturerId: Int, val data: ByteArray, val name: String?, val key: String) {
+class HeadsetAdvert(val manufacturerId: Int, val data: ByteArray, val name: String?, val key: String, val rssi: Int? = null) {
     override fun toString(): String = "HeadsetAdvert(0x${manufacturerId.toString(16)}, ${data.size} bytes, $name)"
 }
