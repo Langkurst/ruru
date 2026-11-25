@@ -263,6 +263,7 @@ jobs:
           # Staying alive isn't enough: the tray keeps the process up even if the window fails.
           if grep -q -e "Exception in thread" -e "Error was captured in composition" ruru-start.log; then echo "Ruru failed at launch:"; cat ruru-start.log; kill $pid || true; exit 1; fi
           kill $pid
+          wait $pid 2>/dev/null || true # let it close, or the next step's copy hands over to it and quits
       - name: Take a picture of the running app
         # The runner has a screen, so the real window can be looked at. What to look for (it checks the macOS
         # title bar from app/desktop Main.kt): the page runs under a transparent title bar with no system title
@@ -272,10 +273,17 @@ jobs:
         run: |
           app=app/desktop/build/compose/binaries/main-release/app/Ruru.app
           mkdir -p shots
-          open -a "$PWD/$app" --args --demo || true
-          sleep 15
+          # Its own instance folder, so no earlier copy can take the launch over.
+          RURU_INSTANCE_DIR="$RUNNER_TEMP/ruru-shot" "$app/Contents/MacOS/Ruru" --demo > shots/ruru-shot.log 2>&1 &
+          pid=$!
+          sleep 20
+          osascript -e 'tell application "System Events" to set frontmost of (first process whose unix id is '"$pid"') to true' || true
+          sleep 2
+          osascript -e 'tell application "System Events" to get {name, title of every window} of (first process whose unix id is '"$pid"')' > shots/windows.txt 2>&1 || true
           screencapture -x shots/mac-window.png || true
-          osascript -e 'tell application "Ruru" to quit' || pkill -f "Ruru.app/Contents/MacOS/Ruru" || true
+          kill $pid || true
+          wait $pid 2>/dev/null || true
+          cat shots/windows.txt shots/ruru-shot.log || true
           ls -la shots
       - name: Name the file after the real version
         run: |
@@ -287,7 +295,7 @@ jobs:
         with: { name: macos, path: out/*.dmg }
       - uses: actions/upload-artifact@v7
         if: always()
-        with: { name: mac-screenshot, path: shots/*.png, if-no-files-found: ignore }
+        with: { name: mac-screenshot, path: "shots/*", if-no-files-found: ignore }
 
   ios:
     needs: test
