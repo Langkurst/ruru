@@ -47,6 +47,7 @@
  "immersive": "이머시브",
  "join": ", "
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>사용 방법</h2>
     <ol class="list steps">
       <li>컴퓨터나 휴대폰용 Ruru를 다운로드하세요.</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>다운로드</h2>
     <p>컴퓨터나 휴대폰을 고르세요. 어느 버튼이든 최신 버전을 받아요.</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">모든 버전에 가상의 헤드폰으로 쓰는 데모 모드가 있어서, 먼저 둘러볼 수 있어요.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>처음 열 때</h2>
     <p>Ruru는 아직 Microsoft나 Apple의 서명을 받지 않아서, Windows와 Mac은 처음에 경고를 보여 줄 수 있어요.</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>먼저 Bose 앱을 닫으세요. 헤드폰과 통신할 수 있는 앱은 한 번에 하나뿐이에요.</p>
   </section>
 
-  <section>
-    <h2>바꿀 수 있는 것</h2>
-    <ul class="list">
-      <li>청취 모드와 나만의 모드</li>
-      <li>노이즈 캔슬링의 세기</li>
-      <li>Wind Block과 Immersive Audio</li>
-      <li>저음, 중음, 고음</li>
-      <li>단축 버튼의 동작</li>
-      <li>내 목소리 듣기, 멀티포인트, 자동 전원 끄기 등</li>
-    </ul>
-    <p>컴퓨터에서는 Ruru가 시계 옆 알림 영역에 머물면서 배터리 잔량을 보여 줘요.</p>
-    <p>Ruru는 헤드폰의 펌웨어를 업데이트하지 않아요. 업데이트는 Bose 앱을 쓰세요.</p>
+  <section id="features">
+    <h2 class="sr">기능</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>헤드폰 설정</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>청취 모드와 나만의 모드</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>노이즈 캔슬링 세기</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block과 Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>저음, 중음, 고음</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>단축 버튼</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>내 목소리 듣기, 멀티포인트, 자동 전원 끄기, 자동 재생과 일시정지</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>앱</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Windows, Mac, Linux, Android, iPhone에서 작동</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>컴퓨터에서는 시계 옆에 배터리 잔량 표시</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>사이드바가 있는 데스크톱 창, Windows에서는 자체 제목 표시줄 포함</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>한 번 눌러 새 버전을 내려받고 확인한 뒤 설치 전에 물어보는 업데이트 (Windows와 Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Windows에서 약 1초 만에 열림</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11개 언어</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>계정 없음, 추적 없음</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>무료 오픈 소스, MIT 라이선스</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru는 헤드폰의 펌웨어를 업데이트하지 않아요. 업데이트는 Bose 앱을 쓰세요.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">데스크톱 앱</h2>
+    <p class="sr">컴퓨터에서 Ruru는 헤드폰과 배터리를 보여 주는 사이드바와, 사운드와 설정 두 페이지가 있는 창이에요. Windows에서는 창에 자체 제목 표시줄이 있어요.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="청취 모드, 노이즈 캔슬링, 이퀄라이저를 보여 주는 Ruru 데스크톱 앱. 가상의 헤드폰을 썼어요.">
+      </picture>
+      <figcaption class="small">데모 모드의 사운드 페이지. 가상의 헤드폰을 썼어요.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru와 Bose 앱</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">그 밖의 무료 Bose 도구는 이 중 한두 가지 시스템에서만 작동해요.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>헤드폰</h2>
     <p>Ruru는 QC Ultra Headphones (1st Gen)으로 테스트했어요.</p>
     <p>아래 모델도 작동할 것 같지만, 아직 Ruru로 써 본 사람은 없어요.</p>
@@ -288,14 +321,14 @@
     <p>이 중 하나로 Ruru를 써 보셨나요? <a href="https://github.com/Langkurst/ruru/issues/new/choose">GitHub에서 알려 주세요</a>. Headphones report 양식을 쓰고, 앱 맨 아래의 보고서를 붙여 넣어 주세요.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>개인정보</h2>
     <p>Ruru는 헤드폰과 통신해요. 인터넷은 '업데이트 확인'을 누를 때만 써요. 그때 GitHub에 최신 버전을 물어보고 내려받아요.</p>
     <p>계정도, 추적도, 충돌 보고서도 없어요. Android 앱은 인터넷을 아예 쓸 수 없어요.</p>
     <p>이 웹사이트에는 쿠키도 추적도 없어요. 어느 버전이 최신인지 GitHub에 물어봐요.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>후원</h2>
     <p>Ruru는 무료예요. 마음에 드셨다면 <a href="https://ko-fi.com/keaclip">Ko-fi에서 커피 한 잔을 사 주실</a> 수 있어요.</p>
   </section>

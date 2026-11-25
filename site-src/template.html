@@ -19,6 +19,7 @@
 <link rel="preload" href="{{@base}}fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{@base}}styles.css">
 <script id="strings" type="application/json">{{@strings}}</script>
+<script src="{{@base}}reveal.js"></script>
 <script src="{{@base}}app.js" defer></script>
 <script src="{{@base}}demo.js" defer></script>
 </head>
@@ -118,7 +119,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>{{how.title}}</h2>
     <ol class="list steps">
       <li>{{how.step1}}</li>
@@ -128,7 +129,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>{{dl.title}}</h2>
     <p>{{dl.intro}}</p>
     <ul class="panel">
@@ -183,7 +184,7 @@
     <p class="small after-panel">{{dl.after}}</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>{{first.title}}</h2>
     <p>{{first.p1}}</p>
     <ul class="list">
@@ -194,21 +195,53 @@
     <p>{{first.p3}}</p>
   </section>
 
-  <section>
-    <h2>{{can.title}}</h2>
-    <ul class="list">
-      <li>{{can.item1}}</li>
-      <li>{{can.item2}}</li>
-      <li>{{can.item3}}</li>
-      <li>{{can.item4}}</li>
-      <li>{{can.item5}}</li>
-      <li>{{can.item6}}</li>
-    </ul>
-    <p>{{can.p1}}</p>
-    <p>{{can.p2}}</p>
+  <section id="features">
+    <h2 class="sr">{{feat.title}}</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>{{feat.g1}}</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a1}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a2}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a3}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a4}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a5}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.a6}}</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>{{feat.g2}}</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b1}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b2}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b3}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b4}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b5}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b6}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b7}}</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>{{feat.b8}}</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">{{can.p2}}</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">{{desk.title}}</h2>
+    <p class="sr">{{desk.p1}}</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="{{@base}}img/app-dark-1100.avif 1100w, {{@base}}img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="{{@base}}img/app-dark-1100.webp 1100w, {{@base}}img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="{{@base}}img/app-light-1100.avif 1100w, {{@base}}img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="{{@base}}img/app-light-1100.webp 1100w, {{@base}}img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="{{@base}}img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="{{desk.alt}}">
+      </picture>
+      <figcaption class="small">{{desk.caption}}</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>{{cmp.title}}</h2>
     <div class="table-panel">
       <table>
@@ -229,7 +262,7 @@
     <p class="after-table">{{cmp.after}}</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>{{hp.title}}</h2>
     <p>{{hp.tested}}</p>
     <p>{{hp.should}}</p>
@@ -245,14 +278,14 @@
     <p>{{hp.report|a=https://github.com/Langkurst/ruru/issues/new/choose}}</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>{{priv.title}}</h2>
     <p>{{priv.p1}}</p>
     <p>{{priv.p2}}</p>
     <p>{{priv.p3}}</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>{{support.title}}</h2>
     <p>{{support.p1|a=https://ko-fi.com/keaclip}}</p>
   </section>

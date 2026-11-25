@@ -47,6 +47,7 @@
  "immersive": "Immersive",
  "join": ", "
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>Zo werkt het</h2>
     <ol class="list steps">
       <li>Download Ruru voor je computer of telefoon.</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>Downloaden</h2>
     <p>Kies je computer of telefoon. Elke knop haalt de nieuwste versie op.</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">Elke versie heeft een demomodus met een nepkoptelefoon, zodat je eerst rond kunt kijken.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>De eerste keer openen</h2>
     <p>Windows en Mac geven je de eerste keer misschien een waarschuwing, omdat Ruru nog niet is ondertekend door Microsoft of Apple.</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>Sluit eerst de Bose-app af. Maar één app tegelijk kan met de koptelefoon praten.</p>
   </section>
 
-  <section>
-    <h2>Wat je kunt wijzigen</h2>
-    <ul class="list">
-      <li>Luistermodi, en je eigen modi</li>
-      <li>Hoeveel ruisonderdrukking je krijgt</li>
-      <li>Wind Block en Immersive Audio</li>
-      <li>Bas, midden en hoge tonen</li>
-      <li>Wat de snelfunctieknop doet</li>
-      <li>Eigen stem, multipoint, automatisch uitschakelen en meer</li>
-    </ul>
-    <p>Op een computer staat Ruru in het systeemvak bij de klok en toont het batterijniveau.</p>
-    <p>Ruru werkt de firmware van de koptelefoon niet bij. Gebruik daarvoor de Bose-app.</p>
+  <section id="features">
+    <h2 class="sr">Functies</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>Instellingen van de koptelefoon</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Luistermodi, en je eigen modi</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Niveau van de ruisonderdrukking</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block en Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Bas, midden en hoge tonen</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Snelfunctieknop</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Eigen stem, multipoint, automatisch uitschakelen en automatisch afspelen en pauzeren</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>De app</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Werkt op Windows, Mac, Linux, Android en iPhone</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Batterijniveau bij de klok op een computer</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Een bureaubladvenster met een zijbalk en, op Windows, een eigen titelbalk</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Updates met één klik die de nieuwe versie downloaden en controleren en vragen voordat ze installeren (Windows en Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Opent op Windows in ongeveer een seconde</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 talen</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Geen account en geen tracking</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Gratis en open source, MIT-licentie</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru werkt de firmware van de koptelefoon niet bij. Gebruik daarvoor de Bose-app.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">Bureaubladapp</h2>
+    <p class="sr">Op een computer is Ruru een venster met een zijbalk voor je koptelefoon en de batterij, en twee pagina's voor geluid en instellingen. Op Windows heeft het venster een eigen titelbalk.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="De Ruru-bureaubladapp met luistermodi, ruisonderdrukking en equalizer, getoond met een nepkoptelefoon.">
+      </picture>
+      <figcaption class="small">De geluidspagina in demomodus, met een nepkoptelefoon.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru en de Bose-app</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">Andere gratis Bose-tools werken elk op één of twee van deze systemen.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>Koptelefoons</h2>
     <p>Ruru is getest met de QC Ultra Headphones (1st Gen).</p>
     <p>Deze zouden ook moeten werken, maar niemand heeft ze nog met Ruru geprobeerd.</p>
@@ -288,14 +321,14 @@
     <p>Heb je Ruru met een van deze geprobeerd? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Laat het me weten op GitHub</a>. Gebruik het formulier Headphones report en plak het rapport van onderaan de app.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>Privacy</h2>
     <p>Ruru praat met je koptelefoon. Het gebruikt het internet alleen als je op Op updates controleren klikt: dan vraagt het GitHub om de nieuwste versie en downloadt die.</p>
     <p>Er is geen account, geen tracking en geen crashrapporten. De Android-app kan het internet helemaal niet gebruiken.</p>
     <p>Deze website heeft geen cookies en geen tracking. Hij vraagt GitHub welke versie de nieuwste is.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>Steun</h2>
     <p>Ruru is gratis. Vind je het fijn, dan kun je <a href="https://ko-fi.com/keaclip">een kop koffie voor me kopen op Ko-fi</a>.</p>
   </section>

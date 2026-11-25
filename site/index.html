@@ -48,6 +48,7 @@
  "immersive": "Immersive",
  "join": ", "
 }</script>
+<script src="reveal.js"></script>
 <script src="app.js" defer></script>
 <script src="demo.js" defer></script>
 </head>
@@ -162,7 +163,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>How it works</h2>
     <ol class="list steps">
       <li>Download Ruru for your computer or phone.</li>
@@ -172,7 +173,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>Download</h2>
     <p>Pick your computer or phone. Each button gets the newest version.</p>
     <ul class="panel">
@@ -227,7 +228,7 @@
     <p class="small after-panel">Every version has a demo mode with pretend headphones, so you can look around first.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>Opening it the first time</h2>
     <p>Windows and Mac may warn you the first time, because Ruru isn't signed by Microsoft or Apple yet.</p>
     <ul class="list">
@@ -238,21 +239,53 @@
     <p>Close the Bose app first. Only one app can talk to the headphones at a time.</p>
   </section>
 
-  <section>
-    <h2>What it can change</h2>
-    <ul class="list">
-      <li>Listening modes, and your own modes</li>
-      <li>How much noise cancelling you get</li>
-      <li>Wind Block and Immersive Audio</li>
-      <li>Bass, mid and treble</li>
-      <li>What the shortcut button does</li>
-      <li>Self voice, multipoint, auto-off and more</li>
-    </ul>
-    <p>On a computer, Ruru sits in the corner by the clock and shows the battery level.</p>
-    <p>Ruru doesn't update the headphones' firmware. Use the Bose app for that.</p>
+  <section id="features">
+    <h2 class="sr">Features</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>Headphone settings</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Listening modes, and your own modes</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Noise cancelling level</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block and Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Bass, mid and treble</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Shortcut button</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Self voice, multipoint, auto-off and auto play/pause</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>The app</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Works on Windows, Mac, Linux, Android and iPhone</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Battery level by the clock on a computer</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>A desktop window with a sidebar and its own title bar on Windows</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>One-click updates that download and check the new version, then ask before installing (Windows and Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Opens in about a second on Windows</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 languages</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>No account and no tracking</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Free and open source, MIT licence</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru doesn't update the headphones' firmware. Use the Bose app for that.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">Desktop app</h2>
+    <p class="sr">On a computer, Ruru is a window with a sidebar for your headphones and the battery, and two pages for sound and settings. On Windows the window has its own title bar.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="img/app-dark-1100.avif 1100w, img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="img/app-dark-1100.webp 1100w, img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="img/app-light-1100.avif 1100w, img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="img/app-light-1100.webp 1100w, img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="The Ruru desktop app showing listening modes, noise cancelling and the equaliser, with pretend headphones.">
+      </picture>
+      <figcaption class="small">The sound page in demo mode, with pretend headphones.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru and the Bose app</h2>
     <div class="table-panel">
       <table>
@@ -273,7 +306,7 @@
     <p class="after-table">Other free Bose tools each run on one or two of these systems.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>Headphones</h2>
     <p>Ruru has been tested with QC Ultra Headphones (1st Gen).</p>
     <p>These should work too, but nobody has tried them with Ruru yet.</p>
@@ -289,14 +322,14 @@
     <p>Tried Ruru with one of these? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Tell me on GitHub</a>. Use the Headphones report form, and paste the report from the bottom of the app.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>Privacy</h2>
     <p>Ruru talks to your headphones. It uses the internet only when you click Check for updates: then it asks GitHub for the newest version and downloads it.</p>
     <p>There's no account, no tracking and no crash reports. The Android app can't use the internet at all.</p>
     <p>This website has no cookies and no tracking. It asks GitHub which version is the newest.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>Support</h2>
     <p>Ruru is free. If you like it, you can <a href="https://ko-fi.com/keaclip">buy me a coffee on Ko-fi</a>.</p>
   </section>

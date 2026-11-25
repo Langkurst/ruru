@@ -257,14 +257,58 @@ tbody td:nth-child(2) { color: var(--ink); }
 .footer-links a:hover { color: var(--ink); background: var(--raised); }
 
 
-/* Reveal: hidden only when the script has run and motion is allowed */
+/* Features: two panels with a tick before each line */
+.feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 759px) { .feats { grid-template-columns: minmax(0, 1fr); } }
+.feat { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 20px; }
+.feat h3 { margin: 0 0 12px; font-size: 16px; line-height: 1.4; font-weight: 600; }
+.feat ul { list-style: none; margin: 0; padding: 0; }
+.feat li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 12px; align-items: start; font-size: 15px; line-height: 24px; color: var(--ink-2); }
+.feat li + li { margin-top: 10px; }
+.ck { display: block; width: 18px; height: 18px; margin-top: 3px; }
+.ck circle { fill: var(--eye); }
+.ck path { fill: none; stroke: var(--on-eye); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.feat:nth-child(2) { --i: 1; }
+.feat li:nth-child(2) { --t: 1; }
+.feat li:nth-child(3) { --t: 2; }
+.feat li:nth-child(4) { --t: 3; }
+.feat li:nth-child(5) { --t: 4; }
+.feat li:nth-child(6) { --t: 5; }
+.feat li:nth-child(7) { --t: 6; }
+.feat li:nth-child(8) { --t: 7; }
+.after-feats { margin: 16px 0 0; }
+@media (max-width: 639px) { .feat { padding: 16px; } }
+
+/* Desktop app screenshot */
+#desktop { contain-intrinsic-size: auto 840px; }
+@media (max-width: 639px) { #desktop { contain-intrinsic-size: auto 560px; } }
+#features { contain-intrinsic-size: auto 560px; }
+@media (max-width: 759px) { #features { contain-intrinsic-size: auto 1080px; } }
+.shot { margin: 24px 0 0; max-width: 1000px; }
+.shot picture { display: block; }
+.shot img {
+  width: 100%; height: auto; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 11px;
+  box-shadow: 0 24px 48px -28px color-mix(in srgb, var(--ink) 40%, transparent);
+}
+.shot figcaption { margin-top: 12px; }
+
+/* Reveal: hidden only once reveal.js has run and motion is allowed. Opacity, transform and stroke-dashoffset only. */
 @media (prefers-reduced-motion: no-preference) {
-  html.js .rv { opacity: 0; transform: translateY(12px); }
-  html.js .rv.in {
+  html.js .sr { opacity: 0; transform: translateY(12px); }
+  html.js .shot.sr { transform: translateY(12px) scale(.97); transform-origin: 50% 0; }
+  html.js .sr.in {
     opacity: 1; transform: none;
-    transition: opacity 450ms var(--ease), transform 450ms var(--ease);
-    transition-delay: calc(var(--i, 0) * 40ms);
+    transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+    transition-delay: calc(var(--i, 0) * 80ms);
   }
+  html.js .sr.now { transition: none; }
+  html.js .feat .ck path { stroke-dashoffset: 1; }
+  html.js .feat.in .ck path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 420ms var(--ease) calc(250ms + var(--t, 0) * 50ms);
+  }
+  html.js .feat.now .ck path { transition: none; }
 }
 
 /* The working copy of the app. Everything that moves uses transform or opacity. */

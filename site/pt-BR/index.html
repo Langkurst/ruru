@@ -47,6 +47,7 @@
  "immersive": "Imersivo",
  "join": ", "
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>Como funciona</h2>
     <ol class="list steps">
       <li>Baixe o Ruru para o seu computador ou celular.</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>Baixar</h2>
     <p>Escolha seu computador ou celular. Cada botão baixa a versão mais recente.</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">Todas as versões têm um modo demo com fones de ouvido simulados, para você dar uma olhada antes.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>Abrindo pela primeira vez</h2>
     <p>Windows e Mac podem mostrar um aviso na primeira vez, porque o Ruru ainda não é assinado pela Microsoft nem pela Apple.</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>Feche primeiro o app da Bose. Só um app pode falar com os fones de ouvido por vez.</p>
   </section>
 
-  <section>
-    <h2>O que ele pode mudar</h2>
-    <ul class="list">
-      <li>Os modos de audição e seus próprios modos</li>
-      <li>Quanto cancelamento de ruído você tem</li>
-      <li>Wind Block e Immersive Audio</li>
-      <li>Graves, médios e agudos</li>
-      <li>O que o botão de atalho faz</li>
-      <li>Voz própria, multiponto, desligamento automático e mais</li>
-    </ul>
-    <p>No computador, o Ruru fica no canto, perto do relógio, e mostra o nível da bateria.</p>
-    <p>Ruru não atualiza o firmware dos fones de ouvido. Para isso, use o app da Bose.</p>
+  <section id="features">
+    <h2 class="sr">Recursos</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>Ajustes dos fones de ouvido</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Os modos de audição e seus próprios modos</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Nível de cancelamento de ruído</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block e Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Graves, médios e agudos</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Botão de atalho</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Voz própria, multiponto, desligamento automático e reprodução/pausa automática</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>O app</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Funciona no Windows, Mac, Linux, Android e iPhone</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Nível da bateria perto do relógio no computador</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Uma janela de desktop com barra lateral e, no Windows, sua própria barra de título</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Atualizações com um clique que baixam e verificam a nova versão e perguntam antes de instalar (Windows e Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Abre em cerca de um segundo no Windows</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 idiomas</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Sem conta e sem rastreamento</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Gratuito e de código aberto, licença MIT</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru não atualiza o firmware dos fones de ouvido. Para isso, use o app da Bose.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">App para desktop</h2>
+    <p class="sr">No computador, o Ruru é uma janela com uma barra lateral para seus fones de ouvido e a bateria, e duas páginas para o som e os ajustes. No Windows, a janela tem sua própria barra de título.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="O app para desktop do Ruru com os modos de audição, o cancelamento de ruído e o equalizador, mostrados com fones de ouvido simulados.">
+      </picture>
+      <figcaption class="small">A página de som no modo demo, com fones de ouvido simulados.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru e o app da Bose</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">As outras ferramentas gratuitas para Bose funcionam cada uma em um ou dois desses sistemas.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>Fones de ouvido</h2>
     <p>Ruru foi testado com QC Ultra Headphones (1st Gen).</p>
     <p>Estes também devem funcionar, mas ninguém ainda os testou com o Ruru.</p>
@@ -288,14 +321,14 @@
     <p>Testou o Ruru com algum destes? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Conte para mim no GitHub</a>. Use o formulário Headphones report e cole o relatório que aparece no fim do app.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>Privacidade</h2>
     <p>Ruru se comunica com os seus fones de ouvido. Ele só usa a internet quando você clica em Verificar atualizações: aí ele pergunta ao GitHub qual é a versão mais recente e baixa essa versão.</p>
     <p>Não há conta, rastreamento nem relatórios de falhas. O app para Android não consegue usar a internet de jeito nenhum.</p>
     <p>Este site não tem cookies nem rastreamento. Ele só pergunta ao GitHub qual é a versão mais recente.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>Apoio</h2>
     <p>Ruru é gratuito. Se você gostar, pode <a href="https://ko-fi.com/keaclip">me pagar um café no Ko-fi</a>.</p>
   </section>

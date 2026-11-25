@@ -12,7 +12,6 @@
   var reduce = win.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var $ = function (s, r) { return (r || d).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || d).querySelectorAll(s)); };
-  d.documentElement.classList.add("js");
 
   // The words come from the page: build.mjs writes them as JSON in <script id="strings">.
   var S = {};
@@ -23,27 +22,6 @@
     el.style.willChange = "transform";
     win.clearTimeout(el._w);
     el._w = win.setTimeout(function () { el.style.willChange = ""; }, ms);
-  }
-
-  // Sections rise and fade in once, as they first come into view.
-  if (!reduce && win.IntersectionObserver) {
-    var io = new win.IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        io.unobserve(e.target);
-        e.target._rv.forEach(function (t, i) { t.classList.add("in"); hold(t, 700 + i * 40); });
-      });
-    }, { rootMargin: "0px 0px -8% 0px" });
-    $$("main > section:not(.intro)").forEach(function (s) {
-      var items = [];
-      [].forEach.call(s.children, function (c) {
-        var inner = c.classList.contains("panel") ? c.children : c.classList.contains("table-panel") ? c.querySelectorAll("tr") : [c];
-        [].push.apply(items, inner);
-      });
-      items.forEach(function (t, i) { t.classList.add("rv"); t.style.setProperty("--i", i); });
-      s._rv = items;
-      io.observe(s);
-    });
   }
 
   var demo = $("#demo");

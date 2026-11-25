@@ -47,6 +47,7 @@
  "immersive": "Immersive",
  "join": "，"
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>使用方法</h2>
     <ol class="list steps">
       <li>为你的电脑或手机下载 Ruru。</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>下载</h2>
     <p>选择你的电脑或手机。每个按钮都会下载最新版本。</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">每个版本都有演示模式，使用模拟的耳机，你可以先随便看看。</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>第一次打开</h2>
     <p>Windows 和 Mac 第一次打开时可能会发出警告，因为 Ruru 还没有 Microsoft 或 Apple 的签名。</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>请先关闭 Bose 应用。同一时间只有一个应用能与耳机通信。</p>
   </section>
 
-  <section>
-    <h2>能更改什么</h2>
-    <ul class="list">
-      <li>聆听模式，以及你自己的模式</li>
-      <li>降噪的强度</li>
-      <li>Wind Block 和 Immersive Audio</li>
-      <li>低音、中音和高音</li>
-      <li>快捷按钮的功能</li>
-      <li>自我语音、多点连接、自动关机等</li>
-    </ul>
-    <p>在电脑上，Ruru 会待在时钟旁边的角落，并显示电量。</p>
-    <p>Ruru 不会更新耳机的固件。固件更新请用 Bose 应用。</p>
+  <section id="features">
+    <h2 class="sr">功能</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>耳机设置</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>聆听模式，以及你自己的模式</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>降噪强度</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block 和 Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>低音、中音和高音</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>快捷按钮</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>自我语音、多点连接、自动关机、自动播放和暂停</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>应用</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>可在 Windows、Mac、Linux、Android 和 iPhone 上使用</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>在电脑上，时钟旁边显示电量</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>带侧边栏的桌面窗口，在 Windows 上有自己的标题栏</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>一键更新，会下载并检查新版本，安装前先询问（Windows 和 Mac）</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>在 Windows 上约一秒钟打开</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 种语言</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>无需账号，不做跟踪</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>免费开源，MIT 许可证</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru 不会更新耳机的固件。固件更新请用 Bose 应用。</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">桌面应用</h2>
+    <p class="sr">在电脑上，Ruru 是一个带侧边栏的窗口，侧边栏显示你的耳机和电量，另有声音和设置两个页面。在 Windows 上，窗口有自己的标题栏。</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="Ruru 桌面应用，显示聆听模式、降噪和均衡器，使用的是模拟耳机。">
+      </picture>
+      <figcaption class="small">演示模式下的声音页面，使用的是模拟耳机。</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru 与 Bose 应用</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">其他免费的 Bose 工具，各自只能在其中一两个系统上运行。</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>耳机</h2>
     <p>Ruru 已在 QC Ultra Headphones (1st Gen) 上测试过。</p>
     <p>下面这些应该也能用，但还没有人用 Ruru 试过。</p>
@@ -288,14 +321,14 @@
     <p>用 Ruru 试过其中某一款？<a href="https://github.com/Langkurst/ruru/issues/new/choose">请在 GitHub 上告诉我</a>。请使用 Headphones report 表单，并粘贴应用底部的报告。</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>隐私</h2>
     <p>Ruru 与你的耳机通信。只有当你点击“检查更新”时才会联网：此时它会向 GitHub 查询最新版本并下载。</p>
     <p>没有账号，没有跟踪，也没有崩溃报告。Android 版应用完全不能使用互联网。</p>
     <p>本网站没有 Cookie，也没有跟踪。它只会向 GitHub 查询哪个版本是最新的。</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>支持</h2>
     <p>Ruru 是免费的。如果你喜欢它，可以<a href="https://ko-fi.com/keaclip">在 Ko-fi 上请我喝杯咖啡</a>。</p>
   </section>

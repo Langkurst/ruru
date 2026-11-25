@@ -70,5 +70,44 @@ const require = createRequire(import.meta.url);
 const { compareVersions } = require(path.join(site, 'app.js'));
 check('compareVersions orders versions', compareVersions('0.1.10', '0.1.9') === 1 && compareVersions('0.1.2', '0.1.2') === 0 && compareVersions('0.0.9', '0.1.0') === -1);
 
+// ---- features list, desktop screenshot and the scroll reveal
+const pages = ['index.html', ...BUILT.map((c) => `${c}/index.html`)];
+for (const rel of pages) {
+  const html = fs.readFileSync(path.join(site, rel), 'utf8');
+  const ticks = (html.match(/<svg class="ck"[^>]*>(?:(?!<\/svg>).)*<path [^>]*pathLength="1"\/><\/svg>/g) || []).length;
+  check(`${rel}: 2 feature panels with 14 ticks`, (html.match(/class="feat sr"/g) || []).length === 2 && ticks === 14, `ticks ${ticks}`);
+  check(`${rel}: screenshot has width, height, alt and a light source`, /<img [^>]*width="1100" height="720"[^>]*loading="lazy"[^>]*alt="[^"]+"/.test(html) && /media="\(prefers-color-scheme: light\)"/.test(html));
+  check(`${rel}: nothing the CSP would block`, !/<script(?![^>]*\ssrc=)[^>]*>(?!\s*\{)/.test(html.replace(/<script id="strings"[\s\S]*?<\/script>/, '')) && !/\sstyle="/.test(html) && !/\son[a-z]+="/.test(html));
+}
+const css = fs.readFileSync(path.join(site, 'styles.css'), 'utf8');
+const hides = css.match(/[^{}]*\.sr[^{}]*\{[^}]*opacity:\s*0[^}]*\}/g) || [];
+check('the reveal hides things only under html.js and no-preference motion', hides.length > 0 && hides.every((r) => /html\.js /.test(r)) && /@media \(prefers-reduced-motion: no-preference\) \{[^@]*html\.js \.sr \{ opacity: 0/.test(css));
+
+const revealCode = fs.readFileSync(path.join(site, 'reveal.js'), 'utf8');
+function reveal({ reduced = false, observer = true, search = '' }) {
+  const classes = new Set();
+  const window = {
+    location: { search },
+    matchMedia: () => ({ matches: reduced }),
+    innerHeight: 800,
+    addEventListener() {},
+    IntersectionObserver: observer ? function () { this.observe = () => {}; this.unobserve = () => {}; } : undefined,
+  };
+  const document = { readyState: 'complete', documentElement: { classList: { add: (c) => classes.add(c) } }, querySelectorAll: () => [], addEventListener() {} };
+  vm.runInNewContext(revealCode, { window, document });
+  return classes.has('js');
+}
+check('reveal.js hides content when motion is allowed', reveal({}) === true);
+check('reveal.js leaves everything visible with reduced motion', reveal({ reduced: true }) === false);
+check('reveal.js leaves everything visible without IntersectionObserver', reveal({ observer: false }) === false);
+check('reveal.js leaves everything visible with ?static', reveal({ search: '?static' }) === false);
+
+// Copy rules that need no judgement: no em or en dashes, no exclamation marks, in any language file.
+for (const f of fs.readdirSync(path.join(here, 'i18n')).filter((n) => n.endsWith('.json'))) {
+  const data = JSON.parse(fs.readFileSync(path.join(here, 'i18n', f), 'utf8'));
+  const bad = Object.entries(data).filter(([k, v]) => !k.startsWith('_') && /[–—!！]/.test(v)).map(([k]) => k);
+  check(`${f}: no dashes or exclamation marks in the text`, bad.length === 0, bad.join(', '));
+}
+
 if (failures) { console.error(`${failures} failed`); process.exit(1); }
 console.log('all passed');

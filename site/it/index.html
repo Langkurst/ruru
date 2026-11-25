@@ -47,6 +47,7 @@
  "immersive": "Immersivo",
  "join": ", "
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>Come funziona</h2>
     <ol class="list steps">
       <li>Scarica Ruru per il tuo computer o telefono.</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>Scarica</h2>
     <p>Scegli il tuo computer o telefono. Ogni pulsante scarica la versione più recente.</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">Ogni versione ha una modalità demo con cuffie finte, così puoi dare prima un'occhiata.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>Aprirlo la prima volta</h2>
     <p>Windows e Mac possono mostrare un avviso la prima volta, perché Ruru non è ancora firmato da Microsoft o Apple.</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>Chiudi prima l'app Bose. Solo un'app alla volta può comunicare con le cuffie.</p>
   </section>
 
-  <section>
-    <h2>Cosa può cambiare</h2>
-    <ul class="list">
-      <li>Le modalità di ascolto, e le tue modalità</li>
-      <li>Quanta cancellazione del rumore ottieni</li>
-      <li>Wind Block e Immersive Audio</li>
-      <li>Bassi, medi e alti</li>
-      <li>Cosa fa il tasto di scelta rapida</li>
-      <li>Self Voice, multipoint, spegnimento automatico e altro</li>
-    </ul>
-    <p>Su un computer, Ruru sta nell'angolo vicino all'orologio e mostra il livello della batteria.</p>
-    <p>Ruru non aggiorna il firmware delle cuffie. Per quello usa l'app Bose.</p>
+  <section id="features">
+    <h2 class="sr">Funzioni</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>Impostazioni delle cuffie</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Le modalità di ascolto, e le tue modalità</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Livello di cancellazione del rumore</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block e Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Bassi, medi e alti</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Tasto di scelta rapida</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Self Voice, multipoint, spegnimento automatico e riproduzione/pausa automatica</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>L'app</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Funziona su Windows, Mac, Linux, Android e iPhone</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Livello della batteria vicino all'orologio su un computer</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Una finestra da desktop con una barra laterale e, su Windows, una barra del titolo propria</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Aggiornamenti con un clic che scaricano e controllano la nuova versione, poi chiedono prima di installare (Windows e Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Si apre in circa un secondo su Windows</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 lingue</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Nessun account e nessun tracciamento</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Gratuito e open source, licenza MIT</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru non aggiorna il firmware delle cuffie. Per quello usa l'app Bose.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">App desktop</h2>
+    <p class="sr">Su un computer, Ruru è una finestra con una barra laterale per le tue cuffie e la batteria, e due pagine per l'audio e le impostazioni. Su Windows la finestra ha una barra del titolo propria.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="L'app desktop di Ruru con le modalità di ascolto, la cancellazione del rumore e l'equalizzatore, mostrati con cuffie finte.">
+      </picture>
+      <figcaption class="small">La pagina dell'audio in modalità demo, con cuffie finte.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru e l'app Bose</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">Gli altri strumenti Bose gratuiti funzionano ciascuno su uno o due di questi sistemi.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>Cuffie</h2>
     <p>Ruru è stato provato con le QC Ultra Headphones (1st Gen).</p>
     <p>Dovrebbero funzionare anche questi modelli, ma nessuno li ha ancora provati con Ruru.</p>
@@ -288,14 +321,14 @@
     <p>Hai provato Ruru con una di queste? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Dimmelo su GitHub</a>. Usa il modulo di segnalazione Headphones e incolla il rapporto che trovi in fondo all'app.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>Privacy</h2>
     <p>Ruru parla con le tue cuffie. Usa internet solo quando fai clic su Cerca aggiornamenti: a quel punto chiede a GitHub qual è la versione più recente e la scarica.</p>
     <p>Nessun account, nessun tracciamento e nessun rapporto sugli arresti anomali. L'app Android non può usare internet in nessun modo.</p>
     <p>Questo sito non ha cookie né tracciamento. Chiede a GitHub qual è la versione più recente.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>Sostegno</h2>
     <p>Ruru è gratuito. Se ti piace, puoi <a href="https://ko-fi.com/keaclip">offrirmi un caffè su Ko-fi</a>.</p>
   </section>

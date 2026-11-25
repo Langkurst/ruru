@@ -47,6 +47,7 @@
  "immersive": "イマーシブ",
  "join": "、"
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>使い方</h2>
     <ol class="list steps">
       <li>パソコンまたはスマートフォン用のRuruをダウンロードします。</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>ダウンロード</h2>
     <p>お使いのパソコンまたはスマートフォンを選んでください。どのボタンも、最新バージョンを取得します。</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">どのバージョンにも、架空のヘッドホンで動くデモモードがあるので、先に中身を見て回れます。</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>初めて開くとき</h2>
     <p>RuruはまだMicrosoftやAppleの署名を受けていないため、WindowsとMacは、初回に警告を出すことがあります。</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>先にBoseアプリを閉じてください。ヘッドホンと通信できるアプリは、同時に1つだけです。</p>
   </section>
 
-  <section>
-    <h2>変更できること</h2>
-    <ul class="list">
-      <li>リスニングモードと、自分用のモード</li>
-      <li>ノイズキャンセリングの強さ</li>
-      <li>Wind BlockとImmersive Audio</li>
-      <li>低音、中音、高音</li>
-      <li>ショートカットボタンの動作</li>
-      <li>自分の声、マルチポイント、自動電源オフなど</li>
-    </ul>
-    <p>パソコンでは、Ruruは時計のそばの通知領域に常駐し、バッテリー残量を表示します。</p>
-    <p>Ruruは、ヘッドホンのファームウェアを更新しません。更新にはBoseアプリを使ってください。</p>
+  <section id="features">
+    <h2 class="sr">機能</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>ヘッドホンの設定</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>リスニングモードと、自分用のモード</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>ノイズキャンセリングの強さ</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind BlockとImmersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>低音、中音、高音</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>ショートカットボタン</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>自分の声、マルチポイント、自動電源オフ、自動再生と一時停止</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>アプリ</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Windows、Mac、Linux、Android、iPhoneで動作</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>パソコンでは時計のそばにバッテリー残量を表示</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>サイドバーのあるデスクトップウィンドウ（Windowsでは専用のタイトルバー付き）</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>ワンクリックで新しいバージョンをダウンロードして確認し、インストール前に確認を求めるアップデート（WindowsとMac）</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Windowsで約1秒で起動</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11言語</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>アカウント不要、トラッキングなし</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>無料のオープンソース、MITライセンス</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruruは、ヘッドホンのファームウェアを更新しません。更新にはBoseアプリを使ってください。</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">デスクトップアプリ</h2>
+    <p class="sr">パソコンでは、Ruruはヘッドホンとバッテリーを表示するサイドバーと、サウンドと設定の2つのページを持つウィンドウです。Windowsでは、ウィンドウに専用のタイトルバーがあります。</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="リスニングモード、ノイズキャンセリング、イコライザーを表示したRuruのデスクトップアプリ。架空のヘッドホンを使っています。">
+      </picture>
+      <figcaption class="small">デモモードのサウンドのページ。架空のヘッドホンを使っています。</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>RuruとBoseアプリ</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">ほかの無料のBose用ツールは、どれもこのうち1つか2つのシステムでしか動きません。</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>ヘッドホン</h2>
     <p>Ruruは、QC Ultra Headphones (1st Gen)でテストしています。</p>
     <p>次のモデルでも動くはずですが、Ruruで試した人はまだいません。</p>
@@ -288,14 +321,14 @@
     <p>これらのどれかでRuruを試しましたか？ <a href="https://github.com/Langkurst/ruru/issues/new/choose">GitHubで教えてください</a>。「Headphones report」フォームを使い、アプリの下部にあるレポートを貼り付けてください。</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>プライバシー</h2>
     <p>Ruruはヘッドホンと通信します。インターネットを使うのは、「アップデートを確認」を押したときだけです。そのときGitHubに最新バージョンを問い合わせて、ダウンロードします。</p>
     <p>アカウントも、トラッキングも、クラッシュレポートもありません。Android版は、インターネットをまったく使えません。</p>
     <p>このウェブサイトには、Cookieもトラッキングもありません。最新バージョンを知るために、GitHubに問い合わせます。</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>応援</h2>
     <p>Ruruは無料です。気に入ったら、<a href="https://ko-fi.com/keaclip">Ko-fiでコーヒーをごちそうしてください</a>。</p>
   </section>

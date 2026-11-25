@@ -47,6 +47,7 @@
  "immersive": "Immersive",
  "join": ", "
 }</script>
+<script src="/reveal.js"></script>
 <script src="/app.js" defer></script>
 <script src="/demo.js" defer></script>
 </head>
@@ -161,7 +162,7 @@
     </div>
   </section>
 
-  <section id="how">
+  <section id="how" class="sr">
     <h2>Jak to działa</h2>
     <ol class="list steps">
       <li>Pobierz Ruru na komputer lub telefon.</li>
@@ -171,7 +172,7 @@
   </section>
 
   <!-- Operating-system marks in the download rows: paths from Simple Icons 11.14.0 (CC0; slugs windows, apple, linux, android). The marks are trademarks of their owners. -->
-  <section id="download">
+  <section id="download" class="sr">
     <h2>Pobierz</h2>
     <p>Wybierz swój komputer lub telefon. Każdy przycisk pobiera najnowszą wersję.</p>
     <ul class="panel">
@@ -226,7 +227,7 @@
     <p class="small after-panel">Każda wersja ma tryb demo z udawanymi słuchawkami, więc możesz najpierw się rozejrzeć.</p>
   </section>
 
-  <section>
+  <section class="sr">
     <h2>Pierwsze uruchomienie</h2>
     <p>Windows i Mac mogą wyświetlić ostrzeżenie przy pierwszym uruchomieniu, bo aplikacja Ruru nie jest jeszcze podpisana przez Microsoft ani Apple.</p>
     <ul class="list">
@@ -237,21 +238,53 @@
     <p>Najpierw zamknij aplikację Bose. Ze słuchawkami może rozmawiać naraz tylko jedna aplikacja.</p>
   </section>
 
-  <section>
-    <h2>Co można zmienić</h2>
-    <ul class="list">
-      <li>Tryby odsłuchu i własne tryby</li>
-      <li>Poziom redukcji szumów</li>
-      <li>Wind Block i Immersive Audio</li>
-      <li>Basy, średnie i wysokie</li>
-      <li>Działanie przycisku skrótu</li>
-      <li>Własny głos, multipoint, automatyczne wyłączanie i więcej</li>
-    </ul>
-    <p>Na komputerze Ruru siedzi w rogu przy zegarze i pokazuje poziom baterii.</p>
-    <p>Ruru nie aktualizuje firmware słuchawek. Zrobisz to w aplikacji Bose.</p>
+  <section id="features">
+    <h2 class="sr">Funkcje</h2>
+    <div class="feats">
+      <div class="feat sr">
+        <h3>Ustawienia słuchawek</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Tryby odsłuchu i własne tryby</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Poziom redukcji szumów</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Wind Block i Immersive Audio</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Basy, średnie i wysokie</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Przycisk skrótu</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Własny głos, multipoint, automatyczne wyłączanie oraz automatyczne odtwarzanie i pauza</span></li>
+        </ul>
+      </div>
+      <div class="feat sr">
+        <h3>Aplikacja</h3>
+        <ul>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Działa w systemach Windows, Mac, Linux, Android i iPhone</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Poziom baterii przy zegarze na komputerze</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Okno na pulpicie z paskiem bocznym i, w Windows, własnym paskiem tytułu</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Aktualizacje jednym kliknięciem, które pobierają i sprawdzają nową wersję, a przed instalacją pytają o zgodę (Windows i Mac)</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>W Windows otwiera się w około sekundę</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>11 języków</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Bez konta i bez śledzenia</span></li>
+        <li><svg class="ck" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.4l2.6 2.6 5-5.4" pathLength="1"/></svg><span>Za darmo i open source, licencja MIT</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="after-feats sr">Ruru nie aktualizuje firmware słuchawek. Zrobisz to w aplikacji Bose.</p>
   </section>
 
-  <section id="compare">
+  <section id="desktop">
+    <h2 class="sr">Aplikacja na komputer</h2>
+    <p class="sr">Na komputerze Ruru to okno z paskiem bocznym na słuchawki i baterię oraz dwiema stronami: dźwięk i ustawienia. W Windows okno ma własny pasek tytułu.</p>
+    <figure class="shot sr">
+      <picture>
+        <source type="image/avif" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.avif 1100w, /img/app-dark-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: dark)" srcset="/img/app-dark-1100.webp 1100w, /img/app-dark-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/avif" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.avif 1100w, /img/app-light-2200.avif 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <source type="image/webp" media="(prefers-color-scheme: light)" srcset="/img/app-light-1100.webp 1100w, /img/app-light-2200.webp 2200w" sizes="(min-width: 1080px) 1000px, calc(100vw - 40px)">
+        <img src="/img/app-dark-1100.webp" width="1100" height="720" loading="lazy" decoding="async" alt="Aplikacja Ruru na komputer z trybami odsłuchu, redukcją szumów i korektorem, pokazana z udawanymi słuchawkami.">
+      </picture>
+      <figcaption class="small">Strona dźwięku w trybie demo, z udawanymi słuchawkami.</figcaption>
+    </figure>
+  </section>
+
+  <section id="compare" class="sr">
     <h2>Ruru i aplikacja Bose</h2>
     <div class="table-panel">
       <table>
@@ -272,7 +305,7 @@
     <p class="after-table">Inne darmowe narzędzia Bose działają każde na jednym lub dwóch z tych systemów.</p>
   </section>
 
-  <section id="headphones">
+  <section id="headphones" class="sr">
     <h2>Słuchawki</h2>
     <p>Ruru przetestowano ze słuchawkami QC Ultra Headphones (1st Gen).</p>
     <p>Te też powinny działać, ale nikt jeszcze nie wypróbował ich z Ruru.</p>
@@ -288,14 +321,14 @@
     <p>Wypróbowano Ruru z którymiś z nich? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Napisz do mnie na GitHub</a>. Użyj formularza Headphones report i wklej raport z dołu aplikacji.</p>
   </section>
 
-  <section id="privacy">
+  <section id="privacy" class="sr">
     <h2>Prywatność</h2>
     <p>Ruru komunikuje się z twoimi słuchawkami. Z internetu korzysta tylko po kliknięciu Sprawdź aktualizacje: wtedy pyta GitHub o najnowszą wersję i ją pobiera.</p>
     <p>Nie ma konta, śledzenia ani raportów o awariach. Aplikacja na Androida w ogóle nie może korzystać z internetu.</p>
     <p>Ta strona nie używa plików cookie ani śledzenia. Pyta GitHub, która wersja jest najnowsza.</p>
   </section>
 
-  <section id="support">
+  <section id="support" class="sr">
     <h2>Wsparcie</h2>
     <p>Aplikacja Ruru jest darmowa. Jeśli ci się podoba, możesz <a href="https://ko-fi.com/keaclip">postawić mi kawę na Ko-fi</a>.</p>
   </section>
