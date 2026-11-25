@@ -1,17 +1,25 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (25 November 2026)
 
-- On a computer, a wide window now has its own layout instead of a stretched phone screen: a sidebar with your
-  headphones, the battery and the pages (Sound, Shortcut button, Settings), and the page beside it. Sound puts
-  the listening modes and noise side by side, with the equaliser below and a curve that shows its shape.
-  Ctrl+1, 2 and 3 switch pages. Narrow windows and phones are unchanged.
-- The owl is new: a chubby ruru with black headphones, in the app, the tray, the installers, on phones and on the website.
+- On a computer, Ruru now looks like a desktop app. A wide window has a sidebar with your headphones,
+  the battery and two pages: Sound (listening modes and noise side by side, the equaliser below with a
+  curve that shows its shape) and Settings. Ctrl+1 and Ctrl+2 switch pages. Narrow windows and phones
+  are unchanged.
+- On Windows, Ruru draws its own title bar in its own colours. Snapping, the shadow and resizing from
+  the edges still work as usual.
+- A new switch, Keep running in the tray, is on by default. Turn it off and closing the window quits
+  Ruru.
 - Check for updates now does the work on Windows and Mac. It looks for the newest version, downloads
-  it, checks it, then asks if you want to install it and restart. A small card in the window shows
-  each step. Ruru still goes online only when you click the button; Linux and phones open the website.
-- Windows: a new installer, `Ruru-<version>-setup.exe`, with Ruru's own window: the owl, a smooth progress bar and the percentage. It installs for your user only (no admin password), adds a Start menu shortcut and an entry in Settings > Apps, and removes an older MSI copy of Ruru first so you never end up with two. The `.msi` stays as the second download, and the old plain `.exe` is gone.
-
+  it, checks it, then asks if you want to install it and restart. Ruru still goes online only when you
+  click the button. Linux and phones open the website.
+- Windows: a new installer, Ruru-<version>-setup.exe, with the owl, a smooth progress bar and the
+  percentage. It installs for your user only (no admin password), adds a Start menu shortcut and an
+  entry in Settings > Apps, and removes an older MSI copy of Ruru first so you never end up with two.
+  The .msi stays as the second download, and the old plain .exe is gone.
+- Ruru opens faster on Windows: about 1 second from a click to the window, down from 1.5.
+- The owl is new: a chubby ruru with black headphones, in the app, the tray, the installers, on phones
+  and on the website.
 ## 0.1.3 (25 November 2026)
 
 - Ruru now speaks 11 languages: English, German, French, Spanish, Italian, Dutch, Portuguese
