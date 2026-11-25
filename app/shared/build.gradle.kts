@@ -56,6 +56,6 @@ val generateVersion by tasks.registering {
 kotlin.sourceSets.commonMain { kotlin.srcDir(generateVersion) }
 
 compose.resources {
-    publicResClass = false
+    publicResClass = true
     packageOfResClass = "io.github.langkurst.ruru.ui.res"
 }

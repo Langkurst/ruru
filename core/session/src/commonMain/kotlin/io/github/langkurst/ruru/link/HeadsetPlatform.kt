@@ -16,7 +16,7 @@ interface HeadsetPlatform {
      * Why the system shows Ruru no headphones right now, in words for the user (Android without
      * the Nearby devices permission, say), or null when nothing is in the way.
      */
-    val blocked: String? get() = null
+    val blocked: Words? get() = null
 
     /**
      * True when [confirm] must be called after [open] to prove the headphones' identity before
@@ -35,7 +35,7 @@ interface HeadsetPlatform {
      * [candidate] is the person's headphones or cannot be checked, or the words to show when they
      * are someone else's.
      */
-    suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? = null
+    suspend fun confirm(candidate: HeadsetCandidate, address: String?): Words? = null
 }
 
 /** A headset the platform can see. [key] identifies it to the platform and is never shown or logged. */

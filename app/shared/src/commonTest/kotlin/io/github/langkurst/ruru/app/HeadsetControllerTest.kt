@@ -7,8 +7,10 @@ import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
+import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.BmapOperator
 import io.github.langkurst.ruru.protocol.bose.QcUltra2
+import io.github.langkurst.ruru.session.QcUltra2Protocol
 import io.github.langkurst.ruru.virtual.VirtualProfile
 import io.github.langkurst.ruru.virtual.VirtualQcUltra2
 import io.github.langkurst.ruru.virtual.VirtualTransport
@@ -28,11 +30,18 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /** The app's controller against the simulated 1st Gen, in real time (a few seconds in all). */
 class HeadsetControllerTest {
+    private companion object {
+        // Any key will do here: the controller passes a platform's words through without opening them.
+        val PAIR_MESSAGE = Words("problem_ios_not_paired", "Test QC Ultra")
+        val NOT_THESE = Words("problem_ios_other_set", "Test QC Ultra")
+    }
+
     private lateinit var scope: CoroutineScope
 
     @BeforeTest
@@ -61,7 +70,7 @@ class HeadsetControllerTest {
     /** Fails the first open with the given explanation, then connects like FlakyPlatform. */
     private class ExplainedPlatform(
         val device: VirtualQcUltra2,
-        private val explanation: String,
+        private val explanation: Words,
         private val retry: Boolean,
     ) : HeadsetPlatform {
         override val name = "Test"
@@ -79,7 +88,7 @@ class HeadsetControllerTest {
     /** Holds the first open() until the test lets it fail with the given explanation. */
     private class HeldOpenPlatform(
         val device: VirtualQcUltra2,
-        private val explanation: String,
+        private val explanation: Words,
     ) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
@@ -103,7 +112,7 @@ class HeadsetControllerTest {
     private class IdentityPlatform(
         val device: VirtualQcUltra2,
         private val checks: Boolean,
-        private val verdict: (String?) -> String?,
+        private val verdict: (String?) -> Words?,
     ) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
@@ -116,7 +125,7 @@ class HeadsetControllerTest {
             device.powerOn()
             return VirtualTransport(device).also { last = it }
         }
-        override suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? {
+        override suspend fun confirm(candidate: HeadsetCandidate, address: String?): Words? {
             confirms++
             confirmedAddress = address
             return verdict(address)
@@ -160,30 +169,32 @@ class HeadsetControllerTest {
         c.setNoise(NoiseSettings(cancellingLevel = 3))
         val s = c.await { it.message != null }
         val message = s.message!!
-        assertTrue(message.isNotBlank())
-        assertFalse("[" in message, "protocol text reached the screen: $message")
-        assertFalse("slot" in message.lowercase(), "the word slot reached the screen: $message")
+        // A sentence of our own, not the protocol's text passed through as it came.
+        assertNotEquals("message_verbatim", message.key, "protocol text reached the screen: $message")
+        assertFalse("[" in message.toString(), "protocol text reached the screen: $message")
+        assertFalse("slot" in message.toString().lowercase(), "the word slot reached the screen: $message")
         c.stop()
     }
 
     @Test
     fun `refused changes are explained in plain words`() {
-        assertEquals("The headphones did not answer. Try again.", HeadsetController.plainMessage("[1.7]: no reply from the headphones"))
-        assertEquals("The headphones did not answer. Try again.", HeadsetController.plainMessage("[31.3]: no reply"))
+        assertEquals(Words("message_no_answer"), HeadsetController.plainMessage("[1.7]: no reply from the headphones"))
+        assertEquals(Words("message_no_answer"), HeadsetController.plainMessage("[31.3]: no reply"))
         for (raw in listOf("[31.6]: Invalid length", "[1.7]: error code 9", "Unexpected reply from the headphones ([1.7]): short", "Command failed", null, "")) {
-            val shown = HeadsetController.plainMessage(raw)
-            assertTrue(shown.startsWith("The headphones did not accept that change"), "for $raw: $shown")
-            assertFalse("[" in shown, shown)
+            assertEquals(Words("message_not_accepted"), HeadsetController.plainMessage(raw), "for $raw")
         }
-        assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("Connection to the headphones was lost"))
-        assertEquals("The headphones disconnected. Ruru reconnects by itself.", HeadsetController.plainMessage("The headphones stopped answering"))
-        assertEquals("That mode is empty. Add a mode first, then choose it.", HeadsetController.plainMessage("Slot 7 is empty: save a custom mode there before selecting it"))
-        assertEquals("Only your own modes can be removed.", HeadsetController.plainMessage("Only custom slots (4-10) can be reset"))
+        assertEquals(Words("message_disconnected"), HeadsetController.plainMessage("Connection to the headphones was lost"))
+        assertEquals(Words("message_disconnected"), HeadsetController.plainMessage("The headphones stopped answering"))
+        assertEquals(Words("message_mode_empty"), HeadsetController.plainMessage("Slot 7 is empty: save a custom mode there before selecting it"))
+        assertEquals(Words("message_custom_only"), HeadsetController.plainMessage("Only custom slots (4-10) can be reset"))
         assertEquals(
-            "Quiet is built into the headphones and can't be changed. Add a mode of your own instead.",
+            Words("message_built_in_mode", "Quiet"),
             HeadsetController.plainMessage("Quiet is a built-in mode and cannot be changed; save to a custom slot instead"),
         )
-        assertEquals("Ruru can't control these headphones", HeadsetController.plainMessage("Ruru can't control these headphones"))
+        assertEquals(Words("message_unsupported"), HeadsetController.plainMessage("Ruru can't control these headphones"))
+        assertEquals(Words("message_noise_per_mode"), HeadsetController.plainMessage(QcUltra2Protocol.NOISE_PER_MODE_MESSAGE))
+        // Words the shared code didn't expect to show are passed on as they came.
+        assertEquals(Words("message_verbatim", "Auto-off must be 0 to 65535 minutes"), HeadsetController.plainMessage("Auto-off must be 0 to 65535 minutes"))
     }
 
     @Test
@@ -191,13 +202,13 @@ class HeadsetControllerTest {
         val blocked = object : HeadsetPlatform {
             override val name = "Android"
             override val supported = true
-            override val blocked = "Ruru needs Android's Nearby devices permission"
+            override val blocked = Words("problem_android_permission")
             override suspend fun headsets() = emptyList<HeadsetCandidate>()
             override suspend fun open(candidate: HeadsetCandidate): ByteTransport = error("never opened")
         }
         val c = controller(blocked)
         val s = c.await { it.phase is Phase.NoHeadset }
-        assertEquals("Ruru needs Android's Nearby devices permission", (s.phase as Phase.NoHeadset).blocked)
+        assertEquals(Words("problem_android_permission"), (s.phase as Phase.NoHeadset).blocked)
         c.stop()
     }
 
@@ -270,10 +281,10 @@ class HeadsetControllerTest {
 
     @Test
     fun `a pairing problem is shown as explained and waits for Try again`() = runBlocking {
-        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message", retry = false)
+        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), PAIR_MESSAGE, retry = false)
         val c = controller(platform)
         val failed = c.await { it.phase is Phase.Failed }
-        assertEquals("Pair message", (failed.phase as Phase.Failed).reason)
+        assertEquals(PAIR_MESSAGE, (failed.phase as Phase.Failed).reason)
         delay(2_500) // longer than the first backoff, so a retry would already have happened
         assertEquals(1, platform.opens)
         c.retryNow()
@@ -284,13 +295,13 @@ class HeadsetControllerTest {
 
     @Test
     fun `a Try again tap made before a failure doesn't skip the wait`() = runBlocking {
-        val platform = HeldOpenPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message")
+        val platform = HeldOpenPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), PAIR_MESSAGE)
         val c = controller(platform)
         platform.holding.await()
         c.retryNow() // made while open() is still waiting, before the failure is known
         platform.release.complete(Unit)
         val failed = c.await { it.phase is Phase.Failed }
-        assertEquals("Pair message", (failed.phase as Phase.Failed).reason)
+        assertEquals(PAIR_MESSAGE, (failed.phase as Phase.Failed).reason)
         delay(2_500) // longer than the first backoff, so a stale tap would have reopened by now
         assertEquals(1, platform.opens)
         c.retryNow()
@@ -301,7 +312,7 @@ class HeadsetControllerTest {
 
     @Test
     fun `an explained retryable failure retries by itself`() = runBlocking {
-        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), "Pair message", retry = true)
+        val platform = ExplainedPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), PAIR_MESSAGE, retry = true)
         val c = controller(platform)
         c.await { it.phase == Phase.Connected }
         assertTrue(platform.opens >= 2)
@@ -310,10 +321,10 @@ class HeadsetControllerTest {
 
     @Test
     fun `a platform that asks for identity is only sent the address read before a mismatch ends the attempt`() = runBlocking {
-        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = true) { "Not these" }
+        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = true) { NOT_THESE }
         val c = controller(platform)
         val failed = c.await { it.phase is Phase.Failed }
-        assertEquals("Not these", (failed.phase as Phase.Failed).reason)
+        assertEquals(NOT_THESE, (failed.phase as Phase.Failed).reason)
         assertEquals(1, platform.confirms)
         val sent = platform.last!!.sentRequests()
         assertEquals(listOf(QcUltra2.MAC_ADDRESS), sent.map { it.address })
@@ -334,7 +345,7 @@ class HeadsetControllerTest {
 
     @Test
     fun `a platform that does not ask for identity never has confirm called`() = runBlocking {
-        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = false) { "Not these" }
+        val platform = IdentityPlatform(VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1), checks = false) { NOT_THESE }
         val c = controller(platform)
         c.await { it.phase == Phase.Connected }
         assertEquals(0, platform.confirms)

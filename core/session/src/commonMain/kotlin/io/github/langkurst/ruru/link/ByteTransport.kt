@@ -39,7 +39,7 @@ class RfcommConnectException(
  * cannot help (a model Earshot doesn't drive): the manager then waits for the next link-up or a tap
  * instead of backing off and reopening the link again and again.
  */
-class ExplainedConnectException(message: String, val retry: Boolean) : IOException(message)
+class ExplainedConnectException(val words: Words, val retry: Boolean) : IOException(words.toString())
 
 /**
  * Why [BmapConnection] closed itself: the socket is open but nothing answers. Seen on a Galaxy

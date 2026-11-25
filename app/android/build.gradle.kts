@@ -46,9 +46,12 @@ android {
         }
     }
 
-    // Ruru's own text is English only; the libraries' translations of their few strings are not shipped.
+    // Ruru is in English and ten more languages (the folders of app/shared/.../composeResources); the
+    // libraries' translations of their few strings are shipped for those languages only. Each of the
+    // languages also has a res/values-xx/strings.xml in this module: Android gives the app a locale only
+    // when the app has resources in it, and Ruru's own words are read by the shared Compose resources.
     androidResources {
-        localeFilters += "en"
+        localeFilters += listOf("en", "de", "fr", "es", "it", "nl", "pt-rBR", "ja", "zh-rCN", "ko", "pl")
     }
 
     compileOptions {

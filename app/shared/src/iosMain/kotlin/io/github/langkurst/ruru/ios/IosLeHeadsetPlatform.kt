@@ -2,6 +2,7 @@ package io.github.langkurst.ruru.ios
 
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.ExplainedConnectException
+import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.LeTransport
@@ -84,21 +85,18 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     private val central: CBCentralManager
         get() = created ?: CBCentralManager(delegate = events, queue = null).also { created = it }
 
-    override val blocked: String?
+    override val blocked: Words?
         get() {
             val permissionOrPower = when (CBCentralManager.authorization) {
-                CBManagerAuthorizationNotDetermined ->
-                    "Allow Bluetooth when iPhone asks. Ruru uses it only to talk to your headphones."
-                CBManagerAuthorizationDenied ->
-                    "Ruru needs Bluetooth to find your headphones. In Settings, open Ruru and turn on Bluetooth."
-                CBManagerAuthorizationRestricted ->
-                    "Bluetooth is restricted on this iPhone, for example by Screen Time, so Ruru can't use it."
+                CBManagerAuthorizationNotDetermined -> Words("problem_ios_allow_bluetooth")
+                CBManagerAuthorizationDenied -> Words("problem_ios_bluetooth_denied")
+                CBManagerAuthorizationRestricted -> Words("problem_ios_bluetooth_restricted")
                 else -> when (created?.state) {
-                    CBManagerStatePoweredOff -> "Bluetooth is off. Turn it on in Control Centre or Settings."
+                    CBManagerStatePoweredOff -> Words("problem_ios_bluetooth_off")
                     else -> null
                 }
             }
-            return permissionOrPower ?: if (nameClash) NAME_CLASH else null
+            return permissionOrPower ?: if (nameClash) Words("problem_ios_name_clash") else null
         }
 
     override suspend fun headsets(): List<HeadsetCandidate> {
@@ -276,7 +274,7 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
      * The person's own set, proven by the address iOS gives for its audio output. Runs after
      * [open] and before Ruru sends anything but the address read; the addresses never leave here.
      */
-    override suspend fun confirm(candidate: HeadsetCandidate, address: String?): String? {
+    override suspend fun confirm(candidate: HeadsetCandidate, address: String?): Words? {
         val id = candidate.key
         val saved = savedPeripheralId()
         // iOS reported it over LE, or Ruru already saved it: no name match was involved.
@@ -301,7 +299,7 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         if (!sawOutputAddress) return null
         if (!same) {
             notBose += id
-            return "Ruru found another set of ${candidate.name} nearby, not the one this iPhone is playing through, and left it alone."
+            return Words("problem_ios_other_set", candidate.name)
         }
         savePeripheralId(id)
         return null
@@ -315,20 +313,15 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         } ?: false
     }
 
-    private fun notPaired(name: String): String =
-        "$name didn't pair with Ruru. Press Try again and choose Pair when iPhone asks. If iPhone doesn't ask, choose Forget This Device for $name in Settings > Bluetooth, then connect them again."
+    private fun notPaired(name: String) = Words("problem_ios_not_paired", name)
 
-    private fun notResponding(name: String): String =
-        "$name didn't respond over Bluetooth. Keep them near this iPhone. Ruru will keep trying."
+    private fun notResponding(name: String) = Words("problem_ios_not_responding", name)
 
-    private fun noBoseControls(name: String): String =
-        "$name doesn't offer Bose's controls over Bluetooth, so Ruru can't control it."
+    private fun noBoseControls(name: String) = Words("problem_ios_no_bose_controls", name)
 
-    private fun otherOpenFailure(name: String): String =
-        "$name didn't answer Ruru over Bluetooth. Ruru will keep trying."
+    private fun otherOpenFailure(name: String) = Words("problem_ios_no_answer", name)
 
-    private fun disconnectedWhileOpening(name: String): String =
-        "$name disconnected. Ruru will keep trying."
+    private fun disconnectedWhileOpening(name: String) = Words("problem_ios_disconnected", name)
 
     private fun disconnectWhileOpening(c: CBCharacteristic, p: CBPeripheral, s: Session, name: String): ExplainedConnectException {
         // The headphones were reset or dropped this iPhone: the old bond cannot be used again.
@@ -458,7 +451,6 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         val ENCRYPTED: CBUUID = CBUUID.UUIDWithString("C65B8F2F-AEE2-4C89-B758-BC4892D6F2D8")
         val PLAIN: CBUUID = CBUUID.UUIDWithString("D417C028-9818-4354-99D1-2AC09D074591")
         const val DISCONNECTED = "The headphones disconnected"
-        const val NAME_CLASH = "Another set of Bose headphones nearby has the same name as yours, so Ruru can't tell them apart. Move away from the other set and Ruru connects by itself."
         const val POWER_MS = 3_000L
         const val SCAN_MS = 4_000L
         const val CONNECT_MS = 10_000L

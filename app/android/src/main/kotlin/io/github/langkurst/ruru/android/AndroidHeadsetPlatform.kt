@@ -11,6 +11,7 @@ import android.os.Build
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.bose.BoseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -34,9 +35,8 @@ class AndroidHeadsetPlatform(private val context: Context) : HeadsetPlatform {
     private fun allowed() = Build.VERSION.SDK_INT < 31 ||
         context.checkSelfPermission(Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED
 
-    override val blocked: String?
-        get() = if (allowed()) null else
-            "Ruru needs Android's Nearby devices permission to see your paired headphones. Allow it in Android's settings for Ruru, then come back."
+    override val blocked: Words?
+        get() = if (allowed()) null else Words("problem_android_permission")
 
     override suspend fun headsets(): List<HeadsetCandidate> = withContext(Dispatchers.IO) {
         if (!allowed()) return@withContext emptyList()

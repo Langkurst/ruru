@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app's name, the same in every language. Having this file in each language folder is what tells
+         Android that Ruru speaks that language, so the system hands the app that locale (the screens' words
+         come from the shared strings.xml, not from here). -->
+    <string name="app_name" translatable="false">Ruru</string>
+</resources>

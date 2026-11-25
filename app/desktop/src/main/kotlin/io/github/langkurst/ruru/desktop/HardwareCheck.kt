@@ -6,6 +6,7 @@ import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
+import io.github.langkurst.ruru.ui.resolve
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -180,7 +181,7 @@ private fun command(action: (HeadsetController) -> Unit): Boolean =
     withController { controller, _ ->
         action(controller)
         Thread.sleep(2_500)
-        controller.state.value.message?.let { println("  headphones said: $it") }
+        controller.state.value.message?.let { println("  headphones said: ${runBlocking { it.resolve() }}") }
         true
     } ?: false
 

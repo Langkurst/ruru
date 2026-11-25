@@ -1,6 +1,9 @@
 package io.github.langkurst.ruru.desktop
 
 import io.github.langkurst.ruru.ui.PlatformSwitch
+import io.github.langkurst.ruru.ui.res.Res
+import io.github.langkurst.ruru.ui.res.desktop_start_with_windows
+import io.github.langkurst.ruru.ui.res.desktop_start_with_windows_hint
 import java.util.concurrent.TimeUnit
 
 /**
@@ -15,8 +18,8 @@ internal object StartWithWindows {
         if (!System.getProperty("os.name").orEmpty().startsWith("Windows")) return null
         val exe = System.getProperty("jpackage.app-path") ?: return null
         return PlatformSwitch(
-            label = "Start with Windows",
-            hint = "Opens in the tray when you sign in",
+            label = Res.string.desktop_start_with_windows,
+            hint = Res.string.desktop_start_with_windows_hint,
             isOn = { reg("query", KEY, "/v", VALUE) },
             set = { on ->
                 if (on) reg("add", KEY, "/v", VALUE, "/t", "REG_SZ", "/d", "\"$exe\" --hidden", "/f")

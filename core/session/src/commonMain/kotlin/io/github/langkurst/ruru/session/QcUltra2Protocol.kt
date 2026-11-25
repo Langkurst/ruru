@@ -877,9 +877,7 @@ class QcUltra2Protocol(
     private suspend fun setNoiseViaMode(c: BmapRequester, current: HeadphoneState, settings: NoiseSettings): HeadphoneState {
         val slot = current.currentMode
         if (slot == null || !slot.isEditable || !slot.isConfigured) {
-            throw HeadphoneCommandException(
-                "On these headphones noise settings belong to a mode: switch to a custom mode to change them",
-            )
+            throw HeadphoneCommandException(NOISE_PER_MODE_MESSAGE)
         }
         val wire = settings.toAudioSettings()
         val base = slotConfigs[slot.index]
@@ -1457,6 +1455,8 @@ class QcUltra2Protocol(
         const val MODES_READ_ONLY_MESSAGE = "These headphones' modes can be switched here but not edited"
         /** `[1.5]` SET_GET refused and no listening modes to fall back on. */
         const val NOISE_READ_ONLY_MESSAGE = "These headphones' firmware doesn't let other apps change the noise cancelling level"
+        const val NOISE_PER_MODE_MESSAGE =
+            "On these headphones noise settings belong to a mode: switch to a custom mode to change them"
         const val NO_FAVORITES_MESSAGE = "These headphones don't have favourite modes"
         const val UNSUPPORTED_MESSAGE = "Ruru can't control these headphones"
     }

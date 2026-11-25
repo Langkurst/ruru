@@ -77,6 +77,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import io.github.langkurst.ruru.ui.res.Res
+import io.github.langkurst.ruru.ui.res.choice_not_set
+import org.jetbrains.compose.resources.stringResource
 import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -328,7 +331,7 @@ fun <T> ChoiceRow(
     var open by remember { mutableStateOf(false) }
     val turn by animateFloatAsState(if (open) 180f else 0f, moveSpec())
     val interaction = remember { MutableInteractionSource() }
-    val current = options.firstOrNull { it.first == selected }?.second ?: "Not set"
+    val current = options.firstOrNull { it.first == selected }?.second ?: stringResource(Res.string.choice_not_set)
     Column(Modifier.fillMaxWidth().animateContentSize(moveSpec())) {
         Row(
             Modifier

@@ -22,6 +22,7 @@ dependencies {
     implementation(project(":platform:linux"))
     implementation(project(":platform:macos"))
     implementation(compose.desktop.currentOs)
+    implementation(libs.compose.resources)
     implementation(libs.kotlinx.coroutines.swing)
 }
 

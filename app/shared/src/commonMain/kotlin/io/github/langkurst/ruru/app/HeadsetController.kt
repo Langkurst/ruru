@@ -15,6 +15,7 @@ import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.RfcommConnectException
 import io.github.langkurst.ruru.link.UnresponsiveLinkException
+import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.BmapPacket
 import io.github.langkurst.ruru.session.QcUltra2Protocol
 import io.github.langkurst.ruru.session.SinkSessionLog
@@ -43,17 +44,17 @@ sealed interface Phase {
     data object Unsupported : Phase
     /** No paired Bose headset is connected; [pairedName] is one that is paired but off or elsewhere. */
     /** [blocked] is the system's reason for showing Ruru nothing (a missing permission), in words for the user. */
-    data class NoHeadset(val pairedName: String?, val blocked: String? = null) : Phase
+    data class NoHeadset(val pairedName: String?, val blocked: Words? = null) : Phase
     data class Connecting(val name: String) : Phase
     data object Connected : Phase
-    data class Failed(val name: String, val reason: String) : Phase
+    data class Failed(val name: String, val reason: Words) : Phase
 }
 
 data class AppState(
     val phase: Phase = Phase.Starting,
     val headset: HeadphoneState = HeadphoneState(),
     /** The last command's problem, in words for the user; null when there is none. */
-    val message: String? = null,
+    val message: Words? = null,
     val platformName: String = "",
     val demo: Boolean = false,
 )
@@ -70,7 +71,7 @@ class HeadsetController(
 ) {
     private val headset = MutableStateFlow(HeadphoneState())
     private val phase = MutableStateFlow<Phase>(Phase.Starting)
-    private val message = MutableStateFlow<String?>(null)
+    private val message = MutableStateFlow<Words?>(null)
     private val mutex = Mutex()
     private val poke = Channel<Unit>(Channel.CONFLATED)
     private val log = SinkSessionLog("Ruru/App")
@@ -189,7 +190,7 @@ class HeadsetController(
     }
 
     /** One session. [Attempt.problem] is null once it was connected and has ended. */
-    private data class Attempt(val problem: String?, val waitForRetry: Boolean = false)
+    private data class Attempt(val problem: Words?, val waitForRetry: Boolean = false)
 
     /** One session. Null problem once it was connected and has ended; otherwise why it never connected. */
     private suspend fun session(target: HeadsetCandidate): Attempt {
@@ -251,51 +252,51 @@ class HeadsetController(
         }
     }
 
-    private fun openProblem(name: String, e: Exception): String = when {
-        e is ExplainedConnectException -> e.message ?: genericOpenProblem(name)
+    private fun openProblem(name: String, e: Exception): Words = when {
+        e is ExplainedConnectException -> e.words
         e is RfcommConnectException && e.looksBusy -> busy(name)
         else -> genericOpenProblem(name)
     }
 
-    private fun genericOpenProblem(name: String) =
-        "Could not open the control channel to $name. Check that it is connected to this ${platformNoun()}, then try again."
+    private fun genericOpenProblem(name: String) = Words(if (isPhone()) "problem_open_phone" else "problem_open_computer", name)
 
-    private fun sessionProblem(name: String, e: Exception): String =
+    private fun sessionProblem(name: String, e: Exception): Words =
         if (e is UnresponsiveLinkException || e.cause is UnresponsiveLinkException || e is HeadphoneCommandException) busy(name)
-        else "$name stopped answering. Ruru will keep trying."
+        else Words("problem_stopped_answering", name)
 
-    private fun busy(name: String) =
-        if (platformNoun() == "phone") {
-            "$name did not answer. If the Bose app is open on this phone, close it. Only one app can control the headphones at a time."
-        } else {
-            // There is no Bose app for computers, but other tools for these headphones exist.
-            "$name did not answer. Close any other app on this computer that controls the headphones, then try again. Only one app can control them at a time."
-        }
+    // There is no Bose app for computers, but other tools for these headphones exist.
+    private fun busy(name: String) = Words(if (isPhone()) "problem_busy_phone" else "problem_busy_computer", name)
 
-    private fun platformNoun() = if (platform.name == "Android" || platform.name == "iPhone") "phone" else "computer"
+    private fun isPhone() = platform.name == "Android" || platform.name == "iPhone"
 
     companion object {
         /**
          * The words shown when a change fails. The shared code's messages are written for the log
          * and the tests ("[31.6]: Invalid length"); people see what happened and what to do.
          */
-        fun plainMessage(raw: String?): String {
+        fun plainMessage(raw: String?): Words {
             val text = raw?.trim().orEmpty()
             return when {
                 text.isEmpty() -> NOT_ACCEPTED
-                text.contains("no reply", ignoreCase = true) -> "The headphones did not answer. Try again."
-                text in DISCONNECTED || text.endsWith("is not connected") -> "The headphones disconnected. Ruru reconnects by itself."
-                text.startsWith("Slot ") && " is empty" in text -> "That mode is empty. Add a mode first, then choose it."
-                text.startsWith("Only custom slots") -> "Only your own modes can be removed."
-                " is a built-in mode and cannot be changed" in text ->
-                    "${text.substringBefore(" is a built-in mode")} is built into the headphones and can't be changed. Add a mode of your own instead."
+                text.contains("no reply", ignoreCase = true) -> Words("message_no_answer")
+                text in DISCONNECTED || text.endsWith("is not connected") -> Words("message_disconnected")
+                text.startsWith("Slot ") && " is empty" in text -> Words("message_mode_empty")
+                text.startsWith("Only custom slots") -> Words("message_custom_only")
+                " is a built-in mode and cannot be changed" in text -> Words("message_built_in_mode", text.substringBefore(" is a built-in mode"))
                 text.startsWith("[") || text.startsWith("Unexpected reply") || text == "Command failed" -> NOT_ACCEPTED
-                else -> text
+                // The shared code's own sentences for a change the headphones can't take; the rest is shown as it came.
+                text == HeadphoneCommandException.FIRMWARE_UNSUPPORTED_MESSAGE -> Words("message_firmware_unsupported")
+                text == QcUltra2Protocol.MODES_UNAVAILABLE_MESSAGE -> Words("message_modes_unavailable")
+                text == QcUltra2Protocol.MODES_READ_ONLY_MESSAGE -> Words("message_modes_read_only")
+                text == QcUltra2Protocol.NOISE_READ_ONLY_MESSAGE -> Words("message_noise_read_only")
+                text == QcUltra2Protocol.NOISE_PER_MODE_MESSAGE -> Words("message_noise_per_mode")
+                text == QcUltra2Protocol.NO_FAVORITES_MESSAGE -> Words("message_no_favorites")
+                text == QcUltra2Protocol.UNSUPPORTED_MESSAGE -> Words("message_unsupported")
+                else -> supportNoteKey(text)?.let { Words(it) } ?: Words("message_verbatim", text)
             }
         }
 
-        private const val NOT_ACCEPTED =
-            "The headphones did not accept that change. If it keeps happening, press Copy connection report below and open an issue on GitHub."
+        private val NOT_ACCEPTED = Words("message_not_accepted")
         private val DISCONNECTED = setOf(
             "Connection to the headphones was lost", "The headphones stopped answering",
             "Headphones not connected", "The headphones are not connected",

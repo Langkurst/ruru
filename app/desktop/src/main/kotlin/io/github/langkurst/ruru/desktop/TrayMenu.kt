@@ -4,6 +4,8 @@ import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.BatteryNotices
 import io.github.langkurst.ruru.app.Phase
+import io.github.langkurst.ruru.link.Words
+import io.github.langkurst.ruru.ui.resolve
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -57,9 +59,18 @@ internal class TrayMenu(
                 .flatMapLatest { c -> c.state.map { BatteryReading.of(it) } }
                 .distinctUntilChanged()
                 .collect { r ->
+                    val name = r.name ?: Words("notice_default_name").resolve()
                     when (notices.next(r.percent, r.charging)) {
-                        BatteryNotices.Notice.CHARGED -> notify("Charged", "${r.name} are fully charged.", TrayIcon.MessageType.INFO)
-                        BatteryNotices.Notice.LOW -> notify("Battery low", "${r.name} are at ${r.percent}%.", TrayIcon.MessageType.WARNING)
+                        BatteryNotices.Notice.CHARGED -> notify(
+                            Words("notice_charged_title").resolve(),
+                            Words("notice_charged_text", name).resolve(),
+                            TrayIcon.MessageType.INFO,
+                        )
+                        BatteryNotices.Notice.LOW -> notify(
+                            Words("notice_low_title").resolve(),
+                            Words("notice_low_text", name, r.percent ?: 0).resolve(),
+                            TrayIcon.MessageType.WARNING,
+                        )
                         null -> Unit
                     }
                 }
@@ -70,12 +81,12 @@ internal class TrayMenu(
         SwingUtilities.invokeLater { runCatching { icon.displayMessage(title, text, type) } }
 
     /** What the battery notices need; no reading while the headphones aren't connected. */
-    private data class BatteryReading(val percent: Int?, val charging: Boolean?, val name: String) {
+    private data class BatteryReading(val percent: Int?, val charging: Boolean?, val name: String?) {
         companion object {
             fun of(state: AppState): BatteryReading {
                 val h = state.headset
-                if (state.phase != Phase.Connected) return BatteryReading(null, null, "")
-                val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName ?: "Your headphones"
+                if (state.phase != Phase.Connected) return BatteryReading(null, null, null)
+                val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName
                 return BatteryReading(h.batteryPercent, h.isCharging, name)
             }
         }
@@ -94,32 +105,53 @@ internal class TrayMenu(
             }
         }
         popup.addSeparator()
-        popup.add(MenuItem("Open Ruru").apply { addActionListener { onOpen() } })
-        popup.add(MenuItem("Quit").apply { addActionListener { onQuit() } })
+        popup.add(MenuItem(view.openLabel).apply { addActionListener { onOpen() } })
+        popup.add(MenuItem(view.quitLabel).apply { addActionListener { onQuit() } })
     }
 
     /** Only what the menu shows, so it is rebuilt only when that changes. */
-    private data class TrayView(val tooltip: String, val status: String?, val modes: List<Triple<Int, String, Boolean>>) {
+    private data class TrayView(
+        val tooltip: String,
+        val status: String?,
+        val modes: List<Triple<Int, String, Boolean>>,
+        val openLabel: String,
+        val quitLabel: String,
+    ) {
         companion object {
-            fun of(state: AppState): TrayView {
+            suspend fun of(state: AppState): TrayView {
                 val h = state.headset
+                val open = Words("tray_open").resolve()
+                val quit = Words("tray_quit").resolve()
                 return when (val p = state.phase) {
                     Phase.Connected -> {
-                        val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName ?: "Headphones"
+                        val name = h.info?.customName?.ifBlank { null } ?: h.connection.deviceName ?: Words("tray_default_name").resolve()
                         val current = h.modes.firstOrNull { it.index == h.currentModeIndex }?.name
-                        val charging = if (h.isCharging == true) ", charging" else ""
+                        val charging = h.isCharging == true
+                        val battery = h.batteryPercent
                         TrayView(
-                            tooltip = listOfNotNull(name, h.batteryPercent?.let { "battery $it%$charging" }, current).joinToString(", "),
-                            status = h.batteryPercent?.let { "Battery $it%$charging" } ?: name,
+                            tooltip = listOfNotNull(
+                                name,
+                                battery?.let { Words(if (charging) "tray_tip_battery_charging" else "tray_tip_battery", it).resolve() },
+                                current,
+                            ).joinToString(Words("list_separator").resolve()),
+                            status = battery?.let { Words(if (charging) "battery_percent_charging" else "battery_percent", it).resolve() } ?: name,
                             modes = h.modes.filter { it.isPreset || (it.isConfigured && it.name.isNotBlank()) }
                                 .map { Triple(it.index, it.name, it.index == h.currentModeIndex) },
+                            openLabel = open,
+                            quitLabel = quit,
                         )
                     }
-                    is Phase.Connecting -> TrayView("Ruru: connecting to ${p.name}", "Connecting to ${p.name}", emptyList())
-                    is Phase.Failed -> TrayView("Ruru: could not connect", "Could not connect to ${p.name}", emptyList())
-                    is Phase.NoHeadset -> TrayView("Ruru: no headphones connected", "No headphones connected", emptyList())
-                    Phase.Starting -> TrayView("Ruru", "Looking for headphones", emptyList())
-                    Phase.Unsupported -> TrayView("Ruru", "Not available on this system", emptyList())
+                    is Phase.Connecting -> TrayView(
+                        Words("tray_tip_connecting", p.name).resolve(), Words("connecting_title", p.name).resolve(), emptyList(), open, quit,
+                    )
+                    is Phase.Failed -> TrayView(
+                        Words("tray_tip_failed").resolve(), Words("failed_title", p.name).resolve(), emptyList(), open, quit,
+                    )
+                    is Phase.NoHeadset -> TrayView(
+                        Words("tray_tip_none").resolve(), Words("tray_status_none").resolve(), emptyList(), open, quit,
+                    )
+                    Phase.Starting -> TrayView("Ruru", Words("header_looking").resolve(), emptyList(), open, quit)
+                    Phase.Unsupported -> TrayView("Ruru", Words("tray_status_unsupported").resolve(), emptyList(), open, quit)
                 }
             }
         }
