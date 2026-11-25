@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruru, Bose 헤드폰용 무료 앱</title>
+<meta name="description" content="Ruru는 Bose 헤드폰의 설정을 바꿔 주는 앱이에요. 컴퓨터와 휴대폰에서 쓸 수 있어요.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0C0A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Ruru">
+<meta property="og:description" content="Ruru는 Bose 헤드폰의 설정을 바꿔 주는 앱이에요. 컴퓨터와 휴대폰에서 쓸 수 있어요.">
+<link rel="canonical" href="https://ruru-app.pages.dev/ko/">
+<link rel="alternate" hreflang="en" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="de" href="https://ruru-app.pages.dev/de/">
+<link rel="alternate" hreflang="fr" href="https://ruru-app.pages.dev/fr/">
+<link rel="alternate" hreflang="es" href="https://ruru-app.pages.dev/es/">
+<link rel="alternate" hreflang="it" href="https://ruru-app.pages.dev/it/">
+<link rel="alternate" hreflang="nl" href="https://ruru-app.pages.dev/nl/">
+<link rel="alternate" hreflang="pt-BR" href="https://ruru-app.pages.dev/pt-BR/">
+<link rel="alternate" hreflang="ja" href="https://ruru-app.pages.dev/ja/">
+<link rel="alternate" hreflang="zh-CN" href="https://ruru-app.pages.dev/zh-CN/">
+<link rel="alternate" hreflang="ko" href="https://ruru-app.pages.dev/ko/">
+<link rel="alternate" hreflang="pl" href="https://ruru-app.pages.dev/pl/">
+<link rel="alternate" hreflang="x-default" href="https://ruru-app.pages.dev/">
+<meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/owl-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/img/owl-180.png">
+<link rel="preload" href="/fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script id="strings" type="application/json">{
+ "locale": "ko",
+ "hero.windows": "Windows용 다운로드",
+ "hero.mac": "Mac용 다운로드",
+ "hero.android": "Android용 다운로드",
+ "hero.ios": "iPhone용 다운로드",
+ "hero.linux": "Linux용 다운로드",
+ "version": "버전 {version}, {date} 출시",
+ "versionNoDate": "버전 {version}",
+ "update.newer": "현재 버전: {have}. 최신 버전: {newest}.",
+ "update.same": "최신 버전을 쓰고 있어요.",
+ "size": "{n} MB",
+ "noiseN": "노이즈 {n}",
+ "windBlock": "Wind Block",
+ "immersive": "이머시브",
+ "join": ", "
+}</script>
+<script src="/app.js" defer></script>
+<script src="/demo.js" defer></script>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="#top"><img src="/img/owl-64.png" width="28" height="28" alt="">Ruru</a>
+  <nav class="nav">
+    <a href="#download">다운로드</a>
+    <a class="optional" href="#compare">비교</a>
+    <a class="optional" href="#privacy">개인정보</a>
+    <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <div class="lang">
+      <svg class="globe" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6.5"/><ellipse cx="8" cy="8" rx="2.8" ry="6.5"/><path d="M1.5 8h13"/></g></svg>
+      <select id="lang" aria-label="언어">
+        <option value="/" lang="en">English</option>
+        <option value="/de/" lang="de">Deutsch</option>
+        <option value="/fr/" lang="fr">Français</option>
+        <option value="/es/" lang="es">Español</option>
+        <option value="/it/" lang="it">Italiano</option>
+        <option value="/nl/" lang="nl">Nederlands</option>
+        <option value="/pt-BR/" lang="pt-BR">Português (Brasil)</option>
+        <option value="/ja/" lang="ja">日本語</option>
+        <option value="/zh-CN/" lang="zh-CN">简体中文</option>
+        <option value="/ko/" lang="ko" selected>한국어</option>
+        <option value="/pl/" lang="pl">Polski</option>
+      </select>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <div class="intro-text">
+      <h1>Ruru</h1>
+      <p>Ruru는 Bose 헤드폰의 설정을 바꿔 주는 앱이에요. 컴퓨터와 휴대폰에서 쓸 수 있어요.</p>
+      <p>무료예요. 계정이 필요 없고 인터넷도 쓰지 않아요.</p>
+      <div class="actions">
+        <a class="button" id="hero-button" href="#download">다운로드</a>
+        <a class="textlink" href="#download">다른 시스템</a>
+      </div>
+      <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">최신 버전은 GitHub에 있어요.</a></p>
+      <div class="star">
+        <p class="small star-text"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Ruru는 오픈 소스예요. 마음에 드셨다면 GitHub에서 별을 눌러 주세요. 다른 사람들이 찾는 데 도움이 돼요.</p>
+        <a class="file star-btn" href="https://github.com/Langkurst/ruru"><svg class="star-i" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg><span>GitHub에서 별 누르기</span><span class="count" id="stars" hidden></span></a>
+      </div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo" id="demo" role="group" aria-label="Ruru">
+        <div class="d-head">
+          <img src="/img/owl-64.png" width="36" height="36" alt="">
+          <div>
+            <p class="d-name">데모 QC Ultra Headphones</p>
+            <p class="d-line">QuietComfort Ultra Headphones, 데모 모드</p>
+          </div>
+        </div>
+        <div class="d-bat"><span>배터리 72%</span><span class="d-bar"><i></i></span></div>
+
+        <div class="d-card">
+          <p class="d-sec">청취 모드</p>
+          <div class="modes" role="radiogroup" aria-label="청취 모드">
+            <span class="mk"></span>
+            <button type="button" class="mode" role="radio" aria-checked="true" tabindex="0"><span class="lb"><span class="a">Quiet</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Aware</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Immersion</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">출퇴근</span></span><span class="lb sm"><span class="a">노이즈 7</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">집중</span></span><span class="lb sm"><span class="a">노이즈 10</span></span></button>
+          </div>
+          <button type="button" class="qb" id="d-add">모드 추가</button>
+        </div>
+
+        <div class="d-card locked" id="nz">
+          <p class="d-sec">노이즈</p>
+          <div class="lk">
+            <div class="d-row"><span id="nl">노이즈 캔슬링</span><span class="val" id="nv">10</span></div>
+            <div class="sl p100" role="slider" tabindex="-1" aria-disabled="true" aria-labelledby="nl" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" aria-valuetext="10" data-min="0" data-max="10" data-o="nv">
+              <span class="rail"><span class="trk"><span class="fu"></span></span><span class="th"></span></span>
+            </div>
+            <div class="d-row">
+              <span><span class="lbl" id="wl">Wind Block</span><span class="hint">야외의 바람 소리를 줄여 줘요</span></span>
+              <button type="button" class="sw" role="switch" aria-checked="false" aria-labelledby="wl" disabled><span class="knob"></span></button>
+            </div>
+            <p class="d-body ia" id="il">Immersive Audio</p>
+            <div class="seg" role="radiogroup" aria-labelledby="il">
+              <span class="sg"><span class="sk"></span>
+                <button type="button" role="radio" aria-checked="true" tabindex="0" disabled>끔</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>정지</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>모션</button>
+              </span>
+            </div>
+          </div>
+          <p class="d-lock"><span id="ln">Quiet</span> 모드는 헤드폰에 내장되어 있어서 바꿀 수 없어요. 이 설정을 바꾸려면 나만의 모드를 선택하거나 추가하세요.</p>
+        </div>
+
+        <div class="d-card">
+          <p class="d-sec">이퀄라이저</p>
+          <div class="eq">
+            <span id="e0">저음</span>
+            <div class="sl bip p50" role="slider" tabindex="0" aria-labelledby="e0" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0" aria-valuetext="0" data-min="-10" data-max="10" data-o="v0"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v0">0</span>
+            <span id="e1">중음</span>
+            <div class="sl bip p40" role="slider" tabindex="0" aria-labelledby="e1" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-2" aria-valuetext="−2" data-min="-10" data-max="10" data-o="v1"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v1">−2</span>
+            <span id="e2">고음</span>
+            <div class="sl bip p20" role="slider" tabindex="0" aria-labelledby="e2" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-6" aria-valuetext="−6" data-min="-10" data-max="10" data-o="v2"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v2">−6</span>
+          </div>
+          <button type="button" class="qb" id="d-reset">평탄하게 되돌리기</button>
+        </div>
+        <span class="tap" aria-hidden="true"><i class="f"></i><i class="r"></i></span>
+      </div>
+      <p class="small d-cap">가상의 헤드폰으로 작동하는, 실제 앱의 복사본이에요.</p>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>사용 방법</h2>
+    <ol class="list steps">
+      <li>컴퓨터나 휴대폰용 Ruru를 다운로드하세요.</li>
+      <li>평소처럼 블루투스로 헤드폰을 연결하세요.</li>
+      <li>Ruru를 여세요. 헤드폰을 찾아서 설정을 보여 줘요.</li>
+    </ol>
+  </section>
+
+  <section id="download">
+    <h2>다운로드</h2>
+    <p>컴퓨터나 휴대폰을 고르세요. 어느 버튼이든 최신 버전을 받아요.</p>
+    <ul class="panel">
+      <li class="row" data-os="windows">
+        <div class="row-text">
+          <p class="name"><span>Windows 10 및 11</span><span class="you" hidden>내 시스템</span></p>
+          <p class="status">실제 Bose 헤드폰으로 테스트했어요.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="msi" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.msi</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="exe" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.exe</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="mac">
+        <div class="row-text">
+          <p class="name"><span>Apple 칩이 들어간 Mac, macOS 12 이상</span><span class="you" hidden>내 시스템</span></p>
+          <p class="status">열리고 데모 모드로 작동해요. 아직 헤드폰으로 써 본 사람은 없어요.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="dmg" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.dmg</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="linux">
+        <div class="row-text">
+          <p class="name"><span>Linux</span><span class="you" hidden>내 시스템</span></p>
+          <p class="status">열리고 데모 모드로 작동해요. 아직 헤드폰으로 써 본 사람은 없어요. .deb 파일은 Ubuntu 24.04 또는 Debian 13 이상이 필요해요.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="deb" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.deb</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="rpm" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.rpm</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="android">
+        <div class="row-text">
+          <p class="name"><span>Android 9 이상</span><span class="you" hidden>내 시스템</span></p>
+          <p class="status">열리고 데모 모드로 작동해요. 아직 실제 휴대폰에서 써 본 사람은 없어요.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="apk" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.apk</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="ios">
+        <div class="row-text">
+          <p class="name"><span>iOS 16 이상의 iPhone</span><span class="you" hidden>내 시스템</span></p>
+          <p class="status">설치하려면 사이드로딩 도구가 필요해요. 아직 실제 iPhone에서 써 본 사람이 없어서 작동하지 않을 수도 있어요.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="ipa" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.ipa</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+    </ul>
+    <p class="small after-panel">모든 버전에 가상의 헤드폰으로 쓰는 데모 모드가 있어서, 먼저 둘러볼 수 있어요.</p>
+  </section>
+
+  <section>
+    <h2>처음 열 때</h2>
+    <p>Ruru는 아직 Microsoft나 Apple의 서명을 받지 않아서, Windows와 Mac은 처음에 경고를 보여 줄 수 있어요.</p>
+    <ul class="list">
+      <li>Windows에서는 &quot;추가 정보&quot;를 누른 다음 &quot;실행&quot;을 누르세요.</li>
+      <li>Mac에서는 &quot;시스템 설정&quot;을 열고 &quot;개인정보 보호 및 보안&quot;에서 &quot;그래도 열기&quot;를 선택하세요. macOS 12에서는 &quot;시스템 환경설정&quot;, &quot;보안 및 개인 정보 보호&quot; 순서예요.</li>
+    </ul>
+    <p>스마트 앱 컨트롤이 Ruru를 차단했다고 나오면, 그 컴퓨터에서는 Ruru를 실행할 수 없어요. 스마트 앱 컨트롤은 서명된 앱만 허용해요.</p>
+    <p>먼저 Bose 앱을 닫으세요. 헤드폰과 통신할 수 있는 앱은 한 번에 하나뿐이에요.</p>
+  </section>
+
+  <section>
+    <h2>바꿀 수 있는 것</h2>
+    <ul class="list">
+      <li>청취 모드와 나만의 모드</li>
+      <li>노이즈 캔슬링의 세기</li>
+      <li>Wind Block과 Immersive Audio</li>
+      <li>저음, 중음, 고음</li>
+      <li>단축 버튼의 동작</li>
+      <li>내 목소리 듣기, 멀티포인트, 자동 전원 끄기 등</li>
+    </ul>
+    <p>컴퓨터에서는 Ruru가 시계 옆 알림 영역에 머물면서 배터리 잔량을 보여 줘요.</p>
+    <p>Ruru는 헤드폰의 펌웨어를 업데이트하지 않아요. 업데이트는 Bose 앱을 쓰세요.</p>
+  </section>
+
+  <section id="compare">
+    <h2>Ruru와 Bose 앱</h2>
+    <div class="table-panel">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">Ruru</th><th scope="col">Bose 앱</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">지원 기기</th><td>Windows, Mac, Linux, Android, iPhone</td><td>iPhone과 Android</td></tr>
+          <tr><th scope="row">계정</th><td>필요 없음</td><td>선택</td></tr>
+          <tr><th scope="row">인터넷</th><td>사용 안 함</td><td>사용</td></tr>
+          <tr><th scope="row">iPhone에서의 크기</th><td>12 MB</td><td>1.15 GB</td></tr>
+          <tr><th scope="row">펌웨어 업데이트</th><td>지원 안 함</td><td>지원</td></tr>
+          <tr><th scope="row">테스트한 헤드폰</th><td>QC Ultra Headphones (1st Gen)</td><td>모든 Bose 헤드폰</td></tr>
+          <tr><th scope="row">가격</th><td>무료, 코드도 공개</td><td>무료</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="after-table">그 밖의 무료 Bose 도구는 이 중 한두 가지 시스템에서만 작동해요.</p>
+  </section>
+
+  <section id="headphones">
+    <h2>헤드폰</h2>
+    <p>Ruru는 QC Ultra Headphones (1st Gen)으로 테스트했어요.</p>
+    <p>아래 모델도 작동할 것 같지만, 아직 Ruru로 써 본 사람은 없어요.</p>
+    <ul class="list">
+      <li>QC Ultra Headphones (2nd Gen)</li>
+      <li>QC Ultra Earbuds (1st and 2nd Gen)</li>
+      <li>QC Headphones (1st and 2nd Gen)</li>
+      <li>QC SC, QC45, QC SE</li>
+      <li>QC Earbuds II와 QC Earbuds (2020)</li>
+      <li>Ultra Open Earbuds</li>
+      <li>Noise Cancelling Headphones 700</li>
+    </ul>
+    <p>이 중 하나로 Ruru를 써 보셨나요? <a href="https://github.com/Langkurst/ruru/issues/new/choose">GitHub에서 알려 주세요</a>. Headphones report 양식을 쓰고, 앱 맨 아래의 보고서를 붙여 넣어 주세요.</p>
+  </section>
+
+  <section id="privacy">
+    <h2>개인정보</h2>
+    <p>Ruru는 헤드폰하고만 통신해요. 어디로도 아무것도 보내지 않아요.</p>
+    <p>계정도, 추적도, 충돌 보고서도 없어요. Android 앱은 인터넷을 아예 쓸 수 없어요.</p>
+    <p>이 웹사이트에는 쿠키도 추적도 없어요. 어느 버전이 최신인지 GitHub에 물어봐요.</p>
+  </section>
+
+  <section id="support">
+    <h2>후원</h2>
+    <p>Ruru는 무료예요. 마음에 드셨다면 <a href="https://ko-fi.com/keaclip">Ko-fi에서 커피 한 잔을 사 주실</a> 수 있어요.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="small">Ruru는 Bose가 만든 앱이 아니에요.</p>
+  <p class="small other">다른 프로젝트</p>
+  <p class="other-line"><a href="https://keaclip.pages.dev">KeaClip</a>은 영상 클립을 저장하고, 자르고, 공유하는 무료 Windows 앱이에요.</p>
+  <nav class="footer-links">
+    <a href="https://github.com/Langkurst/ruru">소스 코드</a>
+    <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">변경 내역</a>
+    <a href="https://github.com/Langkurst/ruru/issues/new/choose">문제 신고</a>
+    <a href="https://ko-fi.com/keaclip">Ko-fi</a>
+    <a href="/code-signing.html">Code signing policy</a>
+  </nav>
+</footer>
+</body>
+</html>

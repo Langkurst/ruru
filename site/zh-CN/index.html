@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruru，一款免费的 Bose 耳机应用</title>
+<meta name="description" content="Ruru 可以更改你的 Bose 耳机的设置，电脑和手机上都能用。">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0C0A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Ruru">
+<meta property="og:description" content="Ruru 可以更改你的 Bose 耳机的设置，电脑和手机上都能用。">
+<link rel="canonical" href="https://ruru-app.pages.dev/zh-CN/">
+<link rel="alternate" hreflang="en" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="de" href="https://ruru-app.pages.dev/de/">
+<link rel="alternate" hreflang="fr" href="https://ruru-app.pages.dev/fr/">
+<link rel="alternate" hreflang="es" href="https://ruru-app.pages.dev/es/">
+<link rel="alternate" hreflang="it" href="https://ruru-app.pages.dev/it/">
+<link rel="alternate" hreflang="nl" href="https://ruru-app.pages.dev/nl/">
+<link rel="alternate" hreflang="pt-BR" href="https://ruru-app.pages.dev/pt-BR/">
+<link rel="alternate" hreflang="ja" href="https://ruru-app.pages.dev/ja/">
+<link rel="alternate" hreflang="zh-CN" href="https://ruru-app.pages.dev/zh-CN/">
+<link rel="alternate" hreflang="ko" href="https://ruru-app.pages.dev/ko/">
+<link rel="alternate" hreflang="pl" href="https://ruru-app.pages.dev/pl/">
+<link rel="alternate" hreflang="x-default" href="https://ruru-app.pages.dev/">
+<meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/owl-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/img/owl-180.png">
+<link rel="preload" href="/fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script id="strings" type="application/json">{
+ "locale": "zh-CN",
+ "hero.windows": "下载 Windows 版",
+ "hero.mac": "下载 Mac 版",
+ "hero.android": "下载 Android 版",
+ "hero.ios": "下载 iPhone 版",
+ "hero.linux": "下载 Linux 版",
+ "version": "版本 {version}，发布于 {date}",
+ "versionNoDate": "版本 {version}",
+ "update.newer": "你的版本是 {have}，最新版本是 {newest}。",
+ "update.same": "你已经是最新版本。",
+ "size": "{n} MB",
+ "noiseN": "降噪 {n}",
+ "windBlock": "Wind Block",
+ "immersive": "Immersive",
+ "join": "，"
+}</script>
+<script src="/app.js" defer></script>
+<script src="/demo.js" defer></script>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="#top"><img src="/img/owl-64.png" width="28" height="28" alt="">Ruru</a>
+  <nav class="nav">
+    <a href="#download">下载</a>
+    <a class="optional" href="#compare">对比</a>
+    <a class="optional" href="#privacy">隐私</a>
+    <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <div class="lang">
+      <svg class="globe" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6.5"/><ellipse cx="8" cy="8" rx="2.8" ry="6.5"/><path d="M1.5 8h13"/></g></svg>
+      <select id="lang" aria-label="语言">
+        <option value="/" lang="en">English</option>
+        <option value="/de/" lang="de">Deutsch</option>
+        <option value="/fr/" lang="fr">Français</option>
+        <option value="/es/" lang="es">Español</option>
+        <option value="/it/" lang="it">Italiano</option>
+        <option value="/nl/" lang="nl">Nederlands</option>
+        <option value="/pt-BR/" lang="pt-BR">Português (Brasil)</option>
+        <option value="/ja/" lang="ja">日本語</option>
+        <option value="/zh-CN/" lang="zh-CN" selected>简体中文</option>
+        <option value="/ko/" lang="ko">한국어</option>
+        <option value="/pl/" lang="pl">Polski</option>
+      </select>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <div class="intro-text">
+      <h1>Ruru</h1>
+      <p>Ruru 可以更改你的 Bose 耳机的设置，电脑和手机上都能用。</p>
+      <p>它是免费的。不需要账号，也不联网。</p>
+      <div class="actions">
+        <a class="button" id="hero-button" href="#download">下载</a>
+        <a class="textlink" href="#download">其他系统</a>
+      </div>
+      <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">最新版本在 GitHub 上。</a></p>
+      <div class="star">
+        <p class="small star-text"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Ruru 是开源的。如果你喜欢它，请在 GitHub 上给它点个星标，这能帮助更多人找到它。</p>
+        <a class="file star-btn" href="https://github.com/Langkurst/ruru"><svg class="star-i" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg><span>在 GitHub 上点星标</span><span class="count" id="stars" hidden></span></a>
+      </div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo" id="demo" role="group" aria-label="Ruru">
+        <div class="d-head">
+          <img src="/img/owl-64.png" width="36" height="36" alt="">
+          <div>
+            <p class="d-name">Demo QC Ultra Headphones</p>
+            <p class="d-line">QuietComfort Ultra Headphones，演示模式</p>
+          </div>
+        </div>
+        <div class="d-bat"><span>电量 72%</span><span class="d-bar"><i></i></span></div>
+
+        <div class="d-card">
+          <p class="d-sec">聆听模式</p>
+          <div class="modes" role="radiogroup" aria-label="聆听模式">
+            <span class="mk"></span>
+            <button type="button" class="mode" role="radio" aria-checked="true" tabindex="0"><span class="lb"><span class="a">Quiet</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Aware</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Immersion</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Commute</span></span><span class="lb sm"><span class="a">降噪 7</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Focus</span></span><span class="lb sm"><span class="a">降噪 10</span></span></button>
+          </div>
+          <button type="button" class="qb" id="d-add">添加模式</button>
+        </div>
+
+        <div class="d-card locked" id="nz">
+          <p class="d-sec">噪声</p>
+          <div class="lk">
+            <div class="d-row"><span id="nl">降噪</span><span class="val" id="nv">10</span></div>
+            <div class="sl p100" role="slider" tabindex="-1" aria-disabled="true" aria-labelledby="nl" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" aria-valuetext="10" data-min="0" data-max="10" data-o="nv">
+              <span class="rail"><span class="trk"><span class="fu"></span></span><span class="th"></span></span>
+            </div>
+            <div class="d-row">
+              <span><span class="lbl" id="wl">Wind Block</span><span class="hint">减弱户外的风噪</span></span>
+              <button type="button" class="sw" role="switch" aria-checked="false" aria-labelledby="wl" disabled><span class="knob"></span></button>
+            </div>
+            <p class="d-body ia" id="il">Immersive Audio</p>
+            <div class="seg" role="radiogroup" aria-labelledby="il">
+              <span class="sg"><span class="sk"></span>
+                <button type="button" role="radio" aria-checked="true" tabindex="0" disabled>关闭</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>静止</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>运动</button>
+              </span>
+            </div>
+          </div>
+          <p class="d-lock"><span id="ln">Quiet</span> 是耳机内置的模式，无法更改。请选择或添加你自己的模式来设置这些项目。</p>
+        </div>
+
+        <div class="d-card">
+          <p class="d-sec">均衡器</p>
+          <div class="eq">
+            <span id="e0">低音</span>
+            <div class="sl bip p50" role="slider" tabindex="0" aria-labelledby="e0" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0" aria-valuetext="0" data-min="-10" data-max="10" data-o="v0"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v0">0</span>
+            <span id="e1">中音</span>
+            <div class="sl bip p40" role="slider" tabindex="0" aria-labelledby="e1" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-2" aria-valuetext="−2" data-min="-10" data-max="10" data-o="v1"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v1">−2</span>
+            <span id="e2">高音</span>
+            <div class="sl bip p20" role="slider" tabindex="0" aria-labelledby="e2" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-6" aria-valuetext="−6" data-min="-10" data-max="10" data-o="v2"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v2">−6</span>
+          </div>
+          <button type="button" class="qb" id="d-reset">恢复为平直</button>
+        </div>
+        <span class="tap" aria-hidden="true"><i class="f"></i><i class="r"></i></span>
+      </div>
+      <p class="small d-cap">这是应用的可运行副本，使用的是模拟耳机。</p>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>使用方法</h2>
+    <ol class="list steps">
+      <li>为你的电脑或手机下载 Ruru。</li>
+      <li>像平常一样，通过蓝牙连接你的耳机。</li>
+      <li>打开 Ruru。它会找到你的耳机，并显示耳机的设置。</li>
+    </ol>
+  </section>
+
+  <section id="download">
+    <h2>下载</h2>
+    <p>选择你的电脑或手机。每个按钮都会下载最新版本。</p>
+    <ul class="panel">
+      <li class="row" data-os="windows">
+        <div class="row-text">
+          <p class="name"><span>Windows 10 和 11</span><span class="you" hidden>你的系统</span></p>
+          <p class="status">已在真实的 Bose 耳机上测试过。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="msi" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.msi</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="exe" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.exe</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="mac">
+        <div class="row-text">
+          <p class="name"><span>搭载 Apple 芯片的 Mac，macOS 12 或更新版本</span><span class="you" hidden>你的系统</span></p>
+          <p class="status">可以打开，并能在演示模式下使用。还没有人用耳机试过。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="dmg" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.dmg</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="linux">
+        <div class="row-text">
+          <p class="name"><span>Linux</span><span class="you" hidden>你的系统</span></p>
+          <p class="status">可以打开，并能在演示模式下使用。还没有人用耳机试过。.deb 文件需要 Ubuntu 24.04 或 Debian 13，或更新版本。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="deb" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.deb</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="rpm" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.rpm</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="android">
+        <div class="row-text">
+          <p class="name"><span>Android 9 或更新版本</span><span class="you" hidden>你的系统</span></p>
+          <p class="status">可以打开，并能在演示模式下使用。还没有人在真实的手机上试过。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="apk" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.apk</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="ios">
+        <div class="row-text">
+          <p class="name"><span>iOS 16 或更新版本的 iPhone</span><span class="you" hidden>你的系统</span></p>
+          <p class="status">需要用旁加载工具来安装。还没有人在真实的 iPhone 上试过，所以可能无法使用。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="ipa" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.ipa</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+    </ul>
+    <p class="small after-panel">每个版本都有演示模式，使用模拟的耳机，你可以先随便看看。</p>
+  </section>
+
+  <section>
+    <h2>第一次打开</h2>
+    <p>Windows 和 Mac 第一次打开时可能会发出警告，因为 Ruru 还没有 Microsoft 或 Apple 的签名。</p>
+    <ul class="list">
+      <li>在 Windows 上，选择“更多信息”，再选择“仍要运行”。</li>
+      <li>在 Mac 上，打开“系统设置”，进入“隐私与安全性”，然后点按“仍要打开”。在 macOS 12 上则是“系统偏好设置”，再进入“安全性与隐私”。</li>
+    </ul>
+    <p>如果 Windows 提示 Smart App Control 拦截了 Ruru，那么 Ruru 无法在那台电脑上运行。Smart App Control 只允许运行已签名的应用。</p>
+    <p>请先关闭 Bose 应用。同一时间只有一个应用能与耳机通信。</p>
+  </section>
+
+  <section>
+    <h2>能更改什么</h2>
+    <ul class="list">
+      <li>聆听模式，以及你自己的模式</li>
+      <li>降噪的强度</li>
+      <li>Wind Block 和 Immersive Audio</li>
+      <li>低音、中音和高音</li>
+      <li>快捷按钮的功能</li>
+      <li>自我语音、多点连接、自动关机等</li>
+    </ul>
+    <p>在电脑上，Ruru 会待在时钟旁边的角落，并显示电量。</p>
+    <p>Ruru 不会更新耳机的固件。固件更新请用 Bose 应用。</p>
+  </section>
+
+  <section id="compare">
+    <h2>Ruru 与 Bose 应用</h2>
+    <div class="table-panel">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">Ruru</th><th scope="col">Bose 应用</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">支持的系统</th><td>Windows、Mac、Linux、Android 和 iPhone</td><td>iPhone 和 Android</td></tr>
+          <tr><th scope="row">账号</th><td>不需要</td><td>可选</td></tr>
+          <tr><th scope="row">联网</th><td>不使用</td><td>使用</td></tr>
+          <tr><th scope="row">在 iPhone 上的大小</th><td>12 MB</td><td>1.15 GB</td></tr>
+          <tr><th scope="row">固件更新</th><td>不支持</td><td>支持</td></tr>
+          <tr><th scope="row">已测试的耳机</th><td>QC Ultra Headphones (1st Gen)</td><td>所有 Bose 耳机</td></tr>
+          <tr><th scope="row">价格</th><td>免费，代码公开</td><td>免费</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="after-table">其他免费的 Bose 工具，各自只能在其中一两个系统上运行。</p>
+  </section>
+
+  <section id="headphones">
+    <h2>耳机</h2>
+    <p>Ruru 已在 QC Ultra Headphones (1st Gen) 上测试过。</p>
+    <p>下面这些应该也能用，但还没有人用 Ruru 试过。</p>
+    <ul class="list">
+      <li>QC Ultra Headphones (2nd Gen)</li>
+      <li>QC Ultra Earbuds (1st and 2nd Gen)</li>
+      <li>QC Headphones (1st and 2nd Gen)</li>
+      <li>QC SC, QC45 and QC SE</li>
+      <li>QC Earbuds II and QC Earbuds (2020)</li>
+      <li>Ultra Open Earbuds</li>
+      <li>Noise Cancelling Headphones 700</li>
+    </ul>
+    <p>用 Ruru 试过其中某一款？<a href="https://github.com/Langkurst/ruru/issues/new/choose">请在 GitHub 上告诉我</a>。请使用 Headphones report 表单，并粘贴应用底部的报告。</p>
+  </section>
+
+  <section id="privacy">
+    <h2>隐私</h2>
+    <p>Ruru 只与你的耳机通信，不会向任何地方发送任何内容。</p>
+    <p>没有账号，没有跟踪，也没有崩溃报告。Android 版应用完全不能使用互联网。</p>
+    <p>本网站没有 Cookie，也没有跟踪。它只会向 GitHub 查询哪个版本是最新的。</p>
+  </section>
+
+  <section id="support">
+    <h2>支持</h2>
+    <p>Ruru 是免费的。如果你喜欢它，可以<a href="https://ko-fi.com/keaclip">在 Ko-fi 上请我喝杯咖啡</a>。</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="small">Ruru 不是 Bose 制作的。</p>
+  <p class="small other">其他项目</p>
+  <p class="other-line"><a href="https://keaclip.pages.dev">KeaClip</a>，一款免费的 Windows 应用，用来保存、剪辑和分享视频片段。</p>
+  <nav class="footer-links">
+    <a href="https://github.com/Langkurst/ruru">源代码</a>
+    <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">更新日志</a>
+    <a href="https://github.com/Langkurst/ruru/issues/new/choose">报告问题</a>
+    <a href="https://ko-fi.com/keaclip">Ko-fi</a>
+    <a href="/code-signing.html">Code signing policy</a>
+  </nav>
+</footer>
+</body>
+</html>

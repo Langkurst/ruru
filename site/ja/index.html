@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruru、Boseヘッドホン用の無料アプリ</title>
+<meta name="description" content="Ruruは、Boseヘッドホンの設定を変えるアプリです。パソコンでもスマートフォンでも使えます。">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0C0A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Ruru">
+<meta property="og:description" content="Ruruは、Boseヘッドホンの設定を変えるアプリです。パソコンでもスマートフォンでも使えます。">
+<link rel="canonical" href="https://ruru-app.pages.dev/ja/">
+<link rel="alternate" hreflang="en" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="de" href="https://ruru-app.pages.dev/de/">
+<link rel="alternate" hreflang="fr" href="https://ruru-app.pages.dev/fr/">
+<link rel="alternate" hreflang="es" href="https://ruru-app.pages.dev/es/">
+<link rel="alternate" hreflang="it" href="https://ruru-app.pages.dev/it/">
+<link rel="alternate" hreflang="nl" href="https://ruru-app.pages.dev/nl/">
+<link rel="alternate" hreflang="pt-BR" href="https://ruru-app.pages.dev/pt-BR/">
+<link rel="alternate" hreflang="ja" href="https://ruru-app.pages.dev/ja/">
+<link rel="alternate" hreflang="zh-CN" href="https://ruru-app.pages.dev/zh-CN/">
+<link rel="alternate" hreflang="ko" href="https://ruru-app.pages.dev/ko/">
+<link rel="alternate" hreflang="pl" href="https://ruru-app.pages.dev/pl/">
+<link rel="alternate" hreflang="x-default" href="https://ruru-app.pages.dev/">
+<meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/owl-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/img/owl-180.png">
+<link rel="preload" href="/fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script id="strings" type="application/json">{
+ "locale": "ja",
+ "hero.windows": "Windows版をダウンロード",
+ "hero.mac": "Mac版をダウンロード",
+ "hero.android": "Android版をダウンロード",
+ "hero.ios": "iPhone版をダウンロード",
+ "hero.linux": "Linux版をダウンロード",
+ "version": "バージョン {version}、{date}公開",
+ "versionNoDate": "バージョン {version}",
+ "update.newer": "お使いのバージョンは {have} です。最新は {newest} です。",
+ "update.same": "最新バージョンをお使いです。",
+ "size": "{n} MB",
+ "noiseN": "ノイズ {n}",
+ "windBlock": "Wind Block",
+ "immersive": "イマーシブ",
+ "join": "、"
+}</script>
+<script src="/app.js" defer></script>
+<script src="/demo.js" defer></script>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="#top"><img src="/img/owl-64.png" width="28" height="28" alt="">Ruru</a>
+  <nav class="nav">
+    <a href="#download">ダウンロード</a>
+    <a class="optional" href="#compare">比較</a>
+    <a class="optional" href="#privacy">プライバシー</a>
+    <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <div class="lang">
+      <svg class="globe" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6.5"/><ellipse cx="8" cy="8" rx="2.8" ry="6.5"/><path d="M1.5 8h13"/></g></svg>
+      <select id="lang" aria-label="言語">
+        <option value="/" lang="en">English</option>
+        <option value="/de/" lang="de">Deutsch</option>
+        <option value="/fr/" lang="fr">Français</option>
+        <option value="/es/" lang="es">Español</option>
+        <option value="/it/" lang="it">Italiano</option>
+        <option value="/nl/" lang="nl">Nederlands</option>
+        <option value="/pt-BR/" lang="pt-BR">Português (Brasil)</option>
+        <option value="/ja/" lang="ja" selected>日本語</option>
+        <option value="/zh-CN/" lang="zh-CN">简体中文</option>
+        <option value="/ko/" lang="ko">한국어</option>
+        <option value="/pl/" lang="pl">Polski</option>
+      </select>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <div class="intro-text">
+      <h1>Ruru</h1>
+      <p>Ruruは、Boseヘッドホンの設定を変えるアプリです。パソコンでもスマートフォンでも使えます。</p>
+      <p>無料です。アカウントは要らず、インターネットも使いません。</p>
+      <div class="actions">
+        <a class="button" id="hero-button" href="#download">ダウンロード</a>
+        <a class="textlink" href="#download">その他のシステム</a>
+      </div>
+      <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">最新バージョンはGitHubにあります。</a></p>
+      <div class="star">
+        <p class="small star-text"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Ruruはオープンソースです。気に入ったら、GitHubでスターを付けてください。ほかの人が見つけやすくなります。</p>
+        <a class="file star-btn" href="https://github.com/Langkurst/ruru"><svg class="star-i" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg><span>GitHubでスターを付ける</span><span class="count" id="stars" hidden></span></a>
+      </div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo" id="demo" role="group" aria-label="Ruru">
+        <div class="d-head">
+          <img src="/img/owl-64.png" width="36" height="36" alt="">
+          <div>
+            <p class="d-name">デモ QC Ultra Headphones</p>
+            <p class="d-line">QuietComfort Ultra Headphones、デモモード</p>
+          </div>
+        </div>
+        <div class="d-bat"><span>バッテリー 72%</span><span class="d-bar"><i></i></span></div>
+
+        <div class="d-card">
+          <p class="d-sec">リスニングモード</p>
+          <div class="modes" role="radiogroup" aria-label="リスニングモード">
+            <span class="mk"></span>
+            <button type="button" class="mode" role="radio" aria-checked="true" tabindex="0"><span class="lb"><span class="a">Quiet</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Aware</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Immersion</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">通勤</span></span><span class="lb sm"><span class="a">ノイズ 7</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">集中</span></span><span class="lb sm"><span class="a">ノイズ 10</span></span></button>
+          </div>
+          <button type="button" class="qb" id="d-add">モードを追加</button>
+        </div>
+
+        <div class="d-card locked" id="nz">
+          <p class="d-sec">ノイズ</p>
+          <div class="lk">
+            <div class="d-row"><span id="nl">ノイズキャンセリング</span><span class="val" id="nv">10</span></div>
+            <div class="sl p100" role="slider" tabindex="-1" aria-disabled="true" aria-labelledby="nl" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" aria-valuetext="10" data-min="0" data-max="10" data-o="nv">
+              <span class="rail"><span class="trk"><span class="fu"></span></span><span class="th"></span></span>
+            </div>
+            <div class="d-row">
+              <span><span class="lbl" id="wl">Wind Block</span><span class="hint">屋外の風切り音を抑えます</span></span>
+              <button type="button" class="sw" role="switch" aria-checked="false" aria-labelledby="wl" disabled><span class="knob"></span></button>
+            </div>
+            <p class="d-body ia" id="il">Immersive Audio</p>
+            <div class="seg" role="radiogroup" aria-labelledby="il">
+              <span class="sg"><span class="sk"></span>
+                <button type="button" role="radio" aria-checked="true" tabindex="0" disabled>オフ</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>静止</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>モーション</button>
+              </span>
+            </div>
+          </div>
+          <p class="d-lock"><span id="ln">Quiet</span>はヘッドホンに内蔵されていて、変更できません。これらを設定するには、自分用のモードを選ぶか追加してください。</p>
+        </div>
+
+        <div class="d-card">
+          <p class="d-sec">イコライザー</p>
+          <div class="eq">
+            <span id="e0">低音</span>
+            <div class="sl bip p50" role="slider" tabindex="0" aria-labelledby="e0" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0" aria-valuetext="0" data-min="-10" data-max="10" data-o="v0"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v0">0</span>
+            <span id="e1">中音</span>
+            <div class="sl bip p40" role="slider" tabindex="0" aria-labelledby="e1" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-2" aria-valuetext="−2" data-min="-10" data-max="10" data-o="v1"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v1">−2</span>
+            <span id="e2">高音</span>
+            <div class="sl bip p20" role="slider" tabindex="0" aria-labelledby="e2" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-6" aria-valuetext="−6" data-min="-10" data-max="10" data-o="v2"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v2">−6</span>
+          </div>
+          <button type="button" class="qb" id="d-reset">フラットに戻す</button>
+        </div>
+        <span class="tap" aria-hidden="true"><i class="f"></i><i class="r"></i></span>
+      </div>
+      <p class="small d-cap">これは、架空のヘッドホンで動く、本物のアプリのコピーです。</p>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>使い方</h2>
+    <ol class="list steps">
+      <li>パソコンまたはスマートフォン用のRuruをダウンロードします。</li>
+      <li>いつもどおり、ヘッドホンをBluetoothで接続します。</li>
+      <li>Ruruを開きます。ヘッドホンが見つかり、設定が表示されます。</li>
+    </ol>
+  </section>
+
+  <section id="download">
+    <h2>ダウンロード</h2>
+    <p>お使いのパソコンまたはスマートフォンを選んでください。どのボタンも、最新バージョンを取得します。</p>
+    <ul class="panel">
+      <li class="row" data-os="windows">
+        <div class="row-text">
+          <p class="name"><span>Windows 10 / 11</span><span class="you" hidden>お使いのシステム</span></p>
+          <p class="status">本物のBoseヘッドホンでテスト済みです。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="msi" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.msi</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="exe" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.exe</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="mac">
+        <div class="row-text">
+          <p class="name"><span>Appleチップ搭載のMac、macOS 12以降</span><span class="you" hidden>お使いのシステム</span></p>
+          <p class="status">開いて、デモモードで動きます。ヘッドホンでは、まだ誰も試していません。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="dmg" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.dmg</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="linux">
+        <div class="row-text">
+          <p class="name"><span>Linux</span><span class="you" hidden>お使いのシステム</span></p>
+          <p class="status">開いて、デモモードで動きます。ヘッドホンでは、まだ誰も試していません。.debファイルには、Ubuntu 24.04かDebian 13、またはそれ以降が必要です。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="deb" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.deb</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="rpm" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.rpm</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="android">
+        <div class="row-text">
+          <p class="name"><span>Android 9以降</span><span class="you" hidden>お使いのシステム</span></p>
+          <p class="status">開いて、デモモードで動きます。実際のスマートフォンでは、まだ誰も試していません。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="apk" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.apk</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="ios">
+        <div class="row-text">
+          <p class="name"><span>iOS 16以降のiPhone</span><span class="you" hidden>お使いのシステム</span></p>
+          <p class="status">インストールには、サイドロード用のツールが必要です。実際のiPhoneでは、まだ誰も試していないため、動かない可能性があります。</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="ipa" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.ipa</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+    </ul>
+    <p class="small after-panel">どのバージョンにも、架空のヘッドホンで動くデモモードがあるので、先に中身を見て回れます。</p>
+  </section>
+
+  <section>
+    <h2>初めて開くとき</h2>
+    <p>RuruはまだMicrosoftやAppleの署名を受けていないため、WindowsとMacは、初回に警告を出すことがあります。</p>
+    <ul class="list">
+      <li>Windowsでは、「詳細情報」を選び、「実行」を選びます。</li>
+      <li>Macでは、「システム設定」を開き、「プライバシーとセキュリティ」で「このまま開く」を選びます。macOS 12では、「システム環境設定」、「セキュリティとプライバシー」の順に開きます。</li>
+    </ul>
+    <p>スマート アプリ コントロールがRuruをブロックしたと表示された場合、そのパソコンではRuruを実行できません。スマート アプリ コントロールは、署名されたアプリしか許可しません。</p>
+    <p>先にBoseアプリを閉じてください。ヘッドホンと通信できるアプリは、同時に1つだけです。</p>
+  </section>
+
+  <section>
+    <h2>変更できること</h2>
+    <ul class="list">
+      <li>リスニングモードと、自分用のモード</li>
+      <li>ノイズキャンセリングの強さ</li>
+      <li>Wind BlockとImmersive Audio</li>
+      <li>低音、中音、高音</li>
+      <li>ショートカットボタンの動作</li>
+      <li>自分の声、マルチポイント、自動電源オフなど</li>
+    </ul>
+    <p>パソコンでは、Ruruは時計のそばの通知領域に常駐し、バッテリー残量を表示します。</p>
+    <p>Ruruは、ヘッドホンのファームウェアを更新しません。更新にはBoseアプリを使ってください。</p>
+  </section>
+
+  <section id="compare">
+    <h2>RuruとBoseアプリ</h2>
+    <div class="table-panel">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">Ruru</th><th scope="col">Boseアプリ</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">対応システム</th><td>Windows、Mac、Linux、Android、iPhone</td><td>iPhoneとAndroid</td></tr>
+          <tr><th scope="row">アカウント</th><td>不要</td><td>任意</td></tr>
+          <tr><th scope="row">インターネット</th><td>使わない</td><td>使う</td></tr>
+          <tr><th scope="row">iPhoneでのサイズ</th><td>12 MB</td><td>1.15 GB</td></tr>
+          <tr><th scope="row">ファームウェア更新</th><td>なし</td><td>あり</td></tr>
+          <tr><th scope="row">テスト済みのヘッドホン</th><td>QC Ultra Headphones (1st Gen)</td><td>すべてのBoseヘッドホン</td></tr>
+          <tr><th scope="row">価格</th><td>無料で、コードも公開</td><td>無料</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="after-table">ほかの無料のBose用ツールは、どれもこのうち1つか2つのシステムでしか動きません。</p>
+  </section>
+
+  <section id="headphones">
+    <h2>ヘッドホン</h2>
+    <p>Ruruは、QC Ultra Headphones (1st Gen)でテストしています。</p>
+    <p>次のモデルでも動くはずですが、Ruruで試した人はまだいません。</p>
+    <ul class="list">
+      <li>QC Ultra Headphones (2nd Gen)</li>
+      <li>QC Ultra Earbuds (1st and 2nd Gen)</li>
+      <li>QC Headphones (1st and 2nd Gen)</li>
+      <li>QC SC、QC45、QC SE</li>
+      <li>QC Earbuds IIとQC Earbuds (2020)</li>
+      <li>Ultra Open Earbuds</li>
+      <li>Noise Cancelling Headphones 700</li>
+    </ul>
+    <p>これらのどれかでRuruを試しましたか？ <a href="https://github.com/Langkurst/ruru/issues/new/choose">GitHubで教えてください</a>。「Headphones report」フォームを使い、アプリの下部にあるレポートを貼り付けてください。</p>
+  </section>
+
+  <section id="privacy">
+    <h2>プライバシー</h2>
+    <p>Ruruが通信する相手は、ヘッドホンだけです。どこにも何も送りません。</p>
+    <p>アカウントも、トラッキングも、クラッシュレポートもありません。Android版は、インターネットをまったく使えません。</p>
+    <p>このウェブサイトには、Cookieもトラッキングもありません。最新バージョンを知るために、GitHubに問い合わせます。</p>
+  </section>
+
+  <section id="support">
+    <h2>応援</h2>
+    <p>Ruruは無料です。気に入ったら、<a href="https://ko-fi.com/keaclip">Ko-fiでコーヒーをごちそうしてください</a>。</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="small">RuruはBoseの製品ではありません。</p>
+  <p class="small other">ほかのプロジェクト</p>
+  <p class="other-line"><a href="https://keaclip.pages.dev">KeaClip</a>は、動画クリップの保存、トリミング、共有ができる無料のWindowsアプリです。</p>
+  <nav class="footer-links">
+    <a href="https://github.com/Langkurst/ruru">ソースコード</a>
+    <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">変更履歴</a>
+    <a href="https://github.com/Langkurst/ruru/issues/new/choose">問題を報告</a>
+    <a href="https://ko-fi.com/keaclip">Ko-fi</a>
+    <a href="/code-signing.html">Code signing policy</a>
+  </nav>
+</footer>
+</body>
+</html>

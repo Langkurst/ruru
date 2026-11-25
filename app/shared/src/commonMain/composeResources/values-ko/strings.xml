@@ -1,216 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Translation pending -->
 <resources>
-    <!-- Ruru, English (the default). Keys are grouped by screen. %1$s / %1$d are filled in by the app: keep them. -->
+    <!-- Ruru, 한국어. 키는 화면별로 묶여 있습니다. %1$s / %1$d 는 앱이 채워 넣는 부분이니 그대로 두세요. -->
 
-    <!-- Words used in several places -->
-    <string name="action_ok">OK</string>
-    <string name="action_cancel">Cancel</string>
-    <string name="action_save">Save</string>
-    <string name="action_remove">Remove</string>
-    <string name="action_try_again">Try again</string>
-    <string name="action_try_demo">Try the demo</string>
-    <string name="option_off">Off</string>
-    <string name="choice_not_set">Not set</string>
+    <!-- 여러 곳에서 쓰는 말 -->
+    <string name="action_ok">확인</string>
+    <string name="action_cancel">취소</string>
+    <string name="action_save">저장</string>
+    <string name="action_remove">삭제</string>
+    <string name="action_try_again">다시 시도</string>
+    <string name="action_try_demo">데모 체험하기</string>
+    <string name="option_off">끔</string>
+    <string name="choice_not_set">설정 안 함</string>
     <string name="list_separator">, </string>
 
-    <!-- Header and battery -->
-    <string name="header_connected">Connected</string>
-    <string name="header_connecting">Connecting</string>
-    <string name="header_not_connected">Not connected</string>
-    <string name="header_looking">Looking for headphones</string>
-    <string name="header_demo_available">Demo mode is available</string>
-    <string name="header_with_demo">%1$s, demo mode</string>
-    <string name="battery_percent">Battery %1$d%</string>
-    <string name="battery_percent_charging">Battery %1$d%, charging</string>
+    <!-- 머리글과 배터리 -->
+    <string name="header_connected">연결됨</string>
+    <string name="header_connecting">연결 중</string>
+    <string name="header_not_connected">연결 안 됨</string>
+    <string name="header_looking">헤드폰을 찾는 중</string>
+    <string name="header_demo_available">데모 모드를 쓸 수 있어요</string>
+    <string name="header_with_demo">%1$s, 데모 모드</string>
+    <string name="battery_percent">배터리 %1$d%</string>
+    <string name="battery_percent_charging">배터리 %1$d%, 충전 중</string>
 
-    <!-- Screen shown while there are no headphones -->
-    <string name="starting_title">Looking for your headphones</string>
-    <string name="starting_body_iphone">Ruru is looking for the Bose headphones this iPhone is playing through.</string>
-    <string name="starting_body_phone">Ruru checks the Bluetooth devices paired with this phone.</string>
-    <string name="starting_body_computer">Ruru checks the Bluetooth devices paired with this computer.</string>
-    <string name="blocked_title">Ruru can't see your headphones yet</string>
-    <string name="none_found_title">No Bose headphones found</string>
-    <string name="none_found_body_iphone">Ruru connects to the Bose headphones this iPhone is playing through. Connect them in Settings &gt; Bluetooth. If iPhone asks to pair them with Ruru, choose Pair. After the Bose app has used them, they can take a few minutes to show up. If you renamed them in iPhone Settings, change the name back. Ruru connects by itself.</string>
-    <string name="none_found_body_phone">Ruru looks for a paired Bluetooth device with Bose in its name. Pair your headphones in this phone's Bluetooth settings. If you renamed them, put Bose back in their name. Ruru connects by itself.</string>
-    <string name="none_found_body_computer">Ruru looks for a paired Bluetooth device with Bose in its name. Pair your headphones in this computer's Bluetooth settings. If you renamed them, put Bose back in their name. Ruru connects by itself.</string>
-    <string name="waiting_title">Waiting for %1$s</string>
-    <string name="waiting_body_phone">Turn the headphones on, or put them on if they've gone to sleep. If they connect to another device first, choose this phone in their Bluetooth list. Ruru connects by itself.</string>
-    <string name="waiting_body_computer">Turn the headphones on, or put them on if they've gone to sleep. If they connect to another device first, choose this computer in their Bluetooth list. Ruru connects by itself.</string>
-    <string name="connecting_title">Connecting to %1$s</string>
-    <string name="connecting_body_iphone">If iPhone asks to pair them with Ruru, choose Pair.</string>
-    <string name="connecting_body">This takes a few seconds.</string>
-    <string name="failed_title">Could not connect to %1$s</string>
-    <string name="unsupported_title">Not available on this system yet</string>
-    <string name="unsupported_body">Ruru can't open the headphones' control channel here. Demo mode shows how the app works.</string>
+    <!-- 헤드폰이 없을 때 보이는 화면 -->
+    <string name="starting_title">헤드폰을 찾고 있어요</string>
+    <string name="starting_body_iphone">Ruru가 이 iPhone으로 소리를 재생 중인 Bose 헤드폰을 찾고 있어요.</string>
+    <string name="starting_body_phone">Ruru가 이 휴대폰에 페어링된 블루투스 기기를 확인해요.</string>
+    <string name="starting_body_computer">Ruru가 이 컴퓨터에 페어링된 블루투스 기기를 확인해요.</string>
+    <string name="blocked_title">Ruru가 아직 헤드폰을 찾지 못했어요</string>
+    <string name="none_found_title">Bose 헤드폰을 찾지 못했어요</string>
+    <string name="none_found_body_iphone">Ruru는 이 iPhone으로 소리를 재생 중인 Bose 헤드폰에 연결해요. 설정 &gt; Bluetooth에서 헤드폰을 연결하세요. iPhone이 Ruru와 페어링할지 물으면 페어링을 선택하세요. Bose 앱에서 사용한 뒤에는 나타나기까지 몇 분 걸릴 수 있어요. iPhone 설정에서 이름을 바꿨다면 원래대로 되돌리세요. Ruru는 자동으로 연결해요.</string>
+    <string name="none_found_body_phone">Ruru는 이름에 Bose가 들어 있는 페어링된 블루투스 기기를 찾아요. 이 휴대폰의 블루투스 설정에서 헤드폰을 페어링하세요. 이름을 바꿨다면 이름에 Bose를 다시 넣어 주세요. Ruru는 자동으로 연결해요.</string>
+    <string name="none_found_body_computer">Ruru는 이름에 Bose가 들어 있는 페어링된 블루투스 기기를 찾아요. 이 컴퓨터의 블루투스 설정에서 헤드폰을 페어링하세요. 이름을 바꿨다면 이름에 Bose를 다시 넣어 주세요. Ruru는 자동으로 연결해요.</string>
+    <string name="waiting_title">%1$s 기다리는 중</string>
+    <string name="waiting_body_phone">헤드폰을 켜거나, 절전 상태라면 착용해 보세요. 다른 기기에 먼저 연결된다면 헤드폰의 블루투스 목록에서 이 휴대폰을 선택하세요. Ruru는 자동으로 연결해요.</string>
+    <string name="waiting_body_computer">헤드폰을 켜거나, 절전 상태라면 착용해 보세요. 다른 기기에 먼저 연결된다면 헤드폰의 블루투스 목록에서 이 컴퓨터를 선택하세요. Ruru는 자동으로 연결해요.</string>
+    <string name="connecting_title">%1$s에 연결하는 중</string>
+    <string name="connecting_body_iphone">iPhone이 Ruru와 페어링할지 물으면 페어링을 선택하세요.</string>
+    <string name="connecting_body">몇 초 걸려요.</string>
+    <string name="failed_title">%1$s에 연결하지 못했어요</string>
+    <string name="unsupported_title">이 시스템에서는 아직 쓸 수 없어요</string>
+    <string name="unsupported_body">Ruru가 여기서는 헤드폰의 제어 채널을 열 수 없어요. 데모 모드에서 앱이 어떻게 작동하는지 볼 수 있어요.</string>
 
-    <!-- Why a connection did not work (shown under the title above, or in the message bar) -->
-    <string name="problem_open_phone">Could not open the control channel to %1$s. Check that it is connected to this phone, then try again.</string>
-    <string name="problem_open_computer">Could not open the control channel to %1$s. Check that it is connected to this computer, then try again.</string>
-    <string name="problem_busy_phone">%1$s did not answer. If the Bose app is open on this phone, close it. Only one app can control the headphones at a time.</string>
-    <string name="problem_busy_computer">%1$s did not answer. Close any other app on this computer that controls the headphones, then try again. Only one app can control them at a time.</string>
-    <string name="problem_stopped_answering">%1$s stopped answering. Ruru will keep trying.</string>
-    <string name="problem_android_permission">Ruru needs Android's Nearby devices permission to see your paired headphones. Allow it in Android's settings for Ruru, then come back.</string>
-    <string name="problem_ios_allow_bluetooth">Allow Bluetooth when iPhone asks. Ruru uses it only to talk to your headphones.</string>
-    <string name="problem_ios_bluetooth_denied">Ruru needs Bluetooth to find your headphones. In Settings, open Ruru and turn on Bluetooth.</string>
-    <string name="problem_ios_bluetooth_restricted">Bluetooth is restricted on this iPhone, for example by Screen Time, so Ruru can't use it.</string>
-    <string name="problem_ios_bluetooth_off">Bluetooth is off. Turn it on in Control Centre or Settings.</string>
-    <string name="problem_ios_name_clash">Another set of Bose headphones nearby has the same name as yours, so Ruru can't tell them apart. Move away from the other set and Ruru connects by itself.</string>
-    <string name="problem_ios_other_set">Ruru found another set of %1$s nearby, not the one this iPhone is playing through, and left it alone.</string>
-    <string name="problem_ios_not_paired">%1$s didn't pair with Ruru. Press Try again and choose Pair when iPhone asks. If iPhone doesn't ask, choose Forget This Device for %1$s in Settings &gt; Bluetooth, then connect them again.</string>
-    <string name="problem_ios_not_responding">%1$s didn't respond over Bluetooth. Keep them near this iPhone. Ruru will keep trying.</string>
-    <string name="problem_ios_no_bose_controls">%1$s doesn't offer Bose's controls over Bluetooth, so Ruru can't control it.</string>
-    <string name="problem_ios_no_answer">%1$s didn't answer Ruru over Bluetooth. Ruru will keep trying.</string>
-    <string name="problem_ios_disconnected">%1$s disconnected. Ruru will keep trying.</string>
+    <!-- 연결이 안 된 이유 (위 제목 아래 또는 메시지 막대에 표시) -->
+    <string name="problem_open_phone">기기(%1$s)의 제어 채널을 열지 못했어요. 이 휴대폰에 연결되어 있는지 확인하고 다시 시도하세요.</string>
+    <string name="problem_open_computer">기기(%1$s)의 제어 채널을 열지 못했어요. 이 컴퓨터에 연결되어 있는지 확인하고 다시 시도하세요.</string>
+    <string name="problem_busy_phone">기기(%1$s)가 응답하지 않았어요. 이 휴대폰에서 Bose 앱이 열려 있다면 닫아 주세요. 헤드폰을 제어할 수 있는 앱은 한 번에 하나뿐이에요.</string>
+    <string name="problem_busy_computer">기기(%1$s)가 응답하지 않았어요. 이 컴퓨터에서 헤드폰을 제어하는 다른 앱을 닫고 다시 시도하세요. 제어할 수 있는 앱은 한 번에 하나뿐이에요.</string>
+    <string name="problem_stopped_answering">기기(%1$s)가 응답을 멈췄어요. Ruru가 계속 시도할게요.</string>
+    <string name="problem_android_permission">Ruru가 페어링된 헤드폰을 찾으려면 Android의 근처 기기 권한이 필요해요. Android 설정에서 Ruru에 허용한 뒤 돌아오세요.</string>
+    <string name="problem_ios_allow_bluetooth">iPhone이 물으면 Bluetooth를 허용하세요. Ruru는 헤드폰과 통신하는 데만 사용해요.</string>
+    <string name="problem_ios_bluetooth_denied">Ruru가 헤드폰을 찾으려면 Bluetooth가 필요해요. 설정에서 Ruru를 열고 Bluetooth를 켜 주세요.</string>
+    <string name="problem_ios_bluetooth_restricted">이 iPhone은 스크린 타임 등으로 Bluetooth가 제한되어 있어서 Ruru가 쓸 수 없어요.</string>
+    <string name="problem_ios_bluetooth_off">Bluetooth가 꺼져 있어요. 제어 센터나 설정에서 켜 주세요.</string>
+    <string name="problem_ios_name_clash">근처의 다른 Bose 헤드폰이 내 헤드폰과 이름이 같아서 Ruru가 구분할 수 없어요. 다른 헤드폰에서 멀어지면 Ruru가 자동으로 연결해요.</string>
+    <string name="problem_ios_other_set">Ruru가 근처에서 다른 헤드폰(%1$s)을 찾았지만, 이 iPhone으로 소리를 재생 중인 헤드폰이 아니어서 건드리지 않았어요.</string>
+    <string name="problem_ios_not_paired">기기(%1$s)가 Ruru와 페어링되지 않았어요. 다시 시도를 누르고 iPhone이 물으면 페어링을 선택하세요. 묻지 않으면 설정 &gt; Bluetooth에서 %1$s의 ‘이 기기 지우기’를 선택한 뒤 다시 연결하세요.</string>
+    <string name="problem_ios_not_responding">기기(%1$s)가 Bluetooth로 응답하지 않았어요. 이 iPhone 가까이에 두세요. Ruru가 계속 시도할게요.</string>
+    <string name="problem_ios_no_bose_controls">기기(%1$s)는 Bluetooth로 Bose 제어 기능을 제공하지 않아서 Ruru가 제어할 수 없어요.</string>
+    <string name="problem_ios_no_answer">기기(%1$s)가 Bluetooth로 Ruru에 응답하지 않았어요. Ruru가 계속 시도할게요.</string>
+    <string name="problem_ios_disconnected">기기(%1$s)의 연결이 끊어졌어요. Ruru가 계속 시도할게요.</string>
 
-    <!-- The message bar, after a change that did not work -->
-    <string name="message_not_accepted">The headphones did not accept that change. If it keeps happening, press Copy connection report below and open an issue on GitHub.</string>
-    <string name="message_no_answer">The headphones did not answer. Try again.</string>
-    <string name="message_disconnected">The headphones disconnected. Ruru reconnects by itself.</string>
-    <string name="message_mode_empty">That mode is empty. Add a mode first, then choose it.</string>
-    <string name="message_custom_only">Only your own modes can be removed.</string>
-    <string name="message_built_in_mode">%1$s is built into the headphones and can't be changed. Add a mode of your own instead.</string>
-    <string name="message_firmware_unsupported">The headphones' firmware doesn't support changing this</string>
-    <string name="message_modes_unavailable">This firmware doesn't expose listening modes to other apps</string>
-    <string name="message_modes_read_only">These headphones' modes can be switched here but not edited</string>
-    <string name="message_noise_read_only">These headphones' firmware doesn't let other apps change the noise cancelling level</string>
-    <string name="message_noise_per_mode">On these headphones noise settings belong to a mode: switch to a custom mode to change them</string>
-    <string name="message_no_favorites">These headphones don't have favourite modes</string>
-    <string name="message_unsupported">Ruru can't control these headphones</string>
-    <!-- Any other message from the headphones' own software is shown as it came (in English): keep %1$s alone. -->
+    <!-- 메시지 막대: 변경이 안 됐을 때 -->
+    <string name="message_not_accepted">헤드폰이 그 변경을 받아들이지 않았어요. 계속 그러면 아래의 연결 보고서 복사를 누르고 GitHub에 이슈를 올려 주세요.</string>
+    <string name="message_no_answer">헤드폰이 응답하지 않았어요. 다시 시도하세요.</string>
+    <string name="message_disconnected">헤드폰의 연결이 끊어졌어요. Ruru가 자동으로 다시 연결해요.</string>
+    <string name="message_mode_empty">그 모드는 비어 있어요. 먼저 모드를 추가한 뒤 선택하세요.</string>
+    <string name="message_custom_only">내가 만든 모드만 삭제할 수 있어요.</string>
+    <string name="message_built_in_mode">%1$s 모드는 헤드폰에 내장되어 있어서 바꿀 수 없어요. 대신 나만의 모드를 추가하세요.</string>
+    <string name="message_firmware_unsupported">헤드폰의 펌웨어가 이 변경을 지원하지 않아요</string>
+    <string name="message_modes_unavailable">이 펌웨어는 청취 모드를 다른 앱에 공개하지 않아요</string>
+    <string name="message_modes_read_only">이 헤드폰의 모드는 여기서 전환할 수 있지만 편집할 수는 없어요</string>
+    <string name="message_noise_read_only">이 헤드폰의 펌웨어는 다른 앱이 노이즈 캔슬링 단계를 바꾸는 것을 허용하지 않아요</string>
+    <string name="message_noise_per_mode">이 헤드폰은 노이즈 설정이 모드마다 따로 있어요. 바꾸려면 나만의 모드로 전환하세요</string>
+    <string name="message_no_favorites">이 헤드폰에는 즐겨찾는 모드가 없어요</string>
+    <string name="message_unsupported">Ruru가 이 헤드폰을 제어할 수 없어요</string>
+    <!-- 헤드폰 자체 소프트웨어가 보낸 그 밖의 메시지는 받은 그대로(영어로) 표시됩니다. %1$s만 남겨 두세요. -->
     <string name="message_verbatim">%1$s</string>
 
-    <!-- Listening mode -->
-    <string name="panel_modes">Listening mode</string>
-    <string name="modes_add">Add a mode</string>
-    <string name="modes_remove_named">Remove %1$s</string>
-    <string name="modes_remove_confirm">Remove %1$s? Its settings are cleared from the headphones.</string>
-    <string name="modes_fallback_name">Mode %1$d</string>
-    <string name="modes_summary_noise">Noise %1$d</string>
-    <string name="modes_summary_immersive">Immersive</string>
-    <string name="modes_new_hint">Name for the new mode. It starts with the current noise settings.</string>
-    <string name="modes_new_label">Name for the new mode</string>
-    <string name="modes_new_placeholder">For example, Commute</string>
+    <!-- 청취 모드 -->
+    <string name="panel_modes">청취 모드</string>
+    <string name="modes_add">모드 추가</string>
+    <string name="modes_remove_named">%1$s 삭제</string>
+    <string name="modes_remove_confirm">%1$s 모드를 삭제할까요? 이 모드의 설정이 헤드폰에서 지워져요.</string>
+    <string name="modes_fallback_name">모드 %1$d</string>
+    <string name="modes_summary_noise">노이즈 %1$d</string>
+    <string name="modes_summary_immersive">이머시브</string>
+    <string name="modes_new_hint">새 모드의 이름을 입력하세요. 지금의 노이즈 설정으로 시작해요.</string>
+    <string name="modes_new_label">새 모드 이름</string>
+    <string name="modes_new_placeholder">예: 출퇴근</string>
 
-    <!-- Noise -->
-    <string name="panel_noise">Noise</string>
-    <string name="noise_cancelling">Noise cancelling</string>
-    <string name="noise_cancelling_level">Noise cancelling level</string>
-    <string name="noise_cancelling_on">Noise cancelling on</string>
+    <!-- 노이즈 -->
+    <string name="panel_noise">노이즈</string>
+    <string name="noise_cancelling">노이즈 캔슬링</string>
+    <string name="noise_cancelling_level">노이즈 캔슬링 단계</string>
+    <string name="noise_cancelling_on">노이즈 캔슬링 켜짐</string>
     <string name="noise_wind_block">Wind Block</string>
-    <string name="noise_wind_block_hint">Cuts wind noise outdoors</string>
+    <string name="noise_wind_block_hint">야외의 바람 소리를 줄여 줘요</string>
     <string name="noise_immersive">Immersive Audio</string>
-    <string name="noise_spatial_still">Still</string>
-    <string name="noise_spatial_motion">Motion</string>
-    <string name="noise_built_in_named">%1$s is built into the headphones and can't be changed. Choose or add one of your own modes to set these.</string>
-    <string name="noise_built_in_unnamed">This mode is built into the headphones and can't be changed. Choose or add one of your own modes to set these.</string>
+    <string name="noise_spatial_still">정지</string>
+    <string name="noise_spatial_motion">모션</string>
+    <string name="noise_built_in_named">%1$s 모드는 헤드폰에 내장되어 있어서 바꿀 수 없어요. 이 설정을 바꾸려면 나만의 모드를 선택하거나 추가하세요.</string>
+    <string name="noise_built_in_unnamed">이 모드는 헤드폰에 내장되어 있어서 바꿀 수 없어요. 이 설정을 바꾸려면 나만의 모드를 선택하거나 추가하세요.</string>
 
-    <!-- Equaliser -->
-    <string name="panel_equaliser">Equaliser</string>
-    <string name="eq_bass">Bass</string>
-    <string name="eq_mid">Mid</string>
-    <string name="eq_treble">Treble</string>
-    <string name="eq_reset">Reset to flat</string>
+    <!-- 이퀄라이저 -->
+    <string name="panel_equaliser">이퀄라이저</string>
+    <string name="eq_bass">저음</string>
+    <string name="eq_mid">중음</string>
+    <string name="eq_treble">고음</string>
+    <string name="eq_reset">평탄하게 되돌리기</string>
 
-    <!-- Shortcut button -->
-    <string name="panel_shortcut">Shortcut button</string>
-    <string name="shortcut_press">Press</string>
-    <string name="shortcut_event_short_press">Short press</string>
-    <string name="shortcut_event_single_press">Single press</string>
-    <string name="shortcut_event_press_and_hold">Press and hold</string>
-    <string name="shortcut_event_double_press">Double press</string>
-    <string name="shortcut_event_double_press_and_hold">Double press and hold</string>
-    <string name="shortcut_event_triple_press">Triple press</string>
-    <string name="shortcut_event_long_press">Long press</string>
-    <string name="shortcut_event_very_long_press">Very long press</string>
-    <string name="shortcut_action_not_configured">Not configured</string>
-    <string name="shortcut_action_voice_assistant">Voice assistant</string>
-    <string name="shortcut_action_anc_cycle">Cycle noise control</string>
-    <string name="shortcut_action_battery_level">Battery level</string>
-    <string name="shortcut_action_play_pause">Play / pause</string>
-    <string name="shortcut_action_increase_cnc">Increase noise cancelling</string>
-    <string name="shortcut_action_decrease_cnc">Decrease noise cancelling</string>
-    <string name="shortcut_action_toggle_wake_word">Toggle wake word</string>
-    <string name="shortcut_action_switch_device">Switch device</string>
-    <string name="shortcut_action_conversation_mode">Conversation mode</string>
-    <string name="shortcut_action_track_forward">Next track</string>
-    <string name="shortcut_action_track_back">Previous track</string>
-    <string name="shortcut_action_fetch_notifications">Read notifications</string>
+    <!-- 단축 버튼 -->
+    <string name="panel_shortcut">단축 버튼</string>
+    <string name="shortcut_press">누르기</string>
+    <string name="shortcut_event_short_press">짧게 누르기</string>
+    <string name="shortcut_event_single_press">한 번 누르기</string>
+    <string name="shortcut_event_press_and_hold">누르고 있기</string>
+    <string name="shortcut_event_double_press">두 번 누르기</string>
+    <string name="shortcut_event_double_press_and_hold">두 번 누르고 유지</string>
+    <string name="shortcut_event_triple_press">세 번 누르기</string>
+    <string name="shortcut_event_long_press">길게 누르기</string>
+    <string name="shortcut_event_very_long_press">아주 길게 누르기</string>
+    <string name="shortcut_action_not_configured">설정 안 함</string>
+    <string name="shortcut_action_voice_assistant">음성 비서</string>
+    <string name="shortcut_action_anc_cycle">노이즈 제어 순환</string>
+    <string name="shortcut_action_battery_level">배터리 잔량</string>
+    <string name="shortcut_action_play_pause">재생 / 일시정지</string>
+    <string name="shortcut_action_increase_cnc">노이즈 캔슬링 높이기</string>
+    <string name="shortcut_action_decrease_cnc">노이즈 캔슬링 낮추기</string>
+    <string name="shortcut_action_toggle_wake_word">호출어 켜기/끄기</string>
+    <string name="shortcut_action_switch_device">기기 전환</string>
+    <string name="shortcut_action_conversation_mode">대화 모드</string>
+    <string name="shortcut_action_track_forward">다음 곡</string>
+    <string name="shortcut_action_track_back">이전 곡</string>
+    <string name="shortcut_action_fetch_notifications">알림 읽어 주기</string>
     <string name="shortcut_action_wind_mode">Wind Block</string>
-    <string name="shortcut_action_disabled">Nothing</string>
-    <string name="shortcut_action_client_interaction">App shortcut</string>
+    <string name="shortcut_action_disabled">없음</string>
+    <string name="shortcut_action_client_interaction">앱 단축키</string>
     <string name="shortcut_action_spotify_tap">Spotify Tap</string>
-    <string name="shortcut_action_modes_carousel">Cycle modes</string>
+    <string name="shortcut_action_modes_carousel">모드 순환</string>
     <string name="shortcut_action_spatial_audio">Immersive Audio</string>
-    <string name="shortcut_action_line_in_switch">Line-in switch</string>
-    <string name="shortcut_action_linking">Linking</string>
-    <string name="shortcut_action_unknown">Unknown</string>
+    <string name="shortcut_action_line_in_switch">라인 입력 전환</string>
+    <string name="shortcut_action_linking">링크</string>
+    <string name="shortcut_action_unknown">알 수 없음</string>
 
-    <!-- Settings -->
-    <string name="panel_settings">Settings</string>
-    <string name="setting_self_voice">Self voice</string>
-    <string name="setting_self_voice_hint">How much of your own voice you hear on calls</string>
-    <string name="setting_self_voice_low">Low</string>
-    <string name="setting_self_voice_medium">Medium</string>
-    <string name="setting_self_voice_high">High</string>
-    <string name="setting_multipoint">Multipoint</string>
-    <string name="setting_multipoint_hint">Stay connected to two devices at once</string>
-    <string name="setting_auto_off">Auto-off</string>
-    <string name="setting_auto_off_hint">Turn off after this long without use</string>
-    <string name="setting_auto_off_never">Never</string>
+    <!-- 설정 -->
+    <string name="panel_settings">설정</string>
+    <string name="setting_self_voice">내 목소리 듣기</string>
+    <string name="setting_self_voice_hint">통화할 때 내 목소리가 들리는 크기</string>
+    <string name="setting_self_voice_low">낮음</string>
+    <string name="setting_self_voice_medium">보통</string>
+    <string name="setting_self_voice_high">높음</string>
+    <string name="setting_multipoint">멀티포인트</string>
+    <string name="setting_multipoint_hint">기기 두 대에 동시에 연결해 둬요</string>
+    <string name="setting_auto_off">자동 전원 끄기</string>
+    <string name="setting_auto_off_hint">사용하지 않은 채 이 시간이 지나면 꺼져요</string>
+    <string name="setting_auto_off_never">안 함</string>
     <plurals name="setting_auto_off_minutes">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="other">%1$d분</item>
     </plurals>
     <plurals name="setting_auto_off_hours">
-        <item quantity="one">%1$d hour</item>
-        <item quantity="other">%1$d hours</item>
+        <item quantity="other">%1$d시간</item>
     </plurals>
-    <string name="setting_auto_play_pause">Auto play/pause</string>
-    <string name="setting_auto_play_pause_hint">Pause when you take them off</string>
-    <string name="setting_auto_answer">Auto-answer calls</string>
-    <string name="setting_auto_answer_hint">Answer when you put them on</string>
-    <string name="setting_voice_prompts">Voice prompts</string>
-    <string name="setting_voice_prompts_hint">Spoken updates such as battery level</string>
+    <string name="setting_auto_play_pause">자동 재생/일시정지</string>
+    <string name="setting_auto_play_pause_hint">벗으면 일시정지해요</string>
+    <string name="setting_auto_answer">전화 자동 받기</string>
+    <string name="setting_auto_answer_hint">착용하면 전화를 받아요</string>
+    <string name="setting_voice_prompts">음성 안내</string>
+    <string name="setting_voice_prompts_hint">배터리 잔량 같은 정보를 음성으로 알려 줘요</string>
 
-    <!-- About these headphones -->
-    <string name="panel_about">About these headphones</string>
-    <string name="about_model">Model</string>
-    <string name="about_firmware">Firmware</string>
-    <string name="about_protocol">Control protocol</string>
-    <string name="about_untested">Ruru has not been tested on this model yet. If something looks wrong, a connection report helps.</string>
-    <string name="about_note_older_app">These headphones use Bose's older app (Bose Connect). Ruru shows their battery only.</string>
-    <string name="about_note_earbuds_app">These earbuds use the separate Bose QC Earbuds app. Ruru can't control them.</string>
-    <string name="about_note_basic_no_modes">Basic support: battery, equaliser, settings and the noise cancelling level. These headphones have no listening modes.</string>
-    <string name="about_note_basic_earbuds">Basic support: battery, equaliser, settings, the noise cancelling level and switching modes. Saving your own modes is untested on these earbuds.</string>
+    <!-- 이 헤드폰 정보 -->
+    <string name="panel_about">이 헤드폰 정보</string>
+    <string name="about_model">모델</string>
+    <string name="about_firmware">펌웨어</string>
+    <string name="about_protocol">제어 프로토콜</string>
+    <string name="about_untested">Ruru는 이 모델에서 아직 테스트하지 않았어요. 이상한 점이 있으면 연결 보고서가 도움이 돼요.</string>
+    <string name="about_note_older_app">이 헤드폰은 Bose의 이전 앱(Bose Connect)을 사용해요. Ruru는 배터리만 보여 줘요.</string>
+    <string name="about_note_earbuds_app">이 이어버드는 별도의 Bose QC Earbuds 앱을 사용해요. Ruru로는 제어할 수 없어요.</string>
+    <string name="about_note_basic_no_modes">기본 지원: 배터리, 이퀄라이저, 설정, 노이즈 캔슬링 단계. 이 헤드폰에는 청취 모드가 없어요.</string>
+    <string name="about_note_basic_earbuds">기본 지원: 배터리, 이퀄라이저, 설정, 노이즈 캔슬링 단계, 모드 전환. 나만의 모드 저장은 이 이어버드에서 테스트하지 않았어요.</string>
 
-    <!-- Bottom of the window -->
-    <string name="footer_demo_mode">Demo mode</string>
-    <string name="footer_demo_mode_hint">A simulated QC Ultra Headphones, for trying Ruru without headphones</string>
-    <string name="footer_version">Ruru %1$s. Not affiliated with Bose.</string>
-    <string name="footer_check_updates">Check for updates</string>
-    <string name="footer_report_hint">The report helps fix problems. It leaves out Bluetooth addresses.</string>
-    <string name="footer_report_copy">Copy connection report</string>
-    <string name="footer_report_copied">Copied</string>
-    <string name="footer_support_hint">Ruru is free. If it helps you, you can shout the developer a coffee on Ko-fi.</string>
-    <string name="footer_support">Support Ruru</string>
+    <!-- 창 아래쪽 -->
+    <string name="footer_demo_mode">데모 모드</string>
+    <string name="footer_demo_mode_hint">헤드폰 없이 Ruru를 체험할 수 있는 가상의 QC Ultra Headphones</string>
+    <string name="footer_version">Ruru %1$s. Bose와 관련이 없어요.</string>
+    <string name="footer_check_updates">업데이트 확인</string>
+    <string name="footer_report_hint">보고서는 문제를 고치는 데 도움이 돼요. 블루투스 주소는 들어 있지 않아요.</string>
+    <string name="footer_report_copy">연결 보고서 복사</string>
+    <string name="footer_report_copied">복사했어요</string>
+    <string name="footer_support_hint">Ruru는 무료예요. 도움이 됐다면 Ko-fi에서 개발자에게 커피 한 잔을 선물할 수 있어요.</string>
+    <string name="footer_support">Ruru 후원하기</string>
 
-    <!-- Desktop only: the switch, the tray icon and the notifications -->
-    <string name="desktop_start_with_windows">Start with Windows</string>
-    <string name="desktop_start_with_windows_hint">Opens in the tray when you sign in</string>
-    <string name="tray_open">Open Ruru</string>
-    <string name="tray_quit">Quit</string>
-    <string name="tray_default_name">Headphones</string>
-    <string name="tray_tip_battery">battery %1$d%</string>
-    <string name="tray_tip_battery_charging">battery %1$d%, charging</string>
-    <string name="tray_tip_connecting">Ruru: connecting to %1$s</string>
-    <string name="tray_tip_failed">Ruru: could not connect</string>
-    <string name="tray_tip_none">Ruru: no headphones connected</string>
-    <string name="tray_status_none">No headphones connected</string>
-    <string name="tray_status_unsupported">Not available on this system</string>
-    <string name="notice_charged_title">Charged</string>
-    <string name="notice_charged_text">%1$s are fully charged.</string>
-    <string name="notice_low_title">Battery low</string>
-    <string name="notice_low_text">%1$s are at %2$d%.</string>
-    <string name="notice_default_name">Your headphones</string>
+    <!-- 데스크톱 전용: 스위치, 트레이 아이콘, 알림 -->
+    <string name="desktop_start_with_windows">Windows 시작 시 실행</string>
+    <string name="desktop_start_with_windows_hint">로그인하면 트레이에서 열려요</string>
+    <string name="tray_open">Ruru 열기</string>
+    <string name="tray_quit">종료</string>
+    <string name="tray_default_name">헤드폰</string>
+    <string name="tray_tip_battery">배터리 %1$d%</string>
+    <string name="tray_tip_battery_charging">배터리 %1$d%, 충전 중</string>
+    <string name="tray_tip_connecting">Ruru: %1$s에 연결 중</string>
+    <string name="tray_tip_failed">Ruru: 연결하지 못했어요</string>
+    <string name="tray_tip_none">Ruru: 연결된 헤드폰 없음</string>
+    <string name="tray_status_none">연결된 헤드폰 없음</string>
+    <string name="tray_status_unsupported">이 시스템에서는 쓸 수 없어요</string>
+    <string name="notice_charged_title">충전 완료</string>
+    <string name="notice_charged_text">%1$s의 충전이 끝났어요.</string>
+    <string name="notice_low_title">배터리 부족</string>
+    <string name="notice_low_text">%1$s의 배터리가 %2$d%예요.</string>
+    <string name="notice_default_name">내 헤드폰</string>
 </resources>

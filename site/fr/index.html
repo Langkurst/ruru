@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruru, une app gratuite pour casques Bose</title>
+<meta name="description" content="Ruru modifie les réglages de votre casque Bose. Il fonctionne sur votre ordinateur et sur votre téléphone.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0C0A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
+<meta property="og:title" content="Ruru">
+<meta property="og:description" content="Ruru modifie les réglages de votre casque Bose. Il fonctionne sur votre ordinateur et sur votre téléphone.">
+<link rel="canonical" href="https://ruru-app.pages.dev/fr/">
+<link rel="alternate" hreflang="en" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="de" href="https://ruru-app.pages.dev/de/">
+<link rel="alternate" hreflang="fr" href="https://ruru-app.pages.dev/fr/">
+<link rel="alternate" hreflang="es" href="https://ruru-app.pages.dev/es/">
+<link rel="alternate" hreflang="it" href="https://ruru-app.pages.dev/it/">
+<link rel="alternate" hreflang="nl" href="https://ruru-app.pages.dev/nl/">
+<link rel="alternate" hreflang="pt-BR" href="https://ruru-app.pages.dev/pt-BR/">
+<link rel="alternate" hreflang="ja" href="https://ruru-app.pages.dev/ja/">
+<link rel="alternate" hreflang="zh-CN" href="https://ruru-app.pages.dev/zh-CN/">
+<link rel="alternate" hreflang="ko" href="https://ruru-app.pages.dev/ko/">
+<link rel="alternate" hreflang="pl" href="https://ruru-app.pages.dev/pl/">
+<link rel="alternate" hreflang="x-default" href="https://ruru-app.pages.dev/">
+<meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/img/owl-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="/img/owl-180.png">
+<link rel="preload" href="/fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css">
+<script id="strings" type="application/json">{
+ "locale": "fr",
+ "hero.windows": "Télécharger pour Windows",
+ "hero.mac": "Télécharger pour Mac",
+ "hero.android": "Télécharger pour Android",
+ "hero.ios": "Télécharger pour iPhone",
+ "hero.linux": "Télécharger pour Linux",
+ "version": "Version {version}, publiée le {date}",
+ "versionNoDate": "Version {version}",
+ "update.newer": "Vous avez la version {have}. La plus récente est la {newest}.",
+ "update.same": "Vous avez la version la plus récente.",
+ "size": "{n} Mo",
+ "noiseN": "Bruit {n}",
+ "windBlock": "Wind Block",
+ "immersive": "Immersif",
+ "join": ", "
+}</script>
+<script src="/app.js" defer></script>
+<script src="/demo.js" defer></script>
+</head>
+<body>
+<header class="header">
+  <a class="brand" href="#top"><img src="/img/owl-64.png" width="28" height="28" alt="">Ruru</a>
+  <nav class="nav">
+    <a href="#download">Télécharger</a>
+    <a class="optional" href="#compare">Comparer</a>
+    <a class="optional" href="#privacy">Confidentialité</a>
+    <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <div class="lang">
+      <svg class="globe" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6.5"/><ellipse cx="8" cy="8" rx="2.8" ry="6.5"/><path d="M1.5 8h13"/></g></svg>
+      <select id="lang" aria-label="Langue">
+        <option value="/" lang="en">English</option>
+        <option value="/de/" lang="de">Deutsch</option>
+        <option value="/fr/" lang="fr" selected>Français</option>
+        <option value="/es/" lang="es">Español</option>
+        <option value="/it/" lang="it">Italiano</option>
+        <option value="/nl/" lang="nl">Nederlands</option>
+        <option value="/pt-BR/" lang="pt-BR">Português (Brasil)</option>
+        <option value="/ja/" lang="ja">日本語</option>
+        <option value="/zh-CN/" lang="zh-CN">简体中文</option>
+        <option value="/ko/" lang="ko">한국어</option>
+        <option value="/pl/" lang="pl">Polski</option>
+      </select>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="intro">
+    <div class="intro-text">
+      <h1>Ruru</h1>
+      <p>Ruru modifie les réglages de votre casque Bose. Il fonctionne sur votre ordinateur et sur votre téléphone.</p>
+      <p>Il est gratuit. Pas besoin de compte, et il n'utilise pas internet.</p>
+      <div class="actions">
+        <a class="button" id="hero-button" href="#download">Télécharger</a>
+        <a class="textlink" href="#download">Autres systèmes</a>
+      </div>
+      <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">La dernière version est sur GitHub.</a></p>
+      <div class="star">
+        <p class="small star-text"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Ruru est open source. Si vous l'aimez, mettez-lui une étoile sur GitHub. Cela aide d'autres personnes à le trouver.</p>
+        <a class="file star-btn" href="https://github.com/Langkurst/ruru"><svg class="star-i" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg><span>Mettre une étoile sur GitHub</span><span class="count" id="stars" hidden></span></a>
+      </div>
+    </div>
+    <div class="demo-wrap">
+      <div class="demo" id="demo" role="group" aria-label="Ruru">
+        <div class="d-head">
+          <img src="/img/owl-64.png" width="36" height="36" alt="">
+          <div>
+            <p class="d-name">Demo QC Ultra Headphones</p>
+            <p class="d-line">QuietComfort Ultra Headphones, mode démo</p>
+          </div>
+        </div>
+        <div class="d-bat"><span>Batterie 72%</span><span class="d-bar"><i></i></span></div>
+
+        <div class="d-card">
+          <p class="d-sec">Mode d'écoute</p>
+          <div class="modes" role="radiogroup" aria-label="Mode d'écoute">
+            <span class="mk"></span>
+            <button type="button" class="mode" role="radio" aria-checked="true" tabindex="0"><span class="lb"><span class="a">Quiet</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Aware</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Immersion</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Commute</span></span><span class="lb sm"><span class="a">Bruit 7</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Focus</span></span><span class="lb sm"><span class="a">Bruit 10</span></span></button>
+          </div>
+          <button type="button" class="qb" id="d-add">Ajouter un mode</button>
+        </div>
+
+        <div class="d-card locked" id="nz">
+          <p class="d-sec">Bruit</p>
+          <div class="lk">
+            <div class="d-row"><span id="nl">Réduction de bruit</span><span class="val" id="nv">10</span></div>
+            <div class="sl p100" role="slider" tabindex="-1" aria-disabled="true" aria-labelledby="nl" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" aria-valuetext="10" data-min="0" data-max="10" data-o="nv">
+              <span class="rail"><span class="trk"><span class="fu"></span></span><span class="th"></span></span>
+            </div>
+            <div class="d-row">
+              <span><span class="lbl" id="wl">Wind Block</span><span class="hint">Atténue le bruit du vent en extérieur</span></span>
+              <button type="button" class="sw" role="switch" aria-checked="false" aria-labelledby="wl" disabled><span class="knob"></span></button>
+            </div>
+            <p class="d-body ia" id="il">Immersive Audio</p>
+            <div class="seg" role="radiogroup" aria-labelledby="il">
+              <span class="sg"><span class="sk"></span>
+                <button type="button" role="radio" aria-checked="true" tabindex="0" disabled>Désactivé</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>Fixe</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>Mouvement</button>
+              </span>
+            </div>
+          </div>
+          <p class="d-lock">Le mode <span id="ln">Quiet</span> est intégré au casque et ne peut pas être modifié. Choisissez ou ajoutez l'un de vos propres modes pour régler ces options.</p>
+        </div>
+
+        <div class="d-card">
+          <p class="d-sec">Égaliseur</p>
+          <div class="eq">
+            <span id="e0">Graves</span>
+            <div class="sl bip p50" role="slider" tabindex="0" aria-labelledby="e0" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0" aria-valuetext="0" data-min="-10" data-max="10" data-o="v0"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v0">0</span>
+            <span id="e1">Médiums</span>
+            <div class="sl bip p40" role="slider" tabindex="0" aria-labelledby="e1" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-2" aria-valuetext="−2" data-min="-10" data-max="10" data-o="v1"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v1">−2</span>
+            <span id="e2">Aigus</span>
+            <div class="sl bip p20" role="slider" tabindex="0" aria-labelledby="e2" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-6" aria-valuetext="−6" data-min="-10" data-max="10" data-o="v2"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v2">−6</span>
+          </div>
+          <button type="button" class="qb" id="d-reset">Remettre à plat</button>
+        </div>
+        <span class="tap" aria-hidden="true"><i class="f"></i><i class="r"></i></span>
+      </div>
+      <p class="small d-cap">Ceci est une copie fonctionnelle de l'app avec un casque fictif.</p>
+    </div>
+  </section>
+
+  <section id="how">
+    <h2>Comment ça marche</h2>
+    <ol class="list steps">
+      <li>Téléchargez Ruru pour votre ordinateur ou votre téléphone.</li>
+      <li>Connectez votre casque en Bluetooth, comme d'habitude.</li>
+      <li>Ouvrez Ruru. Il trouve votre casque et affiche ses réglages.</li>
+    </ol>
+  </section>
+
+  <section id="download">
+    <h2>Télécharger</h2>
+    <p>Choisissez votre ordinateur ou votre téléphone. Chaque bouton télécharge la dernière version.</p>
+    <ul class="panel">
+      <li class="row" data-os="windows">
+        <div class="row-text">
+          <p class="name"><span>Windows 10 et 11</span><span class="you" hidden>Votre système</span></p>
+          <p class="status">Testé avec de vrais casques Bose.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="msi" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.msi</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="exe" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.exe</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="mac">
+        <div class="row-text">
+          <p class="name"><span>Mac avec puce Apple, macOS 12 ou plus récent</span><span class="you" hidden>Votre système</span></p>
+          <p class="status">Il s'ouvre et fonctionne en mode démo. Personne ne l'a encore essayé avec un casque.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="dmg" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.dmg</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="linux">
+        <div class="row-text">
+          <p class="name"><span>Linux</span><span class="you" hidden>Votre système</span></p>
+          <p class="status">Il s'ouvre et fonctionne en mode démo. Personne ne l'a encore essayé avec un casque. Le fichier .deb nécessite Ubuntu 24.04 ou Debian 13, ou plus récent.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="deb" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.deb</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+          <a class="file" data-asset="rpm" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.rpm</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="android">
+        <div class="row-text">
+          <p class="name"><span>Android 9 ou plus récent</span><span class="you" hidden>Votre système</span></p>
+          <p class="status">Il s'ouvre et fonctionne en mode démo. Personne ne l'a encore essayé sur un vrai téléphone.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="apk" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.apk</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+      <li class="row" data-os="ios">
+        <div class="row-text">
+          <p class="name"><span>iPhone avec iOS 16 ou plus récent</span><span class="you" hidden>Votre système</span></p>
+          <p class="status">Il faut un outil de sideloading (installation hors App Store) pour l'installer. Personne ne l'a encore essayé sur un vrai iPhone, donc il se peut qu'il ne fonctionne pas.</p>
+        </div>
+        <div class="files">
+          <a class="file" data-asset="ipa" href="https://github.com/Langkurst/ruru/releases/latest"><span class="ext">.ipa</span><span class="size" aria-hidden="true">00.0 MB</span></a>
+        </div>
+      </li>
+    </ul>
+    <p class="small after-panel">Chaque version a un mode démo avec un casque fictif, pour que vous puissiez d'abord découvrir l'app.</p>
+  </section>
+
+  <section>
+    <h2>Première ouverture</h2>
+    <p>Windows et Mac peuvent afficher un avertissement la première fois, car Ruru n'est pas encore signé par Microsoft ou Apple.</p>
+    <ul class="list">
+      <li>Sous Windows, choisissez Informations complémentaires, puis Exécuter quand même.</li>
+      <li>Sur un Mac, ouvrez Réglages Système, puis Confidentialité et sécurité, et choisissez Ouvrir quand même. Sous macOS 12, c'est Préférences Système, puis Sécurité et confidentialité.</li>
+    </ul>
+    <p>Si Windows indique que Smart App Control a bloqué Ruru, Ruru ne peut pas fonctionner sur cet ordinateur. Smart App Control n'autorise que les apps signées.</p>
+    <p>Fermez d'abord l'app Bose. Une seule app à la fois peut communiquer avec le casque.</p>
+  </section>
+
+  <section>
+    <h2>Ce qu'il peut modifier</h2>
+    <ul class="list">
+      <li>Les modes d'écoute, et vos propres modes</li>
+      <li>Le niveau de réduction de bruit</li>
+      <li>Wind Block et Immersive Audio</li>
+      <li>Graves, médiums et aigus</li>
+      <li>Ce que fait le bouton de raccourci</li>
+      <li>Self Voice, multipoint, arrêt automatique et plus encore</li>
+    </ul>
+    <p>Sur un ordinateur, Ruru se place dans le coin près de l'horloge et affiche le niveau de batterie.</p>
+    <p>Ruru ne met pas à jour le firmware du casque. Utilisez l'app Bose pour cela.</p>
+  </section>
+
+  <section id="compare">
+    <h2>Ruru et l'app Bose</h2>
+    <div class="table-panel">
+      <table>
+        <thead>
+          <tr><td></td><th scope="col">Ruru</th><th scope="col">App Bose</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Fonctionne sur</th><td>Windows, Mac, Linux, Android et iPhone</td><td>iPhone et Android</td></tr>
+          <tr><th scope="row">Compte</th><td>Pas nécessaire</td><td>Facultatif</td></tr>
+          <tr><th scope="row">Internet</th><td>Non utilisé</td><td>Utilisé</td></tr>
+          <tr><th scope="row">Taille sur iPhone</th><td>12 Mo</td><td>1,15 Go</td></tr>
+          <tr><th scope="row">Mises à jour du firmware</th><td>Non</td><td>Oui</td></tr>
+          <tr><th scope="row">Casques testés</th><td>QC Ultra Headphones (1st Gen)</td><td>Tous les casques Bose</td></tr>
+          <tr><th scope="row">Prix</th><td>Gratuit, et le code est ouvert</td><td>Gratuit</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="after-table">Les autres outils Bose gratuits ne fonctionnent chacun que sur un ou deux de ces systèmes.</p>
+  </section>
+
+  <section id="headphones">
+    <h2>Casques</h2>
+    <p>Ruru a été testé avec QC Ultra Headphones (1st Gen).</p>
+    <p>Ceux-ci devraient fonctionner aussi, mais personne ne les a encore essayés avec Ruru.</p>
+    <ul class="list">
+      <li>QC Ultra Headphones (2nd Gen)</li>
+      <li>QC Ultra Earbuds (1st and 2nd Gen)</li>
+      <li>QC Headphones (1st and 2nd Gen)</li>
+      <li>QC SC, QC45 and QC SE</li>
+      <li>QC Earbuds II and QC Earbuds (2020)</li>
+      <li>Ultra Open Earbuds</li>
+      <li>Noise Cancelling Headphones 700</li>
+    </ul>
+    <p>Vous avez essayé Ruru avec l'un d'eux ? <a href="https://github.com/Langkurst/ruru/issues/new/choose">Dites-le-moi sur GitHub</a>. Utilisez le formulaire de rapport Headphones et collez le rapport affiché en bas de l'app.</p>
+  </section>
+
+  <section id="privacy">
+    <h2>Confidentialité</h2>
+    <p>Ruru ne parle qu'à votre casque. Il n'envoie rien nulle part.</p>
+    <p>Pas de compte, pas de suivi et pas de rapports de plantage. L'app Android ne peut pas du tout utiliser internet.</p>
+    <p>Ce site n'a ni cookies ni suivi. Il demande à GitHub quelle est la version la plus récente.</p>
+  </section>
+
+  <section id="support">
+    <h2>Soutien</h2>
+    <p>Ruru est gratuit. Si vous l'aimez, vous pouvez <a href="https://ko-fi.com/keaclip">m'offrir un café sur Ko-fi</a>.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="small">Ruru n'est pas fait par Bose.</p>
+  <p class="small other">Autres projets</p>
+  <p class="other-line"><a href="https://keaclip.pages.dev">KeaClip</a>, une app Windows gratuite pour enregistrer, couper et partager des clips vidéo.</p>
+  <nav class="footer-links">
+    <a href="https://github.com/Langkurst/ruru">Code source</a>
+    <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">Historique des versions</a>
+    <a href="https://github.com/Langkurst/ruru/issues/new/choose">Signaler un problème</a>
+    <a href="https://ko-fi.com/keaclip">Ko-fi</a>
+    <a href="/code-signing.html">Code signing policy</a>
+  </nav>
+</footer>
+</body>
+</html>

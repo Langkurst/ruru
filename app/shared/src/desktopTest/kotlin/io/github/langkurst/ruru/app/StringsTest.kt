@@ -128,8 +128,9 @@ class StringsTest {
         for ((folder, strings) in others) for ((key, entry) in english) {
             for ((quantity, en) in entry.items) {
                 val mine = strings.getValue(key).items[quantity] ?: continue
-                // 2.2 times the English length, with a little room for very short words ("Low", "Mid") that most languages need more letters for.
-                val allowed = maxOf((en.length * 2.2).toInt(), en.length + 8)
+                // 2.2 times the English length, with room for short labels ("Auto-off" is "Automatisch ausschalten"):
+                // anything up to 28 characters fits a 360dp row, and rows wrap.
+                val allowed = maxOf((en.length * 2.2).toInt(), en.length + 8, 28)
                 assertTrue(mine.length <= allowed, "values-$folder: $key is ${mine.length} characters, English is ${en.length} (limit $allowed): $mine")
             }
         }
