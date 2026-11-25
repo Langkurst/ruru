@@ -141,6 +141,9 @@ class HeadsetController(
         if (next != now) command("favourite modes", HeadsetCommand.SetFavorites(next))
     }
 
+    /** Set the whole favourites set at once (the hardware check restores the exact original set with this). */
+    fun setFavorites(indices: Set<Int>) = command("favourite modes", HeadsetCommand.SetFavorites(indices))
+
     fun transport(control: TransportControl) = command("playback", HeadsetCommand.Transport(control))
 
     /**

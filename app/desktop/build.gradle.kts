@@ -25,6 +25,8 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(libs.compose.resources)
     implementation(libs.kotlinx.coroutines.swing)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.junit)
 }
 
 val ruruVersion: String = providers.gradleProperty("ruru.version").get()
