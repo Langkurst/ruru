@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Auriculares y audífonos Skullcandy, español: los títulos de los ajustes que Ruru muestra para ellos (clave = vendor_ más el id del control), las opciones y las notas. -->
+    <string name="vendor_skullcandy_crusher">Bajos Crusher</string>
+    <string name="vendor_skullcandy_crusher_hint">Siente los bajos a través de las almohadillas</string>
+    <string name="vendor_skullcandy_crusher_intensity">Intensidad de Crusher</string>
+    <string name="vendor_skullcandy_crusher_feel">Sensación Crusher</string>
+    <string name="skullcandy_option_high">Alto</string>
+    <string name="skullcandy_option_medium">Medio</string>
+    <string name="skullcandy_option_low">Bajo</string>
+    <string name="skullcandy_note_experimental">Experimental: creado a partir de investigación publicada y unos auriculares virtuales, aún no probado en equipos reales.</string>
+    <string name="skullcandy_note_method">Experimental: estos auriculares comparten los controles del Crusher 1080 y aún no se han probado en unos reales. Cancelación de ruido, Aware, voz propia si la ofrecen, y batería.</string>
+</resources>

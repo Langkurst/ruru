@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy-koptelefoons en -oordopjes, Nederlands: de titels van de instellingen die Ruru ervoor toont (sleutel = vendor_ plus de besturings-id), de keuzes en de opmerkingen. -->
+    <string name="vendor_skullcandy_crusher">Crusher-bas</string>
+    <string name="vendor_skullcandy_crusher_hint">Voel de bas door de oorkussens</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher-intensiteit</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher-gevoel</string>
+    <string name="skullcandy_option_high">Hoog</string>
+    <string name="skullcandy_option_medium">Midden</string>
+    <string name="skullcandy_option_low">Laag</string>
+    <string name="skullcandy_note_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele koptelefoon, nog niet op echte apparatuur geprobeerd.</string>
+    <string name="skullcandy_note_method">Experimenteel: deze oordopjes delen de bediening van de Crusher 1080 en zijn nog niet op echte oordopjes geprobeerd. Ruisonderdrukking, Aware, eigen stem als ze dat hebben, en batterij.</string>
+</resources>

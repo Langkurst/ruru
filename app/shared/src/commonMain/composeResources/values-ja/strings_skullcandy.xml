@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy のヘッドホンとイヤホン、日本語: Ruru が表示する設定のタイトル (キー = vendor_ + コントロール ID)、選択肢、注記。 -->
+    <string name="vendor_skullcandy_crusher">Crusher バス</string>
+    <string name="vendor_skullcandy_crusher_hint">低音を耳元の振動で感じる</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher の強さ</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher の感触</string>
+    <string name="skullcandy_option_high">強</string>
+    <string name="skullcandy_option_medium">中</string>
+    <string name="skullcandy_option_low">弱</string>
+    <string name="skullcandy_note_experimental">実験的: 公開されている調査結果と仮想のヘッドセットをもとに作られており、実機ではまだ試していません。</string>
+    <string name="skullcandy_note_method">実験的: このイヤホンは Crusher 1080 と同じ操作を共有しており、実機ではまだ試していません。ノイズキャンセリング、Aware、対応していればサイドトーン、バッテリー残量。</string>
+</resources>

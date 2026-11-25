@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Słuchawki Skullcandy, polski: tytuły ustawień, które Ruru dla nich pokazuje (klucz = vendor_ plus identyfikator opcji), wybory i uwagi. -->
+    <string name="vendor_skullcandy_crusher">Bas Crusher</string>
+    <string name="vendor_skullcandy_crusher_hint">Poczuj bas przez muszle słuchawek</string>
+    <string name="vendor_skullcandy_crusher_intensity">Intensywność Crusher</string>
+    <string name="vendor_skullcandy_crusher_feel">Odczucie Crusher</string>
+    <string name="skullcandy_option_high">Wysoki</string>
+    <string name="skullcandy_option_medium">Średni</string>
+    <string name="skullcandy_option_low">Niski</string>
+    <string name="skullcandy_note_experimental">Eksperymentalne: zbudowane na podstawie opublikowanych badań i wirtualnych słuchawek, jeszcze niewypróbowane na prawdziwym sprzęcie.</string>
+    <string name="skullcandy_note_method">Eksperymentalne: te słuchawki douszne mają te same ustawienia co Crusher 1080 i nie były jeszcze sprawdzane na prawdziwych słuchawkach. Redukcja szumu, Aware, odsłuch własnego głosu, jeśli jest, i bateria.</string>
+</resources>

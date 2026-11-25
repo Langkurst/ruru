@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Casques et écouteurs Skullcandy, français : les titres des réglages que Ruru affiche pour eux (clé = vendor_ plus l'identifiant du réglage), les choix et les notes. -->
+    <string name="vendor_skullcandy_crusher">Basses Crusher</string>
+    <string name="vendor_skullcandy_crusher_hint">Ressentez les basses à travers les coussinets</string>
+    <string name="vendor_skullcandy_crusher_intensity">Intensité Crusher</string>
+    <string name="vendor_skullcandy_crusher_feel">Ressenti Crusher</string>
+    <string name="skullcandy_option_high">Élevé</string>
+    <string name="skullcandy_option_medium">Moyen</string>
+    <string name="skullcandy_option_low">Faible</string>
+    <string name="skullcandy_note_experimental">Expérimental : conçu d'après des recherches publiées et un casque virtuel, pas encore essayé sur un vrai appareil.</string>
+    <string name="skullcandy_note_method">Expérimental : ces écouteurs partagent les commandes du Crusher 1080 et n'ont pas encore été essayés en vrai. Réduction de bruit, Aware, retour de voix s'ils l'offrent, et batterie.</string>
+</resources>

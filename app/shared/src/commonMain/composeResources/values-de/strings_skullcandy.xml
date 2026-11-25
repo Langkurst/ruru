@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy-Kopfhörer und -Ohrhörer, Deutsch: Titel der Einstellungen, die Ruru dafür zeigt (Schlüssel = vendor_ plus Steuerungs-ID), die Auswahlmöglichkeiten und die Hinweise. -->
+    <string name="vendor_skullcandy_crusher">Crusher-Bass</string>
+    <string name="vendor_skullcandy_crusher_hint">Den Bass durch die Ohrmuscheln spüren</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher-Intensität</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher-Gefühl</string>
+    <string name="skullcandy_option_high">Hoch</string>
+    <string name="skullcandy_option_medium">Mittel</string>
+    <string name="skullcandy_option_low">Niedrig</string>
+    <string name="skullcandy_note_experimental">Experimentell: nach veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="skullcandy_note_method">Experimentell: Diese Ohrhörer teilen sich die Steuerung mit dem Crusher 1080 und wurden noch nicht an echten Ohrhörern getestet. Geräuschunterdrückung, Aware, Eigenstimme, sofern vorhanden, und Akku.</string>
+</resources>

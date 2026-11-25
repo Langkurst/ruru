@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fones Skullcandy, português do Brasil: os títulos das configurações que o Ruru mostra para eles (chave = vendor_ mais o id do controle), as opções e as notas. -->
+    <string name="vendor_skullcandy_crusher">Graves Crusher</string>
+    <string name="vendor_skullcandy_crusher_hint">Sinta os graves pelas almofadas</string>
+    <string name="vendor_skullcandy_crusher_intensity">Intensidade Crusher</string>
+    <string name="vendor_skullcandy_crusher_feel">Sensação Crusher</string>
+    <string name="skullcandy_option_high">Alto</string>
+    <string name="skullcandy_option_medium">Médio</string>
+    <string name="skullcandy_option_low">Baixo</string>
+    <string name="skullcandy_note_experimental">Experimental: feito a partir de pesquisas publicadas e de um fone virtual, ainda não testado em aparelhos reais.</string>
+    <string name="skullcandy_note_method">Experimental: estes fones intra-auriculares compartilham os controles do Crusher 1080 e ainda não foram testados em fones reais. Cancelamento de ruído, Aware, voz própria quando houver, e bateria.</string>
+</resources>

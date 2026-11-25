@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy headphones and earbuds: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_skullcandy_crusher">Crusher bass</string>
+    <string name="vendor_skullcandy_crusher_hint">Feel the bass through the ear cups</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher intensity</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher feel</string>
+    <string name="skullcandy_option_high">High</string>
+    <string name="skullcandy_option_medium">Medium</string>
+    <string name="skullcandy_option_low">Low</string>
+    <string name="skullcandy_note_experimental">Experimental: built from published research and a virtual headset, not yet tried on real hardware.</string>
+    <string name="skullcandy_note_method">Experimental: these earbuds share the Crusher 1080's controls and have not been tried on real earbuds. Noise cancelling, Aware, sidetone where they offer it, and battery.</string>
+</resources>

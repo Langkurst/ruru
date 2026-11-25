@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy 헤드폰과 이어버드, 한국어: Ruru가 보여 주는 설정의 제목(키 = vendor_ + 컨트롤 ID), 선택지, 안내 문구. -->
+    <string name="vendor_skullcandy_crusher">Crusher 베이스</string>
+    <string name="vendor_skullcandy_crusher_hint">이어컵을 통해 베이스를 느껴 보세요</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher 강도</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher 느낌</string>
+    <string name="skullcandy_option_high">높음</string>
+    <string name="skullcandy_option_medium">중간</string>
+    <string name="skullcandy_option_low">낮음</string>
+    <string name="skullcandy_note_experimental">실험적: 공개된 연구와 가상 헤드셋을 바탕으로 만들었으며 실제 기기에서는 아직 시험하지 않았습니다.</string>
+    <string name="skullcandy_note_method">실험적: 이 이어버드는 Crusher 1080과 같은 제어를 사용하며 실제 이어버드에서는 아직 시험하지 않았습니다. 노이즈 캔슬링, Aware, 지원하는 경우 사이드톤, 배터리.</string>
+</resources>

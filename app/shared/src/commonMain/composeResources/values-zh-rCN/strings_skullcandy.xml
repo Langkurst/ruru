@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Skullcandy 耳机，简体中文：Ruru 为其显示的设置标题（键 = vendor_ 加控件 ID）、选项和说明。 -->
+    <string name="vendor_skullcandy_crusher">Crusher 低音</string>
+    <string name="vendor_skullcandy_crusher_hint">通过耳罩感受低音</string>
+    <string name="vendor_skullcandy_crusher_intensity">Crusher 强度</string>
+    <string name="vendor_skullcandy_crusher_feel">Crusher 手感</string>
+    <string name="skullcandy_option_high">高</string>
+    <string name="skullcandy_option_medium">中</string>
+    <string name="skullcandy_option_low">低</string>
+    <string name="skullcandy_note_experimental">实验性：依据已公开的研究和虚拟耳机制作，尚未在真实设备上试过。</string>
+    <string name="skullcandy_note_method">实验性：这款耳机与 Crusher 1080 共用同一套控制，尚未在真实耳机上试过。支持降噪、Aware、侧音（如有）和电量。</string>
+</resources>
