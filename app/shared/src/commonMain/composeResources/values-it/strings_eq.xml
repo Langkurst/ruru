@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">Usa l'equalizzatore</string>
+    <string name="eq_status_on">Attivo. Il suono viene modificato prima di arrivare alle tue cuffie.</string>
+    <string name="eq_status_off">Spento</string>
+    <string name="eq_status_setup">Da configurare</string>
+    <string name="eq_status_unavailable">Non disponibile</string>
+    <string name="eq_unavailable_here">Questo sistema non può ancora filtrare il suono.</string>
+    <string name="eq_apo_checking">Ricerca di Equalizer APO.</string>
+    <string name="eq_apo_not_installed">Equalizer APO non è installato. È un programma gratuito che si occupa del filtraggio su Windows. Ruru non scarica nulla: il pulsante apre il suo sito nel browser.</string>
+    <string name="eq_apo_get">Scarica Equalizer APO</string>
+    <string name="eq_apo_consent">Per attivare l'equalizzatore, Ruru salverà un file chiamato ruru.txt in %1$s e aggiungerà una riga, Include: ruru.txt, a config.txt. Spegnendolo la riga viene tolta. Nient'altro cambia in config.txt.</string>
+    <string name="eq_apo_allow">Consenti</string>
+    <string name="eq_apo_cant_write">Ruru non può scrivere in %1$s. Dai al tuo account Windows il permesso di modificare quella cartella (clic destro, Proprietà, Sicurezza, Modifica), poi ricontrolla.</string>
+    <string name="eq_apo_no_config">Ruru ha trovato la cartella di Equalizer APO (%1$s) ma non il suo config.txt. Apri una volta il Configurator di APO, poi ricontrolla.</string>
+    <string name="eq_apo_unreadable">Ruru non può modificare questo config.txt perché è salvato in UTF-16. Salvalo come UTF-8 in un editor di testo e Ruru se ne accorgerà.</string>
+    <string name="eq_apo_note">Equalizer APO cambia solo le uscite scelte nel suo Configurator. Scegli lì l'uscita delle tue cuffie e riavvia Windows se richiesto.</string>
+    <string name="eq_check_again">Ricontrolla</string>
+    <string name="eq_import_failed">Ruru non ha potuto leggere quel file. Deve essere un file di testo ParametricEQ di AutoEq.</string>
+    <string name="eq_preset_label">Preset</string>
+    <string name="eq_preset_custom">Personalizzato</string>
+    <string name="eq_presets_builtin">Incluse</string>
+    <string name="eq_presets_saved">Salvate</string>
+    <string name="eq_preset_save_as">Salva come</string>
+    <string name="eq_preset_rename">Rinomina</string>
+    <string name="eq_preset_delete">Elimina</string>
+    <string name="eq_preset_delete_confirm">Eliminare «%1$s»?</string>
+    <string name="eq_preset_import">Importa file AutoEq</string>
+    <string name="eq_preset_export">Esporta</string>
+    <string name="eq_preset_name_label">Nome del preset</string>
+    <string name="eq_preset_name_placeholder">Dai un nome a questo preset</string>
+    <string name="eq_preset_remembered">Ruru ricorda questo preset per %1$s.</string>
+    <string name="eq_mode_label">Editor</string>
+    <string name="eq_mode_graphic">Grafico</string>
+    <string name="eq_mode_parametric">Parametrico</string>
+    <string name="eq_preamp">Preamplificazione</string>
+    <string name="eq_preamp_auto">Impostala automaticamente</string>
+    <string name="eq_preamp_auto_hint">Abbassa il volume quanto basta perché le enfatizzazioni non distorcano il suono.</string>
+    <string name="eq_limiter">Limiter</string>
+    <string name="eq_limiter_hint">Trattiene i picchi forti perché non distorcano.</string>
+    <string name="eq_band_add">Aggiungi una banda</string>
+    <string name="eq_band_max">Fino a %1$d bande.</string>
+    <string name="eq_band_on">Banda %1$d attiva</string>
+    <string name="eq_band_peak">Picco</string>
+    <string name="eq_band_low_shelf">Shelf bassi</string>
+    <string name="eq_band_high_shelf">Shelf alti</string>
+    <string name="eq_band_freq_label">Frequenza della banda %1$d (Hz)</string>
+    <string name="eq_band_gain_label">Guadagno della banda %1$d (dB)</string>
+    <string name="eq_band_q_label">Q della banda %1$d</string>
+    <string name="eq_curve_label">Curva di risposta</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">Qui un equalizzatore completo non è possibile: questo sistema non permette a un'app di cambiare il suono delle altre app. Le tre bande qui sopra sono quelle delle cuffie.</string>
+</resources>

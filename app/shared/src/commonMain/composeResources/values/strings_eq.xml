@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">Use the equaliser</string>
+    <string name="eq_status_on">On. The sound is changed before it reaches your headphones.</string>
+    <string name="eq_status_off">Off</string>
+    <string name="eq_status_setup">Needs setting up</string>
+    <string name="eq_status_unavailable">Not available</string>
+    <string name="eq_unavailable_here">This system can't filter the sound yet.</string>
+    <string name="eq_apo_checking">Looking for Equalizer APO.</string>
+    <string name="eq_apo_not_installed">Equalizer APO isn't installed. It's a free program that does the filtering on Windows. Ruru doesn't download anything: the button opens its website in your browser.</string>
+    <string name="eq_apo_get">Get Equalizer APO</string>
+    <string name="eq_apo_consent">To switch the equaliser on, Ruru will save a file called ruru.txt in %1$s and add one line, Include: ruru.txt, to config.txt there. Switching it off takes that line out again. Nothing else in config.txt changes.</string>
+    <string name="eq_apo_allow">Allow</string>
+    <string name="eq_apo_cant_write">Ruru can't write to %1$s. Give your Windows account permission to change that folder (right-click it, then Properties, Security, Edit), then check again.</string>
+    <string name="eq_apo_no_config">Ruru found Equalizer APO's folder (%1$s) but not its config.txt. Open APO's Configurator once, then check again.</string>
+    <string name="eq_apo_unreadable">Ruru can't edit this config.txt because it's saved as UTF-16. Save it as UTF-8 in a text editor and Ruru will notice.</string>
+    <string name="eq_apo_note">Equalizer APO only changes the outputs you pick in its Configurator. Pick the output your headphones use there, and restart Windows if it asks.</string>
+    <string name="eq_check_again">Check again</string>
+    <string name="eq_import_failed">Ruru couldn't read that file. It needs to be an AutoEq ParametricEQ text file.</string>
+    <string name="eq_preset_label">Preset</string>
+    <string name="eq_preset_custom">Custom</string>
+    <string name="eq_presets_builtin">Built in</string>
+    <string name="eq_presets_saved">Saved</string>
+    <string name="eq_preset_save_as">Save as</string>
+    <string name="eq_preset_rename">Rename</string>
+    <string name="eq_preset_delete">Delete</string>
+    <string name="eq_preset_delete_confirm">Delete “%1$s”?</string>
+    <string name="eq_preset_import">Import AutoEq file</string>
+    <string name="eq_preset_export">Export</string>
+    <string name="eq_preset_name_label">Preset name</string>
+    <string name="eq_preset_name_placeholder">Name this preset</string>
+    <string name="eq_preset_remembered">Ruru remembers this preset for %1$s.</string>
+    <string name="eq_mode_label">Editor</string>
+    <string name="eq_mode_graphic">Graphic</string>
+    <string name="eq_mode_parametric">Parametric</string>
+    <string name="eq_preamp">Preamp</string>
+    <string name="eq_preamp_auto">Set it automatically</string>
+    <string name="eq_preamp_auto_hint">Lowers the volume just enough that boosts can't distort the sound.</string>
+    <string name="eq_limiter">Limiter</string>
+    <string name="eq_limiter_hint">Holds back loud peaks so they can't distort.</string>
+    <string name="eq_band_add">Add a band</string>
+    <string name="eq_band_max">Up to %1$d bands.</string>
+    <string name="eq_band_on">Band %1$d on</string>
+    <string name="eq_band_peak">Peak</string>
+    <string name="eq_band_low_shelf">Low shelf</string>
+    <string name="eq_band_high_shelf">High shelf</string>
+    <string name="eq_band_freq_label">Band %1$d frequency (Hz)</string>
+    <string name="eq_band_gain_label">Band %1$d gain (dB)</string>
+    <string name="eq_band_q_label">Band %1$d Q</string>
+    <string name="eq_curve_label">Response curve</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">A full equaliser isn't possible here: this system doesn't let an app change the sound of other apps. The three bands above are the headphones' own.</string>
+</resources>

@@ -117,6 +117,21 @@ its own page file and adds its page to `PageAvailability.ShippedPages`.
   the name. The chosen tab is ink, the others ink-3. No accent colour and no marker. On a phone the
   bar sits above the system's gesture or navigation bar, on the same colour.
 
+## Equaliser page
+
+Top to bottom, up to 880dp wide: a status panel (the on/off switch, one line of state, and when something is
+needed first, one sentence and one button), the response curve, then one panel with the preset menu (built in,
+saved; Save as, Rename, Delete with a confirm, Import AutoEq file, Export), the Graphic / Parametric switch, the editor
+and the preamp. The curve runs 20 Hz to 20 kHz on a log axis with a 0 dB line and labels at 50, 200, 1k, 5k and 10k. It shows at
+least 12 dB either way and grows when the sum needs more. Graphic is ten vertical sliders in 0.5 dB steps, -12 to +12 dB.
+Parametric is a list of bands (on, type, frequency, gain, Q, Remove) and an Add button, up to 20. The preamp is set
+automatically (headroom, so boosts cannot clip) unless switched off; the limiter row appears only where the backend has one
+(Windows has none). On a phone or in a narrow window it is the same in one column and the band rows take two lines.
+
+On Windows the page is always listed, so people find out it exists. Without Equalizer APO it shows its plain
+setup state with a button that opens APO's website (Ruru downloads nothing). On a Mac and an iPhone there is no page: one
+sentence under the headphones' own 3-band equaliser says why.
+
 ## Favourite modes
 
 Each mode row ends with a 16dp star (drawn in the app, ink at 50% until it is a favourite or hovered, filled

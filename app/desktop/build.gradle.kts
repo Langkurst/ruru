@@ -119,7 +119,7 @@ compose.desktop {
 }
 
 // Renders the real app to a PNG: ./gradlew :app:desktop:snapshot -Pout=shots/home.png -Pdemo -Plight
-// Wide layout: add -Pwidth=1100 -Pheight=720 -Pframe (and -Ppage=settings, -Pscale=1). Narrow: -Ptab=more. Pages not built yet: -PallPages [-Psystem=android]
+// Wide layout: add -Pwidth=1100 -Pheight=720 -Pframe (and -Ppage=settings, -Pscale=1). Narrow: -Ptab=more. Pages not built yet: -PallPages [-Psystem=android]. Equaliser page: -Ppage=equaliser [-Peq=notinstalled|off|on] [-PeqView=graphic|parametric]
 tasks.register<JavaExec>("snapshot") {
     group = "ruru"
     description = "Render the app off-screen to a PNG"
@@ -142,6 +142,8 @@ tasks.register<JavaExec>("snapshot") {
             if (providers.gradleProperty("demo").isPresent) "--demo" else null,
             if (providers.gradleProperty("light").isPresent) "--light" else null,
             providers.gradleProperty("update").orNull?.let { "--update=$it" },
+            providers.gradleProperty("eq").orNull?.let { "--eq=$it" },
+            providers.gradleProperty("eqView").orNull?.let { "--eq-view=$it" },
         ),
     )
 }

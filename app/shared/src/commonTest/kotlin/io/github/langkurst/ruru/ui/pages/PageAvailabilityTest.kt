@@ -10,18 +10,22 @@ class PageAvailabilityTest {
     private val everything = DeskPage.entries.toSet()
 
     @Test
-    fun `this build shows only Sound and Settings, and a bar of Headphones and More`() {
-        assertEquals(emptySet(), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
-        val shipped = PageAvailability(system = SystemKind.Windows)
-        assertEquals(listOf(DeskPage.Sound, DeskPage.Settings), shipped.deskPages(sound = true, settings = true))
-        assertEquals(listOf(PhoneTab.Headphones, PhoneTab.More), shipped.phoneTabs())
+    fun `this build ships the Equaliser, listed only where a Pro EQ backend exists`() {
+        assertEquals(setOf(DeskPage.Equaliser), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
+        val windows = PageAvailability(system = SystemKind.Windows)
+        assertEquals(listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Settings), windows.deskPages(sound = true, settings = true))
+        assertEquals(listOf(PhoneTab.Headphones, PhoneTab.Sound, PhoneTab.More), windows.phoneTabs())
+        // A system with no backend yet (Linux and Android until theirs is built) keeps today's navigation.
+        val noBackend = PageAvailability(system = SystemKind.Linux, hasProEq = false)
+        assertEquals(listOf(DeskPage.Sound, DeskPage.Settings), noBackend.deskPages(sound = true, settings = true))
+        assertEquals(listOf(PhoneTab.Headphones, PhoneTab.More), noBackend.phoneTabs())
     }
 
     @Test
     fun `Sound and Settings follow what the headphones give`() {
         val none = PageAvailability(system = SystemKind.Windows)
-        assertEquals(emptyList(), none.deskPages(sound = false, settings = false))
-        assertEquals(listOf(DeskPage.Settings), none.deskPages(sound = false, settings = true))
+        assertEquals(listOf(DeskPage.Equaliser), none.deskPages(sound = false, settings = false))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Settings), none.deskPages(sound = false, settings = true))
     }
 
     @Test

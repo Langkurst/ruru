@@ -31,6 +31,9 @@ import io.github.langkurst.ruru.desktop.chrome.TitleBarHeight
 import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.app.update.DesktopUpdates
+import io.github.langkurst.ruru.app.eq.ApoEqBackend
+import io.github.langkurst.ruru.app.eq.DesktopEqFiles
+import io.github.langkurst.ruru.app.eq.ProEqModel
 import io.github.langkurst.ruru.app.settings.createSettingsStore
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
@@ -109,12 +112,22 @@ fun main(args: Array<String>) {
         },
         log = { if (debug) System.err.println("update $it") },
     )
+    // The Equaliser page's model, made when the window first needs it. Windows has a backend (Equalizer APO); the other systems get theirs later.
+    val proEq = lazy {
+        if (os.startsWith("Windows")) {
+            val settings = createSettingsStore()
+            ProEqModel(settings, scope, ApoEqBackend(settings, scope), files = DesktopEqFiles())
+        } else {
+            null
+        }
+    }
     val quit = {
+        if (proEq.isInitialized()) proEq.value?.close()
         model.stop()
         exitProcess(0)
     }
     var trayMenu: TrayMenu? = null
-    val window = WindowHost(model, updates, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() }, exitAfterFirstFrame = "--warm-up" in args)
+    val window = WindowHost(model, updates, proEq, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() }, exitAfterFirstFrame = "--warm-up" in args)
     show.set(window::open)
     macAppHooks(window::open)
 
@@ -149,6 +162,7 @@ private fun macAppHooks(open: () -> Unit) {
 private class WindowHost(
     private val model: AppModel,
     private val updates: Updates,
+    private val proEq: Lazy<ProEqModel?>,
     private val closing: TrayPreference,
     private val hasTray: Boolean,
     private val onQuit: () -> Unit,
@@ -300,7 +314,7 @@ private class WindowHost(
                     if (exitAfterFirstFrame) onQuit()
                 }
                 RuruTheme(dark = dark, reduceMotion = reduceMotion) {
-                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates) }
+                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates, proEq = proEq.value) }
                 }
             }
         }

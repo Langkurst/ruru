@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">使用均衡器</string>
+    <string name="eq_status_on">已开启。声音在到达耳机之前就被调整。</string>
+    <string name="eq_status_off">已关闭</string>
+    <string name="eq_status_setup">需要先设置</string>
+    <string name="eq_status_unavailable">不可用</string>
+    <string name="eq_unavailable_here">这个系统暂时还不能过滤声音。</string>
+    <string name="eq_apo_checking">正在查找 Equalizer APO。</string>
+    <string name="eq_apo_not_installed">尚未安装 Equalizer APO。它是一款免费程序，在 Windows 上负责过滤声音。Ruru 不会下载任何东西：按钮会在浏览器中打开它的网站。</string>
+    <string name="eq_apo_get">获取 Equalizer APO</string>
+    <string name="eq_apo_consent">要开启均衡器，Ruru 会在 %1$s 中保存一个名为 ruru.txt 的文件，并在 config.txt 中添加一行：Include: ruru.txt。关闭时会再删掉这一行。config.txt 的其他内容不会改变。</string>
+    <string name="eq_apo_allow">允许</string>
+    <string name="eq_apo_cant_write">Ruru 无法写入 %1$s。请给你的 Windows 账户修改该文件夹的权限（右键、属性、安全、编辑），然后重新检查。</string>
+    <string name="eq_apo_no_config">Ruru 找到了 Equalizer APO 的文件夹（%1$s），但没有找到 config.txt。请先打开一次 APO 的 Configurator，然后重新检查。</string>
+    <string name="eq_apo_unreadable">这个 config.txt 保存为 UTF-16，Ruru 无法编辑。请在文本编辑器中另存为 UTF-8，Ruru 会发现。</string>
+    <string name="eq_apo_note">Equalizer APO 只会改变你在它的 Configurator 中选择的输出。请在那里选择耳机使用的输出，如果提示重启，请重启 Windows。</string>
+    <string name="eq_check_again">重新检查</string>
+    <string name="eq_import_failed">Ruru 无法读取该文件。它必须是 AutoEq 的 ParametricEQ 文本文件。</string>
+    <string name="eq_preset_label">预设</string>
+    <string name="eq_preset_custom">自定义</string>
+    <string name="eq_presets_builtin">内置</string>
+    <string name="eq_presets_saved">已保存</string>
+    <string name="eq_preset_save_as">另存为</string>
+    <string name="eq_preset_rename">重命名</string>
+    <string name="eq_preset_delete">删除</string>
+    <string name="eq_preset_delete_confirm">删除“%1$s”吗？</string>
+    <string name="eq_preset_import">导入 AutoEq 文件</string>
+    <string name="eq_preset_export">导出</string>
+    <string name="eq_preset_name_label">预设名称</string>
+    <string name="eq_preset_name_placeholder">给这个预设起个名字</string>
+    <string name="eq_preset_remembered">Ruru 会为 %1$s 记住这个预设。</string>
+    <string name="eq_mode_label">编辑器</string>
+    <string name="eq_mode_graphic">图形</string>
+    <string name="eq_mode_parametric">参数</string>
+    <string name="eq_preamp">前级增益</string>
+    <string name="eq_preamp_auto">自动设置</string>
+    <string name="eq_preamp_auto_hint">只把音量降低到刚好不让增益造成失真的程度。</string>
+    <string name="eq_limiter">限幅器</string>
+    <string name="eq_limiter_hint">压住很响的峰值，避免失真。</string>
+    <string name="eq_band_add">添加频段</string>
+    <string name="eq_band_max">最多 %1$d 个频段。</string>
+    <string name="eq_band_on">频段 %1$d 已开启</string>
+    <string name="eq_band_peak">峰值</string>
+    <string name="eq_band_low_shelf">低频搁架</string>
+    <string name="eq_band_high_shelf">高频搁架</string>
+    <string name="eq_band_freq_label">频段 %1$d 的频率（Hz）</string>
+    <string name="eq_band_gain_label">频段 %1$d 的增益（dB）</string>
+    <string name="eq_band_q_label">频段 %1$d 的 Q 值</string>
+    <string name="eq_curve_label">响应曲线</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">这里无法使用完整的均衡器：这个系统不允许应用改变其他应用的声音。上面的三个频段是耳机自带的。</string>
+</resources>

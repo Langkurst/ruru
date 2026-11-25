@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">이퀄라이저 사용</string>
+    <string name="eq_status_on">켜짐. 소리가 헤드폰에 닿기 전에 바뀝니다.</string>
+    <string name="eq_status_off">꺼짐</string>
+    <string name="eq_status_setup">설정이 필요합니다</string>
+    <string name="eq_status_unavailable">사용할 수 없음</string>
+    <string name="eq_unavailable_here">이 시스템은 아직 소리를 필터링할 수 없습니다.</string>
+    <string name="eq_apo_checking">Equalizer APO를 찾는 중입니다.</string>
+    <string name="eq_apo_not_installed">Equalizer APO가 설치되어 있지 않습니다. Windows에서 소리 필터링을 맡는 무료 프로그램입니다. Ruru는 아무것도 내려받지 않으며, 버튼을 누르면 브라우저에서 해당 웹사이트가 열립니다.</string>
+    <string name="eq_apo_get">Equalizer APO 받기</string>
+    <string name="eq_apo_consent">이퀄라이저를 켜기 위해 Ruru가 %1$s에 ruru.txt 파일을 저장하고, config.txt에 Include: ruru.txt 한 줄을 추가합니다. 끄면 그 줄이 다시 지워집니다. config.txt의 다른 내용은 바뀌지 않습니다.</string>
+    <string name="eq_apo_allow">허용</string>
+    <string name="eq_apo_cant_write">Ruru가 %1$s에 쓸 수 없습니다. 그 폴더를 변경할 수 있는 권한을 Windows 계정에 준 다음(마우스 오른쪽 버튼, 속성, 보안, 편집) 다시 확인하세요.</string>
+    <string name="eq_apo_no_config">Equalizer APO 폴더(%1$s)는 찾았지만 config.txt가 없습니다. APO의 Configurator를 한 번 연 다음 다시 확인하세요.</string>
+    <string name="eq_apo_unreadable">이 config.txt는 UTF-16으로 저장되어 있어 Ruru가 편집할 수 없습니다. 텍스트 편집기에서 UTF-8로 저장하면 Ruru가 알아챕니다.</string>
+    <string name="eq_apo_note">Equalizer APO는 Configurator에서 고른 출력만 바꿉니다. 거기서 헤드폰이 쓰는 출력을 고르고, 요청하면 Windows를 다시 시작하세요.</string>
+    <string name="eq_check_again">다시 확인</string>
+    <string name="eq_import_failed">Ruru가 그 파일을 읽을 수 없습니다. AutoEq ParametricEQ 텍스트 파일이어야 합니다.</string>
+    <string name="eq_preset_label">프리셋</string>
+    <string name="eq_preset_custom">사용자 지정</string>
+    <string name="eq_presets_builtin">기본 제공</string>
+    <string name="eq_presets_saved">저장됨</string>
+    <string name="eq_preset_save_as">다른 이름으로 저장</string>
+    <string name="eq_preset_rename">이름 바꾸기</string>
+    <string name="eq_preset_delete">삭제</string>
+    <string name="eq_preset_delete_confirm">“%1$s”을(를) 삭제할까요?</string>
+    <string name="eq_preset_import">AutoEq 파일 가져오기</string>
+    <string name="eq_preset_export">내보내기</string>
+    <string name="eq_preset_name_label">프리셋 이름</string>
+    <string name="eq_preset_name_placeholder">프리셋 이름 짓기</string>
+    <string name="eq_preset_remembered">Ruru가 %1$s에 이 프리셋을 기억해 둡니다.</string>
+    <string name="eq_mode_label">편집기</string>
+    <string name="eq_mode_graphic">그래픽</string>
+    <string name="eq_mode_parametric">파라메트릭</string>
+    <string name="eq_preamp">프리앰프</string>
+    <string name="eq_preamp_auto">자동으로 설정</string>
+    <string name="eq_preamp_auto_hint">증폭해도 소리가 깨지지 않도록 필요한 만큼만 볼륨을 낮춥니다.</string>
+    <string name="eq_limiter">리미터</string>
+    <string name="eq_limiter_hint">큰 피크를 눌러 소리가 깨지지 않게 합니다.</string>
+    <string name="eq_band_add">밴드 추가</string>
+    <string name="eq_band_max">밴드는 최대 %1$d개입니다.</string>
+    <string name="eq_band_on">밴드 %1$d 켜기</string>
+    <string name="eq_band_peak">피크</string>
+    <string name="eq_band_low_shelf">로 셸프</string>
+    <string name="eq_band_high_shelf">하이 셸프</string>
+    <string name="eq_band_freq_label">밴드 %1$d 주파수(Hz)</string>
+    <string name="eq_band_gain_label">밴드 %1$d 게인(dB)</string>
+    <string name="eq_band_q_label">밴드 %1$d의 Q</string>
+    <string name="eq_curve_label">응답 곡선</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">여기서는 전체 이퀄라이저를 쓸 수 없습니다. 이 시스템은 앱이 다른 앱의 소리를 바꾸는 것을 허용하지 않습니다. 위의 3밴드는 헤드폰 자체의 것입니다.</string>
+</resources>

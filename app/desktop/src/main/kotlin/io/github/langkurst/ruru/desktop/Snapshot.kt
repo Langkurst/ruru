@@ -13,6 +13,12 @@ import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.UnsupportedPlatform
 import io.github.langkurst.ruru.app.UpdateState
 import io.github.langkurst.ruru.app.Updates
+import io.github.langkurst.ruru.app.eq.EqBackendStatus
+import io.github.langkurst.ruru.app.eq.EqStatuses
+import io.github.langkurst.ruru.app.eq.FakeEqBackend
+import io.github.langkurst.ruru.app.eq.ProEqModel
+import io.github.langkurst.ruru.app.settings.MemorySettingsStore
+import io.github.langkurst.ruru.dsp.BuiltInPresets
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
 import io.github.langkurst.ruru.ui.PlatformSwitch
@@ -35,7 +41,7 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--eq=notinstalled|off|on] [--eq-view=graphic|parametric] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
@@ -101,9 +107,21 @@ fun main(args: Array<String>) {
         PlatformSwitch(Res.string.desktop_keep_in_tray, Res.string.desktop_keep_in_tray_hint, { true }, {}),
     ) else emptyList()
     val chrome = WindowChromeState(if (frame) ChromeKind.Windows else ChromeKind.None) {}
+    // The Equaliser page runs on a stand-in backend and in-memory settings, so a snapshot never touches the real system.
+    // --eq=notinstalled|off|on (default on) picks its state, --eq-view=graphic|parametric (default graphic) its editor.
+    val eqState = args.firstOrNull { it.startsWith("--eq=") }?.substringAfter('=') ?: "on"
+    val fake = FakeEqBackend(initial = if (eqState == "notinstalled") EqStatuses.apoNotInstalled() else EqBackendStatus.Ready)
+    val proEq = ProEqModel(MemorySettingsStore(), scope, real = fake, demoBackend = { fake }, saveMs = 0, debounceMs = 0)
+    if (demo) proEq.setDemo(true)
+    if (args.firstOrNull { it.startsWith("--eq-view=") }?.substringAfter('=') == "parametric") {
+        proEq.applyPreset(BuiltInPresets.QC_ULTRA_ID)
+    } else {
+        listOf(4.0, 3.5, 2.0, 0.0, -1.5, 0.0, 1.0, 2.5, 3.0, 1.5).forEachIndexed { i, g -> proEq.setGraphicGain(i, g) }
+    }
+    if (eqState == "on") proEq.setEnabled(true)
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages) }
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq) }
         }
     }
     var image = scene.render(0)

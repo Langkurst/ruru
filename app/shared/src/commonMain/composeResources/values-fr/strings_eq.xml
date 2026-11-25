@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">Utiliser l'égaliseur</string>
+    <string name="eq_status_on">Activé. Le son est modifié avant d'arriver à votre casque.</string>
+    <string name="eq_status_off">Désactivé</string>
+    <string name="eq_status_setup">À configurer</string>
+    <string name="eq_status_unavailable">Indisponible</string>
+    <string name="eq_unavailable_here">Ce système ne peut pas encore filtrer le son.</string>
+    <string name="eq_apo_checking">Recherche d'Equalizer APO.</string>
+    <string name="eq_apo_not_installed">Equalizer APO n'est pas installé. C'est un programme gratuit qui fait le filtrage sous Windows. Ruru ne télécharge rien : le bouton ouvre son site dans votre navigateur.</string>
+    <string name="eq_apo_get">Obtenir Equalizer APO</string>
+    <string name="eq_apo_consent">Pour activer l'égaliseur, Ruru enregistrera un fichier ruru.txt dans %1$s et ajoutera une ligne, Include: ruru.txt, à config.txt. La désactivation retire cette ligne. Rien d'autre ne change dans config.txt.</string>
+    <string name="eq_apo_allow">Autoriser</string>
+    <string name="eq_apo_cant_write">Ruru ne peut pas écrire dans %1$s. Donnez à votre compte Windows le droit de modifier ce dossier (clic droit, Propriétés, Sécurité, Modifier), puis vérifiez à nouveau.</string>
+    <string name="eq_apo_no_config">Ruru a trouvé le dossier d'Equalizer APO (%1$s) mais pas son config.txt. Ouvrez une fois le Configurator d'APO, puis vérifiez à nouveau.</string>
+    <string name="eq_apo_unreadable">Ruru ne peut pas modifier ce config.txt car il est enregistré en UTF-16. Enregistrez-le en UTF-8 dans un éditeur de texte et Ruru le verra.</string>
+    <string name="eq_apo_note">Equalizer APO ne modifie que les sorties choisies dans son Configurator. Choisissez-y la sortie de votre casque, et redémarrez Windows si on vous le demande.</string>
+    <string name="eq_check_again">Vérifier à nouveau</string>
+    <string name="eq_import_failed">Ruru n'a pas pu lire ce fichier. Il doit s'agir d'un fichier texte ParametricEQ d'AutoEq.</string>
+    <string name="eq_preset_label">Préréglage</string>
+    <string name="eq_preset_custom">Personnalisé</string>
+    <string name="eq_presets_builtin">Inclus</string>
+    <string name="eq_presets_saved">Enregistrés</string>
+    <string name="eq_preset_save_as">Enregistrer sous</string>
+    <string name="eq_preset_rename">Renommer</string>
+    <string name="eq_preset_delete">Supprimer</string>
+    <string name="eq_preset_delete_confirm">Supprimer « %1$s » ?</string>
+    <string name="eq_preset_import">Importer un fichier AutoEq</string>
+    <string name="eq_preset_export">Exporter</string>
+    <string name="eq_preset_name_label">Nom du préréglage</string>
+    <string name="eq_preset_name_placeholder">Nommez ce préréglage</string>
+    <string name="eq_preset_remembered">Ruru retient ce préréglage pour %1$s.</string>
+    <string name="eq_mode_label">Éditeur</string>
+    <string name="eq_mode_graphic">Graphique</string>
+    <string name="eq_mode_parametric">Paramétrique</string>
+    <string name="eq_preamp">Préampli</string>
+    <string name="eq_preamp_auto">Le régler automatiquement</string>
+    <string name="eq_preamp_auto_hint">Baisse le volume juste assez pour que les accentuations ne déforment pas le son.</string>
+    <string name="eq_limiter">Limiteur</string>
+    <string name="eq_limiter_hint">Retient les pics forts pour qu'ils ne déforment pas.</string>
+    <string name="eq_band_add">Ajouter une bande</string>
+    <string name="eq_band_max">Jusqu'à %1$d bandes.</string>
+    <string name="eq_band_on">Bande %1$d activée</string>
+    <string name="eq_band_peak">Cloche</string>
+    <string name="eq_band_low_shelf">Plateau grave</string>
+    <string name="eq_band_high_shelf">Plateau aigu</string>
+    <string name="eq_band_freq_label">Fréquence de la bande %1$d (Hz)</string>
+    <string name="eq_band_gain_label">Gain de la bande %1$d (dB)</string>
+    <string name="eq_band_q_label">Q de la bande %1$d</string>
+    <string name="eq_curve_label">Courbe de réponse</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">Un égaliseur complet n'est pas possible ici : ce système ne laisse pas une appli modifier le son des autres applis. Les trois bandes ci-dessus sont celles du casque.</string>
+</resources>

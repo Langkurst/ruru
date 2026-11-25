@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">Używaj equalizera</string>
+    <string name="eq_status_on">Włączony. Dźwięk jest zmieniany, zanim dotrze do słuchawek.</string>
+    <string name="eq_status_off">Wyłączony</string>
+    <string name="eq_status_setup">Wymaga konfiguracji</string>
+    <string name="eq_status_unavailable">Niedostępny</string>
+    <string name="eq_unavailable_here">Ten system nie potrafi jeszcze filtrować dźwięku.</string>
+    <string name="eq_apo_checking">Szukam Equalizer APO.</string>
+    <string name="eq_apo_not_installed">Equalizer APO nie jest zainstalowany. To darmowy program, który w Windows zajmuje się filtrowaniem. Ruru niczego nie pobiera: przycisk otwiera jego stronę w przeglądarce.</string>
+    <string name="eq_apo_get">Pobierz Equalizer APO</string>
+    <string name="eq_apo_consent">Aby włączyć equalizer, Ruru zapisze plik ruru.txt w %1$s i doda do config.txt jedną linię: Include: ruru.txt. Po wyłączeniu ta linia zostanie usunięta. Nic więcej w config.txt się nie zmieni.</string>
+    <string name="eq_apo_allow">Zezwól</string>
+    <string name="eq_apo_cant_write">Ruru nie może zapisywać w %1$s. Nadaj swojemu kontu Windows prawo zmiany tego folderu (prawy przycisk, Właściwości, Zabezpieczenia, Edytuj), a potem sprawdź ponownie.</string>
+    <string name="eq_apo_no_config">Ruru znalazł folder Equalizer APO (%1$s), ale nie znalazł config.txt. Otwórz raz Configurator APO, a potem sprawdź ponownie.</string>
+    <string name="eq_apo_unreadable">Ruru nie może edytować tego config.txt, bo jest zapisany jako UTF-16. Zapisz go jako UTF-8 w edytorze tekstu, a Ruru to zauważy.</string>
+    <string name="eq_apo_note">Equalizer APO zmienia tylko te wyjścia, które wybierzesz w jego Configuratorze. Wybierz tam wyjście swoich słuchawek i uruchom Windows ponownie, jeśli o to poprosi.</string>
+    <string name="eq_check_again">Sprawdź ponownie</string>
+    <string name="eq_import_failed">Ruru nie mógł odczytać tego pliku. To musi być plik tekstowy ParametricEQ z AutoEq.</string>
+    <string name="eq_preset_label">Preset</string>
+    <string name="eq_preset_custom">Własny</string>
+    <string name="eq_presets_builtin">Wbudowane</string>
+    <string name="eq_presets_saved">Zapisane</string>
+    <string name="eq_preset_save_as">Zapisz jako</string>
+    <string name="eq_preset_rename">Zmień nazwę</string>
+    <string name="eq_preset_delete">Usuń</string>
+    <string name="eq_preset_delete_confirm">Usunąć „%1$s”?</string>
+    <string name="eq_preset_import">Importuj plik AutoEq</string>
+    <string name="eq_preset_export">Eksportuj</string>
+    <string name="eq_preset_name_label">Nazwa presetu</string>
+    <string name="eq_preset_name_placeholder">Nazwij ten preset</string>
+    <string name="eq_preset_remembered">Ruru zapamiętuje ten preset dla %1$s.</string>
+    <string name="eq_mode_label">Edytor</string>
+    <string name="eq_mode_graphic">Graficzny</string>
+    <string name="eq_mode_parametric">Parametryczny</string>
+    <string name="eq_preamp">Przedwzmacniacz</string>
+    <string name="eq_preamp_auto">Ustaw automatycznie</string>
+    <string name="eq_preamp_auto_hint">Obniża głośność tylko tyle, by podbicia nie zniekształcały dźwięku.</string>
+    <string name="eq_limiter">Limiter</string>
+    <string name="eq_limiter_hint">Wstrzymuje głośne szczyty, by nie zniekształcały dźwięku.</string>
+    <string name="eq_band_add">Dodaj pasmo</string>
+    <string name="eq_band_max">Do %1$d pasm.</string>
+    <string name="eq_band_on">Pasmo %1$d włączone</string>
+    <string name="eq_band_peak">Dzwon</string>
+    <string name="eq_band_low_shelf">Półka basów</string>
+    <string name="eq_band_high_shelf">Półka wysokich</string>
+    <string name="eq_band_freq_label">Częstotliwość pasma %1$d (Hz)</string>
+    <string name="eq_band_gain_label">Wzmocnienie pasma %1$d (dB)</string>
+    <string name="eq_band_q_label">Q pasma %1$d</string>
+    <string name="eq_curve_label">Krzywa odpowiedzi</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">Pełny equalizer nie jest tu możliwy: ten system nie pozwala aplikacji zmieniać dźwięku innych aplikacji. Trzy pasma powyżej to wbudowane pasma słuchawek.</string>
+</resources>

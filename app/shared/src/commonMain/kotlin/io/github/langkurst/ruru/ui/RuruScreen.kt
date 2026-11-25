@@ -84,7 +84,11 @@ import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.bose.AutoOffOptions
 import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.pages.BottomBar
+import io.github.langkurst.ruru.app.eq.ProEqModel
+import io.github.langkurst.ruru.ui.pages.EqNotPossibleNote
 import io.github.langkurst.ruru.ui.pages.EqualiserPage
+import io.github.langkurst.ruru.ui.pages.LocalProEq
+import io.github.langkurst.ruru.ui.pages.LocalSystemKind
 import io.github.langkurst.ruru.ui.pages.MorePage
 import io.github.langkurst.ruru.ui.pages.PageAvailability
 import io.github.langkurst.ruru.ui.pages.SleepPage
@@ -110,9 +114,11 @@ fun RuruScreen(
     extras: List<PlatformSwitch> = emptyList(),
     updates: Updates? = null,
     pages: PageAvailability? = null,
+    proEq: ProEqModel? = null,
 ) {
     val controller by model.controller.collectAsState()
-    val available = pages ?: remember(model) { PageAvailability(system = SystemKind.of(model.platformName)) }
+    val system = SystemKind.of(model.platformName)
+    val available = pages ?: remember(model, proEq) { PageAvailability(system = system, hasProEq = proEq != null) }
     val state by controller.state.collectAsState()
     val c = Ruru.colors
     val browser = LocalUriHandler.current
@@ -122,6 +128,7 @@ fun RuruScreen(
     val copyReport = { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
     // The page colour goes on before the caller's modifier, so it also fills the strips behind a
     // phone's status and navigation bars that the safe-area padding in [modifier] leaves.
+    CompositionLocalProvider(LocalProEq provides proEq, LocalSystemKind provides available.system) {
     BoxWithConstraints(Modifier.fillMaxSize().background(c.night).then(modifier)) {
         if (maxWidth >= DeskMinWidth) {
             // A computer window: sidebar and pages, as in docs/DESIGN.md.
@@ -161,6 +168,7 @@ fun RuruScreen(
                 if (tabs.size > 1) BottomBar(tabs, tab) { model.tab.value = it }
             }
         }
+    }
     }
 }
 
@@ -549,6 +557,7 @@ internal fun EqPanel(eq: HeadphoneEq, range: IntRange, controller: HeadsetContro
                 ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
             }
         }
+        EqNotPossibleNote()
     }
 }
 

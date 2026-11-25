@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">イコライザーを使う</string>
+    <string name="eq_status_on">オン。音はヘッドホンに届く前に変更されます。</string>
+    <string name="eq_status_off">オフ</string>
+    <string name="eq_status_setup">設定が必要です</string>
+    <string name="eq_status_unavailable">利用できません</string>
+    <string name="eq_unavailable_here">このシステムでは、まだ音をフィルターできません。</string>
+    <string name="eq_apo_checking">Equalizer APO を探しています。</string>
+    <string name="eq_apo_not_installed">Equalizer APO がインストールされていません。Windows で音のフィルターを行う無料のプログラムです。Ruru は何もダウンロードしません。ボタンを押すと、ブラウザーでそのサイトが開きます。</string>
+    <string name="eq_apo_get">Equalizer APO を入手</string>
+    <string name="eq_apo_consent">イコライザーをオンにするため、Ruru は %1$s に ruru.txt というファイルを保存し、config.txt に「Include: ruru.txt」の1行を追加します。オフにするとその行は削除されます。config.txt のほかの部分は変わりません。</string>
+    <string name="eq_apo_allow">許可</string>
+    <string name="eq_apo_cant_write">Ruru は %1$s に書き込めません。そのフォルダーを変更できる権限を Windows アカウントに与えてから（右クリック、プロパティ、セキュリティ、編集）、もう一度確認してください。</string>
+    <string name="eq_apo_no_config">Equalizer APO のフォルダー（%1$s）は見つかりましたが、config.txt がありません。APO の Configurator を一度開いてから、もう一度確認してください。</string>
+    <string name="eq_apo_unreadable">この config.txt は UTF-16 で保存されているため、Ruru は編集できません。テキストエディターで UTF-8 として保存すると、Ruru が気づきます。</string>
+    <string name="eq_apo_note">Equalizer APO は、Configurator で選んだ出力だけを変更します。そこでヘッドホンの出力を選び、求められたら Windows を再起動してください。</string>
+    <string name="eq_check_again">もう一度確認</string>
+    <string name="eq_import_failed">このファイルは読み込めませんでした。AutoEq の ParametricEQ テキストファイルが必要です。</string>
+    <string name="eq_preset_label">プリセット</string>
+    <string name="eq_preset_custom">カスタム</string>
+    <string name="eq_presets_builtin">内蔵</string>
+    <string name="eq_presets_saved">保存済み</string>
+    <string name="eq_preset_save_as">名前を付けて保存</string>
+    <string name="eq_preset_rename">名前を変更</string>
+    <string name="eq_preset_delete">削除</string>
+    <string name="eq_preset_delete_confirm">「%1$s」を削除しますか？</string>
+    <string name="eq_preset_import">AutoEq ファイルを読み込む</string>
+    <string name="eq_preset_export">書き出す</string>
+    <string name="eq_preset_name_label">プリセット名</string>
+    <string name="eq_preset_name_placeholder">プリセットに名前を付ける</string>
+    <string name="eq_preset_remembered">Ruru は、このプリセットを %1$s 用に覚えています。</string>
+    <string name="eq_mode_label">エディター</string>
+    <string name="eq_mode_graphic">グラフィック</string>
+    <string name="eq_mode_parametric">パラメトリック</string>
+    <string name="eq_preamp">プリアンプ</string>
+    <string name="eq_preamp_auto">自動で設定</string>
+    <string name="eq_preamp_auto_hint">ブーストで音が歪まないよう、必要なぶんだけ音量を下げます。</string>
+    <string name="eq_limiter">リミッター</string>
+    <string name="eq_limiter_hint">大きなピークを抑えて、歪みを防ぎます。</string>
+    <string name="eq_band_add">バンドを追加</string>
+    <string name="eq_band_max">バンドは最大 %1$d 個です。</string>
+    <string name="eq_band_on">バンド %1$d をオン</string>
+    <string name="eq_band_peak">ピーク</string>
+    <string name="eq_band_low_shelf">ローシェルフ</string>
+    <string name="eq_band_high_shelf">ハイシェルフ</string>
+    <string name="eq_band_freq_label">バンド %1$d の周波数（Hz）</string>
+    <string name="eq_band_gain_label">バンド %1$d のゲイン（dB）</string>
+    <string name="eq_band_q_label">バンド %1$d の Q</string>
+    <string name="eq_curve_label">周波数特性</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">ここでは本格的なイコライザーは使えません。このシステムでは、アプリが他のアプリの音を変えることができないためです。上の3バンドはヘッドホン自体のものです。</string>
+</resources>

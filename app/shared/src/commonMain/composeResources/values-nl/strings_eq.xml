@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Pro EQ page: the equaliser's status, presets, bands and the Equalizer APO setup. -->
+    <string name="eq_switch_label">De equalizer gebruiken</string>
+    <string name="eq_status_on">Aan. Het geluid wordt aangepast voordat het je koptelefoon bereikt.</string>
+    <string name="eq_status_off">Uit</string>
+    <string name="eq_status_setup">Moet nog worden ingesteld</string>
+    <string name="eq_status_unavailable">Niet beschikbaar</string>
+    <string name="eq_unavailable_here">Dit systeem kan het geluid nog niet filteren.</string>
+    <string name="eq_apo_checking">Equalizer APO wordt gezocht.</string>
+    <string name="eq_apo_not_installed">Equalizer APO is niet geïnstalleerd. Het is een gratis programma dat onder Windows het filteren doet. Ruru downloadt niets: de knop opent de website in je browser.</string>
+    <string name="eq_apo_get">Equalizer APO downloaden</string>
+    <string name="eq_apo_consent">Om de equalizer aan te zetten, slaat Ruru een bestand ruru.txt op in %1$s en voegt daar één regel toe aan config.txt: Include: ruru.txt. Bij uitzetten gaat die regel er weer uit. Verder verandert er niets in config.txt.</string>
+    <string name="eq_apo_allow">Toestaan</string>
+    <string name="eq_apo_cant_write">Ruru kan niet schrijven naar %1$s. Geef je Windows-account toestemming om die map te wijzigen (rechtsklik, Eigenschappen, Beveiliging, Bewerken) en controleer dan opnieuw.</string>
+    <string name="eq_apo_no_config">Ruru vond de map van Equalizer APO (%1$s) maar niet de config.txt. Open de Configurator van APO één keer en controleer dan opnieuw.</string>
+    <string name="eq_apo_unreadable">Ruru kan deze config.txt niet bewerken omdat hij als UTF-16 is opgeslagen. Sla hem in een teksteditor op als UTF-8, dan merkt Ruru het.</string>
+    <string name="eq_apo_note">Equalizer APO past alleen de uitgangen aan die je in de Configurator kiest. Kies daar de uitgang van je koptelefoon en start Windows opnieuw op als daarom wordt gevraagd.</string>
+    <string name="eq_check_again">Opnieuw controleren</string>
+    <string name="eq_import_failed">Ruru kon dat bestand niet lezen. Het moet een AutoEq-ParametricEQ-tekstbestand zijn.</string>
+    <string name="eq_preset_label">Voorinstelling</string>
+    <string name="eq_preset_custom">Eigen</string>
+    <string name="eq_presets_builtin">Ingebouwd</string>
+    <string name="eq_presets_saved">Opgeslagen</string>
+    <string name="eq_preset_save_as">Opslaan als</string>
+    <string name="eq_preset_rename">Hernoemen</string>
+    <string name="eq_preset_delete">Verwijderen</string>
+    <string name="eq_preset_delete_confirm">„%1$s” verwijderen?</string>
+    <string name="eq_preset_import">AutoEq-bestand importeren</string>
+    <string name="eq_preset_export">Exporteren</string>
+    <string name="eq_preset_name_label">Naam van de voorinstelling</string>
+    <string name="eq_preset_name_placeholder">Geef deze voorinstelling een naam</string>
+    <string name="eq_preset_remembered">Ruru onthoudt deze voorinstelling voor %1$s.</string>
+    <string name="eq_mode_label">Editor</string>
+    <string name="eq_mode_graphic">Grafisch</string>
+    <string name="eq_mode_parametric">Parametrisch</string>
+    <string name="eq_preamp">Voorversterking</string>
+    <string name="eq_preamp_auto">Automatisch instellen</string>
+    <string name="eq_preamp_auto_hint">Zet het volume net genoeg lager zodat versterkingen het geluid niet laten vervormen.</string>
+    <string name="eq_limiter">Limiter</string>
+    <string name="eq_limiter_hint">Houdt luide pieken tegen zodat ze niet vervormen.</string>
+    <string name="eq_band_add">Een band toevoegen</string>
+    <string name="eq_band_max">Maximaal %1$d banden.</string>
+    <string name="eq_band_on">Band %1$d aan</string>
+    <string name="eq_band_peak">Piek</string>
+    <string name="eq_band_low_shelf">Lage shelf</string>
+    <string name="eq_band_high_shelf">Hoge shelf</string>
+    <string name="eq_band_freq_label">Frequentie van band %1$d (Hz)</string>
+    <string name="eq_band_gain_label">Versterking van band %1$d (dB)</string>
+    <string name="eq_band_q_label">Q van band %1$d</string>
+    <string name="eq_curve_label">Frequentieresponsie</string>
+    <string name="eq_zero_db">0 dB</string>
+    <string name="eq_not_possible_here">Een volledige equalizer kan hier niet: dit systeem laat een app het geluid van andere apps niet veranderen. De drie banden hierboven zijn die van de koptelefoon zelf.</string>
+</resources>

@@ -30,6 +30,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:session"))
             api(project(":core:vendors"))
+            api(project(":core:dsp"))
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)

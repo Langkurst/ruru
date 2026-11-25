@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Windows: a new Equaliser page with a full equaliser, 10 sliders or a list of bands, presets (built in, your
+  own, AutoEq files in and out) and an on/off switch. It works through Equalizer APO, a free program Ruru does not
+  download for you; the page shows how to set it up. With your agreement Ruru saves one file next to APO's
+  config.txt and adds one line to it, and switching off takes the line out again. Mac and iPhone cannot offer this,
+  and the Sound page now says so under the headphones' own three bands.
+- Settings longer than 8 KB (many saved equaliser presets) are now kept whole on the computer.
 - A big window now fills the screen. The pages grow with the window instead of stopping at 1000dp, and
   from a window about 1280dp wide the whole app (title bar, sidebar and pages) is drawn a little larger,
   up to a third larger on a 2560 pixel screen, so it no longer looks tiny. The equaliser sliders and the
