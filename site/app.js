@@ -2,6 +2,7 @@
   "use strict";
 
   var API_URL = "https://api.github.com/repos/Langkurst/ruru/releases/latest";
+  var REPO_URL = "https://api.github.com/repos/Langkurst/ruru";
   var CACHE_KEY = "ruru-latest-release";
   var CACHE_MS = 10 * 60 * 1000;
 
@@ -37,29 +38,39 @@
     return "";
   }
 
-  function readCache() {
+  function readCache(key) {
     try {
-      var raw = window.sessionStorage.getItem(CACHE_KEY);
-      if (!raw) return null;
-      var item = JSON.parse(raw);
+      var item = JSON.parse(window.sessionStorage.getItem(key));
       if (item && typeof item.t === "number" && Date.now() - item.t < CACHE_MS) return item.d;
     } catch (e) { /* storage unavailable */ }
     return null;
   }
 
-  function writeCache(data) {
-    try { window.sessionStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), d: data })); } catch (e) { /* storage unavailable */ }
+  function writeCache(key, data) {
+    try { window.sessionStorage.setItem(key, JSON.stringify({ t: Date.now(), d: data })); } catch (e) { /* storage unavailable */ }
   }
 
-  function loadRelease() {
-    var cached = readCache();
+  function getJson(key, url) {
+    var cached = readCache(key);
     if (cached) return Promise.resolve(cached);
-    return window.fetch(API_URL, { headers: { Accept: "application/vnd.github+json" } })
+    return window.fetch(url, { headers: { Accept: "application/vnd.github+json" } })
       .then(function (res) {
         if (!res.ok) throw new Error("status " + res.status);
         return res.json();
       })
-      .then(function (data) { writeCache(data); return data; });
+      .then(function (data) { writeCache(key, data); return data; });
+  }
+
+  function loadRelease() { return getJson(CACHE_KEY, API_URL); }
+
+  // The star count stays hidden until GitHub has answered.
+  function showStars() {
+    getJson("ruru-repo", REPO_URL).then(function (repo) {
+      var el = document.getElementById("stars");
+      if (!el || typeof repo.stargazers_count !== "number") return;
+      el.textContent = new Intl.NumberFormat("en-NZ").format(repo.stargazers_count);
+      el.hidden = false;
+    }).catch(function () { /* the button works without the count */ });
   }
 
   var VERSION_PATTERN = /^\d+\.\d+\.\d+$/;
@@ -170,6 +181,7 @@
   function init() {
     var system = detectSystem();
     markSystem(system);
+    showStars();
     loadRelease().then(function (release) {
       apply(release, system);
     }).catch(function () {

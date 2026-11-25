@@ -17,6 +17,7 @@
 <link rel="preload" href="fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <script src="app.js" defer></script>
+<script src="demo.js" defer></script>
 </head>
 <body>
 <header class="header">
@@ -25,7 +26,7 @@
     <a href="#download">Download</a>
     <a class="optional" href="#compare">Compare</a>
     <a class="optional" href="#privacy">Privacy</a>
-    <a href="https://github.com/Langkurst/ruru">GitHub</a>
+    <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
   </nav>
 </header>
 
@@ -40,15 +41,77 @@
         <a class="textlink" href="#download">Other systems</a>
       </div>
       <p class="small version" id="version"><a href="https://github.com/Langkurst/ruru/releases/latest">The latest version is on GitHub.</a></p>
+      <div class="star">
+        <p class="small star-text"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>Ruru is open source. If you like it, please give it a star on GitHub. It helps other people find it.</p>
+        <a class="file star-btn" href="https://github.com/Langkurst/ruru"><svg class="star-i" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/></svg><span>Star on GitHub</span><span class="count" id="stars" hidden></span></a>
+      </div>
     </div>
-    <picture class="shot">
-      <source media="(prefers-color-scheme: light)" type="image/avif" srcset="img/ruru-light.avif">
-      <source media="(prefers-color-scheme: light)" type="image/webp" srcset="img/ruru-light.webp">
-      <source media="(prefers-color-scheme: light)" srcset="img/ruru-light.png">
-      <source type="image/avif" srcset="img/ruru-dark.avif">
-      <source type="image/webp" srcset="img/ruru-dark.webp">
-      <img src="img/ruru-dark.png" width="800" height="1400" alt="Ruru's main screen in demo mode: listening modes and noise cancelling">
-    </picture>
+    <div class="demo-wrap">
+      <div class="demo" id="demo" role="group" aria-label="Ruru">
+        <div class="d-head">
+          <img src="img/owl-64.png" width="36" height="36" alt="">
+          <div>
+            <p class="d-name">Demo QC Ultra Headphones</p>
+            <p class="d-line">QuietComfort Ultra Headphones, demo mode</p>
+          </div>
+        </div>
+        <div class="d-bat"><span>Battery 72%</span><span class="d-bar"><i></i></span></div>
+
+        <div class="d-card">
+          <p class="d-sec">Listening mode</p>
+          <div class="modes" role="radiogroup" aria-label="Listening mode">
+            <span class="mk"></span>
+            <button type="button" class="mode" role="radio" aria-checked="true" tabindex="0"><span class="lb"><span class="a">Quiet</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Aware</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Immersion</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Commute</span></span><span class="lb sm"><span class="a">Noise 7</span></span></button>
+            <button type="button" class="mode" role="radio" aria-checked="false" tabindex="-1"><span class="lb"><span class="a">Focus</span></span><span class="lb sm"><span class="a">Noise 10</span></span></button>
+          </div>
+          <button type="button" class="qb" id="d-add">Add a mode</button>
+        </div>
+
+        <div class="d-card locked" id="nz">
+          <p class="d-sec">Noise</p>
+          <div class="lk">
+            <div class="d-row"><span id="nl">Noise cancelling</span><span class="val" id="nv">10</span></div>
+            <div class="sl p100" role="slider" tabindex="-1" aria-disabled="true" aria-labelledby="nl" aria-valuemin="0" aria-valuemax="10" aria-valuenow="10" aria-valuetext="10" data-min="0" data-max="10" data-o="nv">
+              <span class="rail"><span class="trk"><span class="fu"></span></span><span class="th"></span></span>
+            </div>
+            <div class="d-row">
+              <span><span class="lbl" id="wl">Wind Block</span><span class="hint">Cuts wind noise outdoors</span></span>
+              <button type="button" class="sw" role="switch" aria-checked="false" aria-labelledby="wl" disabled><span class="knob"></span></button>
+            </div>
+            <p class="d-body ia" id="il">Immersive Audio</p>
+            <div class="seg" role="radiogroup" aria-labelledby="il">
+              <span class="sg"><span class="sk"></span>
+                <button type="button" role="radio" aria-checked="true" tabindex="0" disabled>Off</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>Still</button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" disabled>Motion</button>
+              </span>
+            </div>
+          </div>
+          <p class="d-lock"><span id="ln">Quiet</span> is built into the headphones and can't be changed. Choose or add one of your own modes to set these.</p>
+        </div>
+
+        <div class="d-card">
+          <p class="d-sec">Equaliser</p>
+          <div class="eq">
+            <span id="e0">Bass</span>
+            <div class="sl bip p50" role="slider" tabindex="0" aria-labelledby="e0" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="0" aria-valuetext="0" data-min="-10" data-max="10" data-o="v0"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v0">0</span>
+            <span id="e1">Mid</span>
+            <div class="sl bip p40" role="slider" tabindex="0" aria-labelledby="e1" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-2" aria-valuetext="−2" data-min="-10" data-max="10" data-o="v1"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v1">−2</span>
+            <span id="e2">Treble</span>
+            <div class="sl bip p20" role="slider" tabindex="0" aria-labelledby="e2" aria-valuemin="-10" aria-valuemax="10" aria-valuenow="-6" aria-valuetext="−6" data-min="-10" data-max="10" data-o="v2"><span class="rail"><span class="trk"><span class="fp"></span><span class="fn"></span></span><span class="tk"></span><span class="th"></span></span></div>
+            <span class="val" id="v2">−6</span>
+          </div>
+          <button type="button" class="qb" id="d-reset">Reset to flat</button>
+        </div>
+        <span class="tap" aria-hidden="true"><i></i></span>
+      </div>
+      <p class="small d-cap">This is a working copy of the app with pretend headphones.</p>
+    </div>
   </section>
 
   <section id="how">
@@ -158,7 +221,7 @@
         </tbody>
       </table>
     </div>
-    <p class="after-table">Other free Bose tools, like Earshot for Android and bosectl for Linux and Mac, each run on fewer systems. Ruru uses Earshot's research.</p>
+    <p class="after-table">Other free Bose tools each run on one or two of these systems.</p>
   </section>
 
   <section id="headphones">
@@ -191,7 +254,9 @@
 </main>
 
 <footer class="footer">
-  <p class="small">Ruru isn't made by Bose. Parts of it come from Earshot, another free project.</p>
+  <p class="small">Ruru isn't made by Bose.</p>
+  <p class="small other">Other projects</p>
+  <p class="other-line"><a href="https://github.com/Langkurst/KeaClip">KeaClip</a>, a free Windows app for saving, trimming and sharing video clips.</p>
   <nav class="footer-links">
     <a href="https://github.com/Langkurst/ruru">Source code</a>
     <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">Changelog</a>
