@@ -67,7 +67,8 @@
   function showStars() {
     getJson("ruru-repo", REPO_URL).then(function (repo) {
       var el = document.getElementById("stars");
-      if (!el || typeof repo.stargazers_count !== "number") return;
+      // No count until there is at least one star: a 0 next to the button puts people off.
+      if (!el || typeof repo.stargazers_count !== "number" || repo.stargazers_count < 1) return;
       el.textContent = new Intl.NumberFormat("en-NZ").format(repo.stargazers_count);
       el.hidden = false;
     }).catch(function () { /* the button works without the count */ });
