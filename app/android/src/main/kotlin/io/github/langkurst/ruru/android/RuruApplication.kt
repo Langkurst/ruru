@@ -8,6 +8,11 @@ import kotlinx.coroutines.SupervisorJob
 
 /** Holds the one connection for the whole app, so turning the screen doesn't reconnect. */
 class RuruApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
+        io.github.langkurst.ruru.app.settings.AndroidSettings.init(this)
+    }
+
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val model: AppModel by lazy { AppModel(AndroidHeadsetPlatform(this), scope) }
 }
