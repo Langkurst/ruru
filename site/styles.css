@@ -193,6 +193,8 @@ section > p:last-child, .list:last-child { margin-bottom: 0; }
 .row p { margin: 0; }
 .name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 12px; font-size: 16px; line-height: 1.4; font-weight: 600; }
 .you { font-size: 14px; font-weight: 500; color: var(--calm); }
+.name .os { flex: none; width: 20px; height: 20px; margin: calc((1.4em - 20px) / 2) -2px calc((1.4em - 20px) / 2) 0; fill: currentColor; color: var(--ink-2); align-self: flex-start; }
+.name .os + span { min-width: 0; max-width: calc(100% - 30px); }
 .status { margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
 .files { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 .file {
