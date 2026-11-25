@@ -58,12 +58,12 @@ class DeskLayoutTest {
     private fun ctrl(key: Key) = KeyEvent(key, KeyEventType.KeyDown, isCtrlPressed = true)
 
     @Test
-    fun `Ctrl 1, 2 and 3 open the pages in the sidebar and the model remembers the page`() = withScene(1100) { model, scene ->
+    fun `Ctrl 1 and 2 open Sound and Settings and the model remembers the page`() = withScene(1100) { model, scene ->
         assertEquals(DeskPage.Sound, model.page.value)
-        scene.sendKeyEvent(ctrl(Key.Three))
-        assertEquals(DeskPage.Settings, model.page.value, "Ctrl+3 is the third row, Settings")
         scene.sendKeyEvent(ctrl(Key.Two))
-        assertEquals(DeskPage.Shortcut, model.page.value, "Ctrl+2 is the second row, Shortcut button")
+        assertEquals(DeskPage.Settings, model.page.value, "Ctrl+2 is the second row, Settings")
+        scene.sendKeyEvent(ctrl(Key.Three))
+        assertEquals(DeskPage.Settings, model.page.value, "there is no third row")
         scene.sendKeyEvent(ctrl(Key.One))
         assertEquals(DeskPage.Sound, model.page.value)
     }

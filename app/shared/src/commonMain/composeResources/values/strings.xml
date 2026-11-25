@@ -210,7 +210,6 @@
     <string name="footer_support">Support Ruru</string>
     <string name="page_sound">Sound</string>
     <string name="page_sound_lead">Choose a listening mode, set how much noise is blocked and shape the sound.</string>
-    <string name="page_shortcut_lead">Choose what the button on your headphones does.</string>
     <string name="page_settings_lead">Set how your headphones behave and how Ruru runs.</string>
     <string name="page_about_title">About Ruru</string>
     <string name="page_about_lead">This version of Ruru, and where to get help.</string>
@@ -219,6 +218,8 @@
     <string name="about_licence">Ruru is free and open source, under the MIT licence.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Pages</string>
+    <string name="panel_headphones">Headphones</string>
+    <string name="panel_computer">This computer</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Start with Windows</string>

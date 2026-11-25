@@ -14,7 +14,9 @@ import io.github.langkurst.ruru.app.UpdateState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
+import io.github.langkurst.ruru.ui.PlatformSwitch
 import io.github.langkurst.ruru.ui.RuruScreen
+import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.RuruTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +32,7 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|shortcut|settings|about] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|settings|about] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
@@ -44,7 +46,6 @@ fun main(args: Array<String>) {
     val scale = args.firstOrNull { it.startsWith("--scale=") }?.substringAfter('=')?.toFloat() ?: 2f
     val frame = "--frame" in args
     val page = when (args.firstOrNull { it.startsWith("--page=") }?.substringAfter('=')) {
-        "shortcut" -> DeskPage.Shortcut
         "settings" -> DeskPage.Settings
         "about" -> DeskPage.About
         else -> DeskPage.Sound
@@ -73,10 +74,15 @@ fun main(args: Array<String>) {
         model.controller.value.setMode(index)
         runBlocking { withTimeoutOrNull(5_000) { model.controller.value.state.first { it.headset.currentModeIndex == index } } }
     }
+    // The switches a real Windows window offers, so the wide layout's "This computer" panel is drawn as people see it.
+    val extras = if (widthDp >= 880) listOf(
+        PlatformSwitch(Res.string.desktop_start_with_windows, Res.string.desktop_start_with_windows_hint, { false }, {}),
+        PlatformSwitch(Res.string.desktop_keep_in_tray, Res.string.desktop_keep_in_tray_hint, { true }, {}),
+    ) else emptyList()
     val chrome = WindowChromeState(if (frame) ChromeKind.Windows else ChromeKind.None) {}
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, updates = update?.let(::StillUpdates)) }
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates)) }
         }
     }
     var image = scene.render(0)

@@ -212,7 +212,6 @@
     <string name="footer_support">Apoyar a Ruru</string>
     <string name="page_sound">Sonido</string>
     <string name="page_sound_lead">Elige un modo de escucha, ajusta cuánto ruido se bloquea y da forma al sonido.</string>
-    <string name="page_shortcut_lead">Elige qué hace el botón de tus auriculares.</string>
     <string name="page_settings_lead">Ajusta cómo se comportan tus auriculares y cómo funciona Ruru.</string>
     <string name="page_about_title">Acerca de Ruru</string>
     <string name="page_about_lead">Esta versión de Ruru y dónde encontrar ayuda.</string>
@@ -221,6 +220,8 @@
     <string name="about_licence">Ruru es gratis y de código abierto, con licencia MIT.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Páginas</string>
+    <string name="panel_headphones">Auriculares</string>
+    <string name="panel_computer">Este equipo</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Iniciar con Windows</string>

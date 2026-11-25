@@ -546,7 +546,7 @@ internal fun hasHeadphoneSettings(h: HeadphoneState) = h.sidetone != null || h.m
     h.autoPlayPause != null || h.autoAnswer != null || h.voicePrompts != null
 
 @Composable
-internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier) {
+internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier, title: String = stringResource(Res.string.panel_settings)) {
     if (!hasHeadphoneSettings(h)) return
     val c = Ruru.colors
     val selfVoice = stringResource(Res.string.setting_self_voice)
@@ -554,7 +554,7 @@ internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, mod
     val autoPlayPause = stringResource(Res.string.setting_auto_play_pause)
     val autoAnswer = stringResource(Res.string.setting_auto_answer)
     val voicePrompts = stringResource(Res.string.setting_voice_prompts)
-    Panel(stringResource(Res.string.panel_settings), modifier) {
+    Panel(title, modifier) {
         h.sidetone?.let { level ->
             Txt(selfVoice, Ruru.type.body, c.ink)
             Txt(stringResource(Res.string.setting_self_voice_hint), Ruru.type.small, c.ink3)

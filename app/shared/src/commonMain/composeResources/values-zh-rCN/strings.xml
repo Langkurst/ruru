@@ -208,7 +208,6 @@
     <string name="footer_support">支持 Ruru</string>
     <string name="page_sound">声音</string>
     <string name="page_sound_lead">选择聆听模式，设置屏蔽多少噪音，并调整音质。</string>
-    <string name="page_shortcut_lead">选择耳机上按钮的功能。</string>
     <string name="page_settings_lead">设置耳机的行为和 Ruru 的运行方式。</string>
     <string name="page_about_title">关于 Ruru</string>
     <string name="page_about_lead">这个版本的 Ruru，以及在哪里获得帮助。</string>
@@ -217,6 +216,8 @@
     <string name="about_licence">Ruru 免费且开源，采用 MIT 许可证。</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">页面</string>
+    <string name="panel_headphones">耳机</string>
+    <string name="panel_computer">这台电脑</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">随 Windows 启动</string>

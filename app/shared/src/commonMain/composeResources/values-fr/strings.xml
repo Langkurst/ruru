@@ -212,7 +212,6 @@
     <string name="footer_support">Soutenir Ruru</string>
     <string name="page_sound">Son</string>
     <string name="page_sound_lead">Choisissez un mode d'écoute, réglez la quantité de bruit bloqué et façonnez le son.</string>
-    <string name="page_shortcut_lead">Choisissez ce que fait le bouton de votre casque.</string>
     <string name="page_settings_lead">Réglez le comportement de votre casque et le fonctionnement de Ruru.</string>
     <string name="page_about_title">À propos de Ruru</string>
     <string name="page_about_lead">Cette version de Ruru et où trouver de l'aide.</string>
@@ -221,6 +220,8 @@
     <string name="about_licence">Ruru est gratuit et open source, sous licence MIT.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Pages</string>
+    <string name="panel_headphones">Casque</string>
+    <string name="panel_computer">Cet ordinateur</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Démarrer avec Windows</string>

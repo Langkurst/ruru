@@ -208,7 +208,6 @@
     <string name="footer_support">Ruruを応援</string>
     <string name="page_sound">サウンド</string>
     <string name="page_sound_lead">リスニングモードを選び、ノイズをどれだけ抑えるかを設定して、音を整えます。</string>
-    <string name="page_shortcut_lead">ヘッドホンのボタンの動作を選びます。</string>
     <string name="page_settings_lead">ヘッドホンの動作とRuruの動き方を設定します。</string>
     <string name="page_about_title">Ruruについて</string>
     <string name="page_about_lead">このバージョンのRuruと、困ったときの案内です。</string>
@@ -217,6 +216,8 @@
     <string name="about_licence">Ruruは無料のオープンソースで、MITライセンスです。</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">ページ</string>
+    <string name="panel_headphones">ヘッドホン</string>
+    <string name="panel_computer">このコンピューター</string>
 
     <!-- デスクトップ専用：スイッチ、トレイアイコン、通知 -->
     <string name="desktop_start_with_windows">Windows起動時に開く</string>

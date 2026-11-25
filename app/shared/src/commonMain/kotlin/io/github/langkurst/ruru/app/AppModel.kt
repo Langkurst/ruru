@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /** The pages of the wide desktop layout. [Status] is the "no headphones" screen and is never remembered. */
-enum class DeskPage { Sound, Shortcut, Settings, About, Status }
+enum class DeskPage { Sound, Settings, About, Status }
 
 /** Holds the running controller and swaps it when the user turns demo mode on or off. */
 class AppModel(

@@ -124,8 +124,7 @@ internal fun DeskLayout(
     // The pages in the sidebar. With no headphones there is nothing to tune, so only what belongs to the app.
     val navPages = buildList {
         if (connected && hasSound(h)) add(DeskPage.Sound)
-        if (connected && hasShortcutChoices(h)) add(DeskPage.Shortcut)
-        if ((connected && hasHeadphoneSettings(h)) || extras.isNotEmpty()) add(DeskPage.Settings)
+        if ((connected && (hasHeadphoneSettings(h) || hasShortcutChoices(h))) || extras.isNotEmpty()) add(DeskPage.Settings)
     }
     val shown = when {
         requested == DeskPage.About -> DeskPage.About
@@ -140,7 +139,7 @@ internal fun DeskLayout(
             .fillMaxSize()
             .focusRequester(focus)
             .focusable()
-            // Ctrl+1, 2, 3 (Command on a Mac) open the pages in the sidebar, top to bottom.
+            // Ctrl+1 and 2 (Command on a Mac) open the pages in the sidebar, top to bottom.
             .onPreviewKeyEvent { e ->
                 if (e.type != KeyEventType.KeyDown || !(e.isCtrlPressed || e.isMetaPressed)) return@onPreviewKeyEvent false
                 val index = when (e.key) {
@@ -177,7 +176,6 @@ internal fun DeskLayout(
             ) { page ->
                 when (page) {
                     DeskPage.Sound -> SoundPage(state, controller)
-                    DeskPage.Shortcut -> ShortcutPage(state, controller)
                     DeskPage.Settings -> SettingsPage(state, controller, extras)
                     DeskPage.About -> AboutPage(model, state, appVersion, updates, onCopyReport)
                     DeskPage.Status -> StatusPage(state, controller, model)
@@ -225,7 +223,8 @@ private fun Sidebar(
             OwlMark(52.dp)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
-                Txt(deviceName(state), t.device, c.ink, maxLines = 2)
+                val name = deviceName(state)
+                Txt(name, t.device, c.ink, Modifier.semantics { contentDescription = name }, maxLines = 1)
                 val line = statusLine(state, stringResource(Res.string.header_connected))
                 val dot = when (state.phase) {
                     Phase.Connected -> c.calm
@@ -245,12 +244,10 @@ private fun Sidebar(
             navPages.forEach { page ->
                 val label = when (page) {
                     DeskPage.Sound -> stringResource(Res.string.page_sound)
-                    DeskPage.Shortcut -> stringResource(Res.string.panel_shortcut)
                     else -> stringResource(Res.string.panel_settings)
                 }
                 val icon = when (page) {
                     DeskPage.Sound -> NavIcon.Headphones
-                    DeskPage.Shortcut -> NavIcon.Button
                     else -> NavIcon.Gear
                 }
                 NavRow(label, icon, selected = shown == page) { model.page.value = page }
@@ -344,7 +341,7 @@ private fun LinkText(text: String, onClick: () -> Unit) {
 
 // ---------------------------------------------------------------- navigation rows and icons
 
-private enum class NavIcon { Headphones, Button, Gear, Refresh }
+private enum class NavIcon { Headphones, Gear, Refresh }
 
 /** One 36dp sidebar row: a line icon and a label. [quiet] rows are actions rather than pages. */
 @Composable
@@ -397,10 +394,6 @@ private fun DrawScope.drawNavIcon(icon: NavIcon, colour: Color) {
             drawPath(band, colour, style = stroke)
             drawRoundRect(colour, Offset(3 * s, 14 * s), Size(4 * s, 7 * s), CornerRadius(2 * s), style = stroke)
             drawRoundRect(colour, Offset(17 * s, 14 * s), Size(4 * s, 7 * s), CornerRadius(2 * s), style = stroke)
-        }
-        NavIcon.Button -> {
-            drawRoundRect(colour, Offset(7 * s, 3 * s), Size(10 * s, 18 * s), CornerRadius(5 * s), style = stroke)
-            line(12f, 7f, 12f, 10f)
         }
         NavIcon.Gear -> {
             drawCircle(colour, 3 * s, Offset(12 * s, 12 * s), style = stroke)
@@ -464,19 +457,21 @@ private fun SoundPage(state: AppState, controller: HeadsetController) {
 }
 
 @Composable
-private fun ShortcutPage(state: AppState, controller: HeadsetController) {
-    PageFrame(stringResource(Res.string.panel_shortcut), stringResource(Res.string.page_shortcut_lead), state, controller) {
-        ShortcutPanel(state.headset, controller, Modifier.widthIn(max = 560.dp))
-    }
-}
-
-@Composable
 private fun SettingsPage(state: AppState, controller: HeadsetController, extras: List<PlatformSwitch>) {
     PageFrame(stringResource(Res.string.panel_settings), stringResource(Res.string.page_settings_lead), state, controller) {
-        val headphoneSettings = state.phase == Phase.Connected && hasHeadphoneSettings(state.headset)
-        Columns(listOf(headphoneSettings, extras.isNotEmpty()).count { it }) {
-            if (headphoneSettings) SettingsPanel(state.headset, controller, column())
-            if (extras.isNotEmpty()) Panel(stringResource(Res.string.panel_app), column()) { ExtraSwitches(extras) }
+        val h = state.headset
+        val connected = state.phase == Phase.Connected
+        val left = connected && hasHeadphoneSettings(h)
+        val right = (connected && hasShortcutChoices(h)) || extras.isNotEmpty()
+        // Two columns that keep their own heights: the left is one tall panel, the right stacks two short ones.
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.Top) {
+            Column(Modifier.weight(1f)) {
+                if (left) SettingsPanel(h, controller, title = stringResource(Res.string.panel_headphones))
+            }
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                if (right && connected) ShortcutPanel(h, controller)
+                if (extras.isNotEmpty()) Panel(stringResource(Res.string.panel_computer)) { ExtraSwitches(extras) }
+            }
         }
     }
 }
