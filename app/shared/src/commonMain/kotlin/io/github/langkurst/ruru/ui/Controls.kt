@@ -44,6 +44,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
@@ -86,6 +87,9 @@ import kotlin.math.roundToInt
 
 private val PanelShape = RoundedCornerShape(11.dp)
 private val RowShape = RoundedCornerShape(7.dp)
+
+/** A panel on the white content area of the light desktop layout: a shade off white, as in the approved mockup. */
+private val DeskLightPanel = Color(0xFFFAFBF9)
 
 @Composable
 fun Txt(
@@ -138,13 +142,14 @@ fun Modifier.focusRing(
 @Composable
 fun Panel(title: String?, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit) {
     val c = Ruru.colors
+    val desk = LocalDesk.current
     Column(
         modifier
             .fillMaxWidth()
             .clip(PanelShape)
-            .background(c.bough)
+            .background(if (!desk) c.bough else if (c.isDark) c.night else DeskLightPanel)
             .border(1.dp, c.line, PanelShape)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+            .padding(horizontal = 16.dp, vertical = if (desk) 16.dp else 14.dp),
     ) {
         if (title != null) {
             Txt(title, Ruru.type.section, c.ink2, Modifier.semantics { heading() })
@@ -213,7 +218,9 @@ fun LevelSlider(
     val focusColour = c.ink2
     val tick = c.ink3
     fun step(delta: Int) = onCommit((value + delta).coerceIn(range))
-    BoxWithConstraints(
+    // A plain Box, not BoxWithConstraints: the wide layout asks panels for their intrinsic height to
+    // make neighbours equally tall, which a sub-composing layout can't answer. The drag reads its own width.
+    Box(
         modifier
             .fillMaxWidth()
             .height(28.dp)
@@ -233,16 +240,12 @@ fun LevelSlider(
                 }
             },
     ) {
-        val width = constraints.maxWidth.toFloat()
-        fun valueAt(x: Float): Int {
-            val f = ((x - thumbRadius) / (width - 2 * thumbRadius)).coerceIn(0f, 1f)
-            return range.first + (f * steps).roundToInt()
-        }
         Canvas(
             Modifier
                 .fillMaxSize()
-                .pointerInput(enabled, range, width) {
+                .pointerInput(enabled, range) {
                     if (!enabled) return@pointerInput
+                    fun valueAt(x: Float) = sliderValueAt(x, size.width.toFloat(), thumbRadius, range, steps)
                     detectHorizontalDragGestures(
                         onDragStart = { o -> dragging = valueAt(o.x).also(onPreview) },
                         onDragEnd = { dragging?.let(onCommit); dragging = null },
@@ -254,8 +257,8 @@ fun LevelSlider(
                         },
                     )
                 }
-                .pointerInput(enabled, range, width) {
-                    if (enabled) detectTapGestures { o -> onCommit(valueAt(o.x)) }
+                .pointerInput(enabled, range) {
+                    if (enabled) detectTapGestures { o -> onCommit(sliderValueAt(o.x, size.width.toFloat(), thumbRadius, range, steps)) }
                 },
         ) {
             val y = size.height / 2f
@@ -275,6 +278,11 @@ fun LevelSlider(
     }
 }
 
+private fun sliderValueAt(x: Float, width: Float, thumbRadius: Float, range: IntRange, steps: Int): Int {
+    val f = ((x - thumbRadius) / (width - 2 * thumbRadius)).coerceIn(0f, 1f)
+    return range.first + (f * steps).roundToInt()
+}
+
 /** Two to five choices side by side; the selected one sits on a raised block that slides. */
 @Composable
 fun <T> Segmented(options: List<Pair<T, String>>, selected: T?, onSelect: (T) -> Unit, label: String, enabled: Boolean = true) {
@@ -282,21 +290,21 @@ fun <T> Segmented(options: List<Pair<T, String>>, selected: T?, onSelect: (T) ->
     val index = options.indexOfFirst { it.first == selected }
     val outer = RoundedCornerShape(7.dp)
     val inner = RoundedCornerShape(5.dp)
-    BoxWithConstraints(
+    Box(
         Modifier
             .fillMaxWidth()
             .height(32.dp)
             .clip(outer)
-            .background(c.night)
+            .background(if (LocalDesk.current) c.lineSoft else c.night)
             .border(1.dp, c.lineSoft, outer)
             .padding(2.dp)
             .selectableGroup()
             .semantics { contentDescription = label },
     ) {
-        val each = maxWidth / options.size
-        val x by animateDpAsState(each * index.coerceAtLeast(0), moveSpec())
+        // The raised block is one option wide; its horizontal bias (-1 at the first option, 1 at the last) slides it.
+        val bias by animateFloatAsState(if (options.size > 1) -1f + 2f * index.coerceAtLeast(0) / (options.size - 1) else 0f, moveSpec())
         if (index >= 0) {
-            Box(Modifier.offset(x = x).width(each).fillMaxHeight().clip(inner).background(c.bark).border(1.dp, c.line, inner))
+            Box(Modifier.align(BiasAlignment(bias, 0f)).fillMaxWidth(1f / options.size).fillMaxHeight().clip(inner).background(c.bark).border(1.dp, c.line, inner))
         }
         Row(Modifier.fillMaxSize()) {
             options.forEachIndexed { i, (value, text) ->

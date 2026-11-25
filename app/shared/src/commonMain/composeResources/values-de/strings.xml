@@ -208,6 +208,17 @@
     <string name="footer_report_copied">Kopiert</string>
     <string name="footer_support_hint">Ruru ist kostenlos. Wenn es dir hilft, kannst du dem Entwickler auf Ko-fi einen Kaffee spendieren.</string>
     <string name="footer_support">Ruru unterstützen</string>
+    <string name="page_sound">Klang</string>
+    <string name="page_sound_lead">Wähle einen Hörmodus, stelle ein, wie viel Lärm blockiert wird, und passe den Klang an.</string>
+    <string name="page_shortcut_lead">Lege fest, was die Taste an deinen Kopfhörern macht.</string>
+    <string name="page_settings_lead">Lege fest, wie sich deine Kopfhörer verhalten und wie Ruru läuft.</string>
+    <string name="page_about_title">Über Ruru</string>
+    <string name="page_about_lead">Diese Version von Ruru und wo es Hilfe gibt.</string>
+    <string name="footer_about">Info</string>
+    <string name="side_version">Ruru %1$s</string>
+    <string name="about_licence">Ruru ist kostenlos und quelloffen, unter der MIT-Lizenz.</string>
+    <string name="panel_app">Ruru</string>
+    <string name="nav_pages">Seiten</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Mit Windows starten</string>

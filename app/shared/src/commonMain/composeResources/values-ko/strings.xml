@@ -206,6 +206,17 @@
     <string name="footer_report_copied">복사했어요</string>
     <string name="footer_support_hint">Ruru는 무료예요. 도움이 됐다면 Ko-fi에서 개발자에게 커피 한 잔을 선물할 수 있어요.</string>
     <string name="footer_support">Ruru 후원하기</string>
+    <string name="page_sound">사운드</string>
+    <string name="page_sound_lead">청취 모드를 고르고, 소음을 얼마나 막을지 정하고, 소리를 다듬어 보세요.</string>
+    <string name="page_shortcut_lead">헤드폰의 버튼이 하는 일을 골라요.</string>
+    <string name="page_settings_lead">헤드폰이 동작하는 방식과 Ruru가 실행되는 방식을 정해요.</string>
+    <string name="page_about_title">Ruru 정보</string>
+    <string name="page_about_lead">이 버전의 Ruru와 도움을 받을 수 있는 곳이에요.</string>
+    <string name="footer_about">정보</string>
+    <string name="side_version">Ruru %1$s</string>
+    <string name="about_licence">Ruru는 무료 오픈 소스이고, MIT 라이선스예요.</string>
+    <string name="panel_app">Ruru</string>
+    <string name="nav_pages">페이지</string>
 
     <!-- 데스크톱 전용: 스위치, 트레이 아이콘, 알림 -->
     <string name="desktop_start_with_windows">Windows 시작 시 실행</string>

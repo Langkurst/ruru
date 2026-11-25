@@ -3,8 +3,13 @@ package io.github.langkurst.ruru.desktop
 import androidx.compose.ui.ImageComposeScene
 import androidx.compose.ui.unit.Density
 import io.github.langkurst.ruru.app.AppModel
+import io.github.langkurst.ruru.app.DeskPage
+import io.github.langkurst.ruru.desktop.chrome.ChromeKind
+import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
+import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.app.RURU_VERSION
+import io.github.langkurst.ruru.app.UnsupportedPlatform
 import io.github.langkurst.ruru.app.UpdateState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.link.Words
@@ -25,7 +30,7 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--height=<dp>] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|shortcut|settings|about] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
@@ -33,6 +38,17 @@ fun main(args: Array<String>) {
     val demo = "--demo" in args
     val dark = "--light" !in args
     val heightDp = args.firstOrNull { it.startsWith("--height=") }?.substringAfter('=')?.toInt() ?: 1600
+    // 400 is the single column; from 880 up the sidebar layout is drawn. --frame adds Ruru's own title bar above it,
+    // which is how the window looks on Windows.
+    val widthDp = args.firstOrNull { it.startsWith("--width=") }?.substringAfter('=')?.toInt() ?: 400
+    val scale = args.firstOrNull { it.startsWith("--scale=") }?.substringAfter('=')?.toFloat() ?: 2f
+    val frame = "--frame" in args
+    val page = when (args.firstOrNull { it.startsWith("--page=") }?.substringAfter('=')) {
+        "shortcut" -> DeskPage.Shortcut
+        "settings" -> DeskPage.Settings
+        "about" -> DeskPage.About
+        else -> DeskPage.Sound
+    }
     val update = when (args.firstOrNull { it.startsWith("--update=") }?.substringAfter('=')) {
         "checking" -> UpdateState.Checking
         "downloading" -> UpdateState.Downloading("0.2.1", 0.42f)
@@ -43,15 +59,25 @@ fun main(args: Array<String>) {
         else -> null
     }
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    val model = AppModel(WindowsHeadsetPlatform(), scope, startInDemo = demo)
+    // --none shows the screen for a system with no headphones to control, without touching real Bluetooth.
+    val none = "--none" in args
+    val model = AppModel(if (none) UnsupportedPlatform("this system") else WindowsHeadsetPlatform(), scope, startInDemo = demo)
+    model.page.value = page
     model.start()
     val connected = runBlocking {
-        withTimeoutOrNull(30_000) { model.controller.value.state.first { it.phase == Phase.Connected } }
+        withTimeoutOrNull(if (none) 1_000 else 30_000) { model.controller.value.state.first { it.phase == Phase.Connected } }
     }
     println(if (connected != null) "connected" else "not connected, rendering the current state")
-    val scale = 2f
-    val scene = ImageComposeScene(width = (400 * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
-        RuruTheme(dark = dark) { RuruScreen(model, RURU_VERSION, updates = update?.let(::StillUpdates)) }
+    // --mode=<n> picks a listening mode in demo mode first (3 is Commute, one of the editable ones).
+    args.firstOrNull { it.startsWith("--mode=") }?.substringAfter('=')?.toIntOrNull()?.let { index ->
+        model.controller.value.setMode(index)
+        runBlocking { withTimeoutOrNull(5_000) { model.controller.value.state.first { it.headset.currentModeIndex == index } } }
+    }
+    val chrome = WindowChromeState(if (frame) ChromeKind.Windows else ChromeKind.None) {}
+    val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
+        RuruTheme(dark = dark) {
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, updates = update?.let(::StillUpdates)) }
+        }
     }
     var image = scene.render(0)
     for (i in 1..12) {

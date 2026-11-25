@@ -6,8 +6,10 @@ multipoint and other everyday settings. There is no account, no cloud and no ana
 Android app has no internet permission at all.
 
 <p align="center">
-  <img src="docs/screenshots/ruru-dark.png" width="46%" alt="Ruru in the dark theme: listening modes, noise and equaliser">
-  <img src="docs/screenshots/ruru-light.png" width="46%" alt="Ruru in the light theme">
+  <img src="docs/screenshots/ruru-dark.png" width="760" height="497" alt="Ruru on a computer in the dark theme: a sidebar with the headphones and the pages, and the Sound page with listening modes, noise and the equaliser">
+</p>
+<p align="center">
+  <img src="docs/screenshots/ruru-light.png" width="760" height="497" alt="Ruru on a computer in the light theme">
 </p>
 
 ## Where it runs

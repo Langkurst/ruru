@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- On a computer, a wide window now has its own layout instead of a stretched phone screen: a sidebar with your
+  headphones, the battery and the pages (Sound, Shortcut button, Settings), and the page beside it. Sound puts
+  the listening modes and noise side by side, with the equaliser below and a curve that shows its shape.
+  Ctrl+1, 2 and 3 switch pages. Narrow windows and phones are unchanged.
 - The owl is new: a chubby ruru with black headphones, in the app, the tray, the installers, on phones and on the website.
 - Check for updates now does the work on Windows and Mac. It looks for the newest version, downloads
   it, checks it, then asks if you want to install it and restart. A small card in the window shows

@@ -11,6 +11,7 @@ import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +41,7 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -105,23 +107,54 @@ fun RuruScreen(
     val updater = updates ?: remember(appVersion) { WebsiteUpdates(appVersion) { runCatching { browser.openUri(it) }.isSuccess } }
     @Suppress("DEPRECATION")
     val clipboard = LocalClipboardManager.current
+    val copyReport = { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
     // The page colour goes on before the caller's modifier, so it also fills the strips behind a
     // phone's status and navigation bars that the safe-area padding in [modifier] leaves.
-    Box(Modifier.fillMaxSize().background(c.night).then(modifier), contentAlignment = Alignment.TopCenter) {
-        Column(
-            Modifier
-                .widthIn(max = 520.dp)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Header(state)
-            state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
-            if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
-            Footer(state, model, appVersion, extras, updater) { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
+    BoxWithConstraints(Modifier.fillMaxSize().background(c.night).then(modifier)) {
+        if (maxWidth >= DeskMinWidth) {
+            // A computer window: sidebar and pages, as in docs/DESIGN.md.
+            CompositionLocalProvider(LocalDesk provides true) {
+                DeskLayout(model, state, controller, appVersion, extras, updater, copyReport)
+            }
+        } else {
+            // A phone or a narrow window: the one scrolling column.
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+                Column(
+                    Modifier
+                        .widthIn(max = 520.dp)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    Header(state)
+                    state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
+                    if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
+                    Footer(state, model, appVersion, extras, updater, copyReport)
+                }
+            }
         }
     }
+}
+
+/** What the headphones are called, or "Ruru" when none are known yet. */
+internal fun deviceName(state: AppState): String {
+    val h = state.headset
+    return h.info?.customName?.takeIf { it.isNotBlank() }
+        ?: h.connection.deviceName
+        ?: (state.phase as? Phase.Connecting)?.name
+        ?: "Ruru"
+}
+
+/** The one line under the name. [connected] is what to say when the headphones are connected. */
+@Composable
+internal fun statusLine(state: AppState, connected: String): String = when (state.phase) {
+    Phase.Connected -> connected
+    is Phase.Connecting -> stringResource(Res.string.header_connecting)
+    is Phase.Failed -> stringResource(Res.string.header_not_connected)
+    is Phase.NoHeadset -> stringResource(Res.string.header_not_connected)
+    Phase.Starting -> stringResource(Res.string.header_looking)
+    Phase.Unsupported -> stringResource(Res.string.header_demo_available)
 }
 
 @Composable
@@ -129,18 +162,8 @@ private fun Header(state: AppState) {
     val c = Ruru.colors
     val t = Ruru.type
     val h = state.headset
-    val name = h.info?.customName?.takeIf { it.isNotBlank() }
-        ?: h.connection.deviceName
-        ?: (state.phase as? Phase.Connecting)?.name
-        ?: "Ruru"
-    val line = when (state.phase) {
-        Phase.Connected -> h.info?.modelName ?: stringResource(Res.string.header_connected)
-        is Phase.Connecting -> stringResource(Res.string.header_connecting)
-        is Phase.Failed -> stringResource(Res.string.header_not_connected)
-        is Phase.NoHeadset -> stringResource(Res.string.header_not_connected)
-        Phase.Starting -> stringResource(Res.string.header_looking)
-        Phase.Unsupported -> stringResource(Res.string.header_demo_available)
-    }
+    val name = deviceName(state)
+    val line = statusLine(state, h.info?.modelName ?: stringResource(Res.string.header_connected))
     Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         OwlMark(36.dp)
         Spacer(Modifier.width(12.dp))
@@ -166,7 +189,7 @@ private fun Battery(percent: Int, charging: Boolean) {
 }
 
 @Composable
-private fun MessageBar(text: String, onDismiss: () -> Unit) {
+internal fun MessageBar(text: String, onDismiss: () -> Unit) {
     val c = Ruru.colors
     val shape = RoundedCornerShape(11.dp)
     Row(
@@ -179,11 +202,11 @@ private fun MessageBar(text: String, onDismiss: () -> Unit) {
     }
 }
 
+/** The title and the sentence for a state with no headphones to control. */
 @Composable
-private fun NotConnected(state: AppState, controller: HeadsetController, model: AppModel) {
-    val c = Ruru.colors
+internal fun notConnectedWords(state: AppState): Pair<String, String> {
     val phone = state.platformName == "Android" || state.platformName == "iPhone"
-    val (title, body) = when (val p = state.phase) {
+    return when (val p = state.phase) {
         Phase.Starting -> stringResource(Res.string.starting_title) to stringResource(
             when {
                 state.platformName == "iPhone" -> Res.string.starting_body_iphone
@@ -213,15 +236,27 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
         Phase.Unsupported -> stringResource(Res.string.unsupported_title) to stringResource(Res.string.unsupported_body)
         Phase.Connected -> "" to ""
     }
+}
+
+/** Try again and Try the demo, for the states where they make sense. */
+@Composable
+internal fun NotConnectedButtons(state: AppState, controller: HeadsetController, model: AppModel) {
+    ButtonRow {
+        if (state.phase !is Phase.Unsupported && state.phase !is Phase.Connecting) QuietButton(stringResource(Res.string.action_try_again), controller::retryNow)
+        if (!state.demo) QuietButton(stringResource(Res.string.action_try_demo), { model.setDemo(true) })
+    }
+}
+
+@Composable
+private fun NotConnected(state: AppState, controller: HeadsetController, model: AppModel) {
+    val c = Ruru.colors
+    val (title, body) = notConnectedWords(state)
     Panel(null) {
         Txt(title, Ruru.type.bodyMedium, c.ink)
         Spacer(Modifier.height(4.dp))
         Txt(body, Ruru.type.body, c.ink2)
         Spacer(Modifier.height(12.dp))
-        ButtonRow {
-            if (state.phase !is Phase.Unsupported && state.phase !is Phase.Connecting) QuietButton(stringResource(Res.string.action_try_again), controller::retryNow)
-            if (!state.demo) QuietButton(stringResource(Res.string.action_try_demo), { model.setDemo(true) })
-        }
+        NotConnectedButtons(state, controller, model)
     }
 }
 
@@ -231,33 +266,45 @@ private fun Connected(h: HeadphoneState, controller: HeadsetController) {
     if (caps.listeningModes && h.modes.isNotEmpty()) ModesPanel(h, controller)
     if (caps.noiseCancelling && h.noise != null) NoisePanel(h, h.noise!!, controller)
     h.eq?.let { EqPanel(it, h.eqRange ?: -10..10, controller) }
-    h.shortcutButton?.let { button ->
-        if (button.supportedActions.size > 1) {
-            Panel(stringResource(Res.string.panel_shortcut)) {
-                ChoiceRow(
-                    label = buttonEventResource(button.eventLabel)?.let { stringResource(it) } ?: button.eventLabel ?: stringResource(Res.string.shortcut_press),
-                    options = button.supportedActions.map { it to stringResource(it.resource()) },
-                    selected = button.action,
-                    onSelect = controller::setShortcut,
-                )
-            }
-        }
-    }
+    ShortcutPanel(h, controller)
     SettingsPanel(h, controller)
     AboutPanel(h)
+}
+
+/** Whether the headphones offer more than one thing for the shortcut button to do. */
+internal fun hasShortcutChoices(h: HeadphoneState) = (h.shortcutButton?.supportedActions?.size ?: 0) > 1
+
+@Composable
+internal fun ShortcutPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier) {
+    val button = h.shortcutButton ?: return
+    if (button.supportedActions.size <= 1) return
+    Panel(stringResource(Res.string.panel_shortcut), modifier) {
+        ChoiceRow(
+            label = buttonEventResource(button.eventLabel)?.let { stringResource(it) } ?: button.eventLabel ?: stringResource(Res.string.shortcut_press),
+            options = button.supportedActions.map { it to stringResource(it.resource()) },
+            selected = button.action,
+            onSelect = controller::setShortcut,
+        )
+    }
+}
+
+/** Whether the Sound page has anything on it. */
+internal fun hasSound(h: HeadphoneState): Boolean {
+    val caps = h.capabilities
+    return (caps.listeningModes && h.modes.isNotEmpty()) || (caps.noiseCancelling && h.noise != null) || h.eq != null
 }
 
 private fun ListeningMode.isEmptySlot() = !isPreset && (!isConfigured || name.isBlank())
 
 @Composable
-private fun ModesPanel(h: HeadphoneState, controller: HeadsetController) {
+internal fun ModesPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier) {
     val c = Ruru.colors
     val shown = h.modes.filter { !it.isEmptySlot() || it.index == h.currentModeIndex }
     val freeSlot = h.modes.firstOrNull { it.isEditable && it.isEmptySlot() }
     val current = h.modes.firstOrNull { it.index == h.currentModeIndex }
     var adding by remember { mutableStateOf(false) }
     var confirmRemove by remember(h.currentModeIndex) { mutableStateOf(false) }
-    Panel(stringResource(Res.string.panel_modes), Modifier.animateContentSize(moveSpec())) {
+    Panel(stringResource(Res.string.panel_modes), modifier.animateContentSize(moveSpec())) {
         ModeList(shown, h.currentModeIndex, controller::setMode)
         if (adding && freeSlot != null) {
             Spacer(Modifier.height(8.dp))
@@ -381,7 +428,7 @@ private fun NewModeEditor(onSave: (String) -> Unit, onCancel: () -> Unit) {
 }
 
 @Composable
-private fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: HeadsetController) {
+internal fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: HeadsetController, modifier: Modifier = Modifier) {
     val c = Ruru.colors
     val caps = h.capabilities
     val active = h.modes.firstOrNull { it.index == h.currentModeIndex }
@@ -391,7 +438,7 @@ private fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: Head
     val onLabel = stringResource(Res.string.noise_cancelling_on)
     val windLabel = stringResource(Res.string.noise_wind_block)
     val immersiveLabel = stringResource(Res.string.noise_immersive)
-    Panel(stringResource(Res.string.panel_noise)) {
+    Panel(stringResource(Res.string.panel_noise), modifier) {
         SettingRow(stringResource(Res.string.noise_cancelling), enabled = editable) { Txt("$level", Ruru.type.figureMedium, if (editable) c.ink else c.ink3) }
         LevelSlider(
             value = noise.cancellingLevel,
@@ -401,6 +448,14 @@ private fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: Head
             label = levelLabel,
             enabled = editable && (noise.ancEnabled || !caps.ancToggle),
         )
+        if (LocalDesk.current) {
+            // The scale under the slider, as on the wide layout's mockup: both ends and the middle.
+            Row(Modifier.fillMaxWidth().padding(horizontal = 6.dp)) {
+                listOf(0, 5, 10).forEachIndexed { i, mark ->
+                    Txt("$mark", Ruru.type.small, c.ink4, Modifier.weight(1f), align = when (i) { 0 -> TextAlign.Start; 1 -> TextAlign.Center; else -> TextAlign.End })
+                }
+            }
+        }
         if (caps.ancToggle) {
             SettingRow(onLabel, enabled = editable) {
                 Toggle(noise.ancEnabled, { controller.setNoise(noise.copy(ancEnabled = it)) }, onLabel, editable)
@@ -430,32 +485,52 @@ private fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: Head
 }
 
 @Composable
-private fun EqPanel(eq: HeadphoneEq, range: IntRange, controller: HeadsetController) {
-    val c = Ruru.colors
-    Panel(stringResource(Res.string.panel_equaliser)) {
-        val bands = listOf(
-            stringResource(Res.string.eq_bass) to eq.bass,
-            stringResource(Res.string.eq_mid) to eq.mid,
-            stringResource(Res.string.eq_treble) to eq.treble,
-        )
-        bands.forEachIndexed { i, (name, value) ->
-            var shown by remember(value) { mutableStateOf(value) }
-            Row(Modifier.fillMaxWidth().height(36.dp), verticalAlignment = Alignment.CenterVertically) {
-                Txt(name, Ruru.type.body, c.ink, Modifier.width(60.dp))
-                LevelSlider(
-                    value = value,
-                    range = range,
-                    onPreview = { shown = it },
-                    onCommit = { v -> controller.setEq(when (i) { 0 -> eq.copy(bass = v); 1 -> eq.copy(mid = v); else -> eq.copy(treble = v) }) },
-                    label = name,
-                    modifier = Modifier.weight(1f),
-                )
-                Txt(signed(shown), Ruru.type.figureMedium, c.ink, Modifier.width(40.dp), align = TextAlign.End)
+internal fun EqPanel(eq: HeadphoneEq, range: IntRange, controller: HeadsetController, modifier: Modifier = Modifier) {
+    Panel(stringResource(Res.string.panel_equaliser), modifier) {
+        if (LocalDesk.current) {
+            // Wide: the response curve and its reset on the left, the three sliders on the right.
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(32.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    EqCurve(eq, range, Modifier.fillMaxWidth().height(96.dp))
+                    if (eq != HeadphoneEq()) {
+                        Spacer(Modifier.height(10.dp))
+                        ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
+                    }
+                }
+                Column(Modifier.weight(1f)) { EqBands(eq, range, controller) }
+            }
+        } else {
+            EqBands(eq, range, controller)
+            if (eq != HeadphoneEq()) {
+                Spacer(Modifier.height(8.dp))
+                ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
             }
         }
-        if (eq != HeadphoneEq()) {
-            Spacer(Modifier.height(8.dp))
-            ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
+    }
+}
+
+/** Bass, Mid and Treble: a name, a slider and the number. */
+@Composable
+private fun EqBands(eq: HeadphoneEq, range: IntRange, controller: HeadsetController) {
+    val c = Ruru.colors
+    val bands = listOf(
+        stringResource(Res.string.eq_bass) to eq.bass,
+        stringResource(Res.string.eq_mid) to eq.mid,
+        stringResource(Res.string.eq_treble) to eq.treble,
+    )
+    bands.forEachIndexed { i, (name, value) ->
+        var shown by remember(value) { mutableStateOf(value) }
+        Row(Modifier.fillMaxWidth().height(36.dp), verticalAlignment = Alignment.CenterVertically) {
+            Txt(name, Ruru.type.body, c.ink, Modifier.width(60.dp))
+            LevelSlider(
+                value = value,
+                range = range,
+                onPreview = { shown = it },
+                onCommit = { v -> controller.setEq(when (i) { 0 -> eq.copy(bass = v); 1 -> eq.copy(mid = v); else -> eq.copy(treble = v) }) },
+                label = name,
+                modifier = Modifier.weight(1f),
+            )
+            Txt(signed(shown), Ruru.type.figureMedium, c.ink, Modifier.width(40.dp), align = TextAlign.End)
         }
     }
 }
@@ -466,18 +541,20 @@ private fun signed(v: Int) = when {
     else -> "0"
 }
 
+/** Whether the headphones have any of the settings the Settings panel shows. */
+internal fun hasHeadphoneSettings(h: HeadphoneState) = h.sidetone != null || h.multipointEnabled != null || h.autoOffMinutes != null ||
+    h.autoPlayPause != null || h.autoAnswer != null || h.voicePrompts != null
+
 @Composable
-private fun SettingsPanel(h: HeadphoneState, controller: HeadsetController) {
-    val any = h.sidetone != null || h.multipointEnabled != null || h.autoOffMinutes != null ||
-        h.autoPlayPause != null || h.autoAnswer != null || h.voicePrompts != null
-    if (!any) return
+internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier) {
+    if (!hasHeadphoneSettings(h)) return
     val c = Ruru.colors
     val selfVoice = stringResource(Res.string.setting_self_voice)
     val multipoint = stringResource(Res.string.setting_multipoint)
     val autoPlayPause = stringResource(Res.string.setting_auto_play_pause)
     val autoAnswer = stringResource(Res.string.setting_auto_answer)
     val voicePrompts = stringResource(Res.string.setting_voice_prompts)
-    Panel(stringResource(Res.string.panel_settings)) {
+    Panel(stringResource(Res.string.panel_settings), modifier) {
         h.sidetone?.let { level ->
             Txt(selfVoice, Ruru.type.body, c.ink)
             Txt(stringResource(Res.string.setting_self_voice_hint), Ruru.type.small, c.ink3)
@@ -517,10 +594,10 @@ private fun autoOffLabel(minutes: Int): String = when {
 }
 
 @Composable
-private fun AboutPanel(h: HeadphoneState) {
+internal fun AboutPanel(h: HeadphoneState, modifier: Modifier = Modifier) {
     val info = h.info ?: return
     val c = Ruru.colors
-    Panel(stringResource(Res.string.panel_about)) {
+    Panel(stringResource(Res.string.panel_about), modifier) {
         InfoRow(stringResource(Res.string.about_model), info.modelName)
         // Firmware reads like "1.6.7+g6ebabd2"; the part after + is a build tag, kept for the report.
         InfoRow(stringResource(Res.string.about_firmware), info.firmwareVersion?.substringBefore('+'))
@@ -548,6 +625,26 @@ private fun InfoRow(label: String, value: String?) {
     }
 }
 
+/** The switches only some systems have (Start with Windows, Keep running in the tray). */
+@Composable
+internal fun ExtraSwitches(extras: List<PlatformSwitch>) {
+    extras.forEach { extra ->
+        var on by remember(extra) { mutableStateOf(extra.isOn()) }
+        val extraLabel = stringResource(extra.label)
+        SettingRow(extraLabel, extra.hint?.let { stringResource(it) }) {
+            Toggle(on, { extra.set(it); on = extra.isOn() }, extraLabel)
+        }
+    }
+}
+
+@Composable
+internal fun DemoSwitch(state: AppState, model: AppModel) {
+    val demoLabel = stringResource(Res.string.footer_demo_mode)
+    SettingRow(demoLabel, stringResource(Res.string.footer_demo_mode_hint)) {
+        Toggle(state.demo, model::setDemo, demoLabel)
+    }
+}
+
 @Composable
 private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, updates: Updates, onCopyReport: () -> Unit) {
     val c = Ruru.colors
@@ -555,17 +652,8 @@ private fun Footer(state: AppState, model: AppModel, appVersion: String, extras:
     val browser = LocalUriHandler.current
     val update by updates.state.collectAsState()
     Panel(null) {
-        extras.forEach { extra ->
-            var on by remember(extra) { mutableStateOf(extra.isOn()) }
-            val extraLabel = stringResource(extra.label)
-            SettingRow(extraLabel, extra.hint?.let { stringResource(it) }) {
-                Toggle(on, { extra.set(it); on = extra.isOn() }, extraLabel)
-            }
-        }
-        val demoLabel = stringResource(Res.string.footer_demo_mode)
-        SettingRow(demoLabel, stringResource(Res.string.footer_demo_mode_hint)) {
-            Toggle(state.demo, model::setDemo, demoLabel)
-        }
+        ExtraSwitches(extras)
+        DemoSwitch(state, model)
         Spacer(Modifier.height(8.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Txt(stringResource(Res.string.footer_version, appVersion), Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))

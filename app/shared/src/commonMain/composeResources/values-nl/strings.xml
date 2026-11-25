@@ -208,6 +208,17 @@
     <string name="footer_report_copied">Gekopieerd</string>
     <string name="footer_support_hint">Ruru is gratis. Als het je helpt, kun je de ontwikkelaar op Ko-fi een kop koffie geven.</string>
     <string name="footer_support">Steun Ruru</string>
+    <string name="page_sound">Geluid</string>
+    <string name="page_sound_lead">Kies een luistermodus, stel in hoeveel lawaai wordt geblokkeerd en geef het geluid vorm.</string>
+    <string name="page_shortcut_lead">Kies wat de knop op je koptelefoon doet.</string>
+    <string name="page_settings_lead">Stel in hoe je koptelefoon zich gedraagt en hoe Ruru werkt.</string>
+    <string name="page_about_title">Over Ruru</string>
+    <string name="page_about_lead">Deze versie van Ruru en waar je hulp vindt.</string>
+    <string name="footer_about">Over</string>
+    <string name="side_version">Ruru %1$s</string>
+    <string name="about_licence">Ruru is gratis en open source, onder de MIT-licentie.</string>
+    <string name="panel_app">Ruru</string>
+    <string name="nav_pages">Pagina's</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Starten met Windows</string>

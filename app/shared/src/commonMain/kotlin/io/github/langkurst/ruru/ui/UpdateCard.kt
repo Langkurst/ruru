@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
@@ -33,7 +34,7 @@ import org.jetbrains.compose.resources.stringResource
  * Draws nothing when there is nothing to say.
  */
 @Composable
-fun UpdateCard(state: UpdateState, updates: Updates, modifier: Modifier = Modifier) {
+fun UpdateCard(state: UpdateState, updates: Updates, modifier: Modifier = Modifier, fill: Color? = null) {
     if (state == UpdateState.Idle) return
     val c = Ruru.colors
     val shape = RoundedCornerShape(11.dp)
@@ -41,7 +42,7 @@ fun UpdateCard(state: UpdateState, updates: Updates, modifier: Modifier = Modifi
         modifier
             .fillMaxWidth()
             .clip(shape)
-            .background(c.night)
+            .background(fill ?: c.night)
             .border(1.dp, if (state is UpdateState.Failed) c.alarm.copy(alpha = 0.5f) else c.line, shape)
             .padding(12.dp)
             // Screen readers announce each change of state as it happens.

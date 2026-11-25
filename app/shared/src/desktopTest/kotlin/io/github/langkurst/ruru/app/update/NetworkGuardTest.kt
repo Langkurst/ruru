@@ -37,7 +37,7 @@ class NetworkGuardTest {
         assertTrue(!Regex("""updates\.check\(|\.check\(\)""").containsMatchIn(main), "nothing may check for updates at start-up")
         // Only the screen's button calls check().
         val callers = sources().filter { Regex("""\.check\(\)|::check\b""").containsMatchIn(it.readText()) }.map { it.name }.sorted()
-        assertEquals(listOf("RuruScreen.kt", "UpdateCard.kt", "UpdateCheck.kt"), callers)
+        assertEquals(listOf("Desk.kt", "RuruScreen.kt", "UpdateCard.kt", "UpdateCheck.kt"), callers)
     }
 
     @Test

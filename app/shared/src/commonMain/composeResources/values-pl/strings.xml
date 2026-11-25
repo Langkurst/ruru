@@ -212,6 +212,17 @@
     <string name="footer_report_copied">Skopiowano</string>
     <string name="footer_support_hint">Aplikacja Ruru jest darmowa. Jeśli ci pomaga, możesz postawić twórcy kawę na Ko-fi.</string>
     <string name="footer_support">Wesprzyj Ruru</string>
+    <string name="page_sound">Dźwięk</string>
+    <string name="page_sound_lead">Wybierz tryb odsłuchu, ustaw, ile hałasu jest blokowane, i dopasuj brzmienie.</string>
+    <string name="page_shortcut_lead">Wybierz, co robi przycisk na twoich słuchawkach.</string>
+    <string name="page_settings_lead">Ustaw, jak zachowują się twoje słuchawki i jak działa Ruru.</string>
+    <string name="page_about_title">O Ruru</string>
+    <string name="page_about_lead">Ta wersja Ruru i gdzie szukać pomocy.</string>
+    <string name="footer_about">O aplikacji</string>
+    <string name="side_version">Ruru %1$s</string>
+    <string name="about_licence">Ruru jest darmowe i otwartoźródłowe, na licencji MIT.</string>
+    <string name="panel_app">Ruru</string>
+    <string name="nav_pages">Strony</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Uruchamiaj z Windows</string>

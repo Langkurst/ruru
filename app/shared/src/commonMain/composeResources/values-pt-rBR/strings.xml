@@ -210,6 +210,17 @@
     <string name="footer_report_copied">Copiado</string>
     <string name="footer_support_hint">Ruru é gratuito. Se ele ajudar você, pode pagar um café para o desenvolvedor no Ko-fi.</string>
     <string name="footer_support">Apoiar o Ruru</string>
+    <string name="page_sound">Som</string>
+    <string name="page_sound_lead">Escolha um modo de audição, defina quanto ruído é bloqueado e ajuste o som.</string>
+    <string name="page_shortcut_lead">Escolha o que o botão dos seus fones faz.</string>
+    <string name="page_settings_lead">Defina como seus fones se comportam e como o Ruru funciona.</string>
+    <string name="page_about_title">Sobre o Ruru</string>
+    <string name="page_about_lead">Esta versão do Ruru e onde encontrar ajuda.</string>
+    <string name="footer_about">Sobre</string>
+    <string name="side_version">Ruru %1$s</string>
+    <string name="about_licence">O Ruru é gratuito e de código aberto, com licença MIT.</string>
+    <string name="panel_app">Ruru</string>
+    <string name="nav_pages">Páginas</string>
 
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Iniciar com o Windows</string>

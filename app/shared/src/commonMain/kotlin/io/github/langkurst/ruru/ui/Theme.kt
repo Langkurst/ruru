@@ -62,6 +62,10 @@ val LightColors = RuruColors(
 @Immutable
 class RuruType(family: FontFamily) {
     val title = TextStyle(fontFamily = family, fontWeight = FontWeight.SemiBold, fontSize = 18.sp, lineHeight = 24.sp)
+    /** The page title of the wide desktop layout: 20 / 600, the largest type the app uses. */
+    val page = TextStyle(fontFamily = family, fontWeight = FontWeight.SemiBold, fontSize = 20.sp, lineHeight = 26.sp)
+    /** The device name in the wide layout's sidebar. */
+    val device = TextStyle(fontFamily = family, fontWeight = FontWeight.SemiBold, fontSize = 15.sp, lineHeight = 20.sp)
     val section = TextStyle(fontFamily = family, fontWeight = FontWeight.SemiBold, fontSize = 13.sp, lineHeight = 18.sp)
     val body = TextStyle(fontFamily = family, fontWeight = FontWeight.Normal, fontSize = 14.sp, lineHeight = 20.sp, letterSpacing = 0.2.sp)
     val bodyMedium = body.copy(fontWeight = FontWeight.Medium)
@@ -82,6 +86,9 @@ object Motion {
 val LocalColors = staticCompositionLocalOf { DarkColors }
 val LocalType = staticCompositionLocalOf<RuruType> { error("RuruTheme is missing") }
 val LocalReduceMotion = staticCompositionLocalOf { false }
+
+/** True inside the wide desktop layout, where panels sit on the content area and are drawn a shade darker than it. */
+val LocalDesk = staticCompositionLocalOf { false }
 
 object Ruru {
     val colors: RuruColors

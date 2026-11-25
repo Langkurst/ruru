@@ -37,6 +37,10 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        // The wide layout is tested by drawing it off screen (an ImageComposeScene), which needs the native renderer.
+        val desktopTest by getting {
+            dependencies { implementation(compose.desktop.currentOs) }
+        }
     }
 }
 

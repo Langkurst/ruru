@@ -106,6 +106,7 @@ compose.desktop {
 }
 
 // Renders the real app to a PNG: ./gradlew :app:desktop:snapshot -Pout=shots/home.png -Pdemo -Plight
+// Wide layout: add -Pwidth=1100 -Pheight=720 -Pframe (and -Ppage=settings, -Pscale=1)
 tasks.register<JavaExec>("snapshot") {
     group = "ruru"
     description = "Render the app off-screen to a PNG"
@@ -116,6 +117,12 @@ tasks.register<JavaExec>("snapshot") {
         listOfNotNull(
             outPath,
             "--height=" + providers.gradleProperty("height").getOrElse("1600"),
+            "--width=" + providers.gradleProperty("width").getOrElse("400"),
+            providers.gradleProperty("scale").orNull?.let { "--scale=$it" },
+            providers.gradleProperty("page").orNull?.let { "--page=$it" },
+            if (providers.gradleProperty("frame").isPresent) "--frame" else null,
+            providers.gradleProperty("mode").orNull?.let { "--mode=$it" },
+            if (providers.gradleProperty("none").isPresent) "--none" else null,
             if (providers.gradleProperty("demo").isPresent) "--demo" else null,
             if (providers.gradleProperty("light").isPresent) "--light" else null,
             providers.gradleProperty("update").orNull?.let { "--update=$it" },
