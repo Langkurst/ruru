@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Ruru's mark: a friendly ruru (morepork) face. Designed from a FLUX.2 concept made in ComfyUI
+       (25 Nov 2026), redrawn as shapes so it stays sharp at every size. Small sizes (32px and less)
+       use ruru-small.svg. -->
+  <circle cx="512" cy="512" r="384" fill="#A86C46"/>
+  <path fill="#DDB88E" d="M512,444 C472,372 424,338 370,338 C270,338 208,410 208,494 C208,586 300,640 400,652
+    C452,658 488,666 512,682 C536,666 572,658 624,652 C724,640 816,586 816,494 C816,410 754,338 654,338
+    C600,338 552,372 512,444 Z"/>
+  <circle cx="366" cy="496" r="90" fill="#DCA012"/>
+  <circle cx="658" cy="496" r="90" fill="#DCA012"/>
+  <circle cx="369" cy="499" r="61" fill="#0B0C0A"/>
+  <circle cx="655" cy="499" r="61" fill="#0B0C0A"/>
+  <circle cx="346" cy="472" r="18" fill="#FFF8EC"/>
+  <circle cx="632" cy="472" r="18" fill="#FFF8EC"/>
+  <path fill="#FBE8C2" stroke="#FBE8C2" stroke-width="14" stroke-linejoin="round" d="M512,528 L538,580 L512,634 L486,580 Z"/>
+</svg>

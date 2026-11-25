@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Ruru's mark for 32px and less: the same face without the mask, with bigger eyes, so it still
+       reads in a tray or a browser tab. -->
+  <circle cx="32" cy="32" r="31" fill="#A86C46"/>
+  <circle cx="21.5" cy="30" r="9.5" fill="#E2A817"/>
+  <circle cx="42.5" cy="30" r="9.5" fill="#E2A817"/>
+  <circle cx="22" cy="30.5" r="5.6" fill="#0B0C0A"/>
+  <circle cx="42" cy="30.5" r="5.6" fill="#0B0C0A"/>
+  <circle cx="19.8" cy="28.2" r="1.9" fill="#FFF8EC"/>
+  <circle cx="39.8" cy="28.2" r="1.9" fill="#FFF8EC"/>
+  <path fill="#FBE8C2" stroke="#FBE8C2" stroke-width="1.2" stroke-linejoin="round" d="M32,37 L34.6,41.2 L32,45.4 L29.4,41.2 Z"/>
+</svg>

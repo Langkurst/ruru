@@ -9,5 +9,5 @@
     </style>
     <!-- "night" is the page colour (docs/DESIGN.md): F4F5F3 in light, 0B0C0A in dark. -->
     <color name="night">#FFF4F5F3</color>
-    <color name="owl_face">#FF3A3127</color>
+    <color name="owl_face">#FF0B0C0A</color>
 </resources>

@@ -126,45 +126,32 @@ internal class TrayMenu(
     }
 
     private companion object {
-        /** The owl mark, drawn with Java2D (same geometry as OwlMark.kt). */
+        /** The owl mark for small sizes, drawn with Java2D from art/ruru-small.svg (64 viewBox). */
         fun owlImage(size: Int): Image {
             val img = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
             val g = img.createGraphics()
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-            val s = size.toDouble()
-            val cx = s / 2
-            val cy = s / 2
-            val face = Color(0x3A, 0x31, 0x27)
-            g.color = face
-            g.fill(Ellipse2D.Double(0.0, 0.0, s, s))
-            val r = s * 0.165
-            val ex = s * 0.2
-            val ey = cy - s * 0.02
-            for (x in listOf(cx - ex, cx + ex)) {
-                g.color = Color(0xE8, 0xC5, 0x47)
-                g.fill(Ellipse2D.Double(x - r, ey - r, 2 * r, 2 * r))
-                g.color = Color(0x0B, 0x0C, 0x0A)
-                val pr = r * 0.52
-                g.fill(Ellipse2D.Double(x - pr, ey + r * 0.08 - pr, 2 * pr, 2 * pr))
+            g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+            val k = size / 64.0
+            fun dot(color: Color, x: Double, y: Double, r: Double) {
+                g.color = color
+                g.fill(Ellipse2D.Double((x - r) * k, (y - r) * k, 2 * r * k, 2 * r * k))
             }
-            g.clip = Ellipse2D.Double(0.0, 0.0, s, s)
-            g.color = face
-            g.fill(Path2D.Double().apply {
-                moveTo(cx - ex - r * 1.25, ey - r * 0.95)
-                lineTo(cx, ey - r * 0.2)
-                lineTo(cx + ex + r * 1.25, ey - r * 0.95)
-                lineTo(cx + ex + r * 1.25, ey - r * 2)
-                lineTo(cx - ex - r * 1.25, ey - r * 2)
+            dot(Color(0xA8, 0x6C, 0x46), 32.0, 32.0, 31.0)
+            for (x in listOf(21.5, 42.5)) dot(Color(0xE2, 0xA8, 0x17), x, 30.0, 9.5)
+            for (x in listOf(22.0, 42.0)) dot(Color(0x0B, 0x0C, 0x0A), x, 30.5, 5.6)
+            for (x in listOf(19.8, 39.8)) dot(Color(0xFF, 0xF8, 0xEC), x, 28.2, 1.9)
+            val beak = Path2D.Double().apply {
+                moveTo(32.0 * k, 37.0 * k)
+                lineTo(34.6 * k, 41.2 * k)
+                lineTo(32.0 * k, 45.4 * k)
+                lineTo(29.4 * k, 41.2 * k)
                 closePath()
-            })
-            g.color = Color(0xB8, 0x93, 0x5A)
-            g.fill(Path2D.Double().apply {
-                moveTo(cx - s * 0.055, cy + s * 0.07)
-                lineTo(cx + s * 0.055, cy + s * 0.07)
-                lineTo(cx, cy + s * 0.19)
-                closePath()
-            })
-            g.stroke = BasicStroke(1f)
+            }
+            g.color = Color(0xFB, 0xE8, 0xC2)
+            g.fill(beak)
+            g.stroke = BasicStroke((1.2 * k).toFloat(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND)
+            g.draw(beak)
             g.dispose()
             return img
         }
