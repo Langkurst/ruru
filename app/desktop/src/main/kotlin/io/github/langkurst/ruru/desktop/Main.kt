@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
@@ -69,6 +70,7 @@ private val os: String = System.getProperty("os.name").orEmpty()
  * closed. The headphone connection lives in [AppModel] the whole time.
  */
 fun main(args: Array<String>) {
+    StartTiming.mark("main entered")
     // A small settings window draws fine in software: measured on Windows, 125 MB with the window
     // open against 198 MB on DirectX and 374 MB on OpenGL, and less CPU. Not on macOS: it has no
     // SOFTWARE_FAST, and the window failed to open there when this was set for every system.
@@ -80,7 +82,7 @@ fun main(args: Array<String>) {
     }
     // One Ruru per person. Opening it again (the desktop shortcut while it sits in the tray)
     // shows the running copy's window instead of starting a second copy beside it.
-    val single = SingleInstance(SingleInstance.defaultDir())
+    val single = SingleInstance(System.getenv("RURU_INSTANCE_DIR")?.let { java.nio.file.Path.of(it) } ?: SingleInstance.defaultDir())
     val show = AtomicReference<() -> Unit> {}
     val onlyCopy = runCatching { single.claim { show.get()() } }.getOrDefault(true)
     if (!onlyCopy) {
@@ -90,6 +92,7 @@ fun main(args: Array<String>) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val model = AppModel(platformForThisSystem(), scope, startInDemo = "--demo" in args)
     model.start()
+    StartTiming.mark("model started")
     val hasTray = runCatching { SystemTray.isSupported() }.getOrDefault(false)
     // The only way Ruru reaches the internet: the Check for updates button. Nothing runs until it is pressed.
     val debug = System.getenv("RURU_DEBUG") == "1"
@@ -107,7 +110,7 @@ fun main(args: Array<String>) {
         exitProcess(0)
     }
     var trayMenu: TrayMenu? = null
-    val window = WindowHost(model, updates, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() })
+    val window = WindowHost(model, updates, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() }, exitAfterFirstFrame = "--warm-up" in args)
     show.set(window::open)
     macAppHooks(window::open)
 
@@ -146,6 +149,7 @@ private class WindowHost(
     private val hasTray: Boolean,
     private val onQuit: () -> Unit,
     private val onFirstTrayClose: () -> Unit,
+    private val exitAfterFirstFrame: Boolean = false,
 ) {
     private val open = AtomicBoolean(false)
     private val reduceMotion = os.startsWith("Windows") && !WinSystem.animationsEnabled()
@@ -156,6 +160,7 @@ private class WindowHost(
 
     /** Opens the window, or brings it to the front if it is already open. */
     fun open() {
+        StartTiming.request()
         if (!open.compareAndSet(false, true)) {
             bringToFront()
             return
@@ -173,6 +178,7 @@ private class WindowHost(
 
     /** Opens the window and returns once it has been closed. */
     fun openAndWait() {
+        StartTiming.request()
         if (!open.compareAndSet(false, true)) return
         try {
             openBlocking()
@@ -249,6 +255,7 @@ private class WindowHost(
                     // would otherwise show behind whatever is in front. Raise it once it is on screen.
                     val opened = object : WindowAdapter() {
                         override fun windowOpened(e: WindowEvent) {
+                            StartTiming.mark("window shown")
                             drawOwnTitleBar()
                             bringToFront()
                         }
@@ -268,6 +275,14 @@ private class WindowHost(
                     }
                 }
                 LaunchedEffect(dark) { chrome.native?.let { applyWindowTheme(it, dark) } }
+                if (StartTiming.on || exitAfterFirstFrame) LaunchedEffect(Unit) {
+                    withFrameNanos { }
+                    withFrameNanos { }
+                    StartTiming.mark("first frame drawn")
+                    // Build time only (--warm-up): leave through a normal exit, which is when the JVM writes
+                    // its class archive. Nothing else asks for this.
+                    if (exitAfterFirstFrame) onQuit()
+                }
                 RuruTheme(dark = dark, reduceMotion = reduceMotion) {
                     RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates) }
                 }

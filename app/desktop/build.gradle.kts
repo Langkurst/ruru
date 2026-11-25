@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.gradle.internal.os.OperatingSystem
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -44,6 +45,16 @@ compose.desktop {
             // macOS has no SOFTWARE_FAST, and the window failed to open there when it was set here.
             "-Dfile.encoding=UTF-8",
         )
+        // Class data sharing: the build writes ruru.jsa next to the jars (see the task at the bottom), a list
+        // of the classes Ruru loads on start, so a start skips most class loading. A missing or out-of-date
+        // archive is ignored (the app starts as it did before, only without the speed-up). Deliberately not
+        // -XX:+AutoCreateSharedArchive: measured, the one run that has to record the archive takes 17 s to
+        // draw its window. Windows only: the other systems' packages are built on their own hosts.
+        if (OperatingSystem.current().isWindows) {
+            jvmArgs += listOf(
+                "-XX:SharedArchiveFile=\$APPDIR/ruru.jsa", "-Xlog:cds=off", "-Xlog:cds+dynamic=off",
+            )
+        }
 
         // Release builds (createReleaseDistributable, packageRelease*) shrink the app with ProGuard:
         // unused library code is dropped, nothing is renamed, so a crash report still reads clearly.
@@ -149,4 +160,50 @@ tasks.register<JavaExec>("hardwareCheck") {
     classpath = sourceSets["main"].runtimeClasspath
     // The check notes here what it is about to change, so the next run can undo a run that was cut short.
     args(layout.buildDirectory.file("hardware-check-pending.txt").get().asFile.path)
+}
+
+// Class data sharing needs two archives, both made here once the app folder exists (Windows builds only).
+// jpackage's runtime has none (jlink strips java.exe and writes none), so:
+//   1. start Ruru in "dump" mode: the JVM writes a base archive for exactly this runtime and exits. Ruru.cfg
+//      names ruru.jsa as the archive, so that is where it lands; it is moved to runtime/bin/server/classes.jsa.
+//   2. start Ruru once with --warm-up: it shows its window in demo mode, quits after the first frame, and the
+//      JVM writes ruru.jsa (the classes Ruru really used) on the way out. The archive finds its jars again
+//      when the folder is installed somewhere else, as long as the files are the same.
+if (OperatingSystem.current().isWindows) {
+    val appFolders = listOf("main-release", "main").associateWith { layout.buildDirectory.dir("compose/binaries/$it/app/Ruru").get().asFile }
+    tasks.matching { it.name == "createReleaseDistributable" || it.name == "createDistributable" }.configureEach {
+        val folder = appFolders.getValue(if (name.contains("Release")) "main-release" else "main")
+        val scratch = layout.buildDirectory.dir("class-archive").get().asFile
+        doLast {
+            fun running() = ProcessHandle.allProcesses().anyMatch { p ->
+                p.info().command().map { it.startsWith(folder.path, ignoreCase = true) }.orElse(false)
+            }
+            // Ruru.exe returns at once and hands over to a JVM process of its own, so wait for that one too.
+            fun runRuru(vararg args: String, env: Map<String, String>): String {
+                val builder = ProcessBuilder(listOf(folder.resolve("Ruru.exe").path) + args).directory(folder).redirectErrorStream(true)
+                builder.environment().putAll(env)
+                val process = builder.start()
+                val output = process.inputStream.bufferedReader().readText()
+                process.waitFor()
+                val deadline = System.currentTimeMillis() + 180_000
+                Thread.sleep(1_000)
+                while (running() && System.currentTimeMillis() < deadline) Thread.sleep(500)
+                return output
+            }
+            val jsa = folder.resolve("app/ruru.jsa")
+            val base = folder.resolve("runtime/bin/server/classes.jsa")
+            jsa.delete()
+            val output = runRuru(env = mapOf("JAVA_TOOL_OPTIONS" to "-Xshare:dump"))
+            if (jsa.isFile) {
+                jsa.setWritable(true)
+                jsa.copyTo(base, overwrite = true)
+                jsa.delete()
+            }
+            check(base.isFile) { "No classes.jsa after the dump run: $output" }
+            // Own instance folder: a Ruru running in the tray (a developer's own) must not take this start over.
+            scratch.mkdirs()
+            runRuru("--demo", "--warm-up", env = mapOf("RURU_INSTANCE_DIR" to scratch.path, "JAVA_TOOL_OPTIONS" to "-XX:+AutoCreateSharedArchive"))
+            logger.lifecycle(if (jsa.isFile) "Class archive written: ${jsa.length() / 1024} KB" else "No app class archive was written (the app still runs)")
+        }
+    }
 }

@@ -30,6 +30,9 @@ if (-not (Test-Path $exe)) { Fail "No $exe after a silent install" }
 if (-not (Test-Path (Join-Path $app 'unins000.exe'))) { Fail 'No unins000.exe in the install folder' }
 if (-not (Test-Path $shortcut)) { Fail 'No Start menu shortcut' }
 if (-not (Test-Path $uninstallKey)) { Fail 'No entry in Settings > Apps' }
+# The class archives that make Ruru start quickly: the runtime's own and the app's, both inside the per-user folder.
+if (-not (Test-Path (Join-Path $app 'runtime\bin\server\classes.jsa'))) { Fail 'No runtime class archive (classes.jsa) in the install folder' }
+if (-not (Test-Path (Join-Path $app 'app\ruru.jsa'))) { Fail 'No app class archive (ruru.jsa) in the install folder' }
 Write-Host 'Installed: files, shortcut and Settings > Apps entry are there.'
 
 # Ruru runs from where setup put it (demo mode), without errors.
