@@ -215,7 +215,7 @@ jobs:
             cp app/android/build/outputs/apk/release/*.apk "out/ruru-$version-unsigned.apk"
           fi
       - name: Size budget (the APK can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 2800000 out/*.apk # 0.2: 2.74 MB unsigned with the update card, desktop layout and their 11 languages
+        run: bash .github/size-budget.sh 6000000 out/*.apk # 0.3 plan: other brands (~1 MB) and sleep sounds (~2 MB) come in; 0.2 was 2.74 MB
       - name: Let the emulator use hardware acceleration
         if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         run: |
