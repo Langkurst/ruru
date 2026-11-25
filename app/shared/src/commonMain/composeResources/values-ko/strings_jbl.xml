@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">노이즈 캔슬링 강도</string>
+    <string name="vendor_jbl_anc_level_hint">1~7. 어느 쪽이 더 강하게 상쇄하는지는 Ruru가 확인하지 못했습니다</string>
+    <string name="vendor_jbl_eq_preset">EQ 프리셋</string>
+    <string name="vendor_jbl_eq_preset_hint">다른 곳에서 설정한 사용자 EQ는 프리셋을 고를 때까지 유지됩니다</string>
+    <string name="vendor_jbl_voice_prompts">음성 안내</string>
+    <string name="vendor_jbl_voice_prompts_hint">헤드폰이 음성으로 알려 주는 상태 메시지</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">끔</string>
+    <string name="jbl_option_jazz">재즈</string>
+    <string name="jbl_option_vocal">보컬</string>
+    <string name="jbl_option_bass">베이스</string>
+    <string name="jbl_option_club">클럽</string>
+    <string name="jbl_option_studio">스튜디오</string>
+    <string name="jbl_option_extreme_bass">엑스트림 베이스</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">실험적: 공개된 연구와 가상 헤드셋을 바탕으로 만들었으며 실제 기기에서는 아직 시험하지 않았습니다.</string>
+    <string name="jbl_note_silent">실험적: 이 헤드폰이 듣기 모드와 설정을 알려 주지 않아서, Ruru는 알려 준 내용만 보여 줍니다.</string>
+    <string name="jbl_newer_protocol">이 JBL 헤드폰은 JBL의 새로운 프로토콜을 사용하며, Ruru는 아직 지원하지 않습니다.</string>
+    <string name="jbl_airoha">이 JBL 헤드폰은 Airoha의 프로토콜을 사용하며, Ruru는 아직 지원하지 않습니다.</string>
+    <string name="jbl_unknown_model">이 JBL 헤드폰이 모델을 알려 주지 않아서 Ruru는 제어하지 않습니다.</string>
+</resources>

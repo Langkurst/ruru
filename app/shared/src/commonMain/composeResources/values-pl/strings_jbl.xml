@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">Poziom redukcji szumów</string>
+    <string name="vendor_jbl_anc_level_hint">Od 1 do 7; Ruru nie potwierdził, który koniec skali redukuje mocniej</string>
+    <string name="vendor_jbl_eq_preset">Preset korektora</string>
+    <string name="vendor_jbl_eq_preset_hint">Własny equalizer ustawiony gdzie indziej zostaje, dopóki nie wybierzesz ustawienia wstępnego</string>
+    <string name="vendor_jbl_voice_prompts">Komunikaty głosowe</string>
+    <string name="vendor_jbl_voice_prompts_hint">Głosowe komunikaty o stanie ze słuchawek</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">Wył.</string>
+    <string name="jbl_option_jazz">Jazz</string>
+    <string name="jbl_option_vocal">Wokal</string>
+    <string name="jbl_option_bass">Bas</string>
+    <string name="jbl_option_club">Klub</string>
+    <string name="jbl_option_studio">Studio</string>
+    <string name="jbl_option_extreme_bass">Mocny bas</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">Eksperymentalne: zbudowane na podstawie opublikowanych badań i wirtualnego zestawu, jeszcze nie sprawdzone na prawdziwym sprzęcie.</string>
+    <string name="jbl_note_silent">Eksperymentalne: te słuchawki nie zgłosiły trybów odsłuchu ani ustawień, więc Ruru pokazuje tylko to, co zgłosiły.</string>
+    <string name="jbl_newer_protocol">Te słuchawki JBL używają nowszego protokołu JBL, którego Ruru jeszcze nie obsługuje.</string>
+    <string name="jbl_airoha">Te słuchawki JBL używają protokołu Airoha, którego Ruru jeszcze nie obsługuje.</string>
+    <string name="jbl_unknown_model">Te słuchawki JBL nie zgłosiły, jakim są modelem, więc Ruru ich nie steruje.</string>
+</resources>

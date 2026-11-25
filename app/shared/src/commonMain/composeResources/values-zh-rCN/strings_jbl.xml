@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">降噪强度</string>
+    <string name="vendor_jbl_anc_level_hint">1 到 7；Ruru 尚未确认哪一端降噪更强</string>
+    <string name="vendor_jbl_eq_preset">均衡器预设</string>
+    <string name="vendor_jbl_eq_preset_hint">在其他地方设置的自定义均衡器会保留，直到你选择预设</string>
+    <string name="vendor_jbl_voice_prompts">语音提示</string>
+    <string name="vendor_jbl_voice_prompts_hint">耳机用语音播报的状态消息</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">关闭</string>
+    <string name="jbl_option_jazz">爵士</string>
+    <string name="jbl_option_vocal">人声</string>
+    <string name="jbl_option_bass">低音</string>
+    <string name="jbl_option_club">俱乐部</string>
+    <string name="jbl_option_studio">录音室</string>
+    <string name="jbl_option_extreme_bass">极致低音</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">实验性:根据已发布的研究和虚拟耳机制作,尚未在真实设备上测试。</string>
+    <string name="jbl_note_silent">实验性：这副耳机没有报告它的聆听模式和设置，所以 Ruru 只显示它报告过的内容。</string>
+    <string name="jbl_newer_protocol">这副 JBL 耳机使用 JBL 较新的协议，Ruru 暂不支持。</string>
+    <string name="jbl_airoha">这副 JBL 耳机使用 Airoha 的协议，Ruru 暂不支持。</string>
+    <string name="jbl_unknown_model">这副 JBL 耳机没有报告它的型号，所以 Ruru 不会控制它。</string>
+</resources>

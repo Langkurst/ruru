@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">Noise-cancelling level</string>
+    <string name="vendor_jbl_anc_level_hint">1 to 7; Ruru hasn't confirmed which end cancels more</string>
+    <string name="vendor_jbl_eq_preset">EQ preset</string>
+    <string name="vendor_jbl_eq_preset_hint">A custom EQ set elsewhere is kept until you pick a preset</string>
+    <string name="vendor_jbl_voice_prompts">Voice prompts</string>
+    <string name="vendor_jbl_voice_prompts_hint">Spoken status messages from the headphones</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">Off</string>
+    <string name="jbl_option_jazz">Jazz</string>
+    <string name="jbl_option_vocal">Vocal</string>
+    <string name="jbl_option_bass">Bass</string>
+    <string name="jbl_option_club">Club</string>
+    <string name="jbl_option_studio">Studio</string>
+    <string name="jbl_option_extreme_bass">Extreme Bass</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">Experimental: built from published research and a virtual headset, not yet tried on real hardware.</string>
+    <string name="jbl_note_silent">Experimental: these headphones didn't report their listening modes or settings, so Ruru shows only what they did report.</string>
+    <string name="jbl_newer_protocol">These JBL headphones use JBL's newer protocol, which Ruru doesn't drive yet.</string>
+    <string name="jbl_airoha">These JBL headphones use Airoha's protocol, which Ruru doesn't drive yet.</string>
+    <string name="jbl_unknown_model">These JBL headphones didn't say which model they are, so Ruru doesn't control them.</string>
+</resources>

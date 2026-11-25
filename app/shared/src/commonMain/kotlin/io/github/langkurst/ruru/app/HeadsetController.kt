@@ -354,10 +354,10 @@ class HeadsetController(
         } catch (e: CancellationException) {
             if (!currentCoroutineContext().isActive) throw e
             log.w("session with ${target.name} ended", e)
-            return Attempt(if (connected) null else sessionProblem(target.name, e))
+            return sessionEnded(target.name, e, connected)
         } catch (e: Exception) {
             log.w("session with ${target.name} ended", e)
-            return Attempt(if (connected) null else sessionProblem(target.name, e))
+            return sessionEnded(target.name, e, connected)
         } finally {
             session = null
             pushes.cancel()
@@ -374,9 +374,22 @@ class HeadsetController(
 
     private fun genericOpenProblem(name: String) = Words(if (isPhone()) "problem_open_phone" else "problem_open_computer", name)
 
+    /** A session that ended: nothing to show once it had connected, else why it never did. */
+    private fun sessionEnded(name: String, e: Exception, connected: Boolean): Attempt {
+        if (connected) return Attempt(null)
+        // A maker's own refusal (an older Sony protocol, a Soundcore model Ruru doesn't know) is a sentence for the person,
+        // and trying again cannot change it: wait for Try again instead of backing off and reopening.
+        val explained = explained(e)
+        return Attempt(sessionProblem(name, e), waitForRetry = explained != null && !explained.retry)
+    }
+
+    /** The session's start runs inside the command runner, which wraps what it doesn't know in a [HeadphoneCommandException]. */
+    private fun explained(e: Throwable): ExplainedConnectException? = e as? ExplainedConnectException ?: e.cause as? ExplainedConnectException
+
     private fun sessionProblem(name: String, e: Exception): Words =
-        if (e is UnresponsiveLinkException || e.cause is UnresponsiveLinkException || e is HeadphoneCommandException) busy(name)
-        else Words("problem_stopped_answering", name)
+        explained(e)?.words
+            ?: if (e is UnresponsiveLinkException || e.cause is UnresponsiveLinkException || e is HeadphoneCommandException) busy(name)
+            else Words("problem_stopped_answering", name)
 
     // There is no Bose app for computers, but other tools for these headphones exist.
     private fun busy(name: String) = Words(if (isPhone()) "problem_busy_phone" else "problem_busy_computer", name)

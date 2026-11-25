@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">Nível do cancelamento de ruído</string>
+    <string name="vendor_jbl_anc_level_hint">De 1 a 7; o Ruru não confirmou qual extremo cancela mais</string>
+    <string name="vendor_jbl_eq_preset">Predefinição do equalizador</string>
+    <string name="vendor_jbl_eq_preset_hint">Um equalizador personalizado definido em outro lugar é mantido até você escolher uma predefinição</string>
+    <string name="vendor_jbl_voice_prompts">Avisos de voz</string>
+    <string name="vendor_jbl_voice_prompts_hint">Mensagens de status faladas do fone</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">Desligado</string>
+    <string name="jbl_option_jazz">Jazz</string>
+    <string name="jbl_option_vocal">Vocal</string>
+    <string name="jbl_option_bass">Graves</string>
+    <string name="jbl_option_club">Club</string>
+    <string name="jbl_option_studio">Estúdio</string>
+    <string name="jbl_option_extreme_bass">Graves extremos</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">Experimental: feito a partir de pesquisas publicadas e de um fone virtual, ainda não testado em hardware real.</string>
+    <string name="jbl_note_silent">Experimental: este fone não informou seus modos de audição nem suas configurações, então o Ruru mostra só o que ele informou.</string>
+    <string name="jbl_newer_protocol">Este fone JBL usa o protocolo mais novo da JBL, que o Ruru ainda não controla.</string>
+    <string name="jbl_airoha">Este fone JBL usa o protocolo da Airoha, que o Ruru ainda não controla.</string>
+    <string name="jbl_unknown_model">Este fone JBL não informou qual é o modelo, então o Ruru não o controla.</string>
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">Stärke der Geräuschunterdrückung</string>
+    <string name="vendor_jbl_anc_level_hint">1 bis 7; Ruru hat nicht bestätigt, welches Ende stärker unterdrückt</string>
+    <string name="vendor_jbl_eq_preset">EQ-Voreinstellung</string>
+    <string name="vendor_jbl_eq_preset_hint">Ein anderswo eingestellter eigener EQ bleibt erhalten, bis Sie eine Voreinstellung wählen</string>
+    <string name="vendor_jbl_voice_prompts">Sprachansagen</string>
+    <string name="vendor_jbl_voice_prompts_hint">Gesprochene Statusmeldungen der Kopfhörer</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">Aus</string>
+    <string name="jbl_option_jazz">Jazz</string>
+    <string name="jbl_option_vocal">Gesang</string>
+    <string name="jbl_option_bass">Bass</string>
+    <string name="jbl_option_club">Club</string>
+    <string name="jbl_option_studio">Studio</string>
+    <string name="jbl_option_extreme_bass">Extra-Bass</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">Experimentell: nach veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="jbl_note_silent">Experimentell: Diese Kopfhörer haben ihre Hörmodi und Einstellungen nicht gemeldet, deshalb zeigt Ruru nur, was sie gemeldet haben.</string>
+    <string name="jbl_newer_protocol">Diese JBL-Kopfhörer nutzen JBLs neueres Protokoll, das Ruru noch nicht ansteuert.</string>
+    <string name="jbl_airoha">Diese JBL-Kopfhörer nutzen das Protokoll von Airoha, das Ruru noch nicht ansteuert.</string>
+    <string name="jbl_unknown_model">Diese JBL-Kopfhörer haben nicht gemeldet, welches Modell sie sind, deshalb steuert Ruru sie nicht.</string>
+</resources>

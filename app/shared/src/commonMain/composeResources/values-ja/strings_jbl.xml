@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">ノイズキャンセリングのレベル</string>
+    <string name="vendor_jbl_anc_level_hint">1~7。どちら側が強く打ち消すかは Ruru では未確認です</string>
+    <string name="vendor_jbl_eq_preset">イコライザーのプリセット</string>
+    <string name="vendor_jbl_eq_preset_hint">ほかで設定したカスタムのイコライザーは、プリセットを選ぶまで保持されます</string>
+    <string name="vendor_jbl_voice_prompts">音声ガイド</string>
+    <string name="vendor_jbl_voice_prompts_hint">ヘッドホンが音声で伝える状態メッセージ</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">オフ</string>
+    <string name="jbl_option_jazz">ジャズ</string>
+    <string name="jbl_option_vocal">ボーカル</string>
+    <string name="jbl_option_bass">ベース</string>
+    <string name="jbl_option_club">クラブ</string>
+    <string name="jbl_option_studio">スタジオ</string>
+    <string name="jbl_option_extreme_bass">エクストリームベース</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">試験的:公開された調査と仮想ヘッドセットをもとに作ったもので、実機ではまだ試していません。</string>
+    <string name="jbl_note_silent">実験的: このヘッドホンはリスニングモードや設定を報告しなかったため、Ruru は報告された内容だけを表示します。</string>
+    <string name="jbl_newer_protocol">この JBL ヘッドホンは JBL の新しいプロトコルを使っており、Ruru はまだ操作できません。</string>
+    <string name="jbl_airoha">この JBL ヘッドホンは Airoha のプロトコルを使っており、Ruru はまだ操作できません。</string>
+    <string name="jbl_unknown_model">この JBL ヘッドホンは機種を報告しなかったため、Ruru は操作しません。</string>
+</resources>

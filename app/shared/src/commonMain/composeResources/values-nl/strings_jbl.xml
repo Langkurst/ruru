@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JBL headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them, the notes and the reasons a connection is refused. -->
+    <string name="vendor_jbl_anc_level">Niveau van de ruisonderdrukking</string>
+    <string name="vendor_jbl_anc_level_hint">1 tot 7; Ruru heeft niet bevestigd welk uiteinde meer onderdrukt</string>
+    <string name="vendor_jbl_eq_preset">EQ-voorinstelling</string>
+    <string name="vendor_jbl_eq_preset_hint">Een elders ingestelde eigen EQ blijft staan tot je een voorinstelling kiest</string>
+    <string name="vendor_jbl_voice_prompts">Spraakmeldingen</string>
+    <string name="vendor_jbl_voice_prompts_hint">Gesproken statusberichten van de koptelefoon</string>
+
+    <!-- EQ presets -->
+    <string name="jbl_option_off">Uit</string>
+    <string name="jbl_option_jazz">Jazz</string>
+    <string name="jbl_option_vocal">Zang</string>
+    <string name="jbl_option_bass">Bas</string>
+    <string name="jbl_option_club">Club</string>
+    <string name="jbl_option_studio">Studio</string>
+    <string name="jbl_option_extreme_bass">Extra bas</string>
+
+    <!-- Notes and refusals -->
+    <string name="jbl_note_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele headset, nog niet getest op echte hardware.</string>
+    <string name="jbl_note_silent">Experimenteel: deze koptelefoon heeft zijn luistermodi of instellingen niet gemeld, dus Ruru toont alleen wat hij wel gemeld heeft.</string>
+    <string name="jbl_newer_protocol">Deze JBL-koptelefoon gebruikt het nieuwere protocol van JBL, dat Ruru nog niet aanstuurt.</string>
+    <string name="jbl_airoha">Deze JBL-koptelefoon gebruikt het protocol van Airoha, dat Ruru nog niet aanstuurt.</string>
+    <string name="jbl_unknown_model">Deze JBL-koptelefoon heeft niet gemeld welk model hij is, dus Ruru bestuurt hem niet.</string>
+</resources>

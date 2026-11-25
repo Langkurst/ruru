@@ -30,6 +30,8 @@ import kotlin.test.AfterTest
 import io.github.langkurst.ruru.vendors.AdvertVendor
 import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.VendorRegistry
+import io.github.langkurst.ruru.vendors.jbl.VirtualJbl
+import io.github.langkurst.ruru.vendors.jbl.VirtualJblTransport
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -485,6 +487,33 @@ class HeadsetControllerTest {
         val c = controller(platform)
         c.await { it.phase is Phase.Failed }
         assertEquals(0, platform.opens)
+        c.stop()
+    }
+
+    @Test
+    fun `a headset the maker's session refuses shows the session's own words and waits for Try again`() = runBlocking {
+        // A JBL model of the newer protocol: the device info it sends by itself names it, and the session says why Ruru stops.
+        val unit = VirtualJbl(name = "JBL Tour One M3", productId = 0x2160)
+        val platform = object : HeadsetPlatform {
+            override val name = "Test"
+            override val supported = true
+            override val routes = setOf(RouteKind.GATT)
+            var opens = 0
+            override suspend fun headsets() = listOf(HeadsetCandidate("j", "JBL Wave Buds 2", true))
+            override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+                opens++
+                return VirtualJblTransport(unit)
+            }
+        }
+        val c = controller(platform)
+        val failed = c.await { it.phase is Phase.Failed }
+        // Not "stopped answering" or "busy": the sentence the session gave.
+        assertEquals(Words("jbl_newer_protocol"), (failed.phase as Phase.Failed).reason)
+        delay(2_500) // longer than the first back-off: trying again cannot help, so it waits
+        assertEquals(1, platform.opens)
+        assertTrue(unit.received.isEmpty(), "nothing was written to it")
+        c.retryNow()
+        withTimeout(5_000) { while (platform.opens < 2) delay(10) }
         c.stop()
     }
 }
