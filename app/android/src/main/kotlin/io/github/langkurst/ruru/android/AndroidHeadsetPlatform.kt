@@ -11,8 +11,10 @@ import android.os.Build
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
+import io.github.langkurst.ruru.link.RouteNotOfferedException
 import io.github.langkurst.ruru.link.Words
-import io.github.langkurst.ruru.protocol.bose.BoseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,6 +32,9 @@ class AndroidHeadsetPlatform(private val context: Context) : HeadsetPlatform {
     override val name: String = "Android"
     override val supported: Boolean = adapter() != null
 
+    /** Bose over the Serial Port service, then the model's channels. Other routes come in 0.3's B5. */
+    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_RFCOMM)
+
     private fun adapter() = context.getSystemService(BluetoothManager::class.java)?.adapter
 
     private fun allowed() = Build.VERSION.SDK_INT < 31 ||
@@ -42,17 +47,24 @@ class AndroidHeadsetPlatform(private val context: Context) : HeadsetPlatform {
         if (!allowed()) return@withContext emptyList()
         val bonded = adapter()?.bondedDevices.orEmpty()
         bonded.filter { (it.name ?: "").contains("Bose", ignoreCase = true) && !(it.name ?: "").startsWith("LE-") }
-            .map { HeadsetCandidate(key = it.address, name = it.name ?: "Bose headphones", connected = it.isConnectedCompat()) }
+            .map {
+                HeadsetCandidate(
+                    key = it.address,
+                    name = it.name ?: "Bose headphones",
+                    connected = it.isConnectedCompat(),
+                    uuids = it.cachedUuids(),
+                )
+            }
             .sortedByDescending { it.connected }
     }
 
-    override suspend fun open(candidate: HeadsetCandidate): ByteTransport = withContext(Dispatchers.IO) {
+    override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport = withContext(Dispatchers.IO) {
+        if (route !is LinkRoute.BoseRfcomm) throw RouteNotOfferedException(name, route)
         val device = adapter()?.getRemoteDevice(candidate.key) ?: throw IOException("Bluetooth is off")
         adapter()?.cancelDiscovery()
         val tries = buildList<() -> BluetoothSocket> {
             add { device.createRfcommSocketToServiceRecord(SPP) }
-            val channel = BoseModel.fromName(candidate.name)?.rfcommChannel ?: 2
-            for (ch in listOf(channel, 2, 8, 9).distinct()) add { device.createRfcommSocketByChannel(ch) }
+            for (ch in route.channels) add { device.createRfcommSocketByChannel(ch) }
         }
         var last: Exception? = null
         for (make in tries) {
@@ -74,6 +86,10 @@ class AndroidHeadsetPlatform(private val context: Context) : HeadsetPlatform {
         /** BluetoothDevice.isConnected() is hidden but on the SDK's allowed list; assume yes if it is missing. */
         fun BluetoothDevice.isConnectedCompat(): Boolean =
             runCatching { javaClass.getMethod("isConnected").invoke(this) as Boolean }.getOrDefault(true)
+
+        /** The service UUIDs Android cached from its last SDP lookup: no lookup is started, nothing is sent. */
+        fun BluetoothDevice.cachedUuids(): List<String> =
+            runCatching { uuids }.getOrNull().orEmpty().map { it.uuid.toString().lowercase() }
 
         fun BluetoothDevice.createRfcommSocketByChannel(channel: Int): BluetoothSocket =
             javaClass.getMethod("createRfcommSocket", Int::class.javaPrimitiveType).invoke(this, channel) as BluetoothSocket

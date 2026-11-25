@@ -4,7 +4,7 @@ Ruru stands on other people's careful work. Thank you.
 
 | Project | What Ruru uses | Licence |
 |---|---|---|
-| [Earshot](https://github.com/HellzYeahh/earshot) | The Bose protocol code (`core/protocol`), the connection and session logic and the simulated headset (`core/session`), the EQ maths (`core/dsp`) and their tests, ported from Android Kotlin to Kotlin Multiplatform. The Gradle wrapper. | MIT |
+| [Earshot](https://github.com/HellzYeahh/earshot) | The Bose protocol code (`core/protocol`), the connection and session logic and the simulated headset (`core/session`), the EQ maths (`core/dsp`), the rules that tell headphone makers apart and how each is reached (`core/vendors`) and their tests, ported from Android Kotlin to Kotlin Multiplatform. The Gradle wrapper. | MIT |
 | [bosectl](https://github.com/aaronsb/bosectl) | Protocol research Earshot built on (message layout, mode slots, captures used in the tests). | MIT |
 | [Quiet Rebellion](https://github.com/MadEyez/quietrebellion) | Protocol research Earshot built on. | MIT |
 | [AutoEq](https://github.com/jaakkopasanen/AutoEq) | The "Tuned for QC Ultra" correction curve. | MIT |

@@ -106,7 +106,7 @@ You need JDK 21.
 
 | What | Command |
 |---|---|
-| All tests | `./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :app:shared:desktopTest` |
+| All tests | `./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :app:shared:desktopTest` |
 | Desktop app | `./gradlew :app:desktop:run` (add `--args=--demo` for demo mode) |
 | Desktop installer | `./gradlew :app:desktop:packageMsi` (or `packageDmg`, `packageDeb`, `packageRpm`) |
 | Android | `./gradlew :app:android:assembleRelease` (Android SDK required) |

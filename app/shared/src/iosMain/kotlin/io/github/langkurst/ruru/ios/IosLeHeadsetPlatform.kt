@@ -5,6 +5,10 @@ import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.HeadsetLink
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
+import io.github.langkurst.ruru.link.RouteNotOfferedException
 import io.github.langkurst.ruru.link.LeTransport
 import io.github.langkurst.ruru.link.LogRing
 import kotlinx.cinterop.BetaInteropApi
@@ -69,6 +73,9 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     override val name: String = "iPhone"
     override val supported: Boolean = true
     override val checksIdentity: Boolean = true
+
+    /** Bose over LE (FEBE). Other makers' GATT links come in 0.3's B6. */
+    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_LE)
 
     private val events = Events()
     private val known = HashMap<String, CBPeripheral>()
@@ -177,11 +184,13 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
                 key = it.peripheral.identifier.UUIDString,
                 name = it.name.removePrefix("LE-"),
                 connected = it.connected,
+                link = HeadsetLink.LE,
             )
         }
     }
 
-    override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+    override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+        if (route != LinkRoute.BoseLe) throw RouteNotOfferedException(name, route)
         val p = known[candidate.key]
             ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
         events.session?.transport?.close()

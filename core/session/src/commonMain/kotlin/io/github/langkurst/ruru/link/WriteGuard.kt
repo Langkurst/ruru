@@ -10,13 +10,15 @@ import io.github.langkurst.ruru.protocol.BmapPacket
  * Why: the Bose app's tables show that block 3 is FirmwareUpdate and block 18 is Authentication.
  * A START on `[3.2]` opens a firmware-update session (bosectl's notes mistook it for a noise
  * control), `[3.x]` Run applies an image and reboots, Reset erases a staged image; `[7.5]`
- * FactoryDefault, `[7.6]` ShipMode, `[7.11]` Reset and `[4.7]` ClearDeviceList are destructive.
- * None of these have a place in a headphone controller, so they are refused here regardless of
- * which feature (or Lab console) produced the frame. GETs stay allowed: reading is harmless.
+ * FactoryDefault, `[7.6]` ShipMode, `[7.11]` Reset and `[4.7]` ClearDeviceList are destructive,
+ * and `[4.3]` RemoveDevice unpairs a phone or computer from the headphones (Ruru switches devices,
+ * it never unpairs them). None of these have a place in a headphone controller, so they are refused
+ * here regardless of which feature (or Lab console) produced the frame. GETs stay allowed: reading is harmless.
  */
 object WriteGuard {
     private val readOnlyBlocks = setOf(3, 18)
     private val forbiddenFunctions = setOf(7 to 5, 7 to 6, 7 to 11, 4 to 7)
+    private val unpairFunctions = setOf(4 to 3)
 
     /** Null when the frame may be sent, otherwise the user-readable reason it was refused. */
     fun refusalReason(packet: BmapPacket): String? {
@@ -27,6 +29,9 @@ object WriteGuard {
         }
         if ((packet.block to packet.function) in forbiddenFunctions) {
             return "Blocked for safety: ${packet.address} would reset or wipe the headphones"
+        }
+        if ((packet.block to packet.function) in unpairFunctions) {
+            return "Blocked for safety: ${packet.address} would unpair a device from the headphones"
         }
         return null
     }

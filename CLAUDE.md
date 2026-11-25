@@ -7,14 +7,16 @@ Bose protocol code; see CREDITS.md.
 ## Layout
 
 - `core/protocol` Bose BMAP frames and tables · `core/dsp` EQ maths · `core/session` session
-  logic, simulated headset, `HeadsetPlatform` interface
+  logic, simulated headset, `HeadsetPlatform` interface and `LinkRoute`
+- `core/vendors` one `Vendor` per maker (`DeviceFamily`, `HeadsetSession`); Bose wraps the session
+  code, the other makers are stubs that never open a link until 0.3 C1-C6
 - `platform/windows|linux|macos` one Bluetooth connection each (`macos/helper` is a Swift tool)
 - `app/shared` screens + `HeadsetController` (also the iOS framework) · `app/desktop` ·
   `app/android` · `iosApp` (XcodeGen project) · `tools/probe` headset checks from a Windows PC
 
 ## Commands (Windows: `gradlew.bat`, JDK 21; Android needs ANDROID_HOME)
 
-- Tests: `gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :app:shared:desktopTest`
+- Tests: `gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :app:shared:desktopTest`
 - Desktop app: `gradlew :app:desktop:run` (`--args=--demo` for demo mode)
 - Screenshot of the real app: `gradlew :app:desktop:snapshot -Pout=<png> [-Pdemo] [-Plight] [-Pheight=1600]`
 - Real headphones: `gradlew :app:desktop:hardwareCheck` changes the mode and bass through the

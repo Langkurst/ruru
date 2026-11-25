@@ -3,6 +3,9 @@ package io.github.langkurst.ruru.app
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
+import io.github.langkurst.ruru.link.RouteNotOfferedException
 import io.github.langkurst.ruru.protocol.bose.ModePrompt
 import io.github.langkurst.ruru.virtual.VirtualProfile
 import io.github.langkurst.ruru.virtual.VirtualQcUltra2
@@ -16,12 +19,14 @@ import io.github.langkurst.ruru.virtual.VirtualTransport
 class DemoPlatform(profile: VirtualProfile = PROFILE) : HeadsetPlatform {
     override val name: String = "Demo"
     override val supported: Boolean = true
+    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_RFCOMM)
     private val device = VirtualQcUltra2(profile = profile)
     private val candidate = HeadsetCandidate(key = "demo", name = profile.customName, connected = true)
 
     override suspend fun headsets(): List<HeadsetCandidate> = listOf(candidate)
 
-    override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+    override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+        if (route !is LinkRoute.BoseRfcomm) throw RouteNotOfferedException(name, route)
         device.powerOn()
         return VirtualTransport(device)
     }

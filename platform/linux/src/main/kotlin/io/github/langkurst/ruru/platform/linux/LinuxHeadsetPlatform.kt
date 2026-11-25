@@ -7,7 +7,9 @@ import com.sun.jna.Pointer
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
-import io.github.langkurst.ruru.protocol.bose.BoseModel
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
+import io.github.langkurst.ruru.link.RouteNotOfferedException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -27,6 +29,9 @@ class LinuxHeadsetPlatform : HeadsetPlatform {
     override val supported: Boolean =
         System.getProperty("os.name").orEmpty().startsWith("Linux") && run("bluetoothctl", "--version") != null
 
+    /** Bose over plain RFCOMM channels. Other routes come in 0.3's B4. */
+    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_RFCOMM)
+
     override suspend fun headsets(): List<HeadsetCandidate> = withContext(Dispatchers.IO) {
         val paired = run("bluetoothctl", "devices", "Paired") ?: run("bluetoothctl", "paired-devices") ?: ""
         paired.lines().mapNotNull { line ->
@@ -38,10 +43,10 @@ class LinuxHeadsetPlatform : HeadsetPlatform {
         }.sortedByDescending { it.connected }
     }
 
-    override suspend fun open(candidate: HeadsetCandidate): ByteTransport = withContext(Dispatchers.IO) {
-        val first = BoseModel.fromName(candidate.name)?.rfcommChannel ?: 2
+    override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport = withContext(Dispatchers.IO) {
+        if (route !is LinkRoute.BoseRfcomm) throw RouteNotOfferedException(name, route)
         var last: Exception? = null
-        for (channel in listOf(first, 2, 8, 9).distinct()) {
+        for (channel in route.channels) {
             try {
                 val socket = RfcommSocket.connect(candidate.key, channel)
                 if (socket.answersBmap()) return@withContext LinuxRfcommTransport(socket)

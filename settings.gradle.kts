@@ -20,6 +20,8 @@ rootProject.name = "ruru"
 include(":core:protocol")
 include(":core:dsp")
 include(":core:session")
+// Every headphone maker Ruru knows: how each is recognised, reached and driven (0.3).
+include(":core:vendors")
 
 // Platform Bluetooth for the desktop app.
 include(":platform:windows")

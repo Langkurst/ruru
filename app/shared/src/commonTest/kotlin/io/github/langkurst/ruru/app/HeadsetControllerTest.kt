@@ -6,6 +6,8 @@ import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
 import io.github.langkurst.ruru.link.Logging
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.BmapOperator
@@ -56,11 +58,12 @@ class HeadsetControllerTest {
     private class FlakyPlatform(val device: VirtualQcUltra2) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
+        override val routes = setOf(RouteKind.BOSE_RFCOMM)
         var connected = true
         var opens = 0
         var last: VirtualTransport? = null
         override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", connected))
-        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+        override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
             opens++
             device.powerOn()
             return VirtualTransport(device).also { last = it }
@@ -75,9 +78,10 @@ class HeadsetControllerTest {
     ) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
+        override val routes = setOf(RouteKind.BOSE_RFCOMM)
         var opens = 0
         override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
-        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+        override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
             opens++
             if (opens == 1) throw ExplainedConnectException(explanation, retry)
             device.powerOn()
@@ -92,11 +96,12 @@ class HeadsetControllerTest {
     ) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
+        override val routes = setOf(RouteKind.BOSE_RFCOMM)
         var opens = 0
         val holding = CompletableDeferred<Unit>()
         val release = CompletableDeferred<Unit>()
         override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
-        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+        override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
             opens++
             if (opens == 1) {
                 holding.complete(Unit)
@@ -116,12 +121,13 @@ class HeadsetControllerTest {
     ) : HeadsetPlatform {
         override val name = "Test"
         override val supported = true
+        override val routes = setOf(RouteKind.BOSE_RFCOMM)
         override val checksIdentity = checks
         var confirms = 0
         var confirmedAddress: String? = null
         var last: VirtualTransport? = null
         override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
-        override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+        override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
             device.powerOn()
             return VirtualTransport(device).also { last = it }
         }
@@ -202,9 +208,10 @@ class HeadsetControllerTest {
         val blocked = object : HeadsetPlatform {
             override val name = "Android"
             override val supported = true
+            override val routes = setOf(RouteKind.BOSE_RFCOMM)
             override val blocked = Words("problem_android_permission")
             override suspend fun headsets() = emptyList<HeadsetCandidate>()
-            override suspend fun open(candidate: HeadsetCandidate): ByteTransport = error("never opened")
+            override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport = error("never opened")
         }
         val c = controller(blocked)
         val s = c.await { it.phase is Phase.NoHeadset }
@@ -242,9 +249,10 @@ class HeadsetControllerTest {
         val platform = object : HeadsetPlatform {
             override val name = "Test"
             override val supported = true
+            override val routes = setOf(RouteKind.BOSE_RFCOMM)
             var opens = 0
             override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
-            override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+            override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
                 opens++
                 if (opens == 1) withTimeout(10) { awaitCancellation() }
                 device.powerOn()
@@ -262,9 +270,10 @@ class HeadsetControllerTest {
         val platform = object : HeadsetPlatform {
             override val name = "Test"
             override val supported = true
+            override val routes = setOf(RouteKind.BOSE_RFCOMM)
             var opens = 0
             override suspend fun headsets() = listOf(HeadsetCandidate("t", "Test QC Ultra", true))
-            override suspend fun open(candidate: HeadsetCandidate): ByteTransport {
+            override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
                 opens++
                 awaitCancellation()
             }
@@ -384,5 +393,90 @@ class HeadsetControllerTest {
         assertTrue(text.contains("Recent log:"), text)
         assertFalse(text.lowercase().contains(colons), "the headphones' address with colons is in the report")
         assertFalse(text.lowercase().contains(bare), "the headphones' address as bare hex is in the report")
+    }
+
+    /**
+     * Lists [candidates] and counts every open and every byte written. Offers every route kind, so
+     * a refusal can only come from the vendor layer, never from a missing route.
+     */
+    private class CountingPlatform(private val candidates: List<HeadsetCandidate>, private val device: VirtualQcUltra2? = null) : HeadsetPlatform {
+        override val name = "Test"
+        override val supported = true
+        override val routes = RouteKind.entries.toSet()
+        val opened = ArrayList<String>()
+        val transports = ArrayList<VirtualTransport>()
+        override suspend fun headsets() = candidates
+        override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+            opened += candidate.name
+            val d = device ?: error("nothing should be opened")
+            d.powerOn()
+            return VirtualTransport(d).also { transports += it }
+        }
+    }
+
+    @Test
+    fun `a headset of an unknown maker is never opened and never sent a byte`() = runBlocking {
+        val platform = CountingPlatform(listOf(HeadsetCandidate("g", "Pixel Buds Pro", true)), VirtualQcUltra2())
+        val c = controller(platform)
+        val failed = c.await { it.phase is Phase.Failed }
+        assertEquals(Words("message_unsupported"), (failed.phase as Phase.Failed).reason)
+        delay(2_500) // past the first back-off: the loop has looked again
+        assertEquals(emptyList(), platform.opened)
+        assertEquals(0, platform.transports.sumOf { it.sentRequests().size })
+        c.stop()
+    }
+
+    @Test
+    fun `makers whose session is still a stub are never opened, whatever routes the system has`() = runBlocking {
+        val soundcoreUuid = "0cf12d31-fac3-4553-bd80-d6832e7b3947"
+        val names = listOf(
+            HeadsetCandidate("1", "WH-1000XM5", true, uuids = listOf("956c7b26-d49a-4ba8-b03f-b17d393cb6e2")),
+            HeadsetCandidate("2", "MOMENTUM 4", true),
+            HeadsetCandidate("3", "soundcore Liberty 4 NC", true, uuids = listOf(soundcoreUuid)),
+            HeadsetCandidate("4", "JBL Tour One M2", true),
+            // "Sound by Bose", yet Bragi: it must never get BMAP.
+            HeadsetCandidate("5", "Crusher 1080 by Bose", true),
+            HeadsetCandidate("6", "AirPods Pro", true),
+        )
+        for (candidate in names) {
+            val platform = CountingPlatform(listOf(candidate), VirtualQcUltra2())
+            val c = controller(platform)
+            val failed = c.await { it.phase is Phase.Failed }
+            assertEquals(Words("message_unsupported"), (failed.phase as Phase.Failed).reason, candidate.name)
+            assertEquals(emptyList(), platform.opened, candidate.name)
+            c.stop()
+        }
+    }
+
+    @Test
+    fun `a Bose headset is chosen over a connected headset Ruru can't drive`() = runBlocking {
+        val device = VirtualQcUltra2(profile = VirtualProfile.QC_ULTRA_1)
+        val platform = CountingPlatform(
+            listOf(HeadsetCandidate("s", "WH-1000XM5", true), HeadsetCandidate("b", "Bose QC Ultra Headphones", true)),
+            device,
+        )
+        val c = controller(platform)
+        c.await { it.phase == Phase.Connected }
+        assertEquals(listOf("Bose QC Ultra Headphones"), platform.opened.distinct())
+        c.stop()
+    }
+
+    @Test
+    fun `a Bose headset on a system without a Bose route is not opened`() = runBlocking {
+        val platform = object : HeadsetPlatform {
+            override val name = "Test"
+            override val supported = true
+            override val routes = setOf(RouteKind.RFCOMM_SERVICE, RouteKind.GATT)
+            var opens = 0
+            override suspend fun headsets() = listOf(HeadsetCandidate("b", "Bose QC Ultra Headphones", true))
+            override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+                opens++
+                error("never opened")
+            }
+        }
+        val c = controller(platform)
+        c.await { it.phase is Phase.Failed }
+        assertEquals(0, platform.opens)
+        c.stop()
     }
 }

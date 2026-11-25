@@ -3,7 +3,9 @@ package io.github.langkurst.ruru.platform.macos
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
-import io.github.langkurst.ruru.protocol.bose.BoseModel
+import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.link.RouteKind
+import io.github.langkurst.ruru.link.RouteNotOfferedException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,6 +25,9 @@ class MacHeadsetPlatform(private val helper: File? = findHelper()) : HeadsetPlat
     override val supported: Boolean =
         System.getProperty("os.name").orEmpty().startsWith("Mac") && helper?.canExecute() == true
 
+    /** Bose on the model's RFCOMM channel through the helper. Other routes come in 0.3's B3. */
+    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_RFCOMM)
+
     override suspend fun headsets(): List<HeadsetCandidate> = withContext(Dispatchers.IO) {
         val exe = helper ?: return@withContext emptyList()
         val p = ProcessBuilder(exe.path, "list").start()
@@ -37,9 +42,11 @@ class MacHeadsetPlatform(private val helper: File? = findHelper()) : HeadsetPlat
         }.sortedByDescending { it.connected }
     }
 
-    override suspend fun open(candidate: HeadsetCandidate): ByteTransport = withContext(Dispatchers.IO) {
+    override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport = withContext(Dispatchers.IO) {
+        if (route !is LinkRoute.BoseRfcomm) throw RouteNotOfferedException(name, route)
         val exe = helper ?: throw IOException("The Bluetooth helper is missing from this build")
-        val channel = BoseModel.fromName(candidate.name)?.rfcommChannel ?: 2
+        // The model's own channel, the first of the route's list (Ruru 0.2 opened only this one here).
+        val channel = route.channels.first()
         val p = ProcessBuilder(exe.path, "connect", candidate.key, channel.toString()).start()
         val status = p.errorStream.bufferedReader()
         val first = status.readLine() ?: throw IOException("The Bluetooth helper stopped")

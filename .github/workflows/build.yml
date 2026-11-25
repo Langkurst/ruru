@@ -42,7 +42,7 @@ jobs:
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
       - name: Tests (protocol, EQ, session, app controller)
-        run: ./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :app:shared:desktopTest --console=plain
+        run: ./gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :app:shared:desktopTest --console=plain
 
   windows:
     needs: test

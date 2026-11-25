@@ -8,18 +8,21 @@ import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.NoiseSettings
 import io.github.langkurst.ruru.core.Sidetone
-import io.github.langkurst.ruru.core.VoicePrompts
-import io.github.langkurst.ruru.link.BmapConnection
 import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.link.LinkRoute
 import io.github.langkurst.ruru.link.RfcommConnectException
 import io.github.langkurst.ruru.link.UnresponsiveLinkException
 import io.github.langkurst.ruru.link.Words
-import io.github.langkurst.ruru.protocol.BmapPacket
 import io.github.langkurst.ruru.session.QcUltra2Protocol
 import io.github.langkurst.ruru.session.SinkSessionLog
 import io.github.langkurst.ruru.session.StateCommands
+import io.github.langkurst.ruru.vendors.DeviceFamily
+import io.github.langkurst.ruru.vendors.HeadsetCommand
+import io.github.langkurst.ruru.vendors.HeadsetSession
+import io.github.langkurst.ruru.vendors.Vendor
+import io.github.langkurst.ruru.vendors.VendorRegistry
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -60,9 +63,11 @@ data class AppState(
 )
 
 /**
- * Finds a connected Bose headset, keeps one session open to it, reconnects when it drops, and runs
- * the user's commands one at a time. The Bose logic itself is Earshot's [QcUltra2Protocol]; this
- * class only owns the connection's lifetime and the app state.
+ * Finds a connected headset Ruru can drive, keeps one session open to it, reconnects when it drops,
+ * and runs the user's commands one at a time. Which maker's session drives it comes from
+ * [DeviceFamily.resolve] and [VendorRegistry] (Bose: Earshot's QcUltra2Protocol in a BoseSession);
+ * this class only owns the connection's lifetime and the app state. A headset whose maker has no
+ * session yet, or none at all ([DeviceFamily.GENERIC]), is never opened.
  */
 class HeadsetController(
     private val platform: HeadsetPlatform,
@@ -76,16 +81,18 @@ class HeadsetController(
     private val poke = Channel<Unit>(Channel.CONFLATED)
     private val log = SinkSessionLog("Ruru/App")
 
-    @Volatile private var connection: BmapConnection? = null
-    @Volatile private var protocol = QcUltra2Protocol()
+    /** The open session commands go to; null between sessions. */
+    @Volatile private var session: HeadsetSession? = null
+    /** The latest session, kept after it ends (as 0.2 kept its protocol) so a late push is still read. */
+    @Volatile private var pushTarget: HeadsetSession? = null
     private var loopJob: Job? = null
 
-    private val commands = StateCommands<BmapConnection, BmapPacket>(
+    private val commands = StateCommands<HeadsetSession, Any>(
         state = headset,
         mutex = mutex,
-        requireConnection = { connection?.takeIf { it.isOpen } ?: throw HeadphoneCommandException(NOT_CONNECTED) },
+        requireConnection = { session?.takeIf { it.isOpen } ?: throw HeadphoneCommandException(NOT_CONNECTED) },
         log = log,
-        onPush = { packet, current -> protocol.onUnsolicited(packet, current) },
+        onPush = { push, current -> pushTarget?.onPush(push, current) },
     )
 
     val state: StateFlow<AppState> = combine(phase, headset, message) { p, h, m ->
@@ -99,7 +106,7 @@ class HeadsetController(
     fun stop() {
         loopJob?.cancel()
         loopJob = null
-        connection?.close()
+        session?.close()
     }
 
     /** Look again now instead of waiting for the next try. */
@@ -111,26 +118,24 @@ class HeadsetController(
         message.value = null
     }
 
-    fun setMode(index: Int) = command("listening mode") { c, s -> protocol.setMode(c, s, index) }
-    fun setNoise(settings: NoiseSettings) = command("noise") { c, s -> protocol.setNoise(c, s, settings) }
-    fun setEq(eq: HeadphoneEq) = command("equaliser") { c, s -> protocol.setEq(c, s, eq) }
-    fun setSidetone(level: Sidetone) = command("self voice") { c, s -> protocol.setSidetone(c, s, level, s.sidetonePersistent ?: true) }
-    fun setMultipoint(on: Boolean) = command("multipoint") { c, s -> protocol.setMultipoint(c, s, on) }
-    fun setAutoPlayPause(on: Boolean) = command("auto play/pause") { c, s -> protocol.setAutoPlayPause(c, s, on) }
-    fun setAutoAnswer(on: Boolean) = command("auto-answer") { c, s -> protocol.setAutoAnswer(c, s, on) }
-    fun setAutoOff(minutes: Int) = command("auto-off") { c, s -> protocol.setAutoOff(c, s, minutes) }
-    fun setShortcut(action: ButtonAction) = command("shortcut button") { c, s -> protocol.setShortcutButton(c, s, action) }
+    fun setMode(index: Int) = command("listening mode", HeadsetCommand.SetMode(index))
+    fun setNoise(settings: NoiseSettings) = command("noise", HeadsetCommand.SetNoise(settings))
+    fun setEq(eq: HeadphoneEq) = command("equaliser", HeadsetCommand.SetEq(eq))
+    fun setSidetone(level: Sidetone) = command("self voice", HeadsetCommand.SetSidetone(level))
+    fun setMultipoint(on: Boolean) = command("multipoint", HeadsetCommand.SetMultipoint(on))
+    fun setAutoPlayPause(on: Boolean) = command("auto play/pause", HeadsetCommand.SetAutoPlayPause(on))
+    fun setAutoAnswer(on: Boolean) = command("auto-answer", HeadsetCommand.SetAutoAnswer(on))
+    fun setAutoOff(minutes: Int) = command("auto-off", HeadsetCommand.SetAutoOff(minutes))
+    fun setShortcut(action: ButtonAction) = command("shortcut button", HeadsetCommand.SetShortcut(action))
     fun saveMode(index: Int, name: String, settings: NoiseSettings) =
-        command("save mode") { c, s -> protocol.saveCustomMode(c, s, index, name, settings) }
-    fun removeMode(index: Int) = command("remove mode") { c, s -> protocol.resetCustomMode(c, s, index) }
-    fun setVoicePrompts(on: Boolean) = command("voice prompts") { c, s ->
-        protocol.setVoicePrompts(c, s, (s.voicePrompts ?: VoicePrompts(enabled = on, languageId = 1)).copy(enabled = on))
-    }
+        command("save mode", HeadsetCommand.SaveMode(index, name, settings))
+    fun removeMode(index: Int) = command("remove mode", HeadsetCommand.RemoveMode(index))
+    fun setVoicePrompts(on: Boolean) = command("voice prompts", HeadsetCommand.SetVoicePrompts(on))
 
-    private fun command(name: String, block: suspend (BmapConnection, HeadphoneState) -> HeadphoneState) {
+    private fun command(name: String, command: HeadsetCommand) {
         scope.launch {
             try {
-                commands.run(name, block = block)
+                commands.run(name) { s, state -> s.run(command, state) }
                 message.value = null
             } catch (e: CancellationException) {
                 throw e
@@ -157,7 +162,8 @@ class HeadsetController(
                 log.w("listing headsets failed", e)
                 emptyList()
             }
-            val target = seen.firstOrNull { it.connected }
+            // A connected headset Ruru can drive comes first; one it can't is still reported.
+            val target = seen.firstOrNull { it.connected && drivable(it) } ?: seen.firstOrNull { it.connected }
             if (target == null) {
                 phase.value = Phase.NoHeadset(seen.firstOrNull()?.name, platform.blocked)
                 failures = 0
@@ -192,10 +198,26 @@ class HeadsetController(
     /** One session. [Attempt.problem] is null once it was connected and has ended. */
     private data class Attempt(val problem: Words?, val waitForRetry: Boolean = false)
 
+    /** The maker's vendor and the route to open, or null when Ruru must not open [candidate] at all. */
+    private fun plan(candidate: HeadsetCandidate): Pair<Vendor, LinkRoute>? {
+        val family = DeviceFamily.resolve(override = null, learned = null, name = candidate.name, uuids = candidate.uuids)
+        val vendor = VendorRegistry.forFamily(family)?.takeIf { it.sessionReady } ?: return null
+        val route = vendor.route(candidate, platform.routes)?.takeIf { it.kind in platform.routes } ?: return null
+        return vendor to route
+    }
+
+    private fun drivable(candidate: HeadsetCandidate) = plan(candidate) != null
+
     /** One session. Null problem once it was connected and has ended; otherwise why it never connected. */
     private suspend fun session(target: HeadsetCandidate): Attempt {
+        // GENERIC, a maker whose session is still a stub, or no route this system can open:
+        // nothing is opened and no byte is sent. Looked at again after the usual back-off.
+        val (vendor, route) = plan(target) ?: run {
+            log.i("${target.name}: no session for these headphones on ${platform.name}; not opened")
+            return Attempt(Words("message_unsupported"))
+        }
         val transport = try {
-            platform.open(target)
+            platform.open(target, route)
         } catch (e: CancellationException) {
             if (!currentCoroutineContext().isActive) throw e
             log.w("open failed for ${target.name}", e)
@@ -204,20 +226,30 @@ class HeadsetController(
             log.w("open failed for ${target.name}", e)
             return Attempt(openProblem(target.name, e), waitForRetry = e is ExplainedConnectException && !e.retry)
         }
-        val conn = BmapConnection(transport, scope)
-        protocol = QcUltra2Protocol()
+        val conn = try {
+            vendor.session(transport, scope)
+        } catch (e: CancellationException) {
+            transport.close()
+            throw e
+        } catch (e: Throwable) {
+            // A stub's NotImplementedError included: close what was opened, keep the loop alive.
+            transport.close()
+            log.w("no session for ${target.name}", e)
+            return Attempt(Words("message_unsupported"))
+        }
+        pushTarget = conn
         commands.reset()
-        connection = conn
+        session = conn
         headset.value = HeadphoneState(connection = ConnectionState(status = ConnectionStatus.CONNECTING, deviceName = target.name))
-        val pushes = scope.launch { conn.unsolicited.collect { commands.push(it) } }
+        val pushes = scope.launch { conn.pushes.collect { commands.push(it) } }
         var connected = false
         try {
             if (platform.checksIdentity) {
-                val address = protocol.readAddress(conn)
+                val address = conn.readIdentityAddress()
                 val words = platform.confirm(target, address)
                 if (words != null) return Attempt(words)
             }
-            commands.run("connect", showBusy = false) { c, s -> protocol.refresh(c, protocol.onConnected(c, s)) }
+            commands.run("connect", showBusy = false) { c, s -> c.start(s) }
             connected = true
             headset.update { it.copy(connection = ConnectionState(status = ConnectionStatus.CONNECTED, deviceName = target.name)) }
             message.value = null
@@ -226,7 +258,7 @@ class HeadsetController(
                 while (isActive) {
                     delay(if (headset.value.livePushEnabled) LIVE_POLL_MS else POLL_MS)
                     try {
-                        commands.run("battery", showBusy = false) { c, s -> protocol.pollBattery(c, s) }
+                        commands.run("battery", showBusy = false) { c, s -> c.pollBattery(s) }
                     } catch (e: CancellationException) {
                         throw e
                     } catch (e: HeadphoneCommandException) {
@@ -245,7 +277,7 @@ class HeadsetController(
             log.w("session with ${target.name} ended", e)
             return Attempt(if (connected) null else sessionProblem(target.name, e))
         } finally {
-            connection = null
+            session = null
             pushes.cancel()
             conn.close()
             headset.update { it.copy(connection = ConnectionState(status = ConnectionStatus.DISCONNECTED, deviceName = target.name)) }
