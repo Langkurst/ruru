@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- The owl is new: a chubby ruru with black headphones, in the app, the tray, the installers, on phones and on the website.
+
 ## 0.1.3 (25 November 2026)
 
 - Ruru now speaks 11 languages: English, German, French, Spanish, Italian, Dutch, Portuguese

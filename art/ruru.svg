@@ -1,16 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <!-- Ruru's mark: a friendly ruru (morepork) face. Designed from a FLUX.2 concept made in ComfyUI
-       (25 Nov 2026), redrawn as shapes so it stays sharp at every size. Small sizes (32px and less)
-       use ruru-small.svg. -->
-  <circle cx="512" cy="512" r="384" fill="#A86C46"/>
-  <path fill="#DDB88E" d="M512,444 C472,372 424,338 370,338 C270,338 208,410 208,494 C208,586 300,640 400,652
-    C452,658 488,666 512,682 C536,666 572,658 624,652 C724,640 816,586 816,494 C816,410 754,338 654,338
-    C600,338 552,372 512,444 Z"/>
-  <circle cx="366" cy="496" r="90" fill="#DCA012"/>
-  <circle cx="658" cy="496" r="90" fill="#DCA012"/>
-  <circle cx="369" cy="499" r="61" fill="#0B0C0A"/>
-  <circle cx="655" cy="499" r="61" fill="#0B0C0A"/>
-  <circle cx="346" cy="472" r="18" fill="#FFF8EC"/>
-  <circle cx="632" cy="472" r="18" fill="#FFF8EC"/>
-  <path fill="#FBE8C2" stroke="#FBE8C2" stroke-width="14" stroke-linejoin="round" d="M512,528 L538,580 L512,634 L486,580 Z"/>
+  <!-- Ruru's mark: a chubby ruru (morepork) wearing slim black over-ear headphones. Hand-drawn shapes. -->
+  <defs>
+    <mask id="lids">
+      <rect width="1024" height="1024" fill="#fff"/>
+      <circle cx="404" cy="586" r="112" fill="#000"/>
+      <circle cx="620" cy="586" r="112" fill="#000"/>
+    </mask>
+  </defs>
+  <!-- Feet -->
+  <g fill="#F2B33D">
+    <ellipse cx="408" cy="902" rx="28" ry="22"/><ellipse cx="440" cy="910" rx="28" ry="22"/><ellipse cx="376" cy="910" rx="28" ry="22"/>
+    <ellipse cx="616" cy="902" rx="28" ry="22"/><ellipse cx="648" cy="910" rx="28" ry="22"/><ellipse cx="584" cy="910" rx="28" ry="22"/>
+  </g>
+  <!-- One chubby body -->
+  <path fill="#8E5B37" d="M512,150 C720,150 850,290 860,480 C872,700 760,900 512,900 C264,900 152,700 164,480 C174,290 304,150 512,150 Z"/>
+  <!-- Stubby wings -->
+  <ellipse cx="196" cy="660" rx="58" ry="118" transform="rotate(16 196 660)" fill="#704426"/>
+  <ellipse cx="828" cy="660" rx="58" ry="118" transform="rotate(-16 828 660)" fill="#704426"/>
+  <!-- Spotted belly -->
+  <ellipse cx="512" cy="730" rx="214" ry="168" fill="#F1DDBE"/>
+  <g fill="#A3734C">
+    <ellipse cx="452" cy="640" rx="11" ry="17"/><ellipse cx="512" cy="628" rx="11" ry="17"/><ellipse cx="572" cy="640" rx="11" ry="17"/>
+    <ellipse cx="392" cy="712" rx="11" ry="17"/><ellipse cx="472" cy="704" rx="11" ry="17"/><ellipse cx="552" cy="704" rx="11" ry="17"/><ellipse cx="632" cy="712" rx="11" ry="17"/>
+    <ellipse cx="432" cy="784" rx="11" ry="17"/><ellipse cx="512" cy="780" rx="11" ry="17"/><ellipse cx="592" cy="784" rx="11" ry="17"/>
+    <ellipse cx="472" cy="850" rx="11" ry="17"/><ellipse cx="552" cy="850" rx="11" ry="17"/>
+  </g>
+  <!-- Eyes, smiling -->
+  <g id="eyes" mask="url(#lids)">
+    <circle cx="404" cy="452" r="98" fill="#F5B82E"/>
+    <circle cx="620" cy="452" r="98" fill="#F5B82E"/>
+    <circle cx="408" cy="456" r="70" fill="#1B1410"/>
+    <circle cx="616" cy="456" r="70" fill="#1B1410"/>
+    <circle cx="378" cy="418" r="27" fill="#FFFFFF"/>
+    <circle cx="586" cy="418" r="27" fill="#FFFFFF"/>
+    <circle cx="434" cy="452" r="11" fill="#FFFFFF"/>
+    <circle cx="642" cy="452" r="11" fill="#FFFFFF"/>
+  </g>
+  <!-- White ruru eyebrows -->
+  <g fill="none" stroke="#FFF3E0" stroke-width="26" stroke-linecap="round">
+    <path d="M306,318 C352,258 446,252 494,312"/>
+    <path d="M718,318 C672,258 578,252 530,312"/>
+  </g>
+  <!-- Rosy cheeks -->
+  <ellipse cx="312" cy="538" rx="58" ry="34" fill="#FF8F86" opacity="0.8"/>
+  <ellipse cx="712" cy="538" rx="58" ry="34" fill="#FF8F86" opacity="0.8"/>
+  <!-- Little open beak -->
+  <ellipse cx="512" cy="540" rx="22" ry="17" fill="#B8483F"/>
+  <path fill="#F2B33D" stroke="#F2B33D" stroke-width="14" stroke-linejoin="round" d="M486,488 L538,488 L512,530 Z"/>
+  <!-- Black headphones: slim band, metal arms, oval cups with cushions -->
+  <path d="M198,336 C198,92 826,92 826,336" fill="none" stroke="#1C1C1E" stroke-width="36" stroke-linecap="round"/>
+  <path d="M236,236 C300,128 724,128 788,236" fill="none" stroke="#3B3C40" stroke-width="7" stroke-linecap="round"/>
+  <g stroke="#7C7F86" stroke-width="16" stroke-linecap="round">
+    <path d="M198,330 L188,400"/><path d="M826,330 L836,400"/>
+  </g>
+  <ellipse cx="202" cy="490" rx="34" ry="92" fill="#38393D"/>
+  <ellipse cx="822" cy="490" rx="34" ry="92" fill="#38393D"/>
+  <ellipse cx="176" cy="490" rx="64" ry="100" fill="#1C1C1E" stroke="#55575C" stroke-width="7"/>
+  <ellipse cx="848" cy="490" rx="64" ry="100" fill="#1C1C1E" stroke="#55575C" stroke-width="7"/>
+  <ellipse cx="172" cy="490" rx="40" ry="72" fill="#26272A"/>
+  <ellipse cx="852" cy="490" rx="40" ry="72" fill="#26272A"/>
+  <path d="M146,440 C150,416 162,404 176,400" fill="none" stroke="#6A6C72" stroke-width="8" stroke-linecap="round"/>
+  <path d="M878,440 C874,416 862,404 848,400" fill="none" stroke="#6A6C72" stroke-width="8" stroke-linecap="round"/>
 </svg>

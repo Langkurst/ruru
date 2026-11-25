@@ -157,33 +157,64 @@ internal class TrayMenu(
         }
     }
 
-    private companion object {
+    internal companion object {
         /** The owl mark for small sizes, drawn with Java2D from art/ruru-small.svg (64 viewBox). */
         fun owlImage(size: Int): Image {
             val img = BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB)
             val g = img.createGraphics()
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
             g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+            g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON)
             val k = size / 64.0
-            fun dot(color: Color, x: Double, y: Double, r: Double) {
-                g.color = color
-                g.fill(Ellipse2D.Double((x - r) * k, (y - r) * k, 2 * r * k, 2 * r * k))
+            fun rgb(hex: Int, alpha: Double = 1.0) = Color(hex shr 16 and 0xFF, hex shr 8 and 0xFF, hex and 0xFF, (alpha * 255).toInt())
+            fun fillShape(hex: Int, shape: java.awt.Shape, alpha: Double = 1.0) { g.color = rgb(hex, alpha); g.fill(shape) }
+            fun dot(hex: Int, x: Double, y: Double, r: Double) =
+                fillShape(hex, Ellipse2D.Double((x - r) * k, (y - r) * k, 2 * r * k, 2 * r * k))
+            fun oval(hex: Int, x: Double, y: Double, rx: Double, ry: Double, alpha: Double = 1.0) =
+                fillShape(hex, Ellipse2D.Double((x - rx) * k, (y - ry) * k, 2 * rx * k, 2 * ry * k), alpha)
+            fun stroke(hex: Int, shape: java.awt.Shape, width: Double, cap: Int = BasicStroke.CAP_ROUND) {
+                g.color = rgb(hex)
+                g.stroke = BasicStroke((width * k).toFloat(), cap, BasicStroke.JOIN_ROUND)
+                g.draw(shape)
             }
-            dot(Color(0xA8, 0x6C, 0x46), 32.0, 32.0, 31.0)
-            for (x in listOf(21.5, 42.5)) dot(Color(0xE2, 0xA8, 0x17), x, 30.0, 9.5)
-            for (x in listOf(22.0, 42.0)) dot(Color(0x0B, 0x0C, 0x0A), x, 30.5, 5.6)
-            for (x in listOf(19.8, 39.8)) dot(Color(0xFF, 0xF8, 0xEC), x, 28.2, 1.9)
-            val beak = Path2D.Double().apply {
-                moveTo(32.0 * k, 37.0 * k)
-                lineTo(34.6 * k, 41.2 * k)
-                lineTo(32.0 * k, 45.4 * k)
-                lineTo(29.4 * k, 41.2 * k)
+            fun curve(x0: Double, y0: Double, x1: Double, y1: Double, x2: Double, y2: Double, x3: Double, y3: Double) =
+                Path2D.Double().apply { moveTo(x0 * k, y0 * k); curveTo(x1 * k, y1 * k, x2 * k, y2 * k, x3 * k, y3 * k) }
+            fun segment(x0: Double, y0: Double, x1: Double, y1: Double) =
+                Path2D.Double().apply { moveTo(x0 * k, y0 * k); lineTo(x1 * k, y1 * k) }
+
+            val body = Path2D.Double().apply {
+                moveTo(32 * k, 10 * k)
+                curveTo(46 * k, 10 * k, 55 * k, 20 * k, 55 * k, 34 * k)
+                curveTo(55 * k, 49 * k, 46 * k, 58 * k, 32 * k, 58 * k)
+                curveTo(18 * k, 58 * k, 9 * k, 49 * k, 9 * k, 34 * k)
+                curveTo(9 * k, 20 * k, 18 * k, 10 * k, 32 * k, 10 * k)
                 closePath()
             }
-            g.color = Color(0xFB, 0xE8, 0xC2)
-            g.fill(beak)
-            g.stroke = BasicStroke((1.2 * k).toFloat(), BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND)
-            g.draw(beak)
+            fillShape(0x8E5B37, body)
+            oval(0xF1DDBE, 32.0, 54.0, 12.0, 5.5)
+            for (x in listOf(24.5, 39.5)) dot(0xF5B82E, x, 32.0, 7.4)
+            for (x in listOf(24.8, 39.2)) dot(0x1B1410, x, 32.6, 5.3)
+            for (x in listOf(22.8, 37.2)) dot(0xFFFFFF, x, 30.2, 2.0)
+            stroke(0xFFF3E0, curve(17.8, 23.0, 20.8, 19.0, 27.0, 18.8, 30.2, 22.6), 2.4)
+            stroke(0xFFF3E0, curve(46.2, 23.0, 43.2, 19.0, 37.0, 18.8, 33.8, 22.6), 2.4)
+            oval(0xFF8F86, 17.6, 41.0, 3.8, 2.3, 0.85)
+            oval(0xFF8F86, 46.4, 41.0, 3.8, 2.3, 0.85)
+            val beak = Path2D.Double().apply {
+                moveTo(30.0 * k, 37.6 * k)
+                lineTo(34.0 * k, 37.6 * k)
+                lineTo(32.0 * k, 40.8 * k)
+                closePath()
+            }
+            fillShape(0xF2B33D, beak)
+            stroke(0xF2B33D, beak, 1.0)
+            stroke(0x1C1C1E, curve(11.5, 27.0, 11.5, 7.5, 52.5, 7.5, 52.5, 27.0), 3.0)
+            stroke(0x7C7F86, segment(11.5, 27.0, 10.8, 30.0), 1.4)
+            stroke(0x7C7F86, segment(52.5, 27.0, 53.2, 30.0), 1.4)
+            for (x in listOf(10.0, 54.0)) {
+                val cup = Ellipse2D.Double((x - 5) * k, (36.0 - 7) * k, 10 * k, 14 * k)
+                fillShape(0x1C1C1E, cup)
+                stroke(0x55575C, cup, 0.8)
+            }
             g.dispose()
             return img
         }

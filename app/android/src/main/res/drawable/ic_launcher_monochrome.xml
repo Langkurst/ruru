@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Themed-icon layer: the head as one silhouette with the eyes cut out, in the same 66dp circle. -->
+<!-- Themed-icon layer: one-colour silhouette of the chubby owl (body, wings, feet, band and cups, with the eyes cut out) inside the adaptive icon's 72dp safe zone: the whole owl, cups and feet
+     included, is about 64 of the 108dp viewport, centred, the same place as the full-colour layer. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <path android:fillColor="#FF000000" android:fillType="evenOdd" android:pathData="M54.0,54.0m-33.0,0a33.0,33.0 0,1 1,66,0a33.0,33.0 0,1 1,-66,0 M41.45,52.62m-7.73,0a7.73,7.73 0,1 1,15.46,0a7.73,7.73 0,1 1,-15.46,0 M66.55,52.62m-7.73,0a7.73,7.73 0,1 1,15.46,0a7.73,7.73 0,1 1,-15.46,0" />
+    <group android:scaleX="0.08" android:scaleY="0.08" android:translateX="12.92" android:translateY="11.32">
+        <path android:fillColor="#FF000000" android:fillType="evenOdd" android:pathData="M512,150 C720,150 850,290 860,480 C872,700 760,900 512,900 C264,900 152,700 164,480 C174,290 304,150 512,150 Z M323.6,508.03 A98,98 0 1,1 484.4,508.03 A112,112 0 0,0 323.6,508.03 Z M539.6,508.03 A98,98 0 1,1 700.4,508.03 A112,112 0 0,0 539.6,508.03 Z" />
+        <path android:fillColor="#FF000000" android:pathData="M380,902 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z M412,910 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z M348,910 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z M588,902 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z M620,910 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z M556,910 a28,22 0 1,0 56,0 a28,22 0 1,0 -56,0 Z" />
+        <group android:rotation="16" android:pivotX="196" android:pivotY="660"><path android:fillColor="#FF000000" android:pathData="M138,660 a58,118 0 1,0 116,0 a58,118 0 1,0 -116,0 Z" /></group>
+        <group android:rotation="-16" android:pivotX="828" android:pivotY="660"><path android:fillColor="#FF000000" android:pathData="M770,660 a58,118 0 1,0 116,0 a58,118 0 1,0 -116,0 Z" /></group>
+        <path android:strokeColor="#FF000000" android:strokeWidth="36" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M198,336 C198,92 826,92 826,336" />
+        <path android:strokeColor="#FF000000" android:strokeWidth="16" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M198,330 L188,400" />
+        <path android:strokeColor="#FF000000" android:strokeWidth="16" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M826,330 L836,400" />
+        <path android:fillColor="#FF000000" android:pathData="M112,490 a64,100 0 1,0 128,0 a64,100 0 1,0 -128,0 Z M784,490 a64,100 0 1,0 128,0 a64,100 0 1,0 -128,0 Z M168,490 a34,92 0 1,0 68,0 a34,92 0 1,0 -68,0 Z M788,490 a34,92 0 1,0 68,0 a34,92 0 1,0 -68,0 Z" />
+    </group>
 </vector>
