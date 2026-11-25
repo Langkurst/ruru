@@ -12,7 +12,7 @@
   "lang.label": "Langue",
 
   "intro.p1": "Ruru modifie les réglages de votre casque Bose. Il fonctionne sur votre ordinateur et sur votre téléphone.",
-  "intro.p2": "Il est gratuit. Pas besoin de compte, et il n'utilise pas internet.",
+  "intro.p2": "Il est gratuit. Pas besoin de compte, et il n'utilise internet que lorsque vous recherchez des mises à jour.",
   "intro.download": "Télécharger",
   "intro.other": "Autres systèmes",
   "version.link": "<a>La dernière version est sur GitHub.</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "Pas nécessaire",
   "cmp.account.bose": "Facultatif",
   "cmp.internet": "Internet",
-  "cmp.internet.ruru": "Non utilisé",
+  "cmp.internet.ruru": "Seulement pour les mises à jour",
   "cmp.internet.bose": "Utilisé",
   "cmp.size": "Taille sur iPhone",
   "cmp.size.ruru": "12 Mo",
@@ -117,7 +117,7 @@
   "hp.report": "Vous avez essayé Ruru avec l'un d'eux ? <a>Dites-le-moi sur GitHub</a>. Utilisez le formulaire de rapport Headphones et collez le rapport affiché en bas de l'app.",
 
   "priv.title": "Confidentialité",
-  "priv.p1": "Ruru ne parle qu'à votre casque. Il n'envoie rien nulle part.",
+  "priv.p1": "Ruru parle à votre casque. Il n'utilise internet que lorsque vous cliquez sur « Rechercher des mises à jour » : il demande alors à GitHub la version la plus récente et la télécharge.",
   "priv.p2": "Pas de compte, pas de suivi et pas de rapports de plantage. L'app Android ne peut pas du tout utiliser internet.",
   "priv.p3": "Ce site n'a ni cookies ni suivi. Il demande à GitHub quelle est la version la plus récente.",
 

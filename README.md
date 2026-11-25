@@ -86,9 +86,12 @@ real iPhone yet. If you try it, a Headphones report helps a lot.
 
 ## Privacy
 
-Ruru talks only to your headphones. It sends nothing anywhere: no account, no analytics, no
-crash reporting, no update checks. The connection report is text you copy yourself; it masks
-Bluetooth addresses and leaves out the names of your other devices. See [PRIVACY.md](PRIVACY.md).
+Ruru talks to your headphones. It uses the internet only when you click Check for updates on a
+computer: then it asks GitHub for the newest version, downloads it and checks it before offering to
+install it. Nothing else is ever sent: no account, no analytics, no crash reporting, no background
+update checks. The Android app can't use the internet at all, and on phones Check for updates opens
+this website instead. The connection report is text you copy yourself; it masks Bluetooth addresses
+and leaves out the names of your other devices. See [PRIVACY.md](PRIVACY.md).
 
 ## Support
 

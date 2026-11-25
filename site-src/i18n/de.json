@@ -12,7 +12,7 @@
   "lang.label": "Sprache",
 
   "intro.p1": "Ruru ändert die Einstellungen deiner Bose-Kopfhörer. Es läuft auf deinem Computer und auf deinem Handy.",
-  "intro.p2": "Es ist kostenlos. Du brauchst kein Konto, und es nutzt das Internet nicht.",
+  "intro.p2": "Es ist kostenlos. Du brauchst kein Konto, und es nutzt das Internet nur, wenn du nach Updates suchst.",
   "intro.download": "Download",
   "intro.other": "Andere Systeme",
   "version.link": "<a>Die neueste Version gibt es auf GitHub.</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "Nicht nötig",
   "cmp.account.bose": "Optional",
   "cmp.internet": "Internet",
-  "cmp.internet.ruru": "Wird nicht genutzt",
+  "cmp.internet.ruru": "Nur für die Update-Suche",
   "cmp.internet.bose": "Wird genutzt",
   "cmp.size": "Größe auf dem iPhone",
   "cmp.size.ruru": "12 MB",
@@ -117,7 +117,7 @@
   "hp.report": "Du hast Ruru mit einem davon ausprobiert? <a>Sag mir auf GitHub Bescheid</a>. Nutze das Formular Headphones report und füge den Bericht vom unteren Rand der App ein.",
 
   "priv.title": "Datenschutz",
-  "priv.p1": "Ruru spricht nur mit deinen Kopfhörern. Es sendet nichts irgendwohin.",
+  "priv.p1": "Ruru spricht mit deinen Kopfhörern. Das Internet nutzt es nur, wenn du auf „Nach Updates suchen“ klickst: Dann fragt es bei GitHub nach der neuesten Version und lädt sie herunter.",
   "priv.p2": "Es gibt kein Konto, kein Tracking und keine Absturzberichte. Die Android-App kann das Internet gar nicht nutzen.",
   "priv.p3": "Diese Website hat keine Cookies und kein Tracking. Sie fragt bei GitHub nach, welche Version die neueste ist.",
 

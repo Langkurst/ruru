@@ -116,8 +116,20 @@ tasks.register<JavaExec>("snapshot") {
             "--height=" + providers.gradleProperty("height").getOrElse("1600"),
             if (providers.gradleProperty("demo").isPresent) "--demo" else null,
             if (providers.gradleProperty("light").isPresent) "--light" else null,
+            providers.gradleProperty("update").orNull?.let { "--update=$it" },
         ),
     )
+}
+
+// Tries Check for updates against GitHub for real, pretending to be an older version. It downloads and
+// checks the file, prints the command it would run, and installs nothing:
+// ./gradlew :app:desktop:updateCheck -Pfake=0.1.0 -Pkind=msi
+tasks.register<JavaExec>("updateCheck") {
+    group = "ruru"
+    description = "Try the updater against GitHub with a pretend older version (installs nothing)"
+    mainClass.set("io.github.langkurst.ruru.desktop.UpdateCheckKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    args("--fake=" + providers.gradleProperty("fake").getOrElse("0.1.0"), "--kind=" + providers.gradleProperty("kind").getOrElse("msi"))
 }
 
 // Checks the app's controller against real headphones (changes the mode and bass, then puts them back).

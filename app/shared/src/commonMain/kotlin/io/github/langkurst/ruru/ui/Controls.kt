@@ -424,6 +424,32 @@ fun QuietButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier
     }
 }
 
+/** The one button on a card that the person is expected to press: ink fill, night text. */
+@Composable
+fun PrimaryButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
+    val c = Ruru.colors
+    val interaction = remember { MutableInteractionSource() }
+    val hovered by interaction.collectIsHoveredAsState()
+    val pressed by interaction.collectIsPressedAsState()
+    val fill by animateColorAsState(
+        if (!enabled) c.ink4 else if (pressed) c.ink.copy(alpha = 0.78f) else if (hovered) c.ink.copy(alpha = 0.88f) else c.ink,
+        hoverSpec(),
+    )
+    Box(
+        modifier
+            .heightIn(min = 32.dp)
+            .focusRing(interaction, RowShape)
+            .clip(RowShape)
+            .background(fill)
+            .clickable(enabled = enabled, role = Role.Button, interactionSource = interaction, indication = null, onClick = onClick)
+            .hoverable(interaction)
+            .padding(horizontal = 14.dp, vertical = 6.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Txt(text, Ruru.type.bodyMedium, c.night, maxLines = 1)
+    }
+}
+
 @Composable
 fun ButtonRow(content: @Composable () -> Unit) {
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) { content() }

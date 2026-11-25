@@ -12,7 +12,7 @@
   "lang.label": "Idioma",
 
   "intro.p1": "Ruru muda os ajustes dos seus fones de ouvido Bose. Funciona no computador e no celular.",
-  "intro.p2": "É gratuito. Você não precisa de conta e ele não usa a internet.",
+  "intro.p2": "É gratuito. Você não precisa de conta e ele só usa a internet quando você verifica atualizações.",
   "intro.download": "Baixar",
   "intro.other": "Outros sistemas",
   "version.link": "<a>A versão mais recente está no GitHub.</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "Não precisa",
   "cmp.account.bose": "Opcional",
   "cmp.internet": "Internet",
-  "cmp.internet.ruru": "Não usa",
+  "cmp.internet.ruru": "Só para atualizações",
   "cmp.internet.bose": "Usa",
   "cmp.size": "Tamanho no iPhone",
   "cmp.size.ruru": "12 MB",
@@ -117,7 +117,7 @@
   "hp.report": "Testou o Ruru com algum destes? <a>Conte para mim no GitHub</a>. Use o formulário Headphones report e cole o relatório que aparece no fim do app.",
 
   "priv.title": "Privacidade",
-  "priv.p1": "Ruru só se comunica com os seus fones de ouvido. Ele não envia nada para lugar nenhum.",
+  "priv.p1": "Ruru se comunica com os seus fones de ouvido. Ele só usa a internet quando você clica em Verificar atualizações: aí ele pergunta ao GitHub qual é a versão mais recente e baixa essa versão.",
   "priv.p2": "Não há conta, rastreamento nem relatórios de falhas. O app para Android não consegue usar a internet de jeito nenhum.",
   "priv.p3": "Este site não tem cookies nem rastreamento. Ele só pergunta ao GitHub qual é a versão mais recente.",
 

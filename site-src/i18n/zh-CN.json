@@ -12,7 +12,7 @@
   "lang.label": "语言",
 
   "intro.p1": "Ruru 可以更改你的 Bose 耳机的设置，电脑和手机上都能用。",
-  "intro.p2": "它是免费的。不需要账号，也不联网。",
+  "intro.p2": "它是免费的。不需要账号，只有在你检查更新时才会联网。",
   "intro.download": "下载",
   "intro.other": "其他系统",
   "version.link": "<a>最新版本在 GitHub 上。</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "不需要",
   "cmp.account.bose": "可选",
   "cmp.internet": "联网",
-  "cmp.internet.ruru": "不使用",
+  "cmp.internet.ruru": "仅用于检查更新",
   "cmp.internet.bose": "使用",
   "cmp.size": "在 iPhone 上的大小",
   "cmp.size.ruru": "12 MB",
@@ -117,7 +117,7 @@
   "hp.report": "用 Ruru 试过其中某一款？<a>请在 GitHub 上告诉我</a>。请使用 Headphones report 表单，并粘贴应用底部的报告。",
 
   "priv.title": "隐私",
-  "priv.p1": "Ruru 只与你的耳机通信，不会向任何地方发送任何内容。",
+  "priv.p1": "Ruru 与你的耳机通信。只有当你点击“检查更新”时才会联网：此时它会向 GitHub 查询最新版本并下载。",
   "priv.p2": "没有账号，没有跟踪，也没有崩溃报告。Android 版应用完全不能使用互联网。",
   "priv.p3": "本网站没有 Cookie，也没有跟踪。它只会向 GitHub 查询哪个版本是最新的。",
 

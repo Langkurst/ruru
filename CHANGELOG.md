@@ -3,6 +3,9 @@
 ## Unreleased
 
 - The owl is new: a chubby ruru with black headphones, in the app, the tray, the installers, on phones and on the website.
+- Check for updates now does the work on Windows and Mac. It looks for the newest version, downloads
+  it, checks it, then asks if you want to install it and restart. A small card in the window shows
+  each step. Ruru still goes online only when you click the button; Linux and phones open the website.
 
 ## 0.1.3 (25 November 2026)
 

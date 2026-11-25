@@ -66,7 +66,9 @@ import io.github.langkurst.ruru.app.ConnectionReport
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.app.SUPPORT_URL
-import io.github.langkurst.ruru.app.WEBSITE_URL
+import io.github.langkurst.ruru.app.UpdateState
+import io.github.langkurst.ruru.app.Updates
+import io.github.langkurst.ruru.app.WebsiteUpdates
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.ListeningMode
@@ -84,12 +86,23 @@ import org.jetbrains.compose.resources.stringResource
 /** A switch only some platforms have, such as "Start with Windows". */
 class PlatformSwitch(val label: StringResource, val hint: StringResource?, val isOn: () -> Boolean, val set: (Boolean) -> Unit)
 
-/** The whole app on one scrolling column; the same on desktop and phone. */
+/**
+ * The whole app on one scrolling column; the same on desktop and phone. [updates] runs the Check for
+ * updates button; left out, the button opens the download page in the browser (phones).
+ */
 @Composable
-fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifier, extras: List<PlatformSwitch> = emptyList()) {
+fun RuruScreen(
+    model: AppModel,
+    appVersion: String,
+    modifier: Modifier = Modifier,
+    extras: List<PlatformSwitch> = emptyList(),
+    updates: Updates? = null,
+) {
     val controller by model.controller.collectAsState()
     val state by controller.state.collectAsState()
     val c = Ruru.colors
+    val browser = LocalUriHandler.current
+    val updater = updates ?: remember(appVersion) { WebsiteUpdates(appVersion) { runCatching { browser.openUri(it) }.isSuccess } }
     @Suppress("DEPRECATION")
     val clipboard = LocalClipboardManager.current
     // The page colour goes on before the caller's modifier, so it also fills the strips behind a
@@ -106,7 +119,7 @@ fun RuruScreen(model: AppModel, appVersion: String, modifier: Modifier = Modifie
             Header(state)
             state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
             if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
-            Footer(state, model, appVersion, extras) { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
+            Footer(state, model, appVersion, extras, updater) { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
         }
     }
 }
@@ -536,10 +549,11 @@ private fun InfoRow(label: String, value: String?) {
 }
 
 @Composable
-private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, onCopyReport: () -> Unit) {
+private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, updates: Updates, onCopyReport: () -> Unit) {
     val c = Ruru.colors
     var copied by remember { mutableStateOf(false) }
     val browser = LocalUriHandler.current
+    val update by updates.state.collectAsState()
     Panel(null) {
         extras.forEach { extra ->
             var on by remember(extra) { mutableStateOf(extra.isOn()) }
@@ -555,8 +569,13 @@ private fun Footer(state: AppState, model: AppModel, appVersion: String, extras:
         Spacer(Modifier.height(8.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Txt(stringResource(Res.string.footer_version, appVersion), Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
-            // Opens the download page in the browser, which says whether this version is the newest.
-            QuietButton(stringResource(Res.string.footer_check_updates), { runCatching { browser.openUri("$WEBSITE_URL/?have=$appVersion") } })
+            // The desktop app checks, downloads and installs; phones open the download page.
+            val busy = update is UpdateState.Checking || update is UpdateState.Downloading || update is UpdateState.Ready || update is UpdateState.Installing
+            QuietButton(stringResource(Res.string.footer_check_updates), updates::check, enabled = !busy)
+        }
+        if (update != UpdateState.Idle) {
+            Spacer(Modifier.height(8.dp))
+            UpdateCard(update, updates)
         }
         Spacer(Modifier.height(8.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {

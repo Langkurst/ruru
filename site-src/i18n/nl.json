@@ -12,7 +12,7 @@
   "lang.label": "Taal",
 
   "intro.p1": "Ruru wijzigt de instellingen van je Bose-koptelefoon. Het werkt op je computer en op je telefoon.",
-  "intro.p2": "Het is gratis. Je hebt geen account nodig en het gebruikt het internet niet.",
+  "intro.p2": "Het is gratis. Je hebt geen account nodig en het gebruikt het internet alleen als je op updates controleert.",
   "intro.download": "Downloaden",
   "intro.other": "Andere systemen",
   "version.link": "<a>De nieuwste versie staat op GitHub.</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "Niet nodig",
   "cmp.account.bose": "Optioneel",
   "cmp.internet": "Internet",
-  "cmp.internet.ruru": "Niet gebruikt",
+  "cmp.internet.ruru": "Alleen voor updates",
   "cmp.internet.bose": "Gebruikt",
   "cmp.size": "Grootte op iPhone",
   "cmp.size.ruru": "12 MB",
@@ -117,7 +117,7 @@
   "hp.report": "Heb je Ruru met een van deze geprobeerd? <a>Laat het me weten op GitHub</a>. Gebruik het formulier Headphones report en plak het rapport van onderaan de app.",
 
   "priv.title": "Privacy",
-  "priv.p1": "Ruru praat alleen met je koptelefoon. Het stuurt nergens iets naartoe.",
+  "priv.p1": "Ruru praat met je koptelefoon. Het gebruikt het internet alleen als je op Op updates controleren klikt: dan vraagt het GitHub om de nieuwste versie en downloadt die.",
   "priv.p2": "Er is geen account, geen tracking en geen crashrapporten. De Android-app kan het internet helemaal niet gebruiken.",
   "priv.p3": "Deze website heeft geen cookies en geen tracking. Hij vraagt GitHub welke versie de nieuwste is.",
 

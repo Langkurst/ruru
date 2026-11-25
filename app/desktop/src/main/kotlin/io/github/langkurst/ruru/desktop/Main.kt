@@ -28,6 +28,8 @@ import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
 import io.github.langkurst.ruru.desktop.chrome.TitleBarHeight
 import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.desktop.chrome.WindowMemory
+import io.github.langkurst.ruru.app.Updates
+import io.github.langkurst.ruru.app.update.DesktopUpdates
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
 import io.github.langkurst.ruru.platform.linux.LinuxHeadsetPlatform
@@ -89,12 +91,23 @@ fun main(args: Array<String>) {
     val model = AppModel(platformForThisSystem(), scope, startInDemo = "--demo" in args)
     model.start()
     val hasTray = runCatching { SystemTray.isSupported() }.getOrDefault(false)
+    // The only way Ruru reaches the internet: the Check for updates button. Nothing runs until it is pressed.
+    val debug = System.getenv("RURU_DEBUG") == "1"
+    val updates = DesktopUpdates.forThisSystem(
+        scope,
+        quit = {
+            model.stop()
+            single.release() // so the copy the installer opens can start
+            exitProcess(0)
+        },
+        log = { if (debug) System.err.println("update $it") },
+    )
     val quit = {
         model.stop()
         exitProcess(0)
     }
     var trayMenu: TrayMenu? = null
-    val window = WindowHost(model, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() })
+    val window = WindowHost(model, updates, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() })
     show.set(window::open)
     macAppHooks(window::open)
 
@@ -128,6 +141,7 @@ private fun macAppHooks(open: () -> Unit) {
 /** Opens the window on demand, one at a time; closing it releases everything it used. */
 private class WindowHost(
     private val model: AppModel,
+    private val updates: Updates,
     private val closing: TrayPreference,
     private val hasTray: Boolean,
     private val onQuit: () -> Unit,
@@ -255,7 +269,7 @@ private class WindowHost(
                 }
                 LaunchedEffect(dark) { chrome.native?.let { applyWindowTheme(it, dark) } }
                 RuruTheme(dark = dark, reduceMotion = reduceMotion) {
-                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras) }
+                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates) }
                 }
             }
         }

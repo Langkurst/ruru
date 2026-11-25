@@ -12,7 +12,7 @@
   "lang.label": "Język",
 
   "intro.p1": "Ruru zmienia ustawienia twoich słuchawek Bose. Działa na komputerze i na telefonie.",
-  "intro.p2": "Aplikacja jest darmowa. Nie wymaga konta i nie łączy się z internetem.",
+  "intro.p2": "Aplikacja jest darmowa. Nie wymaga konta i łączy się z internetem tylko wtedy, gdy sprawdzasz aktualizacje.",
   "intro.download": "Pobierz",
   "intro.other": "Inne systemy",
   "version.link": "<a>Najnowsza wersja jest w serwisie GitHub.</a>",
@@ -88,7 +88,7 @@
   "cmp.account.ruru": "Niepotrzebne",
   "cmp.account.bose": "Opcjonalne",
   "cmp.internet": "Internet",
-  "cmp.internet.ruru": "Nieużywany",
+  "cmp.internet.ruru": "Tylko do aktualizacji",
   "cmp.internet.bose": "Używany",
   "cmp.size": "Rozmiar na iPhonie",
   "cmp.size.ruru": "12 MB",
@@ -117,7 +117,7 @@
   "hp.report": "Wypróbowano Ruru z którymiś z nich? <a>Napisz do mnie na GitHub</a>. Użyj formularza Headphones report i wklej raport z dołu aplikacji.",
 
   "priv.title": "Prywatność",
-  "priv.p1": "Ruru komunikuje się tylko z twoimi słuchawkami. Niczego nigdzie nie wysyła.",
+  "priv.p1": "Ruru komunikuje się z twoimi słuchawkami. Z internetu korzysta tylko po kliknięciu Sprawdź aktualizacje: wtedy pyta GitHub o najnowszą wersję i ją pobiera.",
   "priv.p2": "Nie ma konta, śledzenia ani raportów o awariach. Aplikacja na Androida w ogóle nie może korzystać z internetu.",
   "priv.p3": "Ta strona nie używa plików cookie ani śledzenia. Pyta GitHub, która wersja jest najnowsza.",
 
