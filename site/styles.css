@@ -196,6 +196,8 @@ section > p:last-child, .list:last-child { margin-bottom: 0; }
 .name .os { flex: none; width: 20px; height: 20px; margin: calc((1.4em - 20px) / 2) -2px calc((1.4em - 20px) / 2) 0; fill: currentColor; color: var(--ink-2); align-self: flex-start; }
 .name .os + span { min-width: 0; max-width: calc(100% - 30px); }
 .status { margin-top: 4px; font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+/* The status line starts where the system name does, after its 20px mark and 10px gap. */
+.name:has(.os) + .status { padding-left: 30px; }
 .files { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
 .file {
   display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px;
