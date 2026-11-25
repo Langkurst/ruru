@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">アダプティブノイズキャンセリング</string>
+    <string name="vendor_sennheiser_adaptive_hint">周囲の状況に合わせてノイズキャンセリングを調整します</string>
+    <string name="vendor_sennheiser_anti_wind">風切り音低減</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">ノイズキャンセリングがオンの間、風の音を抑えます</string>
+    <string name="vendor_sennheiser_comfort">コンフォートモード</string>
+    <string name="vendor_sennheiser_comfort_hint">ゼンハイザーのノイズキャンセリング用コンフォート設定です。正確な効果は未確認です</string>
+    <string name="vendor_sennheiser_transparency_level">外音取り込みレベル</string>
+    <string name="vendor_sennheiser_pause_in_transparency">外音取り込み中は音楽を一時停止</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">外音取り込みが最大の間、再生を一時停止します</string>
+    <string name="vendor_sennheiser_on_head">装着検出</string>
+    <string name="vendor_sennheiser_on_head_hint">ヘッドホンを外したことを検知します</string>
+    <string name="vendor_sennheiser_smart_pause">スマートポーズ</string>
+    <string name="vendor_sennheiser_smart_pause_hint">外すと音楽を一時停止します(装着検出が必要)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">イヤホンを片方外すと音楽を一時停止します</string>
+    <string name="vendor_sennheiser_auto_answer">通話の自動応答</string>
+    <string name="vendor_sennheiser_comfort_call">コンフォートコール</string>
+    <string name="vendor_sennheiser_sidetone">サイドトーン</string>
+    <string name="vendor_sennheiser_sidetone_hint">通話中に自分の声が聞こえます</string>
+    <string name="vendor_sennheiser_auto_off">自動電源オフ</string>
+    <string name="vendor_sennheiser_auto_off_hint">接続がない状態が続くと電源を切ります</string>
+    <string name="vendor_sennheiser_bass_boost">低音ブースト</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">オフ</string>
+    <string name="sennheiser_option_max">最大</string>
+    <string name="sennheiser_option_auto">自動</string>
+    <string name="sennheiser_option_low">低</string>
+    <string name="sennheiser_option_medium">中</string>
+    <string name="sennheiser_option_high">高</string>
+    <string name="sennheiser_option_never">なし</string>
+    <string name="sennheiser_option_15_min">15分</string>
+    <string name="sennheiser_option_30_min">30分</string>
+    <string name="sennheiser_option_1_h">1時間</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">試験的:公開された調査と仮想ヘッドセットをもとに作ったもので、実機ではまだ試していません。</string>
+    <string name="sennheiser_note_no_features">試験的:このヘッドホンは機能の一覧を返さなかったため、Ruruはこれ以上読み取らず、何も送りません。</string>
+</resources>

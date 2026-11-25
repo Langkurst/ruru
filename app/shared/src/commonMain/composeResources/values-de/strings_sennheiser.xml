@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Adaptive Geräuschunterdrückung</string>
+    <string name="vendor_sennheiser_adaptive_hint">Passt die Unterdrückung an die Umgebung an</string>
+    <string name="vendor_sennheiser_anti_wind">Windschutz</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Senkt Windgeräusche, solange die Geräuschunterdrückung an ist</string>
+    <string name="vendor_sennheiser_comfort">Komfortmodus</string>
+    <string name="vendor_sennheiser_comfort_hint">Sennheisers Komforteinstellung für die Geräuschunterdrückung; die genaue Wirkung ist unbestätigt</string>
+    <string name="vendor_sennheiser_transparency_level">Transparenzstufe</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Musik bei Transparenz pausieren</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Pausiert die Wiedergabe, solange Transparenz voll aktiv ist</string>
+    <string name="vendor_sennheiser_on_head">Trageerkennung</string>
+    <string name="vendor_sennheiser_on_head_hint">Der Kopfhörer merkt, wenn du ihn abnimmst</string>
+    <string name="vendor_sennheiser_smart_pause">Smart Pause</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Pausiert die Musik beim Abnehmen (braucht Trageerkennung)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Pausiert die Musik, wenn du einen Ohrhörer herausnimmst</string>
+    <string name="vendor_sennheiser_auto_answer">Anrufe automatisch annehmen</string>
+    <string name="vendor_sennheiser_comfort_call">Comfort Call</string>
+    <string name="vendor_sennheiser_sidetone">Eigenstimme</string>
+    <string name="vendor_sennheiser_sidetone_hint">Deine eigene Stimme bei Anrufen hören</string>
+    <string name="vendor_sennheiser_auto_off">Automatisch ausschalten</string>
+    <string name="vendor_sennheiser_auto_off_hint">Schaltet sich nach einer Weile ohne Verbindung aus</string>
+    <string name="vendor_sennheiser_bass_boost">Bassverstärkung</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Aus</string>
+    <string name="sennheiser_option_max">Max</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Niedrig</string>
+    <string name="sennheiser_option_medium">Mittel</string>
+    <string name="sennheiser_option_high">Hoch</string>
+    <string name="sennheiser_option_never">Nie</string>
+    <string name="sennheiser_option_15_min">15 Min.</string>
+    <string name="sennheiser_option_30_min">30 Min.</string>
+    <string name="sennheiser_option_1_h">1 Std.</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Experimentell: nach veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="sennheiser_note_no_features">Experimentell: Dieser Kopfhörer hat seine Funktionen nicht gemeldet, deshalb liest Ruru nichts weiter und sendet nichts.</string>
+</resources>

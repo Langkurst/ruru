@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Adaptacyjna redukcja szumów</string>
+    <string name="vendor_sennheiser_adaptive_hint">Dopasowuje redukcję do otoczenia</string>
+    <string name="vendor_sennheiser_anti_wind">Ochrona przed wiatrem</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Zmniejsza szum wiatru, gdy redukcja szumów jest włączona</string>
+    <string name="vendor_sennheiser_comfort">Tryb komfortowy</string>
+    <string name="vendor_sennheiser_comfort_hint">Ustawienie komfortu Sennheisera dla redukcji szumów; dokładny efekt nie jest potwierdzony</string>
+    <string name="vendor_sennheiser_transparency_level">Poziom przepuszczania dźwięku</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Pauzuj muzykę w trybie otoczenia</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Wstrzymuje odtwarzanie, gdy tryb otoczenia jest w pełni włączony</string>
+    <string name="vendor_sennheiser_on_head">Wykrywanie noszenia</string>
+    <string name="vendor_sennheiser_on_head_hint">Pozwala słuchawkom wykryć, że je zdejmujesz</string>
+    <string name="vendor_sennheiser_smart_pause">Inteligentna pauza</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Wstrzymuje muzykę po zdjęciu słuchawek (wymaga wykrywania noszenia)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Wstrzymuje muzykę po wyjęciu słuchawki z ucha</string>
+    <string name="vendor_sennheiser_auto_answer">Automatyczne odbieranie połączeń</string>
+    <string name="vendor_sennheiser_comfort_call">Komfortowa rozmowa</string>
+    <string name="vendor_sennheiser_sidetone">Własny głos</string>
+    <string name="vendor_sennheiser_sidetone_hint">Słyszysz własny głos podczas rozmów</string>
+    <string name="vendor_sennheiser_auto_off">Automatyczne wyłączanie</string>
+    <string name="vendor_sennheiser_auto_off_hint">Wyłącza się po pewnym czasie bez połączenia</string>
+    <string name="vendor_sennheiser_bass_boost">Wzmocnienie basów</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Wył.</string>
+    <string name="sennheiser_option_max">Maks.</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Niski</string>
+    <string name="sennheiser_option_medium">Średni</string>
+    <string name="sennheiser_option_high">Wysoki</string>
+    <string name="sennheiser_option_never">Nigdy</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 godz.</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Eksperymentalne: zbudowane na podstawie opublikowanych badań i wirtualnego zestawu, jeszcze nie sprawdzone na prawdziwym sprzęcie.</string>
+    <string name="sennheiser_note_no_features">Eksperymentalne: te słuchawki nie podały swoich funkcji, więc Ruru niczego więcej nie odczytuje i niczego im nie wysyła.</string>
+</resources>

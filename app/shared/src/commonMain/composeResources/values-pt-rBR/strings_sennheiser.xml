@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Cancelamento de ruído adaptativo</string>
+    <string name="vendor_sennheiser_adaptive_hint">Ajusta o cancelamento ao ambiente</string>
+    <string name="vendor_sennheiser_anti_wind">Antivento</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Reduz o ruído do vento enquanto o cancelamento de ruído está ligado</string>
+    <string name="vendor_sennheiser_comfort">Modo conforto</string>
+    <string name="vendor_sennheiser_comfort_hint">Ajuste de conforto da Sennheiser para o cancelamento de ruído; o efeito exato não foi confirmado</string>
+    <string name="vendor_sennheiser_transparency_level">Nível de transparência</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Pausar a música na transparência</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Pausa a reprodução enquanto a transparência está no máximo</string>
+    <string name="vendor_sennheiser_on_head">Detecção de uso</string>
+    <string name="vendor_sennheiser_on_head_hint">Permite que o fone perceba quando você o tira</string>
+    <string name="vendor_sennheiser_smart_pause">Pausa inteligente</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Pausa a música ao tirar o fone (precisa da detecção de uso)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Pausa a música ao tirar um fone da orelha</string>
+    <string name="vendor_sennheiser_auto_answer">Atender chamadas automaticamente</string>
+    <string name="vendor_sennheiser_comfort_call">Chamada conforto</string>
+    <string name="vendor_sennheiser_sidetone">Retorno de voz</string>
+    <string name="vendor_sennheiser_sidetone_hint">Ouça a sua própria voz durante as chamadas</string>
+    <string name="vendor_sennheiser_auto_off">Desligamento automático</string>
+    <string name="vendor_sennheiser_auto_off_hint">Desliga depois de um tempo sem conexão</string>
+    <string name="vendor_sennheiser_bass_boost">Reforço de graves</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Desligado</string>
+    <string name="sennheiser_option_max">Máx.</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Baixo</string>
+    <string name="sennheiser_option_medium">Médio</string>
+    <string name="sennheiser_option_high">Alto</string>
+    <string name="sennheiser_option_never">Nunca</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 h</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Experimental: feito a partir de pesquisas publicadas e de um fone virtual, ainda não testado em hardware real.</string>
+    <string name="sennheiser_note_no_features">Experimental: este fone não listou suas funções, então o Ruru não lê mais nada e não envia nada.</string>
+</resources>

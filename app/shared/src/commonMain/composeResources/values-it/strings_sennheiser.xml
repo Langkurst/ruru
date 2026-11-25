@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Cancellazione del rumore adattiva</string>
+    <string name="vendor_sennheiser_adaptive_hint">Regola la cancellazione in base all'ambiente</string>
+    <string name="vendor_sennheiser_anti_wind">Antivento</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Riduce il rumore del vento quando la cancellazione del rumore è attiva</string>
+    <string name="vendor_sennheiser_comfort">Modalità comfort</string>
+    <string name="vendor_sennheiser_comfort_hint">Impostazione comfort di Sennheiser per la cancellazione del rumore; l'effetto esatto non è confermato</string>
+    <string name="vendor_sennheiser_transparency_level">Livello di trasparenza</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Pausa della musica in trasparenza</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Mette in pausa la riproduzione quando la trasparenza è al massimo</string>
+    <string name="vendor_sennheiser_on_head">Rilevamento indossato</string>
+    <string name="vendor_sennheiser_on_head_hint">Permette alle cuffie di capire quando le togli</string>
+    <string name="vendor_sennheiser_smart_pause">Pausa intelligente</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Mette in pausa la musica quando le togli (richiede il rilevamento indossato)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Mette in pausa la musica quando togli un auricolare</string>
+    <string name="vendor_sennheiser_auto_answer">Risposta automatica alle chiamate</string>
+    <string name="vendor_sennheiser_comfort_call">Chiamata comfort</string>
+    <string name="vendor_sennheiser_sidetone">Effetto locale</string>
+    <string name="vendor_sennheiser_sidetone_hint">Ascolta la tua voce durante le chiamate</string>
+    <string name="vendor_sennheiser_auto_off">Spegnimento automatico</string>
+    <string name="vendor_sennheiser_auto_off_hint">Si spengono dopo un po' senza connessione</string>
+    <string name="vendor_sennheiser_bass_boost">Potenziamento bassi</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Off</string>
+    <string name="sennheiser_option_max">Max</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Basso</string>
+    <string name="sennheiser_option_medium">Medio</string>
+    <string name="sennheiser_option_high">Alto</string>
+    <string name="sennheiser_option_never">Mai</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 h</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Sperimentale: creato da ricerche pubblicate e da una cuffia virtuale, non ancora provato su hardware reale.</string>
+    <string name="sennheiser_note_no_features">Sperimentale: queste cuffie non hanno elencato le loro funzioni, quindi Ruru non legge altro e non invia nulla.</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">自适应降噪</string>
+    <string name="vendor_sennheiser_adaptive_hint">根据周围环境调整降噪</string>
+    <string name="vendor_sennheiser_anti_wind">防风噪</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">降噪开启时降低风噪</string>
+    <string name="vendor_sennheiser_comfort">舒适模式</string>
+    <string name="vendor_sennheiser_comfort_hint">森海塞尔的降噪舒适设置;具体效果尚未确认</string>
+    <string name="vendor_sennheiser_transparency_level">通透等级</string>
+    <string name="vendor_sennheiser_pause_in_transparency">通透模式下暂停音乐</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">通透完全开启时暂停播放</string>
+    <string name="vendor_sennheiser_on_head">佩戴检测</string>
+    <string name="vendor_sennheiser_on_head_hint">让耳机察觉你何时摘下</string>
+    <string name="vendor_sennheiser_smart_pause">智能暂停</string>
+    <string name="vendor_sennheiser_smart_pause_hint">摘下耳机时暂停音乐(需要佩戴检测)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">取出一只耳机时暂停音乐</string>
+    <string name="vendor_sennheiser_auto_answer">自动接听来电</string>
+    <string name="vendor_sennheiser_comfort_call">舒适通话</string>
+    <string name="vendor_sennheiser_sidetone">侧音</string>
+    <string name="vendor_sennheiser_sidetone_hint">通话时听到自己的声音</string>
+    <string name="vendor_sennheiser_auto_off">自动关机</string>
+    <string name="vendor_sennheiser_auto_off_hint">一段时间没有连接后自动关机</string>
+    <string name="vendor_sennheiser_bass_boost">低音增强</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">关</string>
+    <string name="sennheiser_option_max">最大</string>
+    <string name="sennheiser_option_auto">自动</string>
+    <string name="sennheiser_option_low">低</string>
+    <string name="sennheiser_option_medium">中</string>
+    <string name="sennheiser_option_high">高</string>
+    <string name="sennheiser_option_never">从不</string>
+    <string name="sennheiser_option_15_min">15 分钟</string>
+    <string name="sennheiser_option_30_min">30 分钟</string>
+    <string name="sennheiser_option_1_h">1 小时</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">实验性:根据已发布的研究和虚拟耳机制作,尚未在真实设备上测试。</string>
+    <string name="sennheiser_note_no_features">实验性:这款耳机没有列出它的功能,所以 Ruru 不再读取更多内容,也不会向它发送任何内容。</string>
+</resources>

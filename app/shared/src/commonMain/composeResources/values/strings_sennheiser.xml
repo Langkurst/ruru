@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Adaptive noise cancelling</string>
+    <string name="vendor_sennheiser_adaptive_hint">Adjusts the cancelling to your surroundings</string>
+    <string name="vendor_sennheiser_anti_wind">Anti-wind</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Lowers wind noise while noise cancelling is on</string>
+    <string name="vendor_sennheiser_comfort">Comfort mode</string>
+    <string name="vendor_sennheiser_comfort_hint">Sennheiser's comfort setting for noise cancelling; its exact effect is unconfirmed</string>
+    <string name="vendor_sennheiser_transparency_level">Transparency level</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Pause music in transparency</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Pauses playback while transparency is fully on</string>
+    <string name="vendor_sennheiser_on_head">On-head detection</string>
+    <string name="vendor_sennheiser_on_head_hint">Lets the headphones notice when you take them off</string>
+    <string name="vendor_sennheiser_smart_pause">Smart pause</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Pauses music when you take them off (needs on-head detection)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Pauses music when you take an earbud out</string>
+    <string name="vendor_sennheiser_auto_answer">Auto-answer calls</string>
+    <string name="vendor_sennheiser_comfort_call">Comfort call</string>
+    <string name="vendor_sennheiser_sidetone">Sidetone</string>
+    <string name="vendor_sennheiser_sidetone_hint">Hear your own voice during calls</string>
+    <string name="vendor_sennheiser_auto_off">Auto power off</string>
+    <string name="vendor_sennheiser_auto_off_hint">Switch off after a while without a connection</string>
+    <string name="vendor_sennheiser_bass_boost">Bass boost</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Off</string>
+    <string name="sennheiser_option_max">Max</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Low</string>
+    <string name="sennheiser_option_medium">Medium</string>
+    <string name="sennheiser_option_high">High</string>
+    <string name="sennheiser_option_never">Never</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 h</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Experimental: built from published research and a virtual headset, not yet tried on real hardware.</string>
+    <string name="sennheiser_note_no_features">Experimental: these headphones didn't list their features, so Ruru reads nothing more and sends them nothing.</string>
+</resources>

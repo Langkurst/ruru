@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Réduction de bruit adaptative</string>
+    <string name="vendor_sennheiser_adaptive_hint">Ajuste la réduction à votre environnement</string>
+    <string name="vendor_sennheiser_anti_wind">Anti-vent</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Réduit le bruit du vent quand la réduction de bruit est activée</string>
+    <string name="vendor_sennheiser_comfort">Mode confort</string>
+    <string name="vendor_sennheiser_comfort_hint">Réglage de confort de Sennheiser pour la réduction de bruit ; son effet exact n'est pas confirmé</string>
+    <string name="vendor_sennheiser_transparency_level">Niveau de transparence</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Pause de la musique en transparence</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Met la lecture en pause quand la transparence est à fond</string>
+    <string name="vendor_sennheiser_on_head">Détection du port</string>
+    <string name="vendor_sennheiser_on_head_hint">Permet au casque de savoir quand vous l'enlevez</string>
+    <string name="vendor_sennheiser_smart_pause">Pause intelligente</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Met la musique en pause quand vous l'enlevez (nécessite la détection du port)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Met la musique en pause quand vous retirez un écouteur</string>
+    <string name="vendor_sennheiser_auto_answer">Réponse automatique aux appels</string>
+    <string name="vendor_sennheiser_comfort_call">Appel confort</string>
+    <string name="vendor_sennheiser_sidetone">Retour de voix</string>
+    <string name="vendor_sennheiser_sidetone_hint">Entendre sa propre voix pendant les appels</string>
+    <string name="vendor_sennheiser_auto_off">Extinction automatique</string>
+    <string name="vendor_sennheiser_auto_off_hint">S'éteint après un moment sans connexion</string>
+    <string name="vendor_sennheiser_bass_boost">Renfort des basses</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Désactivé</string>
+    <string name="sennheiser_option_max">Max</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Faible</string>
+    <string name="sennheiser_option_medium">Moyen</string>
+    <string name="sennheiser_option_high">Élevé</string>
+    <string name="sennheiser_option_never">Jamais</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 h</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Expérimental : conçu à partir de recherches publiées et d'un casque virtuel, pas encore essayé sur du vrai matériel.</string>
+    <string name="sennheiser_note_no_features">Expérimental : ce casque n'a pas listé ses fonctions, donc Ruru ne lit rien de plus et ne lui envoie rien.</string>
+</resources>

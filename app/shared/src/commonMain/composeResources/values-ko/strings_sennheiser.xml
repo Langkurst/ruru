@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">어댑티브 노이즈 캔슬링</string>
+    <string name="vendor_sennheiser_adaptive_hint">주변 환경에 맞춰 노이즈 캔슬링을 조절합니다</string>
+    <string name="vendor_sennheiser_anti_wind">바람 소리 차단</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">노이즈 캔슬링이 켜져 있는 동안 바람 소리를 줄입니다</string>
+    <string name="vendor_sennheiser_comfort">컴포트 모드</string>
+    <string name="vendor_sennheiser_comfort_hint">노이즈 캔슬링용 젠하이저 컴포트 설정입니다. 정확한 효과는 확인되지 않았습니다</string>
+    <string name="vendor_sennheiser_transparency_level">주변 소리 단계</string>
+    <string name="vendor_sennheiser_pause_in_transparency">주변 소리 모드에서 음악 일시정지</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">주변 소리가 최대일 때 재생을 일시정지합니다</string>
+    <string name="vendor_sennheiser_on_head">착용 감지</string>
+    <string name="vendor_sennheiser_on_head_hint">헤드폰을 벗은 것을 알아차립니다</string>
+    <string name="vendor_sennheiser_smart_pause">스마트 일시정지</string>
+    <string name="vendor_sennheiser_smart_pause_hint">벗으면 음악을 일시정지합니다(착용 감지 필요)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">이어버드를 빼면 음악을 일시정지합니다</string>
+    <string name="vendor_sennheiser_auto_answer">통화 자동 받기</string>
+    <string name="vendor_sennheiser_comfort_call">컴포트 콜</string>
+    <string name="vendor_sennheiser_sidetone">사이드톤</string>
+    <string name="vendor_sennheiser_sidetone_hint">통화 중 내 목소리를 들을 수 있습니다</string>
+    <string name="vendor_sennheiser_auto_off">자동 전원 끄기</string>
+    <string name="vendor_sennheiser_auto_off_hint">연결이 없는 상태가 이어지면 전원이 꺼집니다</string>
+    <string name="vendor_sennheiser_bass_boost">베이스 부스트</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">끔</string>
+    <string name="sennheiser_option_max">최대</string>
+    <string name="sennheiser_option_auto">자동</string>
+    <string name="sennheiser_option_low">낮음</string>
+    <string name="sennheiser_option_medium">보통</string>
+    <string name="sennheiser_option_high">높음</string>
+    <string name="sennheiser_option_never">안 함</string>
+    <string name="sennheiser_option_15_min">15분</string>
+    <string name="sennheiser_option_30_min">30분</string>
+    <string name="sennheiser_option_1_h">1시간</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">실험적: 공개된 연구와 가상 헤드셋을 바탕으로 만들었으며 실제 기기에서는 아직 시험하지 않았습니다.</string>
+    <string name="sennheiser_note_no_features">실험적: 이 헤드폰이 기능 목록을 알려 주지 않아 Ruru는 더 읽지 않고 아무것도 보내지 않습니다.</string>
+</resources>

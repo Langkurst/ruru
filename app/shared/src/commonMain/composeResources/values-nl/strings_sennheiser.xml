@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Sennheiser headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_sennheiser_adaptive">Adaptieve ruisonderdrukking</string>
+    <string name="vendor_sennheiser_adaptive_hint">Past de onderdrukking aan je omgeving aan</string>
+    <string name="vendor_sennheiser_anti_wind">Anti-wind</string>
+    <string name="vendor_sennheiser_anti_wind_earbuds_hint">Verlaagt windruis zolang ruisonderdrukking aanstaat</string>
+    <string name="vendor_sennheiser_comfort">Comfortmodus</string>
+    <string name="vendor_sennheiser_comfort_hint">Sennheisers comfortinstelling voor ruisonderdrukking; het precieze effect is niet bevestigd</string>
+    <string name="vendor_sennheiser_transparency_level">Transparantieniveau</string>
+    <string name="vendor_sennheiser_pause_in_transparency">Muziek pauzeren bij transparantie</string>
+    <string name="vendor_sennheiser_pause_in_transparency_hint">Pauzeert het afspelen zolang transparantie volledig aanstaat</string>
+    <string name="vendor_sennheiser_on_head">Draagdetectie</string>
+    <string name="vendor_sennheiser_on_head_hint">Laat de koptelefoon merken wanneer je hem afdoet</string>
+    <string name="vendor_sennheiser_smart_pause">Slimme pauze</string>
+    <string name="vendor_sennheiser_smart_pause_hint">Pauzeert de muziek als je hem afdoet (vereist draagdetectie)</string>
+    <string name="vendor_sennheiser_smart_pause_earbuds_hint">Pauzeert de muziek als je een oordopje eruit haalt</string>
+    <string name="vendor_sennheiser_auto_answer">Gesprekken automatisch aannemen</string>
+    <string name="vendor_sennheiser_comfort_call">Comfortgesprek</string>
+    <string name="vendor_sennheiser_sidetone">Eigen stem</string>
+    <string name="vendor_sennheiser_sidetone_hint">Hoor je eigen stem tijdens gesprekken</string>
+    <string name="vendor_sennheiser_auto_off">Automatisch uitschakelen</string>
+    <string name="vendor_sennheiser_auto_off_hint">Gaat uit na een tijdje zonder verbinding</string>
+    <string name="vendor_sennheiser_bass_boost">Bassversterking</string>
+
+    <!-- Choices -->
+    <string name="sennheiser_option_off">Uit</string>
+    <string name="sennheiser_option_max">Max</string>
+    <string name="sennheiser_option_auto">Auto</string>
+    <string name="sennheiser_option_low">Laag</string>
+    <string name="sennheiser_option_medium">Midden</string>
+    <string name="sennheiser_option_high">Hoog</string>
+    <string name="sennheiser_option_never">Nooit</string>
+    <string name="sennheiser_option_15_min">15 min</string>
+    <string name="sennheiser_option_30_min">30 min</string>
+    <string name="sennheiser_option_1_h">1 uur</string>
+
+    <!-- Notes -->
+    <string name="sennheiser_note_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele headset, nog niet getest op echte hardware.</string>
+    <string name="sennheiser_note_no_features">Experimenteel: deze koptelefoon gaf zijn functies niet door, dus Ruru leest niets meer en stuurt niets.</string>
+</resources>
