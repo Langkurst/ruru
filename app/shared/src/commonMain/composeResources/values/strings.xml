@@ -22,6 +22,23 @@
     <string name="header_with_demo">%1$s, demo mode</string>
     <string name="battery_percent">Battery %1$d%</string>
     <string name="battery_percent_charging">Battery %1$d%, charging</string>
+    <!-- Time left, mic chip, favourite stars, now playing and volume -->
+    <string name="battery_left_hours">about %1$d h left</string>
+    <string name="battery_left_minutes">about %1$d min left</string>
+    <string name="mic_muted_chip">Mic muted</string>
+    <string name="modes_favourite_add">Add %1$s to favourites</string>
+    <string name="modes_favourite_remove">Remove %1$s from favourites</string>
+    <string name="playback_playing">Playing</string>
+    <string name="playback_paused">Paused</string>
+    <string name="playback_stopped">Stopped</string>
+    <string name="playback_forwarding">Fast forwarding</string>
+    <string name="playback_rewinding">Rewinding</string>
+    <string name="transport_previous">Previous track</string>
+    <string name="transport_next">Next track</string>
+    <string name="transport_play">Play</string>
+    <string name="transport_pause">Pause</string>
+    <string name="volume_label">Volume</string>
+    <string name="volume_of">%1$d of %2$d</string>
 
     <!-- Screen shown while there are no headphones -->
     <string name="starting_title">Looking for your headphones</string>

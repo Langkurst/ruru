@@ -9,6 +9,7 @@ import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.ui.EqPanel
 import io.github.langkurst.ruru.ui.ModesPanel
 import io.github.langkurst.ruru.ui.NoisePanel
+import io.github.langkurst.ruru.ui.NowPlayingPanel
 import io.github.langkurst.ruru.ui.res.*
 import org.jetbrains.compose.resources.stringResource
 
@@ -21,6 +22,7 @@ internal fun SoundPage(state: AppState, controller: HeadsetController) {
     val noise = h.noise?.takeIf { caps.noiseCancelling }
     PageFrame(stringResource(Res.string.page_sound), stringResource(Res.string.page_sound_lead), state, controller) {
         Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            NowPlayingPanel(h, controller)
             Columns(listOf(modes, noise != null).count { it }) {
                 if (modes) ModesPanel(h, controller, column())
                 if (noise != null) NoisePanel(h, noise, controller, column())

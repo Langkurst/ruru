@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s, 데모 모드</string>
     <string name="battery_percent">배터리 %1$d%</string>
     <string name="battery_percent_charging">배터리 %1$d%, 충전 중</string>
+    <string name="battery_left_hours">약 %1$d시간 남음</string>
+    <string name="battery_left_minutes">약 %1$d분 남음</string>
+    <string name="mic_muted_chip">마이크 음소거됨</string>
+    <string name="modes_favourite_add">%1$s 즐겨찾기에 추가</string>
+    <string name="modes_favourite_remove">%1$s 즐겨찾기에서 제거</string>
+    <string name="playback_playing">재생 중</string>
+    <string name="playback_paused">일시정지됨</string>
+    <string name="playback_stopped">정지됨</string>
+    <string name="playback_forwarding">빨리 감기</string>
+    <string name="playback_rewinding">되감기</string>
+    <string name="transport_previous">이전 트랙</string>
+    <string name="transport_next">다음 트랙</string>
+    <string name="transport_play">재생</string>
+    <string name="transport_pause">일시정지</string>
+    <string name="volume_label">볼륨</string>
+    <string name="volume_of">%2$d 중 %1$d</string>
 
     <!-- 헤드폰이 없을 때 보이는 화면 -->
     <string name="starting_title">헤드폰을 찾고 있어요</string>

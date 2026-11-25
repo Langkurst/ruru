@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s，演示模式</string>
     <string name="battery_percent">电量 %1$d%</string>
     <string name="battery_percent_charging">电量 %1$d%，充电中</string>
+    <string name="battery_left_hours">约剩 %1$d 小时</string>
+    <string name="battery_left_minutes">约剩 %1$d 分钟</string>
+    <string name="mic_muted_chip">麦克风已静音</string>
+    <string name="modes_favourite_add">将%1$s加入收藏</string>
+    <string name="modes_favourite_remove">将%1$s移出收藏</string>
+    <string name="playback_playing">播放中</string>
+    <string name="playback_paused">已暂停</string>
+    <string name="playback_stopped">已停止</string>
+    <string name="playback_forwarding">快进</string>
+    <string name="playback_rewinding">快退</string>
+    <string name="transport_previous">上一曲</string>
+    <string name="transport_next">下一曲</string>
+    <string name="transport_play">播放</string>
+    <string name="transport_pause">暂停</string>
+    <string name="volume_label">音量</string>
+    <string name="volume_of">%1$d / %2$d</string>
 
     <!-- Screen shown while there are no headphones -->
     <string name="starting_title">正在查找你的耳机</string>

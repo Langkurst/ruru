@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s, tryb demo</string>
     <string name="battery_percent">Bateria %1$d%</string>
     <string name="battery_percent_charging">Bateria %1$d%, ładowanie</string>
+    <string name="battery_left_hours">jeszcze ok. %1$d godz.</string>
+    <string name="battery_left_minutes">jeszcze ok. %1$d min</string>
+    <string name="mic_muted_chip">Mikrofon wyciszony</string>
+    <string name="modes_favourite_add">Dodaj %1$s do ulubionych</string>
+    <string name="modes_favourite_remove">Usuń %1$s z ulubionych</string>
+    <string name="playback_playing">Odtwarzanie</string>
+    <string name="playback_paused">Wstrzymano</string>
+    <string name="playback_stopped">Zatrzymano</string>
+    <string name="playback_forwarding">Przewijanie do przodu</string>
+    <string name="playback_rewinding">Przewijanie do tyłu</string>
+    <string name="transport_previous">Poprzedni utwór</string>
+    <string name="transport_next">Następny utwór</string>
+    <string name="transport_play">Odtwarzaj</string>
+    <string name="transport_pause">Wstrzymaj</string>
+    <string name="volume_label">Głośność</string>
+    <string name="volume_of">%1$d z %2$d</string>
 
     <!-- Screen shown while there are no headphones -->
     <string name="starting_title">Szukanie twoich słuchawek</string>

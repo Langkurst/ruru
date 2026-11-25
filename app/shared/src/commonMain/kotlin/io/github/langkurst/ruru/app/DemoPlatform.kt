@@ -7,6 +7,7 @@ import io.github.langkurst.ruru.link.LinkRoute
 import io.github.langkurst.ruru.link.RouteKind
 import io.github.langkurst.ruru.link.RouteNotOfferedException
 import io.github.langkurst.ruru.protocol.bose.ModePrompt
+import io.github.langkurst.ruru.protocol.bose.QcUltra2
 import io.github.langkurst.ruru.virtual.VirtualProfile
 import io.github.langkurst.ruru.virtual.VirtualQcUltra2
 import io.github.langkurst.ruru.virtual.VirtualSlot
@@ -34,6 +35,10 @@ class DemoPlatform(profile: VirtualProfile = PROFILE) : HeadsetPlatform {
     companion object {
         val PROFILE: VirtualProfile = VirtualProfile.QC_ULTRA_1.copy(
             customName = "Demo QC Ultra Headphones",
+            // The 1st Gen reports no time left and has no mic mute; the demo shows the time left to
+            // show where it goes, and keeps the 1st Gen's missing mic mute.
+            batteryMinutes = true,
+            absent = VirtualProfile.QC_ULTRA_1.absent + QcUltra2.MIC_MUTE,
             savedModes = mapOf(
                 3 to VirtualSlot(ModePrompt.COMMUTE, "Commute", cncWire = 3),
                 4 to VirtualSlot(ModePrompt.FOCUS, "Focus", cncWire = 0),

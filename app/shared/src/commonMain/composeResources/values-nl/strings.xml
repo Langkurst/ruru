@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s, demomodus</string>
     <string name="battery_percent">Batterij %1$d%</string>
     <string name="battery_percent_charging">Batterij %1$d%, wordt opgeladen</string>
+    <string name="battery_left_hours">nog ongeveer %1$d u</string>
+    <string name="battery_left_minutes">nog ongeveer %1$d min</string>
+    <string name="mic_muted_chip">Microfoon gedempt</string>
+    <string name="modes_favourite_add">%1$s toevoegen aan favorieten</string>
+    <string name="modes_favourite_remove">%1$s verwijderen uit favorieten</string>
+    <string name="playback_playing">Speelt af</string>
+    <string name="playback_paused">Gepauzeerd</string>
+    <string name="playback_stopped">Gestopt</string>
+    <string name="playback_forwarding">Vooruitspoelen</string>
+    <string name="playback_rewinding">Terugspoelen</string>
+    <string name="transport_previous">Vorig nummer</string>
+    <string name="transport_next">Volgend nummer</string>
+    <string name="transport_play">Afspelen</string>
+    <string name="transport_pause">Pauzeren</string>
+    <string name="volume_label">Volume</string>
+    <string name="volume_of">%1$d van %2$d</string>
 
     <!-- Screen shown while there are no headphones -->
     <string name="starting_title">Zoeken naar je koptelefoon</string>

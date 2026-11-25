@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s, mode démo</string>
     <string name="battery_percent">Batterie %1$d%</string>
     <string name="battery_percent_charging">Batterie %1$d%, en charge</string>
+    <string name="battery_left_hours">environ %1$d h restantes</string>
+    <string name="battery_left_minutes">environ %1$d min restantes</string>
+    <string name="mic_muted_chip">Micro coupé</string>
+    <string name="modes_favourite_add">Ajouter %1$s aux favoris</string>
+    <string name="modes_favourite_remove">Retirer %1$s des favoris</string>
+    <string name="playback_playing">Lecture</string>
+    <string name="playback_paused">En pause</string>
+    <string name="playback_stopped">Arrêté</string>
+    <string name="playback_forwarding">Avance rapide</string>
+    <string name="playback_rewinding">Retour rapide</string>
+    <string name="transport_previous">Piste précédente</string>
+    <string name="transport_next">Piste suivante</string>
+    <string name="transport_play">Lire</string>
+    <string name="transport_pause">Pause</string>
+    <string name="volume_label">Volume</string>
+    <string name="volume_of">%1$d sur %2$d</string>
 
     <!-- Screen shown while there are no headphones -->
     <string name="starting_title">Recherche de votre casque</string>

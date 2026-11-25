@@ -196,14 +196,20 @@ private fun Header(state: AppState) {
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Txt(name, t.title, c.ink, maxLines = 2)
-            Txt(if (state.demo) stringResource(Res.string.header_with_demo, line) else line, t.small, c.ink2, maxLines = 2)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Txt(if (state.demo) stringResource(Res.string.header_with_demo, line) else line, t.small, c.ink2, Modifier.weight(1f, fill = false), maxLines = 2)
+                if (state.phase == Phase.Connected && showMicChip(h)) {
+                    Spacer(Modifier.width(8.dp))
+                    MicChip()
+                }
+            }
         }
     }
-    if (state.phase == Phase.Connected) h.batteryPercent?.let { Battery(it, h.isCharging == true) }
+    if (state.phase == Phase.Connected) h.batteryPercent?.let { Battery(it, h.isCharging == true, minutesLeft(h)) }
 }
 
 @Composable
-private fun Battery(percent: Int, charging: Boolean) {
+private fun Battery(percent: Int, charging: Boolean, minutesLeft: Int?) {
     val c = Ruru.colors
     val low = percent <= 15 && !charging
     Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -211,6 +217,10 @@ private fun Battery(percent: Int, charging: Boolean) {
         Spacer(Modifier.width(10.dp))
         Box(Modifier.width(72.dp).height(4.dp).clip(RoundedCornerShape(2.dp)).background(c.ink4.copy(alpha = 0.4f))) {
             Box(Modifier.width(72.dp * (percent.coerceIn(0, 100) / 100f)).height(4.dp).clip(RoundedCornerShape(2.dp)).background(if (low) c.alarm else c.ink2))
+        }
+        if (minutesLeft != null) {
+            Spacer(Modifier.width(10.dp))
+            Txt(hoursLeftText(minutesLeft), Ruru.type.small, c.ink3, maxLines = 1)
         }
     }
 }
@@ -290,6 +300,7 @@ private fun NotConnected(state: AppState, controller: HeadsetController, model: 
 @Composable
 private fun Connected(h: HeadphoneState, controller: HeadsetController) {
     val caps = h.capabilities
+    NowPlayingPanel(h, controller)
     if (caps.listeningModes && h.modes.isNotEmpty()) ModesPanel(h, controller)
     if (caps.noiseCancelling && h.noise != null) NoisePanel(h, h.noise!!, controller)
     h.eq?.let { EqPanel(it, h.eqRange ?: -10..10, controller) }
@@ -315,7 +326,7 @@ internal fun ShortcutPanel(h: HeadphoneState, controller: HeadsetController, mod
 /** Whether the Sound page has anything on it. */
 internal fun hasSound(h: HeadphoneState): Boolean {
     val caps = h.capabilities
-    return (caps.listeningModes && h.modes.isNotEmpty()) || (caps.noiseCancelling && h.noise != null) || h.eq != null
+    return (caps.listeningModes && h.modes.isNotEmpty()) || (caps.noiseCancelling && h.noise != null) || h.eq != null || hasNowPlaying(h)
 }
 
 private fun ListeningMode.isEmptySlot() = !isPreset && (!isConfigured || name.isBlank())
@@ -329,7 +340,7 @@ internal fun ModesPanel(h: HeadphoneState, controller: HeadsetController, modifi
     var adding by remember { mutableStateOf(false) }
     var confirmRemove by remember(h.currentModeIndex) { mutableStateOf(false) }
     Panel(stringResource(Res.string.panel_modes), modifier.animateContentSize(moveSpec())) {
-        ModeList(shown, h.currentModeIndex, controller::setMode)
+        ModeList(shown, h.currentModeIndex, controller::setMode, h.capabilities.favoriteModes, controller::setFavorite)
         if (adding && freeSlot != null) {
             Spacer(Modifier.height(8.dp))
             NewModeEditor(onSave = { name ->
@@ -355,7 +366,7 @@ internal fun ModesPanel(h: HeadphoneState, controller: HeadsetController, modifi
 }
 
 @Composable
-private fun ModeList(modes: List<ListeningMode>, current: Int?, onSelect: (Int) -> Unit) {
+private fun ModeList(modes: List<ListeningMode>, current: Int?, onSelect: (Int) -> Unit, stars: Boolean, onFavourite: (Int, Boolean) -> Unit) {
     val c = Ruru.colors
     val rowHeight = 40.dp
     val selectedRow = modes.indexOfFirst { it.index == current }
@@ -383,11 +394,13 @@ private fun ModeList(modes: List<ListeningMode>, current: Int?, onSelect: (Int) 
                         .background(tint)
                         .selectable(selected, role = Role.RadioButton, interactionSource = interaction, indication = null) { onSelect(mode.index) }
                         .hoverable(interaction)
-                        .padding(horizontal = 12.dp),
+                        .padding(start = 12.dp, end = if (stars) 0.dp else 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Txt(mode.name.ifBlank { stringResource(Res.string.modes_fallback_name, mode.index + 1) }, if (selected) Ruru.type.bodyMedium else Ruru.type.body, ink, Modifier.weight(1f), maxLines = 1)
+                    val name = mode.name.ifBlank { stringResource(Res.string.modes_fallback_name, mode.index + 1) }
+                    Txt(name, if (selected) Ruru.type.bodyMedium else Ruru.type.body, ink, Modifier.weight(1f), maxLines = 1)
                     if (!mode.isPreset) Txt(modeSummary(mode), Ruru.type.small, if (selected) c.onEye.copy(alpha = 0.7f) else c.ink3, maxLines = 1)
+                    if (stars) FavouriteStar(name, mode.isFavorite, selected) { onFavourite(mode.index, it) }
                 }
             }
         }

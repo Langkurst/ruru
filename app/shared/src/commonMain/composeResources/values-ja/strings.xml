@@ -22,6 +22,22 @@
     <string name="header_with_demo">%1$s、デモモード</string>
     <string name="battery_percent">バッテリー %1$d%</string>
     <string name="battery_percent_charging">バッテリー %1$d%、充電中</string>
+    <string name="battery_left_hours">残り約%1$d時間</string>
+    <string name="battery_left_minutes">残り約%1$d分</string>
+    <string name="mic_muted_chip">マイクはミュート中</string>
+    <string name="modes_favourite_add">%1$sをお気に入りに追加</string>
+    <string name="modes_favourite_remove">%1$sをお気に入りから削除</string>
+    <string name="playback_playing">再生中</string>
+    <string name="playback_paused">一時停止中</string>
+    <string name="playback_stopped">停止中</string>
+    <string name="playback_forwarding">早送り</string>
+    <string name="playback_rewinding">巻き戻し</string>
+    <string name="transport_previous">前のトラック</string>
+    <string name="transport_next">次のトラック</string>
+    <string name="transport_play">再生</string>
+    <string name="transport_pause">一時停止</string>
+    <string name="volume_label">音量</string>
+    <string name="volume_of">%2$d中%1$d</string>
 
     <!-- ヘッドホンがないときの画面 -->
     <string name="starting_title">ヘッドホンを探しています</string>

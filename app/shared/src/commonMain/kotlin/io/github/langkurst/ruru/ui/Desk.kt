@@ -256,11 +256,15 @@ private fun Sidebar(
                 Row(Modifier.padding(top = 2.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(Modifier.size(7.dp).clip(CircleShape).background(dot))
                     Spacer(Modifier.width(6.dp))
-                    Txt(if (state.demo) stringResource(Res.string.header_with_demo, line) else line, t.small, c.ink3, maxLines = 1)
+                    Txt(if (state.demo) stringResource(Res.string.header_with_demo, line) else line, t.small, c.ink3, Modifier.weight(1f, fill = false), maxLines = 1)
+                    if (connected && showMicChip(h)) {
+                        Spacer(Modifier.width(8.dp))
+                        MicChip()
+                    }
                 }
             }
         }
-        if (connected) h.batteryPercent?.let { SidebarBattery(it, h.isCharging == true) }
+        if (connected) h.batteryPercent?.let { SidebarBattery(it, h.isCharging == true, minutesLeft(h)) }
         val pagesLabel = stringResource(Res.string.nav_pages)
         Column(Modifier.selectableGroup().semantics { contentDescription = pagesLabel }, verticalArrangement = Arrangement.spacedBy(2.dp)) {
             navPages.forEach { page ->
@@ -287,15 +291,18 @@ private fun Sidebar(
 }
 
 @Composable
-private fun SidebarBattery(percent: Int, charging: Boolean) {
+private fun SidebarBattery(percent: Int, charging: Boolean, minutesLeft: Int?) {
     val c = Ruru.colors
     val low = percent <= 15 && !charging
-    Row(Modifier.fillMaxWidth().padding(start = 6.dp, end = 6.dp, bottom = 16.dp), verticalAlignment = Alignment.CenterVertically) {
-        Txt(stringResource(if (charging) Res.string.battery_percent_charging else Res.string.battery_percent, percent), Ruru.type.small, if (low) c.alarm else c.ink3, maxLines = 1)
-        Spacer(Modifier.width(8.dp))
-        Box(Modifier.weight(1f).height(4.dp).clip(RoundedCornerShape(2.dp)).background(c.lineSoft)) {
-            Box(Modifier.fillMaxWidth(percent.coerceIn(0, 100) / 100f).height(4.dp).clip(RoundedCornerShape(2.dp)).background(if (low) c.alarm else c.ink2))
+    Column(Modifier.fillMaxWidth().padding(start = 6.dp, end = 6.dp, bottom = 16.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Txt(stringResource(if (charging) Res.string.battery_percent_charging else Res.string.battery_percent, percent), Ruru.type.small, if (low) c.alarm else c.ink3, maxLines = 1)
+            Spacer(Modifier.width(8.dp))
+            Box(Modifier.weight(1f).height(4.dp).clip(RoundedCornerShape(2.dp)).background(c.lineSoft)) {
+                Box(Modifier.fillMaxWidth(percent.coerceIn(0, 100) / 100f).height(4.dp).clip(RoundedCornerShape(2.dp)).background(if (low) c.alarm else c.ink2))
+            }
         }
+        if (minutesLeft != null) Txt(hoursLeftText(minutesLeft), Ruru.type.small, c.ink3, Modifier.padding(top = 2.dp), maxLines = 1)
     }
 }
 

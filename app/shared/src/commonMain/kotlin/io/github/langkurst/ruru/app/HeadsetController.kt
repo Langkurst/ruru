@@ -8,6 +8,7 @@ import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.NoiseSettings
 import io.github.langkurst.ruru.core.Sidetone
+import io.github.langkurst.ruru.core.TransportControl
 import io.github.langkurst.ruru.link.ExplainedConnectException
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
@@ -86,6 +87,7 @@ class HeadsetController(
     /** The latest session, kept after it ends (as 0.2 kept its protocol) so a late push is still read. */
     @Volatile private var pushTarget: HeadsetSession? = null
     private var loopJob: Job? = null
+    private var volumeJob: Job? = null
 
     private val commands = StateCommands<HeadsetSession, Any>(
         state = headset,
@@ -131,6 +133,27 @@ class HeadsetController(
         command("save mode", HeadsetCommand.SaveMode(index, name, settings))
     fun removeMode(index: Int) = command("remove mode", HeadsetCommand.RemoveMode(index))
     fun setVoicePrompts(on: Boolean) = command("voice prompts", HeadsetCommand.SetVoicePrompts(on))
+
+    /** Star or unstar one mode: the whole favourites set is sent, as the headphones take it. */
+    fun setFavorite(index: Int, favorite: Boolean) {
+        val now = headset.value.modes.filter { it.isFavorite }.map { it.index }.toSet()
+        val next = if (favorite) now + index else now - index
+        if (next != now) command("favourite modes", HeadsetCommand.SetFavorites(next))
+    }
+
+    fun transport(control: TransportControl) = command("playback", HeadsetCommand.Transport(control))
+
+    /**
+     * Set the headphones' volume. A slider or key press can send many values in a row, so only the
+     * last one still unchanged after [VOLUME_DEBOUNCE_MS] is written.
+     */
+    fun setVolume(level: Int) {
+        volumeJob?.cancel()
+        volumeJob = scope.launch {
+            delay(VOLUME_DEBOUNCE_MS)
+            command("volume", HeadsetCommand.SetVolume(level))
+        }
+    }
 
     private fun command(name: String, command: HeadsetCommand) {
         scope.launch {
@@ -339,6 +362,7 @@ class HeadsetController(
         private const val AFTER_DROP_MS = 1_500L
         private const val FIRST_BACKOFF_MS = 2_000L
         private const val MAX_BACKOFF_MS = 30_000L
+        private const val VOLUME_DEBOUNCE_MS = 250L
         private const val POLL_MS = 60_000L
         private const val LIVE_POLL_MS = 300_000L
     }

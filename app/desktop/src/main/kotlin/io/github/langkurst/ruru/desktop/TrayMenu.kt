@@ -4,6 +4,7 @@ import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.BatteryNotices
 import io.github.langkurst.ruru.app.Phase
+import io.github.langkurst.ruru.app.quickModes
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.ui.resolve
 import kotlinx.coroutines.CoroutineScope
@@ -140,8 +141,7 @@ internal class TrayMenu(
                                 current,
                             ).joinToString(Words("list_separator").resolve()),
                             status = battery?.let { Words(if (charging) "battery_percent_charging" else "battery_percent", it).resolve() } ?: name,
-                            modes = h.modes.filter { it.isPreset || (it.isConfigured && it.name.isNotBlank()) }
-                                .map { Triple(it.index, it.name, it.index == h.currentModeIndex) },
+                            modes = quickModes(h).map { Triple(it.index, it.name, it.index == h.currentModeIndex) },
                             openLabel = open,
                             quitLabel = quit,
                         )

@@ -70,7 +70,14 @@ The accent appears in at most two places on a screen. Switches and sliders are i
     have content, in the order given under "Pages". At the bottom: the update card (only while an update is checking, downloading,
     ready or failed; otherwise a "Check for updates" row) and "Ruru <version>  About  Support Ruru".
     About opens a page with the version, licence, demo switch, connection report and support.
-  - Sound: Listening mode and Noise in two equal columns, the Equaliser full width below, with the
+  - Only what the headphones report is drawn. The sidebar's battery gets a second line, "about 14 h left", when
+    the headphones give a time left (the QC Ultra 1st Gen does not). A small "Mic muted" chip (7dp radius, 1px
+    line, bark fill, ink-2 text) sits after the connected status only while the mic is muted. The phone header
+    shows the same two, on one line.
+  - Sound: a now playing strip first, one panel, one row: previous, play or pause and next (36dp buttons, 7dp
+    radius, 1px line, glyphs drawn in the app, ink), what the headphones are doing in ink-2, then the volume
+    slider with "8 of 31" in a fixed-width slot. A button the headphones do not list is not drawn, and there
+    is no track title because the headphones send none. On a phone the buttons and the volume stack. Below it: Listening mode and Noise in two equal columns, the Equaliser full width below, with the
     response curve (2dp ink line, a hairline at 0 dB) on the left half and the sliders on the right.
     Panels here are one shade darker than the page (night in dark, #FAFBF9 in light).
   - No headphones (looking, not paired, Bluetooth off, an error): the owl, a 20 / 600 title, the
@@ -109,6 +116,12 @@ its own page file and adds its page to `PageAvailability.ShippedPages`.
   high on night, with a 1px line on top, an icon (22dp, drawn in the app, no icon font or emoji) over
   the name. The chosen tab is ink, the others ink-3. No accent colour and no marker. On a phone the
   bar sits above the system's gesture or navigation bar, on the same colour.
+
+## Favourite modes
+
+Each mode row ends with a 16dp star (drawn in the app, ink at 50% until it is a favourite or hovered, filled
+when it is a favourite; on the yellow selected row it is the row's dark ink). Never the accent. The tray's quick
+list shows only the favourites once any are set, and every mode until then.
 
 ## Product animation
 

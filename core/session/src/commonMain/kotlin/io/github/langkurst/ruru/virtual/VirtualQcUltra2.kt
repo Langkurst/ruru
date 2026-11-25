@@ -859,7 +859,8 @@ class VirtualQcUltra2(
      * profile estimates them (three minutes per percent, a made-up rate).
      */
     private fun batteryPayload(): ByteArray {
-        if (profile.battery == VirtualBattery.SINGLE) return record(batteryPercent, null, 0)
+        // A single battery gives a time left only when the profile asks for one (twelve minutes per percent, made up).
+        if (profile.battery == VirtualBattery.SINGLE) return record(batteryPercent, if (profile.batteryMinutes) batteryPercent * 12 else null, 0)
         val left = (batteryPercent - 3).coerceAtLeast(0)
         fun minutes(p: Int) = if (profile.batteryMinutes) p * 3 else null
         return record(batteryPercent, minutes(batteryPercent), 1) + record(left, minutes(left), 2) +
