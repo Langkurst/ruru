@@ -1,6 +1,10 @@
 @font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
 @font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+/* Latin Extended-A (Polish and others): fetched only by a page that uses one of these characters. */
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Regular-ext.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; unicode-range: U+0100-017F, U+201A, U+201E, U+2039, U+203A; }
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-Medium-ext.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; unicode-range: U+0100-017F, U+201A, U+201E, U+2039, U+203A; }
+@font-face { font-family: "Mona Sans"; src: url("fonts/MonaSans-SemiBold-ext.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; unicode-range: U+0100-017F, U+201A, U+201E, U+2039, U+203A; }
 
 :root {
   color-scheme: dark light;
@@ -56,14 +60,14 @@ p { margin-bottom: 16px; }
 [hidden] { display: none !important; }
 
 a { color: inherit; }
-p a {
+p a, .list a {
   text-decoration: underline;
   text-decoration-color: var(--ink-4);
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
   transition: text-decoration-color 160ms var(--ease);
 }
-p a:hover { text-decoration-color: var(--ink); }
+p a:hover, .list a:hover { text-decoration-color: var(--ink); }
 :focus { outline: none; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 7px; }
 
@@ -74,6 +78,13 @@ p a:hover { text-decoration-color: var(--ink); }
   padding-left: var(--gutter);
   padding-right: var(--gutter);
 }
+
+/* Japanese, Chinese and Korean: Mona Sans for Latin text, the system's own font for the rest (no CJK web fonts). */
+body:lang(ja) { font-family: "Mona Sans", "Hiragino Sans", "Yu Gothic UI", "Meiryo UI", sans-serif; }
+body:lang(zh) { font-family: "Mona Sans", "PingFang SC", "Microsoft YaHei UI", "Noto Sans CJK SC", sans-serif; }
+body:lang(ko) { font-family: "Mona Sans", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", sans-serif; }
+/* Long words (German, Dutch, Polish) may break at a hyphen; English stays as it is. */
+html:not(:lang(en)) main { hyphens: auto; }
 
 /* Header */
 .header { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 12px; }
@@ -86,6 +97,34 @@ p a:hover { text-decoration-color: var(--ink); }
 }
 .nav a:hover { color: var(--ink); background: var(--raised); }
 @media (max-width: 639px) { .nav .optional { display: none; } }
+
+/* Language menu: a native select that looks like a nav link; the globe and arrow are drawn by the page. */
+.lang { position: relative; display: inline-flex; align-items: center; margin-left: 2px; }
+.lang select {
+  appearance: none; -webkit-appearance: none; field-sizing: content;
+  min-height: 40px; margin: 0; padding: 0 28px 0 32px;
+  font: inherit; font-size: 14px; color: var(--ink-2); background: transparent;
+  border: 0; border-radius: 7px; cursor: pointer;
+  transition: color 160ms var(--ease), background-color 160ms var(--ease);
+}
+.lang select:hover { color: var(--ink); background: var(--raised); }
+.lang option { color: var(--ink); background: var(--panel); }
+.lang .globe { position: absolute; left: 10px; top: 12px; color: var(--ink-2); pointer-events: none; }
+.lang::after {
+  content: ""; position: absolute; right: 12px; top: 16px; width: 5px; height: 5px;
+  border-right: 1.5px solid var(--ink-3); border-bottom: 1.5px solid var(--ink-3);
+  transform: rotate(45deg); pointer-events: none;
+}
+/* Narrow screens: the menu is just the globe (the list still shows the language names). */
+@media (max-width: 559px) {
+  .lang select { width: 36px; padding: 0; color: transparent; }
+  .lang::after { display: none; }
+}
+@media (max-width: 359px) {
+  .header { gap: 8px; }
+  .nav { margin-right: -8px; }
+  .nav a { padding: 0 8px; }
+}
 
 /* Intro */
 main { padding-bottom: 64px; }
@@ -197,6 +236,8 @@ tbody td:nth-child(2) { color: var(--ink); }
   th, td { padding: 10px 8px; }
   th:first-child, td:first-child { padding-left: 12px; }
   thead td { width: auto; }
+  /* Translated cells may hold long words: break them rather than push the table wider than the screen. */
+  html:not(:lang(en)) th, html:not(:lang(en)) td { overflow-wrap: anywhere; }
 }
 
 /* Footer */

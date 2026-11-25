@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#F4F5F3" media="(prefers-color-scheme: light)">
 <meta property="og:title" content="Ruru">
 <meta property="og:description" content="Ruru changes the settings on your Bose headphones. It works on your computer and on your phone.">
+<link rel="canonical" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="en" href="https://ruru-app.pages.dev/">
+<link rel="alternate" hreflang="x-default" href="https://ruru-app.pages.dev/">
 <meta property="og:image" content="https://ruru-app.pages.dev/img/ruru-dark.png">
 <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="img/owl-64.png" type="image/png" sizes="64x64">
@@ -17,6 +20,23 @@
 <link rel="preload" href="fonts/MonaSans-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/MonaSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
+<script id="strings" type="application/json">{
+ "locale": "en-NZ",
+ "hero.windows": "Download for Windows",
+ "hero.mac": "Download for Mac",
+ "hero.android": "Download for Android",
+ "hero.ios": "iPhone download",
+ "hero.linux": "Download for Linux",
+ "version": "Version {version}, released {date}",
+ "versionNoDate": "Version {version}",
+ "update.newer": "You have version {have}. The newest is {newest}.",
+ "update.same": "You have the newest version.",
+ "size": "{n} MB",
+ "noiseN": "Noise {n}",
+ "windBlock": "Wind Block",
+ "immersive": "Immersive",
+ "join": ", "
+}</script>
 <script src="app.js" defer></script>
 <script src="demo.js" defer></script>
 </head>
@@ -28,6 +48,12 @@
     <a class="optional" href="#compare">Compare</a>
     <a class="optional" href="#privacy">Privacy</a>
     <a href="https://github.com/Langkurst/ruru"><svg class="gh" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+    <div class="lang">
+      <svg class="globe" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.25"><circle cx="8" cy="8" r="6.5"/><ellipse cx="8" cy="8" rx="2.8" ry="6.5"/><path d="M1.5 8h13"/></g></svg>
+      <select id="lang" aria-label="Language">
+        <option value="/" lang="en" selected>English</option>
+      </select>
+    </div>
   </nav>
 </header>
 
@@ -263,6 +289,7 @@
     <a href="https://github.com/Langkurst/ruru/blob/main/CHANGELOG.md">Changelog</a>
     <a href="https://github.com/Langkurst/ruru/issues/new/choose">Report a problem</a>
     <a href="https://ko-fi.com/keaclip">Ko-fi</a>
+    <a href="code-signing.html">Code signing policy</a>
   </nav>
 </footer>
 </body>

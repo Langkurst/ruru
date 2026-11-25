@@ -14,6 +14,10 @@
   var $$ = function (s, r) { return [].slice.call((r || d).querySelectorAll(s)); };
   d.documentElement.classList.add("js");
 
+  // The words come from the page: build.mjs writes them as JSON in <script id="strings">.
+  var S = {};
+  try { S = JSON.parse(d.getElementById("strings").textContent) || {}; } catch (e) { S = {}; }
+
   // will-change only while an element moves: set now, cleared ms later.
   function hold(el, ms) {
     el.style.willChange = "transform";
@@ -48,10 +52,12 @@
   var sw = $(".sw", demo), segEl = $(".seg", demo), segs = $$(".sg button", demo), tap = $(".tap", demo);
   var sls = $$(".sl", demo), noise = sls[0], eqs = sls.slice(1);
   var reset = $("#d-reset", demo);
+  // p marks the built-in modes; the names are the ones written in the page, so they follow its language.
   var M = [
-    { n: "Quiet", p: 1, v: [10, 0, 0] }, { n: "Aware", p: 1, v: [3, 0, 0] }, { n: "Immersion", p: 1, v: [6, 0, 0] },
-    { n: "Commute", v: [7, 0, 0] }, { n: "Focus", v: [10, 0, 0] }
+    { p: 1, v: [10, 0, 0] }, { p: 1, v: [3, 0, 0] }, { p: 1, v: [6, 0, 0] },
+    { v: [7, 0, 0] }, { v: [10, 0, 0] }
   ];
+  M.forEach(function (m, i) { m.n = $(".lb .a", mb[i]).textContent; });
   var cur = 0;
 
   // Each label gets a second copy in ink-on-yellow; selecting a mode cross-fades them (opacity only).
@@ -90,10 +96,9 @@
 
   function summary(i) {
     var v = M[i].v;
-    if (M[i].p) return;
-    $$(".sm .a,.sm .b", mb[i]).forEach(function (n) {
-      n.textContent = "Noise " + v[0] + (v[1] ? ", Wind Block" : "") + (v[2] ? ", Immersive" : "");
-    });
+    if (M[i].p || !S.noiseN) return;
+    var text = S.noiseN.replace("{n}", v[0]) + (v[1] ? S.join + S.windBlock : "") + (v[2] ? S.join + S.immersive : "");
+    $$(".sm .a,.sm .b", mb[i]).forEach(function (n) { n.textContent = text; });
   }
 
   function paintSw(on) { sw.setAttribute("aria-checked", on ? "true" : "false"); }

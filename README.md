@@ -60,6 +60,11 @@ SmartScreen warning also comes back once for each new version.
 Close the Bose app on the same device first: only one app can control the headphones at a time.
 Ruru doesn't install firmware updates; use the Bose app for those.
 
+## Code signing policy
+
+Releases are unsigned for now. Ruru will apply for free code signing from SignPath Foundation.
+Read the [Code signing policy](https://ruru-app.pages.dev/code-signing.html).
+
 ## Stopping and removing Ruru
 
 Closing the window leaves Ruru running in the tray (the menu bar on a Mac), with the battery level

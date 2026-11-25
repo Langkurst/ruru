@@ -16,13 +16,24 @@
     ipa: ".ipa"
   };
 
+  // Which file the big button gets on each system. Its words are in the page's strings.
   var HERO = {
-    windows: { text: "Download for Windows", asset: "msi" },
-    mac: { text: "Download for Mac", asset: "dmg" },
-    android: { text: "Download for Android", asset: "apk" },
-    ios: { text: "iPhone download" },
-    linux: { text: "Download for Linux" }
+    windows: { asset: "msi" },
+    mac: { asset: "dmg" },
+    android: { asset: "apk" },
+    ios: {},
+    linux: {}
   };
+
+  // The words come from the page: build.mjs writes them as JSON in <script id="strings">.
+  var S = {};
+  try { S = JSON.parse(document.getElementById("strings").textContent) || {}; } catch (e) { S = {}; }
+  var LOCALE = S.locale || "en-NZ";
+  var LANG_KEY = "ruru-lang";
+
+  function fill(text, values) {
+    return String(text).replace(/\{(\w+)\}/g, function (m, name) { return name in values ? values[name] : m; });
+  }
 
   function detectSystem() {
     var nav = window.navigator;
@@ -69,7 +80,7 @@
       var el = document.getElementById("stars");
       // No count until there is at least one star: a 0 next to the button puts people off.
       if (!el || typeof repo.stargazers_count !== "number" || repo.stargazers_count < 1) return;
-      el.textContent = new Intl.NumberFormat("en-NZ").format(repo.stargazers_count);
+      el.textContent = new Intl.NumberFormat(LOCALE).format(repo.stargazers_count);
       el.hidden = false;
     }).catch(function () { /* the button works without the count */ });
   }
@@ -97,7 +108,7 @@
 
   function showUpdateNotice(have, newest) {
     var panel = document.querySelector("#download .panel");
-    if (!panel || !have || !VERSION_PATTERN.test(newest)) return;
+    if (!panel || !have || !VERSION_PATTERN.test(newest) || !S["update.newer"] || !S["update.same"]) return;
     var note = document.createElement("p");
     note.className = "notice";
     note.setAttribute("role", "status");
@@ -105,15 +116,15 @@
     // Fill it after it is in the page, so screen readers announce the text.
     window.setTimeout(function () {
       note.textContent = compareVersions(newest, have) > 0
-        ? "You have version " + have + ". The newest is " + newest + "."
-        : "You have the newest version.";
+        ? fill(S["update.newer"], { have: have, newest: newest })
+        : S["update.same"];
     }, 100);
   }
 
   function formatDate(iso) {
     var d = new Date(iso);
     if (isNaN(d.getTime())) return "";
-    return new Intl.DateTimeFormat("en-NZ", { day: "numeric", month: "long", year: "numeric", timeZone: "Pacific/Auckland" }).format(d);
+    return new Intl.DateTimeFormat(LOCALE, { day: "numeric", month: "long", year: "numeric", timeZone: "Pacific/Auckland" }).format(d);
   }
 
   function findAsset(assets, suffix) {
@@ -150,7 +161,7 @@
         link.href = asset.browser_download_url;
         urls[key] = asset.browser_download_url;
         if (size && typeof asset.size === "number") {
-          size.textContent = (asset.size / 1e6).toFixed(1) + " MB";
+          size.textContent = fill(S.size || "{n} MB", { n: new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(asset.size / 1e6) });
           size.classList.add("ready");
           size.removeAttribute("aria-hidden");
         } else if (size) {
@@ -164,22 +175,35 @@
     var version = document.getElementById("version");
     var tag = typeof release.tag_name === "string" ? release.tag_name.replace(/^v/i, "") : "";
     var date = release.published_at ? formatDate(release.published_at) : "";
-    if (version && tag) {
-      version.textContent = "Version " + tag + (date ? ", released " + date : "");
+    if (version && tag && S.version && S.versionNoDate) {
+      version.textContent = date ? fill(S.version, { version: tag, date: date }) : fill(S.versionNoDate, { version: tag });
     }
 
     showUpdateNotice(readHaveVersion(), tag);
 
     var hero = document.getElementById("hero-button");
     var choice = HERO[system];
-    if (hero && choice) {
-      hero.textContent = choice.text;
+    if (hero && choice && S["hero." + system]) {
+      hero.textContent = S["hero." + system];
       if (choice.asset && urls[choice.asset]) hero.href = urls[choice.asset];
       else hero.setAttribute("href", "#download");
     }
   }
 
+  // The language menu: go to that language's page and remember the choice (build.mjs writes the options).
+  function initLanguageMenu() {
+    var menu = document.getElementById("lang");
+    if (!menu) return;
+    menu.addEventListener("change", function () {
+      var option = menu.options[menu.selectedIndex];
+      if (!option) return;
+      try { window.localStorage.setItem(LANG_KEY, option.lang); } catch (e) { /* storage unavailable */ }
+      window.location.href = option.value + window.location.search + window.location.hash;
+    });
+  }
+
   function init() {
+    initLanguageMenu();
     var system = detectSystem();
     markSystem(system);
     showStars();
