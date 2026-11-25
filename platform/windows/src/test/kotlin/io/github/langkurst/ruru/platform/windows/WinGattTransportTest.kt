@@ -146,9 +146,9 @@ class WinGattTransportTest {
 
     @Test
     fun routesFollowTheHelper() {
-        assertEquals(setOf(RouteKind.BOSE_RFCOMM), WindowsHeadsetPlatform(ble = null).routes)
+        assertEquals(setOf(RouteKind.BOSE_RFCOMM, RouteKind.RFCOMM_SERVICE), WindowsHeadsetPlatform(ble = null).routes)
         assertEquals(
-            setOf(RouteKind.BOSE_RFCOMM, RouteKind.BOSE_LE, RouteKind.GATT),
+            setOf(RouteKind.BOSE_RFCOMM, RouteKind.RFCOMM_SERVICE, RouteKind.BOSE_LE, RouteKind.GATT),
             WindowsHeadsetPlatform(ble = WinBleHelper(File("missing-helper.exe"))).routes,
         )
     }
@@ -158,7 +158,8 @@ class WinGattTransportTest {
         val classic = HeadsetCandidate(key = "a1b2c3d4e5f6", name = "Bose QC Ultra Headphones", connected = true)
         // No helper: refused as a route the platform does not offer.
         assertFailsWith<RouteNotOfferedException> { WindowsHeadsetPlatform(ble = null).open(classic, LinkRoute.BoseLe) }
-        assertFailsWith<RouteNotOfferedException> { WindowsHeadsetPlatform(ble = null).open(classic, LinkRoute.RfcommService("00001101-0000-1000-8000-00805f9b34fb")) }
+        val uuid = "0000fe59-0000-1000-8000-00805f9b34fb"
+        assertFailsWith<RouteNotOfferedException> { WindowsHeadsetPlatform(ble = null).open(classic, LinkRoute.Gatt(io.github.langkurst.ruru.link.GattLinkSpec("t", uuid, uuid, listOf(uuid)))) }
         // With a helper (that doesn't exist, so starting it would fail differently): a classic key is never handed over.
         val e = assertFailsWith<IOException> { WindowsHeadsetPlatform(ble = WinBleHelper(File("missing-helper.exe"))).open(classic, LinkRoute.BoseLe) }
         assertEquals("Bose QC Ultra Headphones is not in Windows' Bluetooth LE list", e.message)

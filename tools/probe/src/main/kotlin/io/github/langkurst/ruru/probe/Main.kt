@@ -38,6 +38,18 @@ fun main(args: Array<String>) {
     val started = System.nanoTime()
     fun ms() = (System.nanoTime() - started) / 1_000_000
 
+    // --try-uuid=<uuid>: opens that RFCOMM service by UUID and sends nothing (hardware check H2).
+    val tryUuid = try {
+        TryUuid.parse(args)
+    } catch (e: IllegalArgumentException) {
+        println("RESULT: ${e.message}")
+        exitProcess(2)
+    }
+    if (tryUuid != null) {
+        TryUuid.run(tryUuid)
+        return
+    }
+
     // --le: the same reads over Bluetooth LE (Bose's FEBE service) through ruru-ble-win.exe. Reads only.
     val socket: ProbeLink = if ("--le" in args) {
         if ("--session" in args || "--write-test" in args) {

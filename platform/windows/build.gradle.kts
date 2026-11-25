@@ -19,6 +19,7 @@ kotlin {
 dependencies {
     api(project(":core:session"))
     implementation(libs.jna)
+    testImplementation(project(":core:vendors"))
     testImplementation(libs.kotlin.test)
     testImplementation(libs.junit)
 }

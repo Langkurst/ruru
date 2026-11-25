@@ -4,6 +4,7 @@ import com.sun.jna.Library
 import com.sun.jna.Memory
 import com.sun.jna.Native
 import com.sun.jna.Pointer
+import com.sun.jna.ptr.IntByReference
 import java.io.Closeable
 import java.io.IOException
 
@@ -16,7 +17,37 @@ import java.io.IOException
 object WinBluetooth {
 
     /** A paired device. [address] is kept inside the app and never printed. */
-    class Device(val name: String, internal val address: Long, val connected: Boolean)
+    class Device(
+        val name: String,
+        internal val address: Long,
+        val connected: Boolean,
+        /** The Bluetooth class of device (major class 4 is audio/video); 0 when unknown. */
+        internal val classOfDevice: Int = 0,
+        /** Windows' BLUETOOTH_DEVICE_INFO for this device, kept to ask it for its services. */
+        internal val info: ByteArray = ByteArray(0),
+    )
+
+    /**
+     * The service UUIDs Windows has installed for [device] (lower case), read from its own records:
+     * nothing is sent to the headset. Empty when Windows lists none or the call fails; a vendor
+     * service Windows has no driver for may not be listed.
+     */
+    fun cachedServices(device: Device): List<String> {
+        if (device.info.size != DEVICE_INFO_SIZE) return emptyList()
+        val info = Memory(DEVICE_INFO_SIZE.toLong()).apply { write(0, device.info, 0, device.info.size) }
+        var capacity = SERVICE_SLOTS
+        repeat(2) {
+            val guids = Memory((capacity * WinGuid.SIZE).toLong()).apply { clear() }
+            val count = IntByReference(capacity)
+            val rc = runCatching { BtApi.INSTANCE.BluetoothEnumerateInstalledServices(null, info, count, guids) }.getOrElse { return emptyList() }
+            when {
+                rc == 0 -> return WinGuid.parseList(guids.getByteArray(0, capacity * WinGuid.SIZE), count.value)
+                rc == ERROR_MORE_DATA && count.value > capacity -> capacity = count.value.coerceAtMost(MAX_SERVICE_SLOTS)
+                else -> return emptyList()
+            }
+        }
+        return emptyList()
+    }
 
     /** Paired devices Windows knows about (paired and remembered, with their connection state). */
     fun pairedDevices(): List<Device> {
@@ -38,7 +69,7 @@ object WinBluetooth {
         try {
             do {
                 val name = info.getWideString(64)
-                out.add(Device(name, info.getLong(8), connected = info.getInt(20) != 0))
+                out.add(Device(name, info.getLong(8), connected = info.getInt(20) != 0, classOfDevice = info.getInt(16), info = info.getByteArray(0, DEVICE_INFO_SIZE)))
                 resetInfo()
             } while (BtApi.INSTANCE.BluetoothFindNextDevice(find, info))
         } finally {
@@ -48,23 +79,31 @@ object WinBluetooth {
     }
 
     /** Opens the device's Serial Port service. Windows looks up the channel number itself (SDP). */
-    fun openSerialPort(device: Device, readTimeoutMs: Int = 2_000): RfcommSocket {
+    fun openSerialPort(device: Device, readTimeoutMs: Int = 2_000): RfcommSocket =
+        connectService(device, SPP_UUID, readTimeoutMs, classifyMissing = false)
+
+    /**
+     * Opens the RFCOMM service [uuid] (lower-case text) of [device]: port 0 and the service class id,
+     * so Windows finds the channel by SDP, never a channel number. A service the headset does not
+     * offer throws [ServiceNotFoundException] before a byte is sent.
+     */
+    fun openService(device: Device, uuid: String, readTimeoutMs: Int = 2_000): RfcommSocket =
+        connectService(device, uuid, readTimeoutMs, classifyMissing = true)
+
+    private fun connectService(device: Device, uuid: String, readTimeoutMs: Int, classifyMissing: Boolean): RfcommSocket {
         startWinsock()
         val ws = Ws2.INSTANCE
         val s = ws.socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM)
         if (s == INVALID_SOCKET) throw IOException("socket() failed: ${describe(Native.getLastError())}")
 
-        val addr = Memory(SOCKADDR_BTH_SIZE.toLong()).apply {
-            clear()
-            setShort(0, AF_BTH.toShort())
-            setLong(2, device.address)
-            write(10, SPP_GUID, 0, SPP_GUID.size)
-            setInt(26, 0) // port 0 + service class id = ask SDP for the channel
-        }
-        if (ws.connect(s, addr, SOCKADDR_BTH_SIZE) != 0) {
-            val err = Native.getLastError()
+        try {
+            WinRfcommConnect.connect(device.address, uuid, classifyMissing, ::describe) { sockaddr ->
+                val addr = Memory(WinSockaddr.SIZE.toLong()).apply { write(0, sockaddr, 0, sockaddr.size) }
+                if (ws.connect(s, addr, WinSockaddr.SIZE) != 0) Native.getLastError() else 0
+            }
+        } catch (e: IOException) {
             ws.closesocket(s)
-            throw IOException("could not open the control channel: ${describe(err)}")
+            throw e
         }
         val timeout = Memory(4).apply { setInt(0, readTimeoutMs) }
         ws.setsockopt(s, SOL_SOCKET, SO_RCVTIMEO, timeout, 4)
@@ -112,17 +151,15 @@ object WinBluetooth {
     private const val INVALID_SOCKET = -1L
     private const val WSAETIMEDOUT = 10060
 
-    /** ws2bth.h packs SOCKADDR_BTH to 1 byte: family u16, address u64, service GUID, port u32. */
-    private const val SOCKADDR_BTH_SIZE = 30
+    private const val ERROR_MORE_DATA = 234
+    private const val SERVICE_SLOTS = 32
+    private const val MAX_SERVICE_SLOTS = 512
     /** sizeof(BLUETOOTH_DEVICE_SEARCH_PARAMS) and sizeof(BLUETOOTH_DEVICE_INFO) on x64. */
     private const val SEARCH_PARAMS_SIZE = 40
     private const val DEVICE_INFO_SIZE = 560
 
-    /** {00001101-0000-1000-8000-00805F9B34FB} in GUID memory order (first three fields little-endian). */
-    private val SPP_GUID = byteArrayOf(
-        0x01, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10,
-        0x80.toByte(), 0x00, 0x00, 0x80.toByte(), 0x5F, 0x9B.toByte(), 0x34, 0xFB.toByte(),
-    )
+    /** The Serial Port Profile service class: how Bose's control channel is found. */
+    const val SPP_UUID = "00001101-0000-1000-8000-00805f9b34fb"
 
     @Volatile private var winsockStarted = false
 
@@ -171,6 +208,7 @@ object WinBluetooth {
         fun BluetoothFindFirstDevice(params: Pointer, info: Pointer): Pointer?
         fun BluetoothFindNextDevice(find: Pointer, info: Pointer): Boolean
         fun BluetoothFindDeviceClose(find: Pointer): Boolean
+        fun BluetoothEnumerateInstalledServices(radio: Pointer?, info: Pointer, count: IntByReference, guids: Pointer?): Int
 
         companion object {
             val INSTANCE: BtApi = Native.load("BluetoothApis", BtApi::class.java)
