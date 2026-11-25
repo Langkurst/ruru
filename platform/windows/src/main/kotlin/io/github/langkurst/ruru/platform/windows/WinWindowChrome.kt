@@ -44,16 +44,21 @@ class WinWindowChrome private constructor(
         fun maxButtonPressed(pressed: Boolean)
 
         /**
-         * The window changed size or state. [insetRightPx] and [insetBottomPx] say how much of the
-         * window's outer size lies off screen, so the drawn content can leave that out.
+         * The window changed size or state. Maximised, the system window is a little bigger than the
+         * screen, but the client area (what is drawn into) is clipped to the work area by WM_NCCALCSIZE,
+         * so the content needs no inset of its own.
          */
-        fun frameChanged(maximised: Boolean, insetRightPx: Int, insetBottomPx: Int)
+        fun frameChanged(maximised: Boolean)
     }
 
     private val api = Api.user32
     private var previous = 0L
     private val childPrevious = ConcurrentHashMap<Long, Long>()
     private var maxHover = false
+
+    /** How much larger than the system scale the app draws its title bar (the window is scaled up when it is big). */
+    @Volatile
+    var uiScale: Double = 1.0
     private var maxDown = false
 
     // JNA callbacks must stay referenced for as long as the native window can call them.
@@ -184,14 +189,7 @@ class WinWindowChrome private constructor(
     }
 
     private fun reportFrame() {
-        val outer = Memory(16)
-        val inner = Memory(16)
-        if (!api.GetWindowRect(hwnd, outer) || !api.GetClientRect(hwnd, inner)) return
-        val outerW = outer.getInt(8) - outer.getInt(0)
-        val outerH = outer.getInt(12) - outer.getInt(4)
-        val innerW = inner.getInt(8)
-        val innerH = inner.getInt(12)
-        listener.frameChanged(api.IsZoomed(hwnd), (outerW - innerW).coerceAtLeast(0), (outerH - innerH).coerceAtLeast(0))
+        listener.frameChanged(api.IsZoomed(hwnd))
     }
 
     // ---- geometry -----------------------------------------------------------------------------
@@ -264,8 +262,8 @@ class WinWindowChrome private constructor(
         val x = screenX - origin.getInt(0)
         val y = screenY - origin.getInt(4)
         val width = inner.getInt(8)
-        if (x < 0 || x >= width || y < 0 || y >= (geometry.titleBarDp * k).roundToInt()) return HTCLIENT
-        val button = (geometry.buttonDp * k).roundToInt()
+        if (x < 0 || x >= width || y < 0 || y >= (geometry.titleBarDp * k * uiScale).roundToInt()) return HTCLIENT
+        val button = (geometry.buttonDp * k * uiScale).roundToInt()
         val fromRight = width - x
         return when {
             fromRight <= button -> HTCLIENT // close: the drawn button handles it

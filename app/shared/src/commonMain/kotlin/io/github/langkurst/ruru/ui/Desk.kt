@@ -101,7 +101,6 @@ import kotlin.math.sin
 internal val DeskMinWidth = 880.dp
 
 private val SidebarWidth = 264.dp
-private val ContentMaxWidth = 1000.dp
 
 /**
  * The computer layout (docs/DESIGN.md, "Desktop layout"): a sidebar with the headphones and the
@@ -422,12 +421,12 @@ private fun atan2Of(y: Float, x: Float): Double = kotlin.math.atan2(y.toDouble()
 
 // ---------------------------------------------------------------- pages
 
-/** A page: its title, one plain sentence, then the content, on a column that scrolls and stops growing at 1000dp. */
+/** A page: its title, one plain sentence, then the content, on a column that scrolls and fills the window. */
 @Composable
 private fun PageFrame(title: String, lead: String, state: AppState, controller: HeadsetController, content: @Composable ColumnScope.() -> Unit) {
     val c = Ruru.colors
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 32.dp, vertical = 28.dp)) {
-        Column(Modifier.widthIn(max = ContentMaxWidth).fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth()) {
             state.message?.let {
                 MessageBar(it.text(), controller::dismissMessage)
                 Spacer(Modifier.height(16.dp))
@@ -518,7 +517,7 @@ private fun StatusPage(state: AppState, controller: HeadsetController, model: Ap
     val (title, body) = notConnectedWords(state)
     Column(Modifier.fillMaxSize().padding(horizontal = 32.dp, vertical = 28.dp)) {
         state.message?.let {
-            Box(Modifier.widthIn(max = ContentMaxWidth).fillMaxWidth()) { MessageBar(it.text(), controller::dismissMessage) }
+            Box(Modifier.fillMaxWidth()) { MessageBar(it.text(), controller::dismissMessage) }
         }
         Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
             Column(Modifier.widthIn(max = 440.dp), horizontalAlignment = Alignment.CenterHorizontally) {

@@ -1,7 +1,6 @@
 package io.github.langkurst.ruru.desktop.chrome
 
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import io.github.langkurst.ruru.platform.windows.WinWindowChrome
@@ -32,11 +31,15 @@ class WindowChromeState(val kind: ChromeKind, private val closeWindow: () -> Uni
     var maxPressed by mutableStateOf(false)
         internal set
 
-    /** How much of the window's outer size is off screen at the right and bottom (maximised on Windows). */
-    var insetRightPx by mutableIntStateOf(0)
-        internal set
-    var insetBottomPx by mutableIntStateOf(0)
-        internal set
+    /** How much the window draws everything larger than the system scale (see deskScale); the hit-testing follows. */
+    @Volatile
+    var uiScale: Float = 1f
+        private set
+
+    fun setUiScale(scale: Float) {
+        uiScale = scale
+        native?.uiScale = scale.toDouble()
+    }
 
     @Volatile
     internal var native: WinWindowChrome? = null
@@ -57,10 +60,8 @@ class WindowChromeState(val kind: ChromeKind, private val closeWindow: () -> Uni
     internal val listener = object : WinWindowChrome.Listener {
         override fun maxButtonHover(hover: Boolean) { maxHover = hover }
         override fun maxButtonPressed(pressed: Boolean) { maxPressed = pressed }
-        override fun frameChanged(maximised: Boolean, insetRightPx: Int, insetBottomPx: Int) {
+        override fun frameChanged(maximised: Boolean) {
             this@WindowChromeState.maximised = maximised
-            this@WindowChromeState.insetRightPx = insetRightPx
-            this@WindowChromeState.insetBottomPx = insetBottomPx
         }
     }
 }

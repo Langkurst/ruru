@@ -263,6 +263,20 @@ jobs:
           # Staying alive isn't enough: the tray keeps the process up even if the window fails.
           if grep -q -e "Exception in thread" -e "Error was captured in composition" ruru-start.log; then echo "Ruru failed at launch:"; cat ruru-start.log; kill $pid || true; exit 1; fi
           kill $pid
+      - name: Take a picture of the running app
+        # The runner has a screen, so the real window can be looked at. What to look for (it checks the macOS
+        # title bar from app/desktop Main.kt): the page runs under a transparent title bar with no system title
+        # text, the three traffic lights sit at the top left with the owl and "Ruru" 78dp to their right (not on
+        # top of them), the sidebar starts at the top, and nothing is cut off. Only the picture is kept; it is
+        # never part of the release files (the release job collects installers by file extension).
+        run: |
+          app=app/desktop/build/compose/binaries/main-release/app/Ruru.app
+          mkdir -p shots
+          open -a "$PWD/$app" --args --demo || true
+          sleep 15
+          screencapture -x shots/mac-window.png || true
+          osascript -e 'tell application "Ruru" to quit' || pkill -f "Ruru.app/Contents/MacOS/Ruru" || true
+          ls -la shots
       - name: Name the file after the real version
         run: |
           v=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
@@ -271,6 +285,9 @@ jobs:
         run: bash .github/size-budget.sh 62900000 out/*.dmg
       - uses: actions/upload-artifact@v7
         with: { name: macos, path: out/*.dmg }
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with: { name: mac-screenshot, path: shots/*.png, if-no-files-found: ignore }
 
   ios:
     needs: test

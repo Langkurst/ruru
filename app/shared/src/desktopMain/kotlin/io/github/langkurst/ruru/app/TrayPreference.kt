@@ -39,6 +39,6 @@ class TrayPreference(private val prefs: Preferences? = defaultNode()) {
     private companion object {
         const val KEEP = "keepRunningInTray"
         const val NOTICE_SHOWN = "trayNoticeShown"
-        fun defaultNode(): Preferences? = runCatching { Preferences.userRoot().node("io/github/langkurst/ruru/tray") }.getOrNull()
+        fun defaultNode(): Preferences? = PrefsRoot.node("tray")
     }
 }

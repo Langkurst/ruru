@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- A big window now fills the screen. The pages grow with the window instead of stopping at 1000dp, and
+  from a window about 1280dp wide the whole app (title bar, sidebar and pages) is drawn a little larger,
+  up to a third larger on a 2560 pixel screen, so it no longer looks tiny. The equaliser sliders and the
+  hint text keep a comfortable length.
+- Windows: maximised, the window now reaches the edges of the screen. A dark strip of about 16 pixels
+  was left along the right and bottom, which also pushed the caption buttons in from the edge.
+- Windows: the first start of 0.2.0 could open at the smallest size. The build had left that size in the
+  settings. Ruru ignores it now, and the build no longer writes any settings. A window is only
+  remembered at a size under the default when you resized it yourself.
+
 ## 0.2.0 (25 November 2026)
 
 - On a computer, Ruru now looks like a desktop app. A wide window has a sidebar with your headphones,

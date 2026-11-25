@@ -8,17 +8,19 @@ import androidx.compose.foundation.hoverable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,13 +40,15 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import io.github.langkurst.ruru.ui.deskScale
 import io.github.langkurst.ruru.ui.OwlMark
 import io.github.langkurst.ruru.ui.Ruru
 import io.github.langkurst.ruru.ui.hoverSpec
 import kotlin.math.floor
 
-/** Height of the drawn title bar. The native hit-testing in WinWindowChrome uses the same numbers. */
+/** Height of the drawn title bar at scale 1 (the native hit-testing in WinWindowChrome uses the same numbers, times the UI scale). */
 val TitleBarHeight = 40.dp
 
 /** Width of each caption button (minimise, maximise, close). */
@@ -65,13 +69,30 @@ private val CloseRed = Color(0xFFC42B1C)
  */
 @Composable
 fun RuruWindowFrame(chrome: WindowChromeState, content: @Composable () -> Unit) {
-    val density = LocalDensity.current
-    // Maximised, the system window is a little bigger than the screen; the part off screen is left out.
-    val endInset = with(density) { chrome.insetRightPx.toDp() }
-    val bottomInset = with(density) { chrome.insetBottomPx.toDp() }
-    Column(Modifier.fillMaxSize().background(Ruru.colors.night).padding(end = endInset, bottom = bottomInset)) {
-        if (chrome.kind != ChromeKind.None) TitleBar(chrome)
-        Box(Modifier.weight(1f).fillMaxWidth()) { content() }
+    val system = LocalDensity.current
+    // Maximised, the system window is a little bigger than the screen, but WinWindowChrome's WM_NCCALCSIZE
+    // already clips its client area (what Compose draws into) to the work area. Measured on a real screen:
+    // leaving more out here left a 16px dark band at the right and the bottom.
+    Box(Modifier.fillMaxSize().background(Ruru.colors.night)) {
+        // On a big window the whole interface (bar, sidebar and pages together) is drawn a little larger.
+        // BoxWithConstraints measures the width in the same pass as the layout, so a resize never shows
+        // one frame at the old scale. The 880dp narrow/wide switch sees the scaled width, which is the
+        // same as the system width wherever it matters (the scale is 1 below 1280dp).
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val k = deskScale(maxWidth.value)
+            SideEffect { chrome.setUiScale(k) }
+            CompositionLocalProvider(LocalDensity provides Density(system.density * k, system.fontScale)) {
+                Column(Modifier.fillMaxSize()) {
+                    if (chrome.kind == ChromeKind.Mac) {
+                        // The traffic lights are the system's and do not grow, so the bar stays at the system scale.
+                        CompositionLocalProvider(LocalDensity provides system) { TitleBar(chrome) }
+                    } else if (chrome.kind != ChromeKind.None) {
+                        TitleBar(chrome)
+                    }
+                    Box(Modifier.weight(1f).fillMaxWidth()) { content() }
+                }
+            }
+        }
     }
 }
 

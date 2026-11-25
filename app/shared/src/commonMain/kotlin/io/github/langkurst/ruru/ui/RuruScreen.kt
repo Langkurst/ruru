@@ -484,20 +484,26 @@ internal fun NoisePanel(h: HeadphoneState, noise: NoiseSettings, controller: Hea
     }
 }
 
+private val EqSlidersMaxWidth = 480.dp
+
 @Composable
 internal fun EqPanel(eq: HeadphoneEq, range: IntRange, controller: HeadsetController, modifier: Modifier = Modifier) {
     Panel(stringResource(Res.string.panel_equaliser), modifier) {
         if (LocalDesk.current) {
             // Wide: the response curve and its reset on the left, the three sliders on the right.
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(32.dp), verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    EqCurve(eq, range, Modifier.fillMaxWidth().height(96.dp))
-                    if (eq != HeadphoneEq()) {
-                        Spacer(Modifier.height(10.dp))
-                        ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
+            // The sliders stop growing at 480dp (a slider across a whole screen is hard to place); the curve takes the rest.
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val sliders = ((maxWidth - 32.dp) / 2).coerceAtMost(EqSlidersMaxWidth)
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(32.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.weight(1f)) {
+                        EqCurve(eq, range, Modifier.fillMaxWidth().height(96.dp))
+                        if (eq != HeadphoneEq()) {
+                            Spacer(Modifier.height(10.dp))
+                            ButtonRow { QuietButton(stringResource(Res.string.eq_reset), { controller.setEq(HeadphoneEq()) }) }
+                        }
                     }
+                    Column(Modifier.width(sliders)) { EqBands(eq, range, controller) }
                 }
-                Column(Modifier.weight(1f)) { EqBands(eq, range, controller) }
             }
         } else {
             EqBands(eq, range, controller)

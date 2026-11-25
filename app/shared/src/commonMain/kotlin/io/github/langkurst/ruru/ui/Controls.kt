@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.selection.toggleable
@@ -159,13 +160,16 @@ fun Panel(title: String?, modifier: Modifier = Modifier, content: @Composable Co
     }
 }
 
+/** A hint is a sentence to read, so its lines stop at a comfortable length however wide the panel is. */
+internal val HintMaxWidth = 460.dp
+
 @Composable
 fun SettingRow(label: String, hint: String? = null, enabled: Boolean = true, trailing: @Composable () -> Unit) {
     val c = Ruru.colors
     Row(Modifier.fillMaxWidth().heightIn(min = 40.dp).padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f).padding(end = 12.dp)) {
             Txt(label, Ruru.type.body, if (enabled) c.ink else c.ink3)
-            if (hint != null) Txt(hint, Ruru.type.small, c.ink3)
+            if (hint != null) Txt(hint, Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
         }
         trailing()
     }
@@ -353,7 +357,7 @@ fun <T> ChoiceRow(
         ) {
             Column(Modifier.weight(1f).padding(end = 12.dp)) {
                 Txt(label, Ruru.type.body, if (enabled) c.ink else c.ink3)
-                if (hint != null) Txt(hint, Ruru.type.small, c.ink3)
+                if (hint != null) Txt(hint, Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
             }
             Txt(current, Ruru.type.body, c.ink2, maxLines = 1)
             Spacer(Modifier.width(8.dp))

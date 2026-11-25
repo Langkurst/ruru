@@ -22,13 +22,14 @@ import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.SingleInstance
 import io.github.langkurst.ruru.app.UnsupportedPlatform
 import io.github.langkurst.ruru.app.CloseAction
+import io.github.langkurst.ruru.app.PrefsRoot
 import io.github.langkurst.ruru.app.TrayPreference
+import io.github.langkurst.ruru.app.WindowMemory
 import io.github.langkurst.ruru.desktop.chrome.CaptionButtonWidth
 import io.github.langkurst.ruru.desktop.chrome.ChromeKind
 import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
 import io.github.langkurst.ruru.desktop.chrome.TitleBarHeight
 import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
-import io.github.langkurst.ruru.desktop.chrome.WindowMemory
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.app.update.DesktopUpdates
 import io.github.langkurst.ruru.link.HeadsetPlatform
@@ -71,6 +72,9 @@ private val os: String = System.getProperty("os.name").orEmpty()
  */
 fun main(args: Array<String>) {
     StartTiming.mark("main entered")
+    // The build's warm-up run only has to draw one frame. It must not read or write any setting, or the
+    // window size and "still running" notice it leaves behind would be the owner's first start.
+    if ("--warm-up" in args) PrefsRoot.disabled = true
     // A small settings window draws fine in software: measured on Windows, 125 MB with the window
     // open against 198 MB on DirectX and 374 MB on OpenGL, and less CPU. Not on macOS: it has no
     // SOFTWARE_FAST, and the window failed to open there when this was set for every system.
@@ -152,6 +156,7 @@ private class WindowHost(
     private val exitAfterFirstFrame: Boolean = false,
 ) {
     private val open = AtomicBoolean(false)
+    private val memory = WindowMemory()
     private val reduceMotion = os.startsWith("Windows") && !WinSystem.animationsEnabled()
     private val extras = listOfNotNull(StartWithWindows.switchOrNull(), keepInTraySwitch(closing, hasTray))
 
@@ -188,7 +193,7 @@ private class WindowHost(
     }
 
     private fun openBlocking() = application(exitProcessOnExit = false) {
-        val saved = remember { WindowMemory.load() }
+        val saved = remember { memory.load() }
         // Where the next window opens: the remembered spot, or (after a fallback) where the last one was.
         val resume = remember { arrayOf(saved?.bounds) }
         var kind by remember { mutableStateOf(wantedChrome()) }
@@ -229,9 +234,16 @@ private class WindowHost(
                     if (kind == ChromeKind.Mac) macTitleBar(window)
                     // Last position and size when not maximised, kept for the next start.
                     var normal = window.bounds
+                    // The size the window opened at; a different size afterwards means the person resized it.
+                    var openedSize: Dimension? = null
+                    var userResized = false
                     val track = object : ComponentAdapter() {
                         private fun note() {
-                            if (window.isShowing && !chrome.isMaximised && window.extendedState and Frame.ICONIFIED == 0) normal = window.bounds
+                            if (window.isShowing && !chrome.isMaximised && window.extendedState and Frame.ICONIFIED == 0) {
+                                normal = window.bounds
+                                val first = openedSize
+                                if (first != null && window.size != first) userResized = true
+                            }
                         }
                         override fun componentResized(e: ComponentEvent) = note()
                         override fun componentMoved(e: ComponentEvent) = note()
@@ -248,6 +260,7 @@ private class WindowHost(
                             return
                         }
                         chrome.native = attached
+                        attached.uiScale = chrome.uiScale.toDouble()
                         applyWindowTheme(attached, darkNow)
                         if (saved?.maximised == true) attached.toggleMaximise()
                     }
@@ -257,16 +270,18 @@ private class WindowHost(
                         override fun windowOpened(e: WindowEvent) {
                             StartTiming.mark("window shown")
                             drawOwnTitleBar()
+                            openedSize = window.size
                             bringToFront()
                         }
                     }
                     window.addWindowListener(opened)
                     if (window.isShowing) {
                         drawOwnTitleBar() // already on screen: its "opened" event has been and gone
+                        openedSize = window.size
                         bringToFront()
                     }
                     onDispose {
-                        WindowMemory.save(normal, chrome.isMaximised)
+                        memory.save(normal, chrome.isMaximised, userResized)
                         window.removeWindowListener(opened)
                         window.removeComponentListener(track)
                         chrome.native = null
