@@ -199,6 +199,9 @@
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Démarrer avec Windows</string>
     <string name="desktop_start_with_windows_hint">S'ouvre dans la zone de notification à l'ouverture de session</string>
+    <string name="desktop_keep_in_tray">Rester dans la zone de notification</string>
+    <string name="desktop_keep_in_tray_hint">Fermer la fenêtre laisse Ruru dans la zone de notification, et votre casque reste connecté. Désactivez cette option pour quitter Ruru à la fermeture de la fenêtre.</string>
+    <string name="desktop_tray_notice">Ruru reste actif dans la zone de notification. Vous pouvez le changer dans les réglages.</string>
     <string name="tray_open">Ouvrir Ruru</string>
     <string name="tray_quit">Quitter</string>
     <string name="tray_default_name">Casque</string>

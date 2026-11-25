@@ -195,6 +195,9 @@
     <!-- デスクトップ専用：スイッチ、トレイアイコン、通知 -->
     <string name="desktop_start_with_windows">Windows起動時に開く</string>
     <string name="desktop_start_with_windows_hint">サインインすると、トレイで開きます</string>
+    <string name="desktop_keep_in_tray">トレイで実行を続ける</string>
+    <string name="desktop_keep_in_tray_hint">ウィンドウを閉じても Ruru はトレイに残り、ヘッドホンは接続されたままです。オフにすると、ウィンドウを閉じたときに Ruru が終了します。</string>
+    <string name="desktop_tray_notice">Ruru はトレイで実行中です。設定で変更できます。</string>
     <string name="tray_open">Ruruを開く</string>
     <string name="tray_quit">終了</string>
     <string name="tray_default_name">ヘッドホン</string>

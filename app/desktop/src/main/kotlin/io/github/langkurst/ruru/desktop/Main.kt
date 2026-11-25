@@ -1,8 +1,17 @@
 package io.github.langkurst.ruru.desktop
 
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.ui.Alignment
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
@@ -11,12 +20,23 @@ import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.SingleInstance
 import io.github.langkurst.ruru.app.UnsupportedPlatform
+import io.github.langkurst.ruru.app.CloseAction
+import io.github.langkurst.ruru.app.TrayPreference
+import io.github.langkurst.ruru.desktop.chrome.CaptionButtonWidth
+import io.github.langkurst.ruru.desktop.chrome.ChromeKind
+import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
+import io.github.langkurst.ruru.desktop.chrome.TitleBarHeight
+import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
+import io.github.langkurst.ruru.desktop.chrome.WindowMemory
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
 import io.github.langkurst.ruru.platform.linux.LinuxHeadsetPlatform
 import io.github.langkurst.ruru.platform.macos.MacHeadsetPlatform
 import io.github.langkurst.ruru.platform.windows.WinSystem
+import io.github.langkurst.ruru.platform.windows.WinWindowChrome
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
+import io.github.langkurst.ruru.ui.DarkColors
+import io.github.langkurst.ruru.ui.LightColors
 import io.github.langkurst.ruru.ui.OwlPainter
 import io.github.langkurst.ruru.ui.RuruScreen
 import io.github.langkurst.ruru.ui.RuruTheme
@@ -28,12 +48,15 @@ import java.awt.Dimension
 import java.awt.Frame
 import java.awt.SystemTray
 import java.awt.desktop.AppReopenedListener
+import java.awt.event.ComponentAdapter
+import java.awt.event.ComponentEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.concurrent.atomic.AtomicReference
 import javax.swing.SwingUtilities
 import javax.swing.Timer
+import kotlin.math.roundToInt
 import kotlin.system.exitProcess
 
 private val os: String = System.getProperty("os.name").orEmpty()
@@ -66,15 +89,17 @@ fun main(args: Array<String>) {
     val model = AppModel(platformForThisSystem(), scope, startInDemo = "--demo" in args)
     model.start()
     val hasTray = runCatching { SystemTray.isSupported() }.getOrDefault(false)
-    val window = WindowHost(model)
+    val quit = {
+        model.stop()
+        exitProcess(0)
+    }
+    var trayMenu: TrayMenu? = null
+    val window = WindowHost(model, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() })
     show.set(window::open)
     macAppHooks(window::open)
 
     if (hasTray) {
-        TrayMenu(model, scope, onOpen = window::open, onQuit = {
-            model.stop()
-            exitProcess(0)
-        }).install()
+        trayMenu = TrayMenu(model, scope, onOpen = window::open, onQuit = quit).also { it.install() }
         if ("--hidden" !in args) window.open()
     } else {
         // No tray (some Linux desktops): the window is the app, and closing it quits.
@@ -101,10 +126,16 @@ private fun macAppHooks(open: () -> Unit) {
 }
 
 /** Opens the window on demand, one at a time; closing it releases everything it used. */
-private class WindowHost(private val model: AppModel) {
+private class WindowHost(
+    private val model: AppModel,
+    private val closing: TrayPreference,
+    private val hasTray: Boolean,
+    private val onQuit: () -> Unit,
+    private val onFirstTrayClose: () -> Unit,
+) {
     private val open = AtomicBoolean(false)
     private val reduceMotion = os.startsWith("Windows") && !WinSystem.animationsEnabled()
-    private val extras = listOfNotNull(StartWithWindows.switchOrNull())
+    private val extras = listOfNotNull(StartWithWindows.switchOrNull(), keepInTraySwitch(closing, hasTray))
 
     @Volatile
     private var frame: Frame? = null
@@ -137,29 +168,95 @@ private class WindowHost(private val model: AppModel) {
     }
 
     private fun openBlocking() = application(exitProcessOnExit = false) {
-        Window(
-            onCloseRequest = ::exitApplication,
-            title = "Ruru",
-            icon = OwlPainter(),
-            state = rememberWindowState(width = 400.dp, height = 780.dp, position = WindowPosition(Alignment.Center)),
-        ) {
-            window.minimumSize = Dimension(360, 480)
-            DisposableEffect(Unit) {
-                frame = window
-                // A window opened for a second launch belongs to the copy in the tray, which Windows
-                // would otherwise show behind whatever is in front. Raise it once it is on screen.
-                val raise = object : WindowAdapter() {
-                    override fun windowOpened(e: WindowEvent) = bringToFront()
-                }
-                window.addWindowListener(raise)
-                if (window.isShowing) bringToFront() // already on screen: its "opened" event has been and gone
-                onDispose {
-                    window.removeWindowListener(raise)
-                    frame = null
+        val saved = remember { WindowMemory.load() }
+        // Where the next window opens: the remembered spot, or (after a fallback) where the last one was.
+        val resume = remember { arrayOf(saved?.bounds) }
+        var kind by remember { mutableStateOf(wantedChrome()) }
+        val dark = themeOverride() ?: isSystemInDarkTheme()
+        val darkNow by rememberUpdatedState(dark)
+        // The close button, Alt+F4, the taskbar and the macOS red button all end up here.
+        val requestClose = {
+            when (closing.closeAction(hasTray)) {
+                CloseAction.Quit -> onQuit()
+                CloseAction.CloseToTray -> {
+                    exitApplication()
+                    if (closing.takeFirstTrayNotice()) onFirstTrayClose()
                 }
             }
-            RuruTheme(reduceMotion = reduceMotion) {
-                RuruScreen(model, RURU_VERSION, extras = extras)
+        }
+        // A different kind of title bar needs a different window, so the window is keyed on it.
+        key(kind) {
+            val chrome = remember { WindowChromeState(kind, requestClose) }
+            val start = resume[0]
+            val state = rememberWindowState(
+                width = (start?.width ?: WindowMemory.DEFAULT_WIDTH).dp,
+                height = (start?.height ?: WindowMemory.DEFAULT_HEIGHT).dp,
+                position = start?.let { WindowPosition(it.x.dp, it.y.dp) } ?: WindowPosition(Alignment.Center),
+            )
+            Window(
+                onCloseRequest = requestClose,
+                title = "Ruru",
+                icon = OwlPainter(),
+                state = state,
+                undecorated = kind == ChromeKind.Windows,
+            ) {
+                window.minimumSize = Dimension(WindowMemory.MIN_WIDTH, WindowMemory.MIN_HEIGHT)
+                DisposableEffect(Unit) {
+                    frame = window
+                    chrome.awt = window
+                    val page = (if (darkNow) DarkColors else LightColors).night
+                    window.background = java.awt.Color(page.red, page.green, page.blue)
+                    if (kind == ChromeKind.Mac) macTitleBar(window)
+                    // Last position and size when not maximised, kept for the next start.
+                    var normal = window.bounds
+                    val track = object : ComponentAdapter() {
+                        private fun note() {
+                            if (window.isShowing && !chrome.isMaximised && window.extendedState and Frame.ICONIFIED == 0) normal = window.bounds
+                        }
+                        override fun componentResized(e: ComponentEvent) = note()
+                        override fun componentMoved(e: ComponentEvent) = note()
+                    }
+                    window.addComponentListener(track)
+                    fun drawOwnTitleBar() {
+                        if (kind != ChromeKind.Windows || chrome.native != null) return
+                        val attached = WinWindowChrome.attach(window, WINDOW_GEOMETRY, chrome.listener)
+                        if (attached == null) {
+                            // Whatever went wrong, the person still gets a normal window with the system title bar.
+                            System.err.println("Ruru: custom title bar unavailable, using the system one")
+                            resume[0] = normal
+                            kind = ChromeKind.None
+                            return
+                        }
+                        chrome.native = attached
+                        applyWindowTheme(attached, darkNow)
+                        if (saved?.maximised == true) attached.toggleMaximise()
+                    }
+                    // A window opened for a second launch belongs to the copy in the tray, which Windows
+                    // would otherwise show behind whatever is in front. Raise it once it is on screen.
+                    val opened = object : WindowAdapter() {
+                        override fun windowOpened(e: WindowEvent) {
+                            drawOwnTitleBar()
+                            bringToFront()
+                        }
+                    }
+                    window.addWindowListener(opened)
+                    if (window.isShowing) {
+                        drawOwnTitleBar() // already on screen: its "opened" event has been and gone
+                        bringToFront()
+                    }
+                    onDispose {
+                        WindowMemory.save(normal, chrome.isMaximised)
+                        window.removeWindowListener(opened)
+                        window.removeComponentListener(track)
+                        chrome.native = null
+                        chrome.awt = null
+                        frame = null
+                    }
+                }
+                LaunchedEffect(dark) { chrome.native?.let { applyWindowTheme(it, dark) } }
+                RuruTheme(dark = dark, reduceMotion = reduceMotion) {
+                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras) }
+                }
             }
         }
     }
@@ -180,6 +277,47 @@ private class WindowHost(private val model: AppModel) {
 
     private companion object {
         const val RAISE_HOLD_MS = 400
+    }
+}
+
+private val WINDOW_GEOMETRY = WinWindowChrome.Geometry(
+    titleBarDp = TitleBarHeight.value.toInt(),
+    buttonDp = CaptionButtonWidth.value.toInt(),
+)
+
+/**
+ * Windows draws Ruru's own title bar, macOS puts the page under the traffic lights, and Linux keeps
+ * its native one. RURU_NATIVE_TITLEBAR=1 forces the system title bar everywhere, for testing the fallback.
+ */
+private fun wantedChrome(): ChromeKind = when {
+    System.getenv("RURU_NATIVE_TITLEBAR") == "1" -> ChromeKind.None
+    os.startsWith("Windows") && WinWindowChrome.supported -> ChromeKind.Windows
+    os.startsWith("Mac") -> ChromeKind.Mac
+    else -> ChromeKind.None
+}
+
+/** RURU_THEME=light or dark (or -Druru.theme) overrides the system theme, for screenshots. */
+private fun themeOverride(): Boolean? = when ((System.getProperty("ruru.theme") ?: System.getenv("RURU_THEME")).orEmpty().lowercase()) {
+    "dark" -> true
+    "light" -> false
+    else -> null
+}
+
+/** The system's own parts of the window (shadow, border line, anything it still draws) follow the app theme. */
+private fun applyWindowTheme(chrome: WinWindowChrome, dark: Boolean) {
+    val colors = if (dark) DarkColors else LightColors
+    val edge = colors.line.compositeOver(colors.night)
+    chrome.setDark(dark)
+    chrome.setBorderColor((edge.red * 255).roundToInt(), (edge.green * 255).roundToInt(), (edge.blue * 255).roundToInt())
+}
+
+/** macOS: the page runs under a transparent title bar, and the traffic lights stay where they are. */
+private fun macTitleBar(window: Frame) {
+    runCatching {
+        val pane = (window as javax.swing.RootPaneContainer).rootPane
+        pane.putClientProperty("apple.awt.fullWindowContent", true)
+        pane.putClientProperty("apple.awt.transparentTitleBar", true)
+        pane.putClientProperty("apple.awt.windowTitleVisible", false)
     }
 }
 

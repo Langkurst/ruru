@@ -197,6 +197,9 @@
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Start with Windows</string>
     <string name="desktop_start_with_windows_hint">Opens in the tray when you sign in</string>
+    <string name="desktop_keep_in_tray">Keep running in the tray</string>
+    <string name="desktop_keep_in_tray_hint">Closing the window leaves Ruru in the tray so your headphones stay connected. Turn this off to quit Ruru when you close the window.</string>
+    <string name="desktop_tray_notice">Ruru is still running in the tray. You can change this in Settings.</string>
     <string name="tray_open">Open Ruru</string>
     <string name="tray_quit">Quit</string>
     <string name="tray_default_name">Headphones</string>

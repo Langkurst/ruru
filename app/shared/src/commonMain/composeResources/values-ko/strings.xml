@@ -195,6 +195,9 @@
     <!-- 데스크톱 전용: 스위치, 트레이 아이콘, 알림 -->
     <string name="desktop_start_with_windows">Windows 시작 시 실행</string>
     <string name="desktop_start_with_windows_hint">로그인하면 트레이에서 열려요</string>
+    <string name="desktop_keep_in_tray">트레이에서 계속 실행</string>
+    <string name="desktop_keep_in_tray_hint">창을 닫아도 Ruru가 트레이에 남아 헤드폰 연결이 유지돼요. 끄면 창을 닫을 때 Ruru가 종료돼요.</string>
+    <string name="desktop_tray_notice">Ruru가 트레이에서 계속 실행 중이에요. 설정에서 바꿀 수 있어요.</string>
     <string name="tray_open">Ruru 열기</string>
     <string name="tray_quit">종료</string>
     <string name="tray_default_name">헤드폰</string>

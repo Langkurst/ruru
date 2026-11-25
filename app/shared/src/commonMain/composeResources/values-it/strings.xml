@@ -199,6 +199,9 @@
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Avvia con Windows</string>
     <string name="desktop_start_with_windows_hint">Si apre nell'area di notifica quando accedi</string>
+    <string name="desktop_keep_in_tray">Resta nell'area di notifica</string>
+    <string name="desktop_keep_in_tray_hint">Chiudendo la finestra Ruru resta nell'area di notifica e le cuffie restano collegate. Disattiva per chiudere Ruru insieme alla finestra.</string>
+    <string name="desktop_tray_notice">Ruru è ancora attivo nell'area di notifica. Puoi cambiarlo nelle impostazioni.</string>
     <string name="tray_open">Apri Ruru</string>
     <string name="tray_quit">Esci</string>
     <string name="tray_default_name">Cuffie</string>

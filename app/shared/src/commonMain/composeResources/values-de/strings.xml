@@ -197,6 +197,9 @@
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Mit Windows starten</string>
     <string name="desktop_start_with_windows_hint">Öffnet sich beim Anmelden im Infobereich</string>
+    <string name="desktop_keep_in_tray">Im Infobereich weiterlaufen lassen</string>
+    <string name="desktop_keep_in_tray_hint">Beim Schließen des Fensters bleibt Ruru im Infobereich, damit deine Kopfhörer verbunden bleiben. Schalte das aus, um Ruru beim Schließen des Fensters zu beenden.</string>
+    <string name="desktop_tray_notice">Ruru läuft weiter im Infobereich. Das kannst du in den Einstellungen ändern.</string>
     <string name="tray_open">Ruru öffnen</string>
     <string name="tray_quit">Beenden</string>
     <string name="tray_default_name">Kopfhörer</string>

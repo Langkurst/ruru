@@ -201,6 +201,9 @@
     <!-- Desktop only: the switch, the tray icon and the notifications -->
     <string name="desktop_start_with_windows">Uruchamiaj z Windows</string>
     <string name="desktop_start_with_windows_hint">Otwiera się w zasobniku po zalogowaniu</string>
+    <string name="desktop_keep_in_tray">Działaj w zasobniku</string>
+    <string name="desktop_keep_in_tray_hint">Zamknięcie okna zostawia Ruru w zasobniku, więc słuchawki pozostają połączone. Wyłącz, aby zamknięcie okna kończyło działanie Ruru.</string>
+    <string name="desktop_tray_notice">Ruru nadal działa w zasobniku. Możesz to zmienić w ustawieniach.</string>
     <string name="tray_open">Otwórz Ruru</string>
     <string name="tray_quit">Zakończ</string>
     <string name="tray_default_name">Słuchawki</string>

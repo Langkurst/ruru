@@ -77,6 +77,11 @@ internal class TrayMenu(
         }
     }
 
+    /** The one-time notice after the window first closes to the tray. */
+    fun notifyStillRunning() {
+        scope.launch { notify("Ruru", Words("desktop_tray_notice").resolve(), TrayIcon.MessageType.INFO) }
+    }
+
     private fun notify(title: String, text: String, type: TrayIcon.MessageType) =
         SwingUtilities.invokeLater { runCatching { icon.displayMessage(title, text, type) } }
 
