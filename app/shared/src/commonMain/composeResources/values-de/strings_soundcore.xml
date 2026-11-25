@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore-Ohrhörer und -Kopfhörer, Deutsch: Titel der Einstellungen, die Ruru dafür zeigt (Schlüssel = vendor_ plus Steuerungs-ID), die Auswahlmöglichkeiten und die Hinweise. -->
+    <string name="vendor_soundcore_anc">Geräuschunterdrückung</string>
+    <string name="vendor_soundcore_listening_mode">Hörmodus</string>
+    <string name="vendor_soundcore_listening_mode_hint">Lokale Klänge: Die Ohrhörer spielen eigene Schlafklänge ab, kein Telefon nötig</string>
+    <string name="vendor_soundcore_default_listening_mode">Starten in</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">Der Hörmodus, in dem die Ohrhörer starten</string>
+    <string name="vendor_soundcore_auto_switch_asleep">Beim Einschlafen wechseln</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">Tut, was unten eingestellt ist, sobald die Ohrhörer erkennen, dass Sie eingeschlafen sind</string>
+    <string name="vendor_soundcore_post_sleep_action">Nach dem Einschlafen</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">Lokale Klänge abspielen schaltet die Geräuschunterdrückung aus</string>
+    <string name="vendor_soundcore_incoming_calls">Anrufe im Bluetooth-Modus</string>
+    <string name="vendor_soundcore_prompt_low_battery">Ansage bei schwachem Akku</string>
+    <string name="vendor_soundcore_prompt_anc">Ansage zur Geräuschunterdrückung</string>
+    <string name="vendor_soundcore_prompt_listening_mode">Ansage zum Hörmodus</string>
+    <string name="vendor_soundcore_prompt_auto_off">Ansage zum automatischen Ausschalten</string>
+    <string name="vendor_soundcore_nc_type">Art der Geräuschunterdrückung</string>
+    <string name="vendor_soundcore_nc_type_hint">Ändert sich, solange die Geräuschunterdrückung aktiv ist</string>
+    <string name="vendor_soundcore_nc_level">Manuelle Stärke der Geräuschunterdrückung</string>
+    <string name="vendor_soundcore_nc_level_hint">Gilt für die Art Manuell; 1 ist am schwächsten</string>
+    <string name="vendor_soundcore_transparency_type">Art des Transparenzmodus</string>
+    <string name="vendor_soundcore_transparency_type_hint">Ändert sich, solange der Transparenzmodus aktiv ist</string>
+    <string name="vendor_soundcore_wind">Windgeräuschreduzierung</string>
+    <string name="vendor_soundcore_wind_hint">Mit Geräuschunterdrückung oder Transparenz</string>
+    <string name="vendor_soundcore_touch_tone">Tippton</string>
+    <string name="vendor_soundcore_touch_tone_hint">Ein Piepton, wenn Sie auf die Ohrhörer tippen</string>
+    <string name="vendor_soundcore_gaming_mode">Gaming-Modus</string>
+    <string name="vendor_soundcore_gaming_mode_hint">Geringere Latenz</string>
+    <string name="vendor_soundcore_leak_compensation">Ausgleich für Schallverlust</string>
+    <string name="vendor_soundcore_multipoint">Multipoint</string>
+    <string name="vendor_soundcore_multipoint_hint">Mit zwei Geräten gleichzeitig verbunden bleiben</string>
+    <string name="vendor_soundcore_low_battery_prompt">Ansage bei schwachem Akku</string>
+    <string name="vendor_soundcore_wearing_tone">Trageton</string>
+    <string name="vendor_soundcore_wear_detection">Trageerkennung</string>
+    <string name="vendor_soundcore_wear_detection_hint">Pausiert, wenn Sie einen Ohrhörer herausnehmen</string>
+    <string name="vendor_soundcore_surround">3D-Surround</string>
+    <string name="vendor_soundcore_auto_off">Automatisch ausschalten</string>
+
+    <!-- Auswahl -->
+    <string name="soundcore_option_off">Aus</string>
+    <string name="soundcore_option_local_sounds">Lokale Klänge</string>
+    <string name="soundcore_option_pause">Pause</string>
+    <string name="soundcore_option_play_local_sounds">Lokale Klänge abspielen</string>
+    <string name="soundcore_option_manual">Manuell</string>
+    <string name="soundcore_option_adaptive">Adaptiv</string>
+    <string name="soundcore_option_transportation">Unterwegs</string>
+    <string name="soundcore_option_multi_scene">Mehrere Szenen</string>
+    <string name="soundcore_option_fully_transparent">Voll transparent</string>
+    <string name="soundcore_option_vocal_mode">Stimmenmodus</string>
+
+    <!-- Hinweise und Probleme -->
+    <string name="soundcore_note_experimental">Experimentell: nach veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="soundcore_note_read_only">Experimentell, nur lesend: Ruru kann diese Soundcore-Einstellungen nicht ändern (oder sie passen nicht zum bekannten Aufbau) und liest sie daher nur.</string>
+    <string name="soundcore_note_battery_only">Experimentell, nur lesend: Ruru liest Akku und Firmware dieses Soundcore-Modells; seine Einstellungen sind noch nicht erfasst.</string>
+    <string name="soundcore_note_unreadable">Experimentell, nur lesend: Diese Soundcore-Kopfhörer sind verbunden, aber ihr Zustand passt zu keinem Aufbau, den Ruru kennt. Es wird nichts angezeigt oder geändert.</string>
+    <string name="soundcore_unknown_model">Diese Soundcore-Kopfhörer haben einen Zustand gesendet, den Ruru keinem Modell zuordnen kann, das es ansteuert.</string>
+</resources>

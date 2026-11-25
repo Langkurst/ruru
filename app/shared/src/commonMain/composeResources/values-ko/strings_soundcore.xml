@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore 이어폰·헤드폰, 한국어: Ruru가 보여 주는 설정 제목(키 = vendor_ + 컨트롤 ID), 선택지, 안내 문구. -->
+    <string name="vendor_soundcore_anc">노이즈 캔슬링</string>
+    <string name="vendor_soundcore_listening_mode">청취 모드</string>
+    <string name="vendor_soundcore_listening_mode_hint">로컬 사운드: 이어폰이 내장된 수면 사운드를 재생하며 휴대폰이 필요 없습니다</string>
+    <string name="vendor_soundcore_default_listening_mode">시작 모드</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">이어폰이 켜질 때 사용하는 청취 모드</string>
+    <string name="vendor_soundcore_auto_switch_asleep">잠들면 전환</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">잠든 것을 이어폰이 감지하면 아래 설정대로 동작합니다</string>
+    <string name="vendor_soundcore_post_sleep_action">잠든 후</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">로컬 사운드를 재생하면 노이즈 캔슬링이 꺼집니다</string>
+    <string name="vendor_soundcore_incoming_calls">블루투스 모드의 수신 전화</string>
+    <string name="vendor_soundcore_prompt_low_battery">배터리 부족 안내음</string>
+    <string name="vendor_soundcore_prompt_anc">노이즈 캔슬링 안내음</string>
+    <string name="vendor_soundcore_prompt_listening_mode">청취 모드 안내음</string>
+    <string name="vendor_soundcore_prompt_auto_off">자동 전원 끔 안내음</string>
+    <string name="vendor_soundcore_nc_type">노이즈 캔슬링 유형</string>
+    <string name="vendor_soundcore_nc_type_hint">노이즈 캔슬링이 켜진 모드일 때 바뀝니다</string>
+    <string name="vendor_soundcore_nc_level">수동 노이즈 캔슬링 단계</string>
+    <string name="vendor_soundcore_nc_level_hint">수동 유형에 적용되며 1이 가장 약합니다</string>
+    <string name="vendor_soundcore_transparency_type">주변 소리 유형</string>
+    <string name="vendor_soundcore_transparency_type_hint">주변 소리가 켜진 모드일 때 바뀝니다</string>
+    <string name="vendor_soundcore_wind">바람 소리 감소</string>
+    <string name="vendor_soundcore_wind_hint">노이즈 캔슬링이나 주변 소리와 함께 사용합니다</string>
+    <string name="vendor_soundcore_touch_tone">터치음</string>
+    <string name="vendor_soundcore_touch_tone_hint">이어폰을 두드리면 신호음이 납니다</string>
+    <string name="vendor_soundcore_gaming_mode">게임 모드</string>
+    <string name="vendor_soundcore_gaming_mode_hint">지연 시간이 줄어듭니다</string>
+    <string name="vendor_soundcore_leak_compensation">소리 새는 현상 보정</string>
+    <string name="vendor_soundcore_multipoint">멀티포인트</string>
+    <string name="vendor_soundcore_multipoint_hint">기기 두 대에 동시에 연결해 둡니다</string>
+    <string name="vendor_soundcore_low_battery_prompt">배터리 부족 안내음</string>
+    <string name="vendor_soundcore_wearing_tone">착용음</string>
+    <string name="vendor_soundcore_wear_detection">착용 감지</string>
+    <string name="vendor_soundcore_wear_detection_hint">이어폰을 빼면 일시 정지합니다</string>
+    <string name="vendor_soundcore_surround">3D 서라운드</string>
+    <string name="vendor_soundcore_auto_off">자동 전원 끔</string>
+
+    <!-- 선택지 -->
+    <string name="soundcore_option_off">끔</string>
+    <string name="soundcore_option_local_sounds">로컬 사운드</string>
+    <string name="soundcore_option_pause">일시 정지</string>
+    <string name="soundcore_option_play_local_sounds">로컬 사운드 재생</string>
+    <string name="soundcore_option_manual">수동</string>
+    <string name="soundcore_option_adaptive">적응형</string>
+    <string name="soundcore_option_transportation">교통수단</string>
+    <string name="soundcore_option_multi_scene">멀티 씬</string>
+    <string name="soundcore_option_fully_transparent">완전 투명</string>
+    <string name="soundcore_option_vocal_mode">보컬 모드</string>
+
+    <!-- 안내와 문제 -->
+    <string name="soundcore_note_experimental">실험적: 공개된 연구와 가상 헤드셋을 바탕으로 만들었으며 실제 기기에서는 아직 시험하지 않았습니다.</string>
+    <string name="soundcore_note_read_only">실험적, 읽기 전용: Ruru가 이 Soundcore 설정을 바꿀 수 없거나 알고 있는 구성과 맞지 않아 읽기만 합니다.</string>
+    <string name="soundcore_note_battery_only">실험적, 읽기 전용: Ruru는 이 Soundcore 모델의 배터리와 펌웨어를 읽습니다. 설정은 아직 지원하지 않습니다.</string>
+    <string name="soundcore_note_unreadable">실험적, 읽기 전용: 이 Soundcore 헤드폰은 연결되었지만 상태가 Ruru가 아는 어떤 구성과도 맞지 않아 아무것도 표시하거나 바꾸지 않습니다.</string>
+    <string name="soundcore_unknown_model">이 Soundcore 헤드폰이 보낸 상태를 Ruru가 제어하는 어느 모델과도 연결할 수 없습니다.</string>
+</resources>

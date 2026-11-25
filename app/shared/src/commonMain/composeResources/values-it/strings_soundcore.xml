@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Auricolari e cuffie Soundcore, italiano: i titoli delle impostazioni che Ruru mostra per loro (chiave = vendor_ più l'id del controllo), le scelte e le note. -->
+    <string name="vendor_soundcore_anc">Cancellazione del rumore</string>
+    <string name="vendor_soundcore_listening_mode">Modalità di ascolto</string>
+    <string name="vendor_soundcore_listening_mode_hint">Suoni locali: gli auricolari riproducono i propri suoni per dormire, senza telefono</string>
+    <string name="vendor_soundcore_default_listening_mode">Avvia in</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">La modalità di ascolto con cui si avviano gli auricolari</string>
+    <string name="vendor_soundcore_auto_switch_asleep">Cambia all'addormentamento</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">Fa ciò che è impostato qui sotto quando gli auricolari rilevano che ti sei addormentato</string>
+    <string name="vendor_soundcore_post_sleep_action">Dopo l'addormentamento</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">Riprodurre i suoni locali disattiva la cancellazione del rumore</string>
+    <string name="vendor_soundcore_incoming_calls">Chiamate in arrivo in modalità Bluetooth</string>
+    <string name="vendor_soundcore_prompt_low_battery">Avviso di batteria scarica</string>
+    <string name="vendor_soundcore_prompt_anc">Avviso della cancellazione del rumore</string>
+    <string name="vendor_soundcore_prompt_listening_mode">Avviso della modalità di ascolto</string>
+    <string name="vendor_soundcore_prompt_auto_off">Avviso di spegnimento automatico</string>
+    <string name="vendor_soundcore_nc_type">Tipo di cancellazione del rumore</string>
+    <string name="vendor_soundcore_nc_type_hint">Cambia finché la cancellazione del rumore è la modalità attiva</string>
+    <string name="vendor_soundcore_nc_level">Livello manuale di cancellazione del rumore</string>
+    <string name="vendor_soundcore_nc_level_hint">Vale per il tipo Manuale; 1 è il più leggero</string>
+    <string name="vendor_soundcore_transparency_type">Tipo di trasparenza</string>
+    <string name="vendor_soundcore_transparency_type_hint">Cambia finché la trasparenza è la modalità attiva</string>
+    <string name="vendor_soundcore_wind">Riduzione del rumore del vento</string>
+    <string name="vendor_soundcore_wind_hint">Con cancellazione del rumore o trasparenza</string>
+    <string name="vendor_soundcore_touch_tone">Suono al tocco</string>
+    <string name="vendor_soundcore_touch_tone_hint">Un bip quando tocchi gli auricolari</string>
+    <string name="vendor_soundcore_gaming_mode">Modalità gaming</string>
+    <string name="vendor_soundcore_gaming_mode_hint">Latenza ridotta</string>
+    <string name="vendor_soundcore_leak_compensation">Compensazione della dispersione sonora</string>
+    <string name="vendor_soundcore_multipoint">Multipoint</string>
+    <string name="vendor_soundcore_multipoint_hint">Resta connesso a due dispositivi insieme</string>
+    <string name="vendor_soundcore_low_battery_prompt">Avviso di batteria scarica</string>
+    <string name="vendor_soundcore_wearing_tone">Suono di indosso</string>
+    <string name="vendor_soundcore_wear_detection">Rilevamento indosso</string>
+    <string name="vendor_soundcore_wear_detection_hint">Pausa quando togli un auricolare</string>
+    <string name="vendor_soundcore_surround">Surround 3D</string>
+    <string name="vendor_soundcore_auto_off">Spegnimento automatico</string>
+
+    <!-- Scelte -->
+    <string name="soundcore_option_off">Disattivato</string>
+    <string name="soundcore_option_local_sounds">Suoni locali</string>
+    <string name="soundcore_option_pause">Pausa</string>
+    <string name="soundcore_option_play_local_sounds">Riproduci suoni locali</string>
+    <string name="soundcore_option_manual">Manuale</string>
+    <string name="soundcore_option_adaptive">Adattivo</string>
+    <string name="soundcore_option_transportation">Mezzi di trasporto</string>
+    <string name="soundcore_option_multi_scene">Multiscena</string>
+    <string name="soundcore_option_fully_transparent">Totalmente trasparente</string>
+    <string name="soundcore_option_vocal_mode">Modalità voce</string>
+
+    <!-- Note e problemi -->
+    <string name="soundcore_note_experimental">Sperimentale: costruito da ricerche pubblicate e da una cuffia virtuale, non ancora provato su dispositivi reali.</string>
+    <string name="soundcore_note_read_only">Sperimentale, sola lettura: Ruru non può cambiare queste impostazioni Soundcore (o non corrispondono alla struttura che conosce), quindi le legge soltanto.</string>
+    <string name="soundcore_note_battery_only">Sperimentale, sola lettura: Ruru legge batteria e firmware di questo modello Soundcore; le sue impostazioni non sono ancora mappate.</string>
+    <string name="soundcore_note_unreadable">Sperimentale, sola lettura: queste cuffie Soundcore si sono connesse, ma il loro stato non corrisponde a nessuna struttura che Ruru riconosca, quindi non viene mostrato né cambiato nulla.</string>
+    <string name="soundcore_unknown_model">Queste cuffie Soundcore hanno inviato uno stato che Ruru non sa associare a un modello che gestisce.</string>
+</resources>

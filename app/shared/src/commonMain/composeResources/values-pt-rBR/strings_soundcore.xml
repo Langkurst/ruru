@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fones Soundcore, português do Brasil: os títulos dos ajustes que o Ruru mostra para eles (chave = vendor_ mais o id do controle), as opções e as notas. -->
+    <string name="vendor_soundcore_anc">Cancelamento de ruído</string>
+    <string name="vendor_soundcore_listening_mode">Modo de audição</string>
+    <string name="vendor_soundcore_listening_mode_hint">Sons locais: os fones tocam os próprios sons para dormir, sem precisar do celular</string>
+    <string name="vendor_soundcore_default_listening_mode">Iniciar em</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">O modo de audição em que os fones iniciam</string>
+    <string name="vendor_soundcore_auto_switch_asleep">Mudar ao pegar no sono</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">Faz o que está definido abaixo quando os fones detectam que você adormeceu</string>
+    <string name="vendor_soundcore_post_sleep_action">Ao pegar no sono</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">Tocar sons locais desliga o cancelamento de ruído</string>
+    <string name="vendor_soundcore_incoming_calls">Chamadas recebidas no modo Bluetooth</string>
+    <string name="vendor_soundcore_prompt_low_battery">Aviso de bateria fraca</string>
+    <string name="vendor_soundcore_prompt_anc">Aviso do cancelamento de ruído</string>
+    <string name="vendor_soundcore_prompt_listening_mode">Aviso do modo de audição</string>
+    <string name="vendor_soundcore_prompt_auto_off">Aviso de desligamento automático</string>
+    <string name="vendor_soundcore_nc_type">Tipo de cancelamento de ruído</string>
+    <string name="vendor_soundcore_nc_type_hint">Muda enquanto o cancelamento de ruído é o modo ativo</string>
+    <string name="vendor_soundcore_nc_level">Nível manual de cancelamento de ruído</string>
+    <string name="vendor_soundcore_nc_level_hint">Vale para o tipo Manual; 1 é o mais leve</string>
+    <string name="vendor_soundcore_transparency_type">Tipo de transparência</string>
+    <string name="vendor_soundcore_transparency_type_hint">Muda enquanto a transparência é o modo ativo</string>
+    <string name="vendor_soundcore_wind">Redução de ruído do vento</string>
+    <string name="vendor_soundcore_wind_hint">Com cancelamento de ruído ou transparência</string>
+    <string name="vendor_soundcore_touch_tone">Som ao tocar</string>
+    <string name="vendor_soundcore_touch_tone_hint">Um bipe quando você toca nos fones</string>
+    <string name="vendor_soundcore_gaming_mode">Modo jogo</string>
+    <string name="vendor_soundcore_gaming_mode_hint">Menor latência</string>
+    <string name="vendor_soundcore_leak_compensation">Compensação de vazamento de som</string>
+    <string name="vendor_soundcore_multipoint">Multiponto</string>
+    <string name="vendor_soundcore_multipoint_hint">Fica conectado a dois aparelhos ao mesmo tempo</string>
+    <string name="vendor_soundcore_low_battery_prompt">Aviso de bateria fraca</string>
+    <string name="vendor_soundcore_wearing_tone">Som ao colocar</string>
+    <string name="vendor_soundcore_wear_detection">Detecção de uso</string>
+    <string name="vendor_soundcore_wear_detection_hint">Pausa quando você tira um fone</string>
+    <string name="vendor_soundcore_surround">Surround 3D</string>
+    <string name="vendor_soundcore_auto_off">Desligamento automático</string>
+
+    <!-- Opções -->
+    <string name="soundcore_option_off">Desligado</string>
+    <string name="soundcore_option_local_sounds">Sons locais</string>
+    <string name="soundcore_option_pause">Pausar</string>
+    <string name="soundcore_option_play_local_sounds">Tocar sons locais</string>
+    <string name="soundcore_option_manual">Manual</string>
+    <string name="soundcore_option_adaptive">Adaptativo</string>
+    <string name="soundcore_option_transportation">Transporte</string>
+    <string name="soundcore_option_multi_scene">Multicenário</string>
+    <string name="soundcore_option_fully_transparent">Totalmente transparente</string>
+    <string name="soundcore_option_vocal_mode">Modo voz</string>
+
+    <!-- Notas e problemas -->
+    <string name="soundcore_note_experimental">Experimental: feito a partir de pesquisas publicadas e de um fone virtual, ainda não testado em aparelhos reais.</string>
+    <string name="soundcore_note_read_only">Experimental, somente leitura: o Ruru não consegue alterar estes ajustes da Soundcore (ou eles não batem com o layout que ele conhece), então só os lê.</string>
+    <string name="soundcore_note_battery_only">Experimental, somente leitura: o Ruru lê a bateria e o firmware deste modelo Soundcore; os ajustes dele ainda não foram mapeados.</string>
+    <string name="soundcore_note_unreadable">Experimental, somente leitura: estes fones Soundcore se conectaram, mas o estado deles não bate com nenhum layout que o Ruru reconheça, então nada é mostrado nem alterado.</string>
+    <string name="soundcore_unknown_model">Estes fones Soundcore enviaram um estado que o Ruru não consegue associar a um modelo que ele controle.</string>
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore のイヤホン・ヘッドホン、日本語: Ruru が表示する設定のタイトル（キー = vendor_ + コントロール ID）、選択肢、注意書き。 -->
+    <string name="vendor_soundcore_anc">ノイズキャンセリング</string>
+    <string name="vendor_soundcore_listening_mode">リスニングモード</string>
+    <string name="vendor_soundcore_listening_mode_hint">ローカルサウンド: イヤホン内蔵の睡眠用サウンドを再生します。スマートフォンは不要です</string>
+    <string name="vendor_soundcore_default_listening_mode">起動時のモード</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">イヤホンの起動時に使うリスニングモード</string>
+    <string name="vendor_soundcore_auto_switch_asleep">寝たら切り替え</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">眠ったとイヤホンが検知したら、下の設定を実行します</string>
+    <string name="vendor_soundcore_post_sleep_action">寝たあと</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">ローカルサウンドを再生すると、ノイズキャンセリングはオフになります</string>
+    <string name="vendor_soundcore_incoming_calls">Bluetooth モード中の着信</string>
+    <string name="vendor_soundcore_prompt_low_battery">電池残量低下の音声案内</string>
+    <string name="vendor_soundcore_prompt_anc">ノイズキャンセリングの音声案内</string>
+    <string name="vendor_soundcore_prompt_listening_mode">リスニングモードの音声案内</string>
+    <string name="vendor_soundcore_prompt_auto_off">自動電源オフの音声案内</string>
+    <string name="vendor_soundcore_nc_type">ノイズキャンセリングの種類</string>
+    <string name="vendor_soundcore_nc_type_hint">ノイズキャンセリングが有効なモードのときに変わります</string>
+    <string name="vendor_soundcore_nc_level">ノイズキャンセリングの手動レベル</string>
+    <string name="vendor_soundcore_nc_level_hint">「手動」タイプに適用されます。1 が最も弱い設定です</string>
+    <string name="vendor_soundcore_transparency_type">外音取り込みの種類</string>
+    <string name="vendor_soundcore_transparency_type_hint">外音取り込みが有効なモードのときに変わります</string>
+    <string name="vendor_soundcore_wind">風切り音の低減</string>
+    <string name="vendor_soundcore_wind_hint">ノイズキャンセリングまたは外音取り込みと一緒に使います</string>
+    <string name="vendor_soundcore_touch_tone">タッチ音</string>
+    <string name="vendor_soundcore_touch_tone_hint">イヤホンをタップすると音が鳴ります</string>
+    <string name="vendor_soundcore_gaming_mode">ゲームモード</string>
+    <string name="vendor_soundcore_gaming_mode_hint">遅延が小さくなります</string>
+    <string name="vendor_soundcore_leak_compensation">音漏れ補正</string>
+    <string name="vendor_soundcore_multipoint">マルチポイント</string>
+    <string name="vendor_soundcore_multipoint_hint">2 台の機器に同時に接続したままにします</string>
+    <string name="vendor_soundcore_low_battery_prompt">電池残量低下の音声案内</string>
+    <string name="vendor_soundcore_wearing_tone">装着音</string>
+    <string name="vendor_soundcore_wear_detection">装着検知</string>
+    <string name="vendor_soundcore_wear_detection_hint">イヤホンを外すと一時停止します</string>
+    <string name="vendor_soundcore_surround">3D サラウンド</string>
+    <string name="vendor_soundcore_auto_off">自動電源オフ</string>
+
+    <!-- 選択肢 -->
+    <string name="soundcore_option_off">オフ</string>
+    <string name="soundcore_option_local_sounds">ローカルサウンド</string>
+    <string name="soundcore_option_pause">一時停止</string>
+    <string name="soundcore_option_play_local_sounds">ローカルサウンドを再生</string>
+    <string name="soundcore_option_manual">手動</string>
+    <string name="soundcore_option_adaptive">アダプティブ</string>
+    <string name="soundcore_option_transportation">乗り物</string>
+    <string name="soundcore_option_multi_scene">マルチシーン</string>
+    <string name="soundcore_option_fully_transparent">フル外音取り込み</string>
+    <string name="soundcore_option_vocal_mode">ボーカルモード</string>
+
+    <!-- 注意書きと問題 -->
+    <string name="soundcore_note_experimental">実験的: 公開されている調査結果と仮想のヘッドセットをもとに作られており、実機ではまだ試していません。</string>
+    <string name="soundcore_note_read_only">実験的 (読み取り専用): Ruru はこの Soundcore の設定を変更できない（または既知のレイアウトと一致しない）ため、読み取りのみ行います。</string>
+    <string name="soundcore_note_battery_only">実験的 (読み取り専用): Ruru はこの Soundcore モデルの電池残量とファームウェアを読み取ります。設定はまだ対応していません。</string>
+    <string name="soundcore_note_unreadable">実験的 (読み取り専用): この Soundcore のヘッドホンは接続しましたが、状態が Ruru の知るレイアウトと一致しないため、何も表示も変更もしません。</string>
+    <string name="soundcore_unknown_model">この Soundcore のヘッドホンが送った状態は、Ruru が操作できるどのモデルとも一致しませんでした。</string>
+</resources>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore 耳机，简体中文：Ruru 为它们显示的设置标题（键 = vendor_ 加控件 ID）、选项和提示。 -->
+    <string name="vendor_soundcore_anc">降噪</string>
+    <string name="vendor_soundcore_listening_mode">聆听模式</string>
+    <string name="vendor_soundcore_listening_mode_hint">本地声音：耳机播放自带的助眠声音，无需手机</string>
+    <string name="vendor_soundcore_default_listening_mode">启动时的模式</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">耳机启动时使用的聆听模式</string>
+    <string name="vendor_soundcore_auto_switch_asleep">入睡后切换</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">耳机检测到你睡着后，执行下面的设置</string>
+    <string name="vendor_soundcore_post_sleep_action">入睡后</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">播放本地声音会关闭降噪</string>
+    <string name="vendor_soundcore_incoming_calls">蓝牙模式下的来电</string>
+    <string name="vendor_soundcore_prompt_low_battery">低电量语音提示</string>
+    <string name="vendor_soundcore_prompt_anc">降噪语音提示</string>
+    <string name="vendor_soundcore_prompt_listening_mode">聆听模式语音提示</string>
+    <string name="vendor_soundcore_prompt_auto_off">自动关机语音提示</string>
+    <string name="vendor_soundcore_nc_type">降噪类型</string>
+    <string name="vendor_soundcore_nc_type_hint">降噪为当前模式时才会改变</string>
+    <string name="vendor_soundcore_nc_level">手动降噪级别</string>
+    <string name="vendor_soundcore_nc_level_hint">适用于手动类型；1 为最弱</string>
+    <string name="vendor_soundcore_transparency_type">通透类型</string>
+    <string name="vendor_soundcore_transparency_type_hint">通透为当前模式时才会改变</string>
+    <string name="vendor_soundcore_wind">风噪抑制</string>
+    <string name="vendor_soundcore_wind_hint">与降噪或通透模式配合使用</string>
+    <string name="vendor_soundcore_touch_tone">触控提示音</string>
+    <string name="vendor_soundcore_touch_tone_hint">轻触耳机时发出提示音</string>
+    <string name="vendor_soundcore_gaming_mode">游戏模式</string>
+    <string name="vendor_soundcore_gaming_mode_hint">更低的延迟</string>
+    <string name="vendor_soundcore_leak_compensation">漏音补偿</string>
+    <string name="vendor_soundcore_multipoint">多点连接</string>
+    <string name="vendor_soundcore_multipoint_hint">同时连接两台设备</string>
+    <string name="vendor_soundcore_low_battery_prompt">低电量语音提示</string>
+    <string name="vendor_soundcore_wearing_tone">佩戴提示音</string>
+    <string name="vendor_soundcore_wear_detection">佩戴检测</string>
+    <string name="vendor_soundcore_wear_detection_hint">摘下一只耳机时暂停</string>
+    <string name="vendor_soundcore_surround">3D 环绕声</string>
+    <string name="vendor_soundcore_auto_off">自动关机</string>
+
+    <!-- 选项 -->
+    <string name="soundcore_option_off">关闭</string>
+    <string name="soundcore_option_local_sounds">本地声音</string>
+    <string name="soundcore_option_pause">暂停</string>
+    <string name="soundcore_option_play_local_sounds">播放本地声音</string>
+    <string name="soundcore_option_manual">手动</string>
+    <string name="soundcore_option_adaptive">自适应</string>
+    <string name="soundcore_option_transportation">交通出行</string>
+    <string name="soundcore_option_multi_scene">多场景</string>
+    <string name="soundcore_option_fully_transparent">完全通透</string>
+    <string name="soundcore_option_vocal_mode">人声模式</string>
+
+    <!-- 提示和问题 -->
+    <string name="soundcore_note_experimental">实验性：依据已公开的研究和虚拟耳机制作，尚未在真实设备上试过。</string>
+    <string name="soundcore_note_read_only">实验性，只读：Ruru 无法更改这款 Soundcore 的设置（或设置与它已知的布局不符），所以只读取。</string>
+    <string name="soundcore_note_battery_only">实验性，只读：Ruru 会读取这款 Soundcore 的电量和固件；它的设置尚未支持。</string>
+    <string name="soundcore_note_unreadable">实验性，只读：这款 Soundcore 耳机已连接，但它的状态与 Ruru 认识的任何布局都不符，所以不显示也不更改任何内容。</string>
+    <string name="soundcore_unknown_model">这款 Soundcore 耳机发来的状态，Ruru 无法对应到它能控制的任何型号。</string>
+</resources>

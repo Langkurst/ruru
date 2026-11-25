@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore earbuds and headphones: the titles of the settings Ruru draws for them (key = vendor_ plus the control id), the choices in them and the notes. -->
+    <string name="vendor_soundcore_anc">Noise cancelling</string>
+    <string name="vendor_soundcore_listening_mode">Listening mode</string>
+    <string name="vendor_soundcore_listening_mode_hint">Local sounds: the earbuds play their own sleep sounds, no phone needed</string>
+    <string name="vendor_soundcore_default_listening_mode">Start in</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">The listening mode the earbuds start in</string>
+    <string name="vendor_soundcore_auto_switch_asleep">Switch once asleep</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">Do what's set below when the earbuds detect you fell asleep</string>
+    <string name="vendor_soundcore_post_sleep_action">Once asleep</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">Play local sounds turns noise cancelling off</string>
+    <string name="vendor_soundcore_incoming_calls">Incoming calls in Bluetooth mode</string>
+    <string name="vendor_soundcore_prompt_low_battery">Low battery prompt</string>
+    <string name="vendor_soundcore_prompt_anc">Noise cancelling prompt</string>
+    <string name="vendor_soundcore_prompt_listening_mode">Listening mode prompt</string>
+    <string name="vendor_soundcore_prompt_auto_off">Auto power-off prompt</string>
+    <string name="vendor_soundcore_nc_type">Noise cancelling type</string>
+    <string name="vendor_soundcore_nc_type_hint">Changes while noise cancelling is the active mode</string>
+    <string name="vendor_soundcore_nc_level">Manual noise cancelling level</string>
+    <string name="vendor_soundcore_nc_level_hint">Applies to the Manual type; 1 is the lightest</string>
+    <string name="vendor_soundcore_transparency_type">Transparency type</string>
+    <string name="vendor_soundcore_transparency_type_hint">Changes while transparency is the active mode</string>
+    <string name="vendor_soundcore_wind">Wind noise reduction</string>
+    <string name="vendor_soundcore_wind_hint">With noise cancelling or transparency</string>
+    <string name="vendor_soundcore_touch_tone">Touch tone</string>
+    <string name="vendor_soundcore_touch_tone_hint">A beep when you tap the earbuds</string>
+    <string name="vendor_soundcore_gaming_mode">Gaming mode</string>
+    <string name="vendor_soundcore_gaming_mode_hint">Lower latency</string>
+    <string name="vendor_soundcore_leak_compensation">Sound leak compensation</string>
+    <string name="vendor_soundcore_multipoint">Multipoint</string>
+    <string name="vendor_soundcore_multipoint_hint">Stay connected to two devices at once</string>
+    <string name="vendor_soundcore_low_battery_prompt">Low battery prompt</string>
+    <string name="vendor_soundcore_wearing_tone">Wearing tone</string>
+    <string name="vendor_soundcore_wear_detection">Wear detection</string>
+    <string name="vendor_soundcore_wear_detection_hint">Pause when you take an earbud out</string>
+    <string name="vendor_soundcore_surround">3D surround</string>
+    <string name="vendor_soundcore_auto_off">Auto power-off</string>
+
+    <!-- Choices -->
+    <string name="soundcore_option_off">Off</string>
+    <string name="soundcore_option_local_sounds">Local sounds</string>
+    <string name="soundcore_option_pause">Pause</string>
+    <string name="soundcore_option_play_local_sounds">Play local sounds</string>
+    <string name="soundcore_option_manual">Manual</string>
+    <string name="soundcore_option_adaptive">Adaptive</string>
+    <string name="soundcore_option_transportation">Transportation</string>
+    <string name="soundcore_option_multi_scene">Multi-scene</string>
+    <string name="soundcore_option_fully_transparent">Fully transparent</string>
+    <string name="soundcore_option_vocal_mode">Vocal mode</string>
+
+    <!-- Notes and problems -->
+    <string name="soundcore_note_experimental">Experimental: built from published research and a virtual headset, not yet tried on real hardware.</string>
+    <string name="soundcore_note_read_only">Experimental, read-only: Ruru can't change these Soundcore settings (or they don't match the layout it knows), so it only reads them.</string>
+    <string name="soundcore_note_battery_only">Experimental, read-only: Ruru reads this Soundcore model's battery and firmware; its settings aren't mapped yet.</string>
+    <string name="soundcore_note_unreadable">Experimental, read-only: these Soundcore headphones connected, but their state isn't a layout Ruru recognises, so nothing is shown or changed.</string>
+    <string name="soundcore_unknown_model">These Soundcore headphones sent a state Ruru can't match to a model it drives.</string>
+</resources>

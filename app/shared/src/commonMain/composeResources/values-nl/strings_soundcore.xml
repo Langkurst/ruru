@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Soundcore-oordopjes en -koptelefoons, Nederlands: de titels van de instellingen die Ruru ervoor toont (sleutel = vendor_ plus de id van het bedieningselement), de keuzes en de opmerkingen. -->
+    <string name="vendor_soundcore_anc">Ruisonderdrukking</string>
+    <string name="vendor_soundcore_listening_mode">Luistermodus</string>
+    <string name="vendor_soundcore_listening_mode_hint">Lokale geluiden: de oordopjes spelen hun eigen slaapgeluiden af, geen telefoon nodig</string>
+    <string name="vendor_soundcore_default_listening_mode">Starten in</string>
+    <string name="vendor_soundcore_default_listening_mode_hint">De luistermodus waarin de oordopjes starten</string>
+    <string name="vendor_soundcore_auto_switch_asleep">Wisselen bij inslapen</string>
+    <string name="vendor_soundcore_auto_switch_asleep_hint">Doet wat hieronder is ingesteld zodra de oordopjes merken dat je in slaap bent gevallen</string>
+    <string name="vendor_soundcore_post_sleep_action">Zodra je slaapt</string>
+    <string name="vendor_soundcore_post_sleep_action_hint">Lokale geluiden afspelen zet de ruisonderdrukking uit</string>
+    <string name="vendor_soundcore_incoming_calls">Inkomende gesprekken in Bluetooth-modus</string>
+    <string name="vendor_soundcore_prompt_low_battery">Melding bij lage batterij</string>
+    <string name="vendor_soundcore_prompt_anc">Melding bij ruisonderdrukking</string>
+    <string name="vendor_soundcore_prompt_listening_mode">Melding bij luistermodus</string>
+    <string name="vendor_soundcore_prompt_auto_off">Melding bij automatisch uitschakelen</string>
+    <string name="vendor_soundcore_nc_type">Type ruisonderdrukking</string>
+    <string name="vendor_soundcore_nc_type_hint">Verandert zolang ruisonderdrukking de actieve modus is</string>
+    <string name="vendor_soundcore_nc_level">Handmatig niveau van ruisonderdrukking</string>
+    <string name="vendor_soundcore_nc_level_hint">Geldt voor het type Handmatig; 1 is het zwakst</string>
+    <string name="vendor_soundcore_transparency_type">Type transparantie</string>
+    <string name="vendor_soundcore_transparency_type_hint">Verandert zolang transparantie de actieve modus is</string>
+    <string name="vendor_soundcore_wind">Windruisonderdrukking</string>
+    <string name="vendor_soundcore_wind_hint">Met ruisonderdrukking of transparantie</string>
+    <string name="vendor_soundcore_touch_tone">Aanraaktoon</string>
+    <string name="vendor_soundcore_touch_tone_hint">Een piepje als je op de oordopjes tikt</string>
+    <string name="vendor_soundcore_gaming_mode">Gamemodus</string>
+    <string name="vendor_soundcore_gaming_mode_hint">Lagere latentie</string>
+    <string name="vendor_soundcore_leak_compensation">Compensatie voor geluidslek</string>
+    <string name="vendor_soundcore_multipoint">Multipoint</string>
+    <string name="vendor_soundcore_multipoint_hint">Verbonden blijven met twee apparaten tegelijk</string>
+    <string name="vendor_soundcore_low_battery_prompt">Melding bij lage batterij</string>
+    <string name="vendor_soundcore_wearing_tone">Draagtoon</string>
+    <string name="vendor_soundcore_wear_detection">Draagdetectie</string>
+    <string name="vendor_soundcore_wear_detection_hint">Pauzeren als je een oordopje uitdoet</string>
+    <string name="vendor_soundcore_surround">3D-surround</string>
+    <string name="vendor_soundcore_auto_off">Automatisch uitschakelen</string>
+
+    <!-- Keuzes -->
+    <string name="soundcore_option_off">Uit</string>
+    <string name="soundcore_option_local_sounds">Lokale geluiden</string>
+    <string name="soundcore_option_pause">Pauzeren</string>
+    <string name="soundcore_option_play_local_sounds">Lokale geluiden afspelen</string>
+    <string name="soundcore_option_manual">Handmatig</string>
+    <string name="soundcore_option_adaptive">Adaptief</string>
+    <string name="soundcore_option_transportation">Openbaar vervoer</string>
+    <string name="soundcore_option_multi_scene">Meerdere scènes</string>
+    <string name="soundcore_option_fully_transparent">Volledig transparant</string>
+    <string name="soundcore_option_vocal_mode">Stemmodus</string>
+
+    <!-- Opmerkingen en problemen -->
+    <string name="soundcore_note_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele koptelefoon, nog niet op echte apparatuur geprobeerd.</string>
+    <string name="soundcore_note_read_only">Experimenteel, alleen lezen: Ruru kan deze Soundcore-instellingen niet wijzigen (of ze komen niet overeen met de indeling die het kent), dus Ruru leest ze alleen.</string>
+    <string name="soundcore_note_battery_only">Experimenteel, alleen lezen: Ruru leest de batterij en firmware van dit Soundcore-model; de instellingen zijn nog niet in kaart gebracht.</string>
+    <string name="soundcore_note_unreadable">Experimenteel, alleen lezen: deze Soundcore-koptelefoon is verbonden, maar de status komt met geen enkele indeling overeen die Ruru kent, dus er wordt niets getoond of gewijzigd.</string>
+    <string name="soundcore_unknown_model">Deze Soundcore-koptelefoon stuurde een status die Ruru niet aan een model kan koppelen dat het aanstuurt.</string>
+</resources>
