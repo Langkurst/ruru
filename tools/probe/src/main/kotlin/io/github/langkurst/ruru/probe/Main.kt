@@ -14,9 +14,11 @@ import io.github.langkurst.ruru.protocol.bose.CurrentMode
 import io.github.langkurst.ruru.protocol.bose.Eq
 import io.github.langkurst.ruru.protocol.bose.FavoritesCodec
 import io.github.langkurst.ruru.protocol.bose.LeAudioControl
+import io.github.langkurst.ruru.protocol.bose.Mac
 import io.github.langkurst.ruru.protocol.bose.ModeConfigs
 import io.github.langkurst.ruru.protocol.bose.ModesCapabilities
 import io.github.langkurst.ruru.protocol.bose.Multipoint
+import io.github.langkurst.ruru.protocol.bose.PairedDeviceList
 import io.github.langkurst.ruru.protocol.bose.ProductInfo
 import io.github.langkurst.ruru.protocol.bose.QcUltra2
 import io.github.langkurst.ruru.protocol.bose.Sidetone
@@ -82,7 +84,7 @@ fun main(args: Array<String>) {
         println("Greeting frames: $greeting")
 
         fun get(address: FunctionAddress, payload: ByteArray = BmapPacket.EMPTY): BmapPacket? {
-            s.write(BmapPacket(address.block, address.function, BmapOperator.GET, payload).encode())
+            s.write(ProbeSafety.get(address, payload).encode())
             return pump(ms() + 2_000) {
                 it.matches(address) && (it.operator == BmapOperator.STATUS || it.operator == BmapOperator.ERROR)
             }
@@ -90,7 +92,7 @@ fun main(args: Array<String>) {
 
         var answered = 0
         var asked = 0
-        fun read(label: String, address: FunctionAddress, payload: ByteArray = BmapPacket.EMPTY, decode: (ByteArray) -> Any?): ByteArray? {
+        fun read(label: String, address: FunctionAddress, payload: ByteArray = BmapPacket.EMPTY, rawShown: (ByteArray) -> String = { it.toHex() }, decode: (ByteArray) -> Any?): ByteArray? {
             asked++
             val t0 = ms()
             val reply = get(address, payload)
@@ -99,7 +101,7 @@ fun main(args: Array<String>) {
                 reply == null -> "no reply"
                 reply.isError -> "error ${reply.errorCode} (${reply.error?.description ?: "unknown"})"
                 else -> runCatching { decode(reply.payload) }.getOrElse { "parse failed: ${it.message}" }
-                    .toString() + "   raw=${reply.payload.toHex()}"
+                    .toString() + "   raw=${rawShown(reply.payload)}"
             }
             if (reply != null && !reply.isError) answered++
             println("%-8s %-26s %s  (%d ms)".format(address.toString(), label, shown, took))
@@ -152,6 +154,19 @@ fun main(args: Array<String>) {
         read("Auto answer", QcUltra2.AUTO_ANSWER) { Toggle.parse(it) }
         read("Touch controls", QcUltra2.DISABLE_CAPTOUCH) { TouchControls.parseEnabled(it) }
         read("LE Audio switch", QcUltra2.LE_AUDIO_CONTROL) { LeAudioControl.parse(it) }
+
+        println()
+        println("== Playback, volume and paired devices (read only)")
+        for (r in PlaybackReads.all) read(r.label, r.address, r.payload, r.raw, r.decode)
+        val listPayload = read("Paired devices [4.4]", QcUltra2.PAIRED_DEVICES, rawShown = { "(addresses hidden, ${it.size} bytes)" }) { p ->
+            PairedDeviceList.parse(p)?.let { "${it.macs.size} paired, ${it.connectedMacs.size} connected" }
+        }
+        val devices = listPayload?.let { PairedDeviceList.parse(it) }
+        devices?.macs?.take(8)?.forEachIndexed { i, mac ->
+            read("  device ${i + 1} [4.5]", QcUltra2.DEVICE_INFO, Mac.toBytes(mac), { ProbeSafety.maskAddress(it, 0) }) { p ->
+                "connected=${devices.isConnected(mac)} ${PlaybackReads.describeInfo(p)}"
+            }
+        }
 
         println()
         println("RESULT: $answered of $asked reads answered, ${frames.desyncCount} framing errors, total ${ms()} ms")

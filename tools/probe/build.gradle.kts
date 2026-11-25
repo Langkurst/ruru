@@ -17,7 +17,10 @@ kotlin {
 dependencies {
     implementation(project(":core:protocol"))
     implementation(project(":platform:windows"))
+    implementation(project(":core:session"))
     implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.junit)
 }
 
 application {
