@@ -56,7 +56,9 @@ compose.desktop {
         }
 
         nativeDistributions {
-            targetFormats(TargetFormat.Msi, TargetFormat.Exe, TargetFormat.Dmg, TargetFormat.Deb, TargetFormat.Rpm)
+            // Windows gets an MSI from jpackage and a setup program from packaging/windows (Inno Setup),
+            // which replaces jpackage's own .exe installer.
+            targetFormats(TargetFormat.Msi, TargetFormat.Dmg, TargetFormat.Deb, TargetFormat.Rpm)
             packageName = "Ruru"
             packageVersion = ruruVersion
             description = "Open-source app for Bose headphones"

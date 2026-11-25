@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   What SignPath signs in a release build. Not used until SignPath Foundation approves Ruru.
-  The build uploads the Windows installers as a ZIP with the folders msi/ and exe/ (see
+  The build uploads the Windows installers as a ZIP with the folders msi/ and setup/ (see
   .github/workflows/build.yml). SignPath signs:
     - the .msi installer, and Ruru's own Ruru.exe inside it,
-    - the .exe installer.
+    - the setup program (Ruru-<version>-setup.exe, built with Inno Setup from packaging/windows).
+  The uninstaller that setup writes into the install folder is made on the user's PC and is not signed.
   The Java runtime files inside the installers come from OpenJDK and are not signed under Ruru's name.
   Product name and version are enforced: every signed file must say "Ruru" and the release version,
   which the workflow passes in as the "version" parameter (ruru.version in gradle.properties).
@@ -20,7 +21,7 @@
       </pe-file>
       <authenticode-sign />
     </msi-file>
-    <pe-file path="exe/*.exe" product-name="Ruru" product-version="${version}">
+    <pe-file path="setup/*.exe" product-name="Ruru" product-version="${version}">
       <authenticode-sign />
     </pe-file>
   </zip-file>

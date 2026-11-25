@@ -22,6 +22,9 @@ Bose protocol code; see CREDITS.md.
   be worn while it runs (they switch off when taken off); if a run is cut short, the next run
   starts by undoing what it changed. `gradlew :tools:probe:run` reads every setting and changes
   nothing
+- Windows setup (Inno Setup 6, `winget install JRSoftware.InnoSetup`): `gradlew :app:desktop:createReleaseDistributable`, then
+  `iscc /DAppVersion=<v> packaging/windows/ruru.iss` from a short path (ISCC fails past 260 characters; `subst R: <repo>`).
+  Never run the setup on a PC with the MSI install without `/DRYRUNMSI`: it removes the MSI copy
 - Android: `gradlew :app:android:assembleRelease` (signed only when `keystore.properties` exists)
 - iOS Kotlin compiles on Windows: `gradlew :app:shared:compileKotlinIosArm64`
 - Website (`site/`, plain HTML, live at https://ruru-app.pages.dev): `npx wrangler pages deploy site

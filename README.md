@@ -41,7 +41,7 @@ Download the file for your system from [ruru-app.pages.dev](https://ruru-app.pag
 
 | System | File |
 |---|---|
-| Windows | `Ruru-<version>.msi` or `.exe` |
+| Windows | `Ruru-<version>-setup.exe` (the installer; no admin password needed) or `Ruru-<version>.msi` |
 | macOS (Apple silicon) | `Ruru-<version>-macos-arm64.dmg` (not notarised) |
 | Linux | `ruru_<version>_amd64.deb` (Ubuntu 24.04, Debian 13 or newer) or `ruru-<version>-1.x86_64.rpm` |
 | Android | `ruru-<version>.apk` |

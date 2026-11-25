@@ -8,7 +8,7 @@ body:
       label: Which file
       options:
         - .msi (Windows)
-        - .exe (Windows)
+        - setup .exe (Windows)
         - .dmg (Mac)
         - .deb (Linux)
         - .rpm (Linux)

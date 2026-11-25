@@ -6,6 +6,7 @@
 - Check for updates now does the work on Windows and Mac. It looks for the newest version, downloads
   it, checks it, then asks if you want to install it and restart. A small card in the window shows
   each step. Ruru still goes online only when you click the button; Linux and phones open the website.
+- Windows: a new installer, `Ruru-<version>-setup.exe`, with Ruru's own window: the owl, a smooth progress bar and the percentage. It installs for your user only (no admin password), adds a Start menu shortcut and an entry in Settings > Apps, and removes an older MSI copy of Ruru first so you never end up with two. The `.msi` stays as the second download, and the old plain `.exe` is gone.
 
 ## 0.1.3 (25 November 2026)
 

@@ -52,10 +52,20 @@ jobs:
       - uses: actions/setup-java@v6
         with: { distribution: temurin, java-version: "21" }
       - uses: gradle/actions/setup-gradle@v6
-      - run: ./gradlew :app:desktop:packageReleaseMsi :app:desktop:packageReleaseExe :app:desktop:createReleaseDistributable --console=plain
+      - run: ./gradlew :app:desktop:packageReleaseMsi :app:desktop:createReleaseDistributable --console=plain
+      # The setup program (Inno Setup is on GitHub's Windows images; installed here only if it is missing).
+      - name: Build the setup program
+        shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup --no-progress -y; $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
+          $version = ((Select-String -Path gradle.properties -Pattern '^ruru.version=').Line -split '=')[1]
+          & $iscc /Q "/DAppVersion=$version" packaging\windows\ruru.iss
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          Get-ChildItem app/desktop/build/compose/binaries/main-release/setup
       - name: Size budget (the installers can shrink, not quietly grow)
         shell: bash
-        run: bash .github/size-budget.sh 107900000 app/desktop/build/compose/binaries/main-release/msi/*.msi app/desktop/build/compose/binaries/main-release/exe/*.exe
+        run: bash .github/size-budget.sh 96900000 app/desktop/build/compose/binaries/main-release/msi/*.msi app/desktop/build/compose/binaries/main-release/setup/*.exe
       - name: Check the app starts (demo mode)
         shell: pwsh
         run: |
@@ -69,13 +79,16 @@ jobs:
           if ($stopped) { Write-Host "Ruru stopped after launch"; Write-Host $output; exit 1 }
           # Staying alive isn't enough: the tray keeps the process up even if the window fails.
           if ($output -match "Exception in thread|Error was captured in composition") { Write-Host "Ruru failed at launch:"; Write-Host $output; exit 1 }
+      - name: Check the setup installs, updates in place, starts and uninstalls
+        shell: pwsh
+        run: ./packaging/windows/check-setup.ps1 -Setup (Resolve-Path app/desktop/build/compose/binaries/main-release/setup/*.exe).Path
       - uses: actions/upload-artifact@v7
         id: unsigned
         with:
           name: windows
           path: |
             app/desktop/build/compose/binaries/main-release/msi/*.msi
-            app/desktop/build/compose/binaries/main-release/exe/*.exe
+            app/desktop/build/compose/binaries/main-release/setup/*.exe
       # Free code signing from SignPath Foundation (see site/code-signing.html). Inert until the project is
       # approved: it runs only on a release tag, and only when the SIGNPATH_API_TOKEN secret exists. The
       # organisation ID, project and policy come from the repository variables SIGNPATH_ORGANIZATION_ID,
@@ -116,7 +129,7 @@ jobs:
           overwrite: true
           path: |
             signed/msi/*.msi
-            signed/exe/*.exe
+            signed/setup/*.exe
 
   linux:
     needs: test

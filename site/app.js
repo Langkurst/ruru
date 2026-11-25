@@ -8,7 +8,7 @@
 
   var SUFFIXES = {
     msi: ".msi",
-    exe: ".exe",
+    exe: "-setup.exe",
     dmg: "-macos-arm64.dmg",
     deb: "_amd64.deb",
     rpm: ".x86_64.rpm",
@@ -18,7 +18,7 @@
 
   // Which file the big button gets on each system. Its words are in the page's strings.
   var HERO = {
-    windows: { asset: "msi" },
+    windows: { asset: "exe" },
     mac: { asset: "dmg" },
     android: { asset: "apk" },
     ios: {},

@@ -7,4 +7,5 @@ gradlew text eol=lf
 *.ttf binary
 *.png binary
 *.ico binary
+*.bmp binary
 *.icns binary
