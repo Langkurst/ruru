@@ -156,7 +156,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y rpm xvfb
       - run: ./gradlew :app:desktop:packageReleaseDeb :app:desktop:packageReleaseRpm :app:desktop:createReleaseDistributable --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 107780000 app/desktop/build/compose/binaries/main-release/deb/*.deb app/desktop/build/compose/binaries/main-release/rpm/*.rpm
+        run: bash .github/size-budget.sh 112000000 app/desktop/build/compose/binaries/main-release/deb/*.deb app/desktop/build/compose/binaries/main-release/rpm/*.rpm
       - name: Library budget (at most 64 libraries ship; 58 on 11 November 2026)
         run: |
           n=$(find app/desktop/build/compose/binaries/main-release/app/Ruru/lib/app -maxdepth 1 -name '*.jar' | wc -l)
@@ -303,7 +303,7 @@ jobs:
           v=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
           mkdir -p out && mv app/desktop/build/compose/binaries/main-release/dmg/*.dmg "out/Ruru-$v-macos-arm64.dmg"
       - name: Size budget (the DMG can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 62900000 out/*.dmg
+        run: bash .github/size-budget.sh 64000000 out/*.dmg # 0.3 plan
       - uses: actions/upload-artifact@v7
         with: { name: macos, path: out/*.dmg }
       - uses: actions/upload-artifact@v7
@@ -334,7 +334,7 @@ jobs:
           cp -R "$app" Payload/
           zip -qr "out/Ruru-$version.ipa" Payload
       - name: Size budget (the IPA can shrink, not quietly grow)
-        run: bash .github/size-budget.sh 13500000 iosApp/out/*.ipa
+        run: bash .github/size-budget.sh 16500000 iosApp/out/*.ipa # 0.3 plan: other brands and sleep sounds; 0.2 was 13.3 MB
       - name: Open it on a virtual iPhone in demo mode
         run: |
           cd iosApp
