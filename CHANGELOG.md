@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2 (25 November 2026)
+
+- A new owl icon: a friendlier ruru face, in the app, the tray, the installers and on phones.
+- Check for updates: a new button at the bottom of the window opens the Ruru website, which tells
+  you if a newer version is out. Ruru itself still never uses the internet.
+- Windows, Mac and Linux: the download is about a fifth smaller. Unused library code is left out,
+  and Ruru works the same. Tested with real headphones on Windows.
+- Mac: About Ruru in the menu now opens Ruru's window, which shows the real version number.
+- Phones: a long headphone name now wraps onto a second line instead of being cut off.
 ## 0.1.1 (25 November 2026)
 
 The first release: everything under 0.1.0, plus these changes.
