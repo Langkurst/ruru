@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
@@ -212,11 +211,12 @@ private class WindowHost(
         // A different kind of title bar needs a different window, so the window is keyed on it.
         key(kind) {
             val chrome = remember { WindowChromeState(kind, requestClose) }
-            val start = resume[0]
+            // The remembered window, or the first one: 1100 x 720 or 92% of the screen's work area, centred.
+            val start = resume[0] ?: WindowMemory.defaultBounds(WindowMemory.primaryWorkArea())
             val state = rememberWindowState(
-                width = (start?.width ?: WindowMemory.DEFAULT_WIDTH).dp,
-                height = (start?.height ?: WindowMemory.DEFAULT_HEIGHT).dp,
-                position = start?.let { WindowPosition(it.x.dp, it.y.dp) } ?: WindowPosition(Alignment.Center),
+                width = start.width.dp,
+                height = start.height.dp,
+                position = WindowPosition(start.x.dp, start.y.dp),
             )
             Window(
                 onCloseRequest = requestClose,

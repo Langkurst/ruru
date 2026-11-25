@@ -1,7 +1,9 @@
 package io.github.langkurst.ruru.app
 
+import java.awt.GraphicsConfiguration
 import java.awt.GraphicsEnvironment
 import java.awt.Rectangle
+import java.awt.Toolkit
 import java.util.prefs.Preferences
 
 /**
@@ -20,7 +22,8 @@ class WindowMemory(private val prefs: Preferences? = PrefsRoot.node("window")) {
         // What a window that never opened properly leaves behind (0.2.0's build wrote it): not a place anyone chose.
         if (isPlaceholder(bounds)) return null
         if (!onSomeScreen(bounds)) return null
-        Saved(bounds, p.getBoolean("max", false))
+        // A screen smaller than the one the window was saved on (or a taskbar added since) must not cut it off.
+        Saved(fitTo(bounds, workAreaFor(bounds) ?: return null), p.getBoolean("max", false))
     }.getOrNull()
 
     /**
@@ -49,6 +52,49 @@ class WindowMemory(private val prefs: Preferences? = PrefsRoot.node("window")) {
     }
 
     companion object {
+        /** How much of the screen's work area (the screen minus the taskbar or menu bar) a first window may take. */
+        private const val FIRST_WINDOW_SHARE = 0.92
+
+        /**
+         * Where the very first window opens: 1100 x 720, or 92% of the work area when that is smaller (a 1024 x 768
+         * screen got a window 1100 wide, cut off at the right), centred in the work area.
+         */
+        fun defaultBounds(work: Rectangle): Rectangle {
+            val w = minOf(DEFAULT_WIDTH, (work.width * FIRST_WINDOW_SHARE).toInt()).coerceAtLeast(minOf(MIN_WIDTH, work.width))
+            val h = minOf(DEFAULT_HEIGHT, (work.height * FIRST_WINDOW_SHARE).toInt()).coerceAtLeast(minOf(MIN_HEIGHT, work.height))
+            return Rectangle(work.x + (work.width - w) / 2, work.y + (work.height - h) / 2, w, h)
+        }
+
+        /** [bounds] moved and, if need be, made smaller so that the whole window is inside [work]. */
+        fun fitTo(bounds: Rectangle, work: Rectangle): Rectangle {
+            val w = minOf(bounds.width, work.width)
+            val h = minOf(bounds.height, work.height)
+            return Rectangle(
+                bounds.x.coerceIn(work.x, work.x + work.width - w),
+                bounds.y.coerceIn(work.y, work.y + work.height - h),
+                w,
+                h,
+            )
+        }
+
+        private fun workArea(config: GraphicsConfiguration): Rectangle {
+            val screen = config.bounds
+            val edge = Toolkit.getDefaultToolkit().getScreenInsets(config)
+            return Rectangle(screen.x + edge.left, screen.y + edge.top, screen.width - edge.left - edge.right, screen.height - edge.top - edge.bottom)
+        }
+
+        /** The main screen's work area. Where there is no screen to ask, a common laptop one. */
+        fun primaryWorkArea(): Rectangle = runCatching {
+            workArea(GraphicsEnvironment.getLocalGraphicsEnvironment().defaultScreenDevice.defaultConfiguration)
+        }.getOrDefault(Rectangle(0, 0, 1920, 1040))
+
+        /** The work area of the screen that holds most of [bounds]. */
+        internal fun workAreaFor(bounds: Rectangle): Rectangle? = runCatching {
+            GraphicsEnvironment.getLocalGraphicsEnvironment().screenDevices
+                .map { workArea(it.defaultConfiguration) }
+                .maxByOrNull { val i = it.intersection(bounds); if (i.isEmpty) 0L else i.width.toLong() * i.height }
+        }.getOrNull()
+
         const val DEFAULT_WIDTH = 1100
         const val DEFAULT_HEIGHT = 720
         const val MIN_WIDTH = 360

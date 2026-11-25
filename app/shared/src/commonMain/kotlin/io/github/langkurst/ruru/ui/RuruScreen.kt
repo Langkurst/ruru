@@ -44,6 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -67,6 +68,7 @@ import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.ConnectionReport
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
+import io.github.langkurst.ruru.app.PhoneTab
 import io.github.langkurst.ruru.app.SUPPORT_URL
 import io.github.langkurst.ruru.app.UpdateState
 import io.github.langkurst.ruru.app.Updates
@@ -81,6 +83,12 @@ import io.github.langkurst.ruru.app.supportNoteKey
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.protocol.bose.AutoOffOptions
 import io.github.langkurst.ruru.ui.res.*
+import io.github.langkurst.ruru.ui.pages.BottomBar
+import io.github.langkurst.ruru.ui.pages.EqualiserPage
+import io.github.langkurst.ruru.ui.pages.MorePage
+import io.github.langkurst.ruru.ui.pages.PageAvailability
+import io.github.langkurst.ruru.ui.pages.SleepPage
+import io.github.langkurst.ruru.ui.pages.SystemKind
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
@@ -89,8 +97,10 @@ import org.jetbrains.compose.resources.stringResource
 class PlatformSwitch(val label: StringResource, val hint: StringResource?, val isOn: () -> Boolean, val set: (Boolean) -> Unit)
 
 /**
- * The whole app on one scrolling column; the same on desktop and phone. [updates] runs the Check for
- * updates button; left out, the button opens the download page in the browser (phones).
+ * The whole app. From 880dp wide it is the sidebar and its pages; narrower (phones, narrow windows) it is
+ * one scrolling column per tab of the bottom bar. [updates] runs the Check for updates button; left out,
+ * the button opens the download page in the browser (phones). [pages] says which pages have content
+ * (docs/DESIGN.md, "Pages"); left out, it is what this build ships on the model's system.
  */
 @Composable
 fun RuruScreen(
@@ -99,8 +109,10 @@ fun RuruScreen(
     modifier: Modifier = Modifier,
     extras: List<PlatformSwitch> = emptyList(),
     updates: Updates? = null,
+    pages: PageAvailability? = null,
 ) {
     val controller by model.controller.collectAsState()
+    val available = pages ?: remember(model) { PageAvailability(system = SystemKind.of(model.platformName)) }
     val state by controller.state.collectAsState()
     val c = Ruru.colors
     val browser = LocalUriHandler.current
@@ -114,24 +126,39 @@ fun RuruScreen(
         if (maxWidth >= DeskMinWidth) {
             // A computer window: sidebar and pages, as in docs/DESIGN.md.
             CompositionLocalProvider(LocalDesk provides true) {
-                DeskLayout(model, state, controller, appVersion, extras, updater, copyReport)
+                DeskLayout(model, state, controller, appVersion, extras, updater, copyReport, available)
             }
         } else {
-            // A phone or a narrow window: the one scrolling column.
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-                Column(
-                    Modifier
-                        .widthIn(max = 520.dp)
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    Header(state)
-                    state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
-                    if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
-                    Footer(state, model, appVersion, extras, updater, copyReport)
+            // A phone or a narrow window: one scrolling column for the tab chosen in the bottom bar.
+            val tabs = available.phoneTabs()
+            val chosen by model.tab.collectAsState()
+            val tab = if (chosen in tabs) chosen else PhoneTab.Headphones
+            Column(Modifier.fillMaxSize()) {
+                Box(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+                    // Each tab starts at its top: the scroll position is not carried from one to the next.
+                    key(tab) {
+                        Column(
+                            Modifier
+                                .widthIn(max = 520.dp)
+                                .fillMaxSize()
+                                .verticalScroll(rememberScrollState())
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(12.dp),
+                        ) {
+                            when (tab) {
+                                PhoneTab.Headphones -> {
+                                    Header(state)
+                                    state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
+                                    if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
+                                }
+                                PhoneTab.Sound -> EqualiserPage(state, controller)
+                                PhoneTab.Sleep -> SleepPage(state, controller)
+                                PhoneTab.More -> MorePage(model, state, controller, appVersion, extras, updater, copyReport)
+                            }
+                        }
+                    }
                 }
+                if (tabs.size > 1) BottomBar(tabs, tab) { model.tab.value = it }
             }
         }
     }
@@ -266,9 +293,6 @@ private fun Connected(h: HeadphoneState, controller: HeadsetController) {
     if (caps.listeningModes && h.modes.isNotEmpty()) ModesPanel(h, controller)
     if (caps.noiseCancelling && h.noise != null) NoisePanel(h, h.noise!!, controller)
     h.eq?.let { EqPanel(it, h.eqRange ?: -10..10, controller) }
-    ShortcutPanel(h, controller)
-    SettingsPanel(h, controller)
-    AboutPanel(h)
 }
 
 /** Whether the headphones offer more than one thing for the shortcut button to do. */
@@ -652,7 +676,7 @@ internal fun DemoSwitch(state: AppState, model: AppModel) {
 }
 
 @Composable
-private fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, updates: Updates, onCopyReport: () -> Unit) {
+internal fun Footer(state: AppState, model: AppModel, appVersion: String, extras: List<PlatformSwitch>, updates: Updates, onCopyReport: () -> Unit) {
     val c = Ruru.colors
     var copied by remember { mutableStateOf(false) }
     val browser = LocalUriHandler.current

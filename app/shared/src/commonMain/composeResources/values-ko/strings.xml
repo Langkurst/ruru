@@ -216,6 +216,19 @@
     <string name="about_licence">Ruru는 무료 오픈 소스이고, MIT 라이선스예요.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">페이지</string>
+    <string name="page_equaliser_lead">프리셋과 나만의 곡선으로 소리를 조절해요.</string>
+    <string name="page_night">야간</string>
+    <string name="page_night_lead">잠자리에 들 때 조용한 모드로 바꾸고 아침에 되돌려요.</string>
+    <string name="page_devices">기기</string>
+    <string name="page_devices_lead">헤드폰과 페어링된 기기를 확인하고 전환해요.</string>
+    <string name="page_tools">도구</string>
+    <string name="page_tools_lead">헤드폰을 찾고 마이크를 확인해요.</string>
+    <string name="page_sleep">수면</string>
+    <string name="page_sleep_lead">타이머와 부드러운 알람으로 잔잔한 소리를 들으며 잠들어요.</string>
+    <string name="page_more">더보기</string>
+    <string name="page_more_lead">설정, 업데이트, 도움말이에요.</string>
+    <string name="page_placeholder_note">이 페이지는 아직 준비되지 않았어요.</string>
+    <string name="nav_tabs">탭</string>
     <string name="panel_headphones">헤드폰</string>
     <string name="panel_computer">이 컴퓨터</string>
 

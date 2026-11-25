@@ -8,6 +8,7 @@ import io.github.langkurst.ruru.desktop.chrome.ChromeKind
 import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
 import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.app.Phase
+import io.github.langkurst.ruru.app.PhoneTab
 import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.UnsupportedPlatform
 import io.github.langkurst.ruru.app.UpdateState
@@ -16,6 +17,8 @@ import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
 import io.github.langkurst.ruru.ui.PlatformSwitch
 import io.github.langkurst.ruru.ui.RuruScreen
+import io.github.langkurst.ruru.ui.pages.PageAvailability
+import io.github.langkurst.ruru.ui.pages.SystemKind
 import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.RuruTheme
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +35,7 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|settings|about] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
@@ -46,9 +49,26 @@ fun main(args: Array<String>) {
     val scale = args.firstOrNull { it.startsWith("--scale=") }?.substringAfter('=')?.toFloat() ?: 2f
     val frame = "--frame" in args
     val page = when (args.firstOrNull { it.startsWith("--page=") }?.substringAfter('=')) {
+        "equaliser" -> DeskPage.Equaliser
+        "night" -> DeskPage.Night
+        "devices" -> DeskPage.Devices
         "settings" -> DeskPage.Settings
+        "tools" -> DeskPage.Tools
         "about" -> DeskPage.About
         else -> DeskPage.Sound
+    }
+    val tab = when (args.firstOrNull { it.startsWith("--tab=") }?.substringAfter('=')) {
+        "sound" -> PhoneTab.Sound
+        "sleep" -> PhoneTab.Sleep
+        "more" -> PhoneTab.More
+        else -> PhoneTab.Headphones
+    }
+    // --all-pages shows the pages that are not built yet too (as placeholders), as on the system named by --system.
+    val system = args.firstOrNull { it.startsWith("--system=") }?.substringAfter('=')?.let { name -> SystemKind.entries.firstOrNull { it.name.equals(name, ignoreCase = true) } }
+    val pages = when {
+        "--all-pages" in args -> PageAvailability(DeskPage.entries.toSet(), system ?: SystemKind.Windows)
+        system != null -> PageAvailability(system = system)
+        else -> null
     }
     val update = when (args.firstOrNull { it.startsWith("--update=") }?.substringAfter('=')) {
         "checking" -> UpdateState.Checking
@@ -64,6 +84,7 @@ fun main(args: Array<String>) {
     val none = "--none" in args
     val model = AppModel(if (none) UnsupportedPlatform("this system") else WindowsHeadsetPlatform(), scope, startInDemo = demo)
     model.page.value = page
+    model.tab.value = tab
     model.start()
     val connected = runBlocking {
         withTimeoutOrNull(if (none) 1_000 else 30_000) { model.controller.value.state.first { it.phase == Phase.Connected } }
@@ -82,7 +103,7 @@ fun main(args: Array<String>) {
     val chrome = WindowChromeState(if (frame) ChromeKind.Windows else ChromeKind.None) {}
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates)) }
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages) }
         }
     }
     var image = scene.render(0)

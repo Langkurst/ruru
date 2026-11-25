@@ -55,9 +55,10 @@ The accent appears in at most two places on a screen. Switches and sliders are i
 
 ## Layout
 
-- Under 880dp (phones, narrow windows): one column, 360 to 520dp wide, panels stacked with 12dp gaps,
-  16dp padding, rows 40dp minimum (48dp on touch). Order: headset header, listening mode, noise,
-  equaliser, shortcut button, settings, about.
+- Under 880dp (phones, narrow windows): one column per tab, 360 to 520dp wide, panels stacked with 12dp
+  gaps, 16dp padding, rows 40dp minimum (48dp on touch), and a bottom bar (see "Pages"). Headphones tab:
+  headset header, listening mode, noise, equaliser. More tab: shortcut button, settings, about the
+  headphones, then the switches for this system, version, updates, report and support. Each tab opens at its top.
 - From a window about 1280dp wide the whole interface (title bar, sidebar, pages) is drawn larger by
   clamp(1 + (width - 1280) / 1280 * 0.35, 1, 1.35), so a big screen does not look tiny. The 880dp switch below
   is checked before this scale, which is 1 under 1280dp.
@@ -65,8 +66,8 @@ The accent appears in at most two places on a screen. Switches and sliders are i
   bough beside it (1px line on its top and left edges, 11dp top-left radius, padding 28 / 32, the content
   fills the window; hint text stops at 460dp and the equaliser sliders at 480dp). Page title 20 / 600 and one plain sentence in ink-3.
   - Sidebar, top to bottom: owl 52dp, device name 15 / 600, a calm dot and the status, battery label
-    and a 4dp bar, nav rows (36dp, 7dp radius, 17dp line icons, selected row on bark): Sound, Shortcut
-    button, Settings. At the bottom: the update card (only while an update is checking, downloading,
+    and a 4dp bar, nav rows (36dp, 7dp radius, 17dp line icons, selected row on bark): the pages that
+    have content, in the order given under "Pages". At the bottom: the update card (only while an update is checking, downloading,
     ready or failed; otherwise a "Check for updates" row) and "Ruru <version>  About  Support Ruru".
     About opens a page with the version, licence, demo switch, connection report and support.
   - Sound: Listening mode and Noise in two equal columns, the Equaliser full width below, with the
@@ -76,9 +77,38 @@ The accent appears in at most two places on a screen. Switches and sliders are i
     sentence and the buttons, centred in the content area; the sidebar keeps the owl and the status.
   - Pages change with a cross-fade: the old page fades out in 200ms, the new one fades in over 350ms
     starting 100ms later and rises 8dp, ease-out-quint. Reduced motion changes pages instantly.
-  - Keyboard: Ctrl+1, 2, 3 (Command on a Mac) open the pages in the sidebar; Tab goes through the
-    sidebar first, then the page. The chosen page is kept while the app runs, also when the window is closed.
+  - Keyboard: Ctrl+1 to 6 (Command on a Mac) open the pages in the sidebar, top to bottom, whichever are
+    listed; Tab goes through the sidebar first, then the page. The chosen page is kept while the app runs, also when the window is closed.
 - No rows of equal cards, no stat tiles, no hero.
+- The first window is 1100 x 720, or 92% of the screen's work area (the screen without the taskbar or
+  menu bar) when that is smaller, centred. A remembered window is also kept inside the work area.
+
+## Pages
+
+One file per page in `ui/pages` (`SoundPage.kt`, `EqualiserPage.kt` and so on); a feature edits only
+its own page file and adds its page to `PageAvailability.ShippedPages`.
+
+| Page | Holds | Where |
+|---|---|---|
+| Sound | listening modes, noise, the headphones' own 3-band equaliser | when the headphones have any |
+| Equaliser | the Pro EQ | Windows, Linux, Android |
+| Night | the night schedule | every system |
+| Devices | paired devices and switching | every system |
+| Settings | the headphones' settings and shortcut button, then the settings for this computer | when there are any |
+| Tools | Find my headphones, mic check, Lab | every system |
+| Sleep | timer, sounds and alarms | phones (a bottom bar tab) |
+| More | settings, about the headphones, updates, report, support | bottom bar only |
+
+- A page appears only when it has content. Until its feature is built, a page file holds a plain
+  placeholder (title, one sentence of what will be there, "This page isn't ready yet.") and the page is
+  left out of the sidebar and the bar. Nothing is drawn that does not work.
+- About stays at the foot of the sidebar, next to the version.
+- Bottom bar (phones and windows under 880dp): up to four tabs, in this order: Headphones, Sound (the
+  Pro EQ, only where the Equaliser page exists), Sleep (phones), More. A tab appears only if it has
+  content, so today the bar is Headphones and More, and it is hidden if only one tab is left. 56dp
+  high on night, with a 1px line on top, an icon (22dp, drawn in the app, no icon font or emoji) over
+  the name. The chosen tab is ink, the others ink-3. No accent colour and no marker. On a phone the
+  bar sits above the system's gesture or navigation bar, on the same colour.
 
 ## Product animation
 

@@ -89,6 +89,21 @@ import io.github.langkurst.ruru.app.SUPPORT_URL
 import io.github.langkurst.ruru.app.UpdateState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.core.HeadphoneEq
+import io.github.langkurst.ruru.ui.pages.Columns
+import io.github.langkurst.ruru.ui.pages.DevicesPage
+import io.github.langkurst.ruru.ui.pages.EqualiserPage
+import io.github.langkurst.ruru.ui.pages.NavIcon
+import io.github.langkurst.ruru.ui.pages.NavIconView
+import io.github.langkurst.ruru.ui.pages.NightPage
+import io.github.langkurst.ruru.ui.pages.PageAvailability
+import io.github.langkurst.ruru.ui.pages.PageFrame
+import io.github.langkurst.ruru.ui.pages.SettingsPage
+import io.github.langkurst.ruru.ui.pages.SleepPage
+import io.github.langkurst.ruru.ui.pages.SoundPage
+import io.github.langkurst.ruru.ui.pages.ToolsPage
+import io.github.langkurst.ruru.ui.pages.column
+import io.github.langkurst.ruru.ui.pages.pageIcon
+import io.github.langkurst.ruru.ui.pages.pageTitle
 import io.github.langkurst.ruru.ui.res.*
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.PI
@@ -96,6 +111,9 @@ import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
+
+/** Ctrl+1 to Ctrl+6 (Command on a Mac): the keys for the first six pages of the sidebar. */
+private val pageKeys = listOf(Key.One, Key.Two, Key.Three, Key.Four, Key.Five, Key.Six)
 
 /** From this window width the app draws the sidebar layout; below it, the single column. */
 internal val DeskMinWidth = 880.dp
@@ -116,15 +134,17 @@ internal fun DeskLayout(
     extras: List<PlatformSwitch>,
     updates: Updates,
     onCopyReport: () -> Unit,
+    pages: PageAvailability,
 ) {
     val requested by model.page.collectAsState()
     val h = state.headset
     val connected = state.phase == Phase.Connected
-    // The pages in the sidebar. With no headphones there is nothing to tune, so only what belongs to the app.
-    val navPages = buildList {
-        if (connected && hasSound(h)) add(DeskPage.Sound)
-        if ((connected && (hasHeadphoneSettings(h) || hasShortcutChoices(h))) || extras.isNotEmpty()) add(DeskPage.Settings)
-    }
+    // The pages in the sidebar. With no headphones there is nothing to tune, so only what belongs to the app,
+    // and a page whose feature is not built yet is not listed (see PageAvailability).
+    val navPages = pages.deskPages(
+        sound = connected && hasSound(h),
+        settings = (connected && (hasHeadphoneSettings(h) || hasShortcutChoices(h))) || extras.isNotEmpty(),
+    )
     val shown = when {
         requested == DeskPage.About -> DeskPage.About
         requested in navPages -> requested
@@ -138,15 +158,11 @@ internal fun DeskLayout(
             .fillMaxSize()
             .focusRequester(focus)
             .focusable()
-            // Ctrl+1 and 2 (Command on a Mac) open the pages in the sidebar, top to bottom.
+            // Ctrl+1 to 6 (Command on a Mac) open the pages in the sidebar, top to bottom.
             .onPreviewKeyEvent { e ->
                 if (e.type != KeyEventType.KeyDown || !(e.isCtrlPressed || e.isMetaPressed)) return@onPreviewKeyEvent false
-                val index = when (e.key) {
-                    Key.One, Key.NumPad1 -> 0
-                    Key.Two, Key.NumPad2 -> 1
-                    Key.Three, Key.NumPad3 -> 2
-                    else -> return@onPreviewKeyEvent false
-                }
+                val index = pageKeys.indexOf(e.key)
+                if (index < 0) return@onPreviewKeyEvent false
                 val target = navPages.getOrNull(index) ?: return@onPreviewKeyEvent false
                 model.page.value = target
                 true
@@ -175,7 +191,14 @@ internal fun DeskLayout(
             ) { page ->
                 when (page) {
                     DeskPage.Sound -> SoundPage(state, controller)
+                    DeskPage.Equaliser -> EqualiserPage(state, controller)
+                    DeskPage.Night -> NightPage(state, controller)
+                    DeskPage.Devices -> DevicesPage(state, controller)
                     DeskPage.Settings -> SettingsPage(state, controller, extras)
+                    DeskPage.Tools -> ToolsPage(state, controller)
+                    // The phone's tabs: never chosen in the sidebar, but a remembered page may name one.
+                    DeskPage.Sleep -> SleepPage(state, controller)
+                    DeskPage.More -> SettingsPage(state, controller, extras)
                     DeskPage.About -> AboutPage(model, state, appVersion, updates, onCopyReport)
                     DeskPage.Status -> StatusPage(state, controller, model)
                 }
@@ -241,15 +264,7 @@ private fun Sidebar(
         val pagesLabel = stringResource(Res.string.nav_pages)
         Column(Modifier.selectableGroup().semantics { contentDescription = pagesLabel }, verticalArrangement = Arrangement.spacedBy(2.dp)) {
             navPages.forEach { page ->
-                val label = when (page) {
-                    DeskPage.Sound -> stringResource(Res.string.page_sound)
-                    else -> stringResource(Res.string.panel_settings)
-                }
-                val icon = when (page) {
-                    DeskPage.Sound -> NavIcon.Headphones
-                    else -> NavIcon.Gear
-                }
-                NavRow(label, icon, selected = shown == page) { model.page.value = page }
+                NavRow(pageTitle(page), pageIcon(page), selected = shown == page) { model.page.value = page }
             }
         }
         Spacer(Modifier.weight(1f))
@@ -340,8 +355,6 @@ private fun LinkText(text: String, onClick: () -> Unit) {
 
 // ---------------------------------------------------------------- navigation rows and icons
 
-private enum class NavIcon { Headphones, Gear, Refresh }
-
 /** One 36dp sidebar row: a line icon and a label. [quiet] rows are actions rather than pages. */
 @Composable
 private fun NavRow(label: String, icon: NavIcon, selected: Boolean, quiet: Boolean = false, onClick: () -> Unit) {
@@ -370,110 +383,13 @@ private fun NavRow(label: String, icon: NavIcon, selected: Boolean, quiet: Boole
             .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Canvas(Modifier.size(17.dp)) { drawNavIcon(icon, ink.copy(alpha = ink.alpha * 0.8f)) }
+        NavIconView(icon, ink.copy(alpha = ink.alpha * 0.8f), 17.dp)
         Spacer(Modifier.width(11.dp))
         Txt(label, if (selected) Ruru.type.bodyMedium else Ruru.type.body, ink, maxLines = 1)
     }
 }
 
-/** The icons are 24 x 24 line drawings, stroked at 1.6 and scaled to whatever size the canvas has. */
-private fun DrawScope.drawNavIcon(icon: NavIcon, colour: Color) {
-    val s = size.width / 24f
-    val stroke = Stroke(1.6f * s, cap = StrokeCap.Round, join = StrokeJoin.Round)
-    fun line(x1: Float, y1: Float, x2: Float, y2: Float) =
-        drawLine(colour, Offset(x1 * s, y1 * s), Offset(x2 * s, y2 * s), 1.6f * s, StrokeCap.Round)
-    when (icon) {
-        NavIcon.Headphones -> {
-            val band = Path().apply {
-                moveTo(4 * s, 14 * s)
-                lineTo(4 * s, 12 * s)
-                arcTo(Rect(4 * s, 4 * s, 20 * s, 20 * s), 180f, 180f, false)
-                lineTo(20 * s, 14 * s)
-            }
-            drawPath(band, colour, style = stroke)
-            drawRoundRect(colour, Offset(3 * s, 14 * s), Size(4 * s, 7 * s), CornerRadius(2 * s), style = stroke)
-            drawRoundRect(colour, Offset(17 * s, 14 * s), Size(4 * s, 7 * s), CornerRadius(2 * s), style = stroke)
-        }
-        NavIcon.Gear -> {
-            drawCircle(colour, 3 * s, Offset(12 * s, 12 * s), style = stroke)
-            line(12f, 2f, 12f, 5f); line(12f, 19f, 12f, 22f); line(2f, 12f, 5f, 12f); line(19f, 12f, 22f, 12f)
-            line(4.9f, 4.9f, 7f, 7f); line(17f, 17f, 19.1f, 19.1f); line(4.9f, 19.1f, 7f, 17f); line(17f, 7f, 19.1f, 4.9f)
-        }
-        NavIcon.Refresh -> {
-            // Nearly a full circle, with an arrow head at its end.
-            val r = 7f
-            val arc = Path().apply { arcTo(Rect((12 - r) * s, (12 - r) * s, (12 + r) * s, (12 + r) * s), 30f, 300f, true) }
-            drawPath(arc, colour, style = stroke)
-            val end = 330.0 * PI / 180.0
-            val ex = 12f + r * cos(end).toFloat()
-            val ey = 12f + r * sin(end).toFloat()
-            val tx = (-sin(end)).toFloat()
-            val ty = cos(end).toFloat()
-            for (turn in listOf(0.75, -0.75)) {
-                val a = atan2Of(-ty, -tx) + turn
-                line(ex, ey, ex + 4f * cos(a).toFloat(), ey + 4f * sin(a).toFloat())
-            }
-        }
-    }
-}
-
-private fun atan2Of(y: Float, x: Float): Double = kotlin.math.atan2(y.toDouble(), x.toDouble())
-
 // ---------------------------------------------------------------- pages
-
-/** A page: its title, one plain sentence, then the content, on a column that scrolls and fills the window. */
-@Composable
-private fun PageFrame(title: String, lead: String, state: AppState, controller: HeadsetController, content: @Composable ColumnScope.() -> Unit) {
-    val c = Ruru.colors
-    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 32.dp, vertical = 28.dp)) {
-        Column(Modifier.fillMaxWidth()) {
-            state.message?.let {
-                MessageBar(it.text(), controller::dismissMessage)
-                Spacer(Modifier.height(16.dp))
-            }
-            Txt(title, Ruru.type.page, c.ink, Modifier.semantics { heading() })
-            Txt(lead, Ruru.type.body, c.ink3, Modifier.padding(top = 4.dp, bottom = 22.dp))
-            content()
-        }
-    }
-}
-
-@Composable
-private fun SoundPage(state: AppState, controller: HeadsetController) {
-    val h = state.headset
-    val caps = h.capabilities
-    val modes = caps.listeningModes && h.modes.isNotEmpty()
-    val noise = h.noise?.takeIf { caps.noiseCancelling }
-    PageFrame(stringResource(Res.string.page_sound), stringResource(Res.string.page_sound_lead), state, controller) {
-        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-            Columns(listOf(modes, noise != null).count { it }) {
-                if (modes) ModesPanel(h, controller, column())
-                if (noise != null) NoisePanel(h, noise, controller, column())
-            }
-            h.eq?.let { EqPanel(it, h.eqRange ?: -10..10, controller) }
-        }
-    }
-}
-
-@Composable
-private fun SettingsPage(state: AppState, controller: HeadsetController, extras: List<PlatformSwitch>) {
-    PageFrame(stringResource(Res.string.panel_settings), stringResource(Res.string.page_settings_lead), state, controller) {
-        val h = state.headset
-        val connected = state.phase == Phase.Connected
-        val left = connected && hasHeadphoneSettings(h)
-        val right = (connected && hasShortcutChoices(h)) || extras.isNotEmpty()
-        // Two columns that keep their own heights: the left is one tall panel, the right stacks two short ones.
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.Top) {
-            Column(Modifier.weight(1f)) {
-                if (left) SettingsPanel(h, controller, title = stringResource(Res.string.panel_headphones))
-            }
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                if (right && connected) ShortcutPanel(h, controller)
-                if (extras.isNotEmpty()) Panel(stringResource(Res.string.panel_computer)) { ExtraSwitches(extras) }
-            }
-        }
-    }
-}
 
 @Composable
 private fun AboutPage(model: AppModel, state: AppState, appVersion: String, updates: Updates, onCopyReport: () -> Unit) {
@@ -532,21 +448,6 @@ private fun StatusPage(state: AppState, controller: HeadsetController, model: Ap
         }
     }
 }
-
-/**
- * Panels side by side in equal columns, all as tall as the tallest, with a 16dp gap. A panel on its
- * own keeps the width of one column rather than stretching across the page.
- */
-@Composable
-private fun Columns(items: Int, content: @Composable RowScope.() -> Unit) {
-    Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        content()
-        if (items < 2) Spacer(Modifier.weight(1f))
-    }
-}
-
-/** One column of [Columns]: half the width, as tall as the row. */
-private fun RowScope.column(): Modifier = Modifier.weight(1f).fillMaxHeight()
 
 // ---------------------------------------------------------------- equaliser curve
 

@@ -220,6 +220,19 @@
     <string name="about_licence">Ruru es gratis y de código abierto, con licencia MIT.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Páginas</string>
+    <string name="page_equaliser_lead">Ajusta el sonido con ajustes predefinidos y tu propia curva.</string>
+    <string name="page_night">Noche</string>
+    <string name="page_night_lead">Cambia a un modo más tranquilo al acostarte y vuelve por la mañana.</string>
+    <string name="page_devices">Dispositivos</string>
+    <string name="page_devices_lead">Mira con qué están emparejados tus auriculares y cambia entre ellos.</string>
+    <string name="page_tools">Herramientas</string>
+    <string name="page_tools_lead">Encuentra tus auriculares y comprueba el micrófono.</string>
+    <string name="page_sleep">Sueño</string>
+    <string name="page_sleep_lead">Duérmete con sonidos suaves, con temporizador y una alarma suave.</string>
+    <string name="page_more">Más</string>
+    <string name="page_more_lead">Ajustes, actualizaciones y ayuda.</string>
+    <string name="page_placeholder_note">Esta página aún no está lista.</string>
+    <string name="nav_tabs">Pestañas</string>
     <string name="panel_headphones">Auriculares</string>
     <string name="panel_computer">Este equipo</string>
 

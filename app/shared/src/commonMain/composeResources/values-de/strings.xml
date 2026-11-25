@@ -218,6 +218,19 @@
     <string name="about_licence">Ruru ist kostenlos und quelloffen, unter der MIT-Lizenz.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Seiten</string>
+    <string name="page_equaliser_lead">Stimme den Klang mit Voreinstellungen und eigener Kurve ab.</string>
+    <string name="page_night">Nacht</string>
+    <string name="page_night_lead">Wechsle abends in einen ruhigeren Modus und morgens zurück.</string>
+    <string name="page_devices">Geräte</string>
+    <string name="page_devices_lead">Sieh, womit deine Kopfhörer gekoppelt sind, und wechsle zwischen den Geräten.</string>
+    <string name="page_tools">Werkzeuge</string>
+    <string name="page_tools_lead">Finde deine Kopfhörer und prüfe das Mikrofon.</string>
+    <string name="page_sleep">Schlaf</string>
+    <string name="page_sleep_lead">Schlafe mit sanften Klängen ein, mit Timer und sanftem Wecker.</string>
+    <string name="page_more">Mehr</string>
+    <string name="page_more_lead">Einstellungen, Updates und Hilfe.</string>
+    <string name="page_placeholder_note">Diese Seite ist noch nicht fertig.</string>
+    <string name="nav_tabs">Reiter</string>
     <string name="panel_headphones">Kopfhörer</string>
     <string name="panel_computer">Dieser Computer</string>
 

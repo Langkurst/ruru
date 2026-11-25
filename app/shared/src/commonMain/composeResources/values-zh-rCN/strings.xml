@@ -216,6 +216,19 @@
     <string name="about_licence">Ruru 免费且开源，采用 MIT 许可证。</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">页面</string>
+    <string name="page_equaliser_lead">用预设和自定义曲线调整音效。</string>
+    <string name="page_night">夜间</string>
+    <string name="page_night_lead">睡前切换到更安静的模式，早上再切换回来。</string>
+    <string name="page_devices">设备</string>
+    <string name="page_devices_lead">查看耳机已配对的设备，并在它们之间切换。</string>
+    <string name="page_tools">工具</string>
+    <string name="page_tools_lead">查找耳机并检查麦克风。</string>
+    <string name="page_sleep">睡眠</string>
+    <string name="page_sleep_lead">伴着轻柔的声音入睡，带定时器和柔和的闹钟。</string>
+    <string name="page_more">更多</string>
+    <string name="page_more_lead">设置、更新和帮助。</string>
+    <string name="page_placeholder_note">此页面尚未就绪。</string>
+    <string name="nav_tabs">标签页</string>
     <string name="panel_headphones">耳机</string>
     <string name="panel_computer">这台电脑</string>
 

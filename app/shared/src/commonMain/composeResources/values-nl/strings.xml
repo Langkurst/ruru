@@ -218,6 +218,19 @@
     <string name="about_licence">Ruru is gratis en open source, onder de MIT-licentie.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Pagina's</string>
+    <string name="page_equaliser_lead">Stem het geluid af met voorinstellingen en je eigen curve.</string>
+    <string name="page_night">Nacht</string>
+    <string name="page_night_lead">Schakel 's avonds over op een rustigere stand en 's ochtends terug.</string>
+    <string name="page_devices">Apparaten</string>
+    <string name="page_devices_lead">Zie waarmee je koptelefoon is gekoppeld en schakel tussen apparaten.</string>
+    <string name="page_tools">Hulpmiddelen</string>
+    <string name="page_tools_lead">Zoek je koptelefoon en controleer de microfoon.</string>
+    <string name="page_sleep">Slaap</string>
+    <string name="page_sleep_lead">Val in slaap bij zachte geluiden, met timer en een rustige wekker.</string>
+    <string name="page_more">Meer</string>
+    <string name="page_more_lead">Instellingen, updates en hulp.</string>
+    <string name="page_placeholder_note">Deze pagina is nog niet klaar.</string>
+    <string name="nav_tabs">Tabbladen</string>
     <string name="panel_headphones">Koptelefoon</string>
     <string name="panel_computer">Deze computer</string>
 

@@ -222,6 +222,19 @@
     <string name="about_licence">Ruru jest darmowe i otwartoźródłowe, na licencji MIT.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Strony</string>
+    <string name="page_equaliser_lead">Dostosuj dźwięk za pomocą presetów i własnej krzywej.</string>
+    <string name="page_night">Noc</string>
+    <string name="page_night_lead">Wieczorem przełącz na cichszy tryb, a rano wróć do poprzedniego.</string>
+    <string name="page_devices">Urządzenia</string>
+    <string name="page_devices_lead">Zobacz, z czym są sparowane twoje słuchawki, i przełączaj się między nimi.</string>
+    <string name="page_tools">Narzędzia</string>
+    <string name="page_tools_lead">Znajdź słuchawki i sprawdź mikrofon.</string>
+    <string name="page_sleep">Sen</string>
+    <string name="page_sleep_lead">Zasypiaj przy łagodnych dźwiękach, z timerem i delikatnym budzikiem.</string>
+    <string name="page_more">Więcej</string>
+    <string name="page_more_lead">Ustawienia, aktualizacje i pomoc.</string>
+    <string name="page_placeholder_note">Ta strona nie jest jeszcze gotowa.</string>
+    <string name="nav_tabs">Karty</string>
     <string name="panel_headphones">Słuchawki</string>
     <string name="panel_computer">Ten komputer</string>
 

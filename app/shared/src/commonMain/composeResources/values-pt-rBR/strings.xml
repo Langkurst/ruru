@@ -220,6 +220,19 @@
     <string name="about_licence">O Ruru é gratuito e de código aberto, com licença MIT.</string>
     <string name="panel_app">Ruru</string>
     <string name="nav_pages">Páginas</string>
+    <string name="page_equaliser_lead">Ajuste o som com predefinições e sua própria curva.</string>
+    <string name="page_night">Noite</string>
+    <string name="page_night_lead">Mude para um modo mais silencioso na hora de dormir e volte de manhã.</string>
+    <string name="page_devices">Dispositivos</string>
+    <string name="page_devices_lead">Veja com o que seus fones estão pareados e alterne entre eles.</string>
+    <string name="page_tools">Ferramentas</string>
+    <string name="page_tools_lead">Encontre seus fones e teste o microfone.</string>
+    <string name="page_sleep">Sono</string>
+    <string name="page_sleep_lead">Durma ao som de ruídos suaves, com timer e um alarme gentil.</string>
+    <string name="page_more">Mais</string>
+    <string name="page_more_lead">Ajustes, atualizações e ajuda.</string>
+    <string name="page_placeholder_note">Esta página ainda não está pronta.</string>
+    <string name="nav_tabs">Abas</string>
     <string name="panel_headphones">Fones</string>
     <string name="panel_computer">Este computador</string>
 

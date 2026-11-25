@@ -75,4 +75,29 @@ class WindowMemoryTest {
             PrefsRoot.disabled = false
         }
     }
+
+    @Test
+    fun `the first window is 1100 by 720 on a big screen, centred`() {
+        val b = WindowMemory.defaultBounds(Rectangle(0, 0, 1920, 1040))
+        assertEquals(Rectangle(410, 160, 1100, 720), b)
+    }
+
+    @Test
+    fun `the first window on a 1024 by 768 screen is 92 percent of the work area and inside it`() {
+        val work = Rectangle(0, 0, 1024, 728) // a taskbar takes 40
+        val b = WindowMemory.defaultBounds(work)
+        assertEquals(942, b.width)
+        assertEquals(669, b.height)
+        assertTrue(work.contains(b), "the window is cut off: $b")
+        assertEquals((work.width - b.width) / 2, b.x)
+    }
+
+    @Test
+    fun `a remembered window bigger or further out than the screen is pulled back in`() {
+        val work = Rectangle(0, 0, 1366, 728)
+        assertEquals(Rectangle(0, 0, 1366, 728), WindowMemory.fitTo(Rectangle(900, 400, 1600, 900), work))
+        assertEquals(Rectangle(566, 228, 800, 500), WindowMemory.fitTo(Rectangle(1000, 500, 800, 500), work))
+        val fine = Rectangle(100, 4, 1100, 720)
+        assertEquals(fine, WindowMemory.fitTo(fine, work))
+    }
 }
