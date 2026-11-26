@@ -78,7 +78,8 @@ compose.desktop {
             vendor = "Langkurst"
             copyright = "Copyright (c) 2026 Langkurst and Earshot contributors. MIT licence."
             licenseFile.set(rootProject.file("LICENSE"))
-            modules("jdk.unsupported")
+            // jdk.unsupported for JNA; java.xml and jdk.security.auth for dbus-java (Linux Bluetooth: its D-Bus introspection and the user id for D-Bus login).
+            modules("jdk.unsupported", "java.xml", "jdk.security.auth")
             // OS-specific files bundled with the app (the macOS Bluetooth helper is built into resources/macos by CI).
             appResourcesRootDir.set(project.layout.projectDirectory.dir("resources"))
 

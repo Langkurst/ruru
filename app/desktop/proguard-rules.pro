@@ -24,3 +24,17 @@
     kotlinx.serialization.KSerializer serializer(...);
 }
 -keep,includedescriptorclasses class io.github.langkurst.ruru.**$$serializer { *; }
+
+# Linux Bluetooth talks to BlueZ over D-Bus with dbus-java and junixsocket (platform/linux). dbus-java reads the
+# interface classes by reflection and finds its transport through service files; junixsocket's JNI names must stay.
+-keep class org.freedesktop.dbus.** { *; }
+-keep class org.newsclub.net.unix.** { *; }
+-keep class org.slf4j.** { *; }
+-dontwarn org.freedesktop.dbus.**
+-dontwarn org.newsclub.**
+-dontwarn org.slf4j.**
+-dontwarn com.kohlschutter.**
+-dontwarn org.eclipse.jdt.annotation.**
+-dontwarn com.google.errorprone.annotations.**
+-dontwarn jnr.**
+-dontwarn org.codehaus.mojo.animal_sniffer.**

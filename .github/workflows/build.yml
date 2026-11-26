@@ -157,12 +157,12 @@ jobs:
       - run: ./gradlew :app:desktop:packageReleaseDeb :app:desktop:packageReleaseRpm :app:desktop:createReleaseDistributable --console=plain
       - name: Size budget (the installers can shrink, not quietly grow)
         run: bash .github/size-budget.sh 112000000 app/desktop/build/compose/binaries/main-release/deb/*.deb app/desktop/build/compose/binaries/main-release/rpm/*.rpm
-      - name: Library budget (at most 64 libraries ship; 58 on 11 November 2026)
+      - name: Library budget (at most 68 libraries ship; 58 on 11 November 2026, 0.3 B4 adds dbus-java and junixsocket: 5 jars)
         run: |
           n=$(find app/desktop/build/compose/binaries/main-release/app/Ruru/lib/app -maxdepth 1 -name '*.jar' | wc -l)
           echo "$n libraries in the app"
           [ "$n" -gt 0 ] || { echo "::error::No libraries found; the app folder has moved"; exit 1; }
-          [ "$n" -le 64 ] || { echo "::error::$n libraries ship, over the budget of 64"; exit 1; }
+          [ "$n" -le 68 ] || { echo "::error::$n libraries ship, over the budget of 68"; exit 1; }
       - name: Check the app starts (on a virtual screen, demo mode)
         run: |
           # The app folder uses the main package name (Ruru); only the .deb/.rpm are lower case.
