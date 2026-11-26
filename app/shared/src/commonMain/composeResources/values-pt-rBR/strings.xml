@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">Não foi possível emparelhar %1$s com o Ruru. Escolha Tentar de novo e depois Emparelhar quando o iPhone pedir. Se o iPhone não pedir, escolha Esquecer este Dispositivo para %1$s em Ajustes &gt; Bluetooth e conecte os fones de ouvido de novo.</string>
     <string name="problem_ios_not_responding">O Ruru não recebeu resposta de %1$s pelo Bluetooth. Deixe os fones de ouvido perto deste iPhone. Ruru vai continuar tentando.</string>
     <string name="problem_ios_no_bose_controls">Os controles da Bose por Bluetooth não estão disponíveis em %1$s, então o Ruru não consegue controlar esse dispositivo.</string>
+    <string name="problem_ios_classic_only">O iPhone não permite que apps usem esse tipo de conexão Bluetooth, então o Ruru não consegue controlar esses fones no iPhone.</string>'
+    <string name="problem_ios_no_controls">%1$s não oferece controles por Bluetooth LE que o Ruru conheça, então o Ruru não consegue controlar esse dispositivo.</string>'
     <string name="problem_ios_no_answer">O Ruru não recebeu resposta de %1$s pelo Bluetooth. Ruru vai continuar tentando.</string>
     <string name="problem_ios_disconnected">A conexão com %1$s foi perdida. Ruru vai continuar tentando.</string>
 

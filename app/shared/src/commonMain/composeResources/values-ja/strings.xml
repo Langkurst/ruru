@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">%1$sがRuruとペアリングされませんでした。「もう一度試す」を押して、iPhoneから求められたら「ペアリング」を選んでください。求められない場合は、設定 &gt; Bluetooth で%1$sの「このデバイスの登録を解除」を選び、もう一度接続してください。</string>
     <string name="problem_ios_not_responding">%1$sがBluetoothで応答しませんでした。このiPhoneの近くに置いてください。Ruruは再試行を続けます。</string>
     <string name="problem_ios_no_bose_controls">%1$sはBluetoothでBoseの制御に対応していないため、Ruruでは操作できません。</string>
+    <string name="problem_ios_classic_only">iPhoneでは、アプリがこの種類のBluetooth接続を使えないため、RuruはiPhoneでこのヘッドホンを操作できません。</string>'
+    <string name="problem_ios_no_controls">%1$sはRuruが対応しているBluetooth LEの制御機能を備えていないため、Ruruでは操作できません。</string>'
     <string name="problem_ios_no_answer">%1$sがBluetoothでRuruに応答しませんでした。Ruruは再試行を続けます。</string>
     <string name="problem_ios_disconnected">%1$sの接続が切れました。Ruruは再試行を続けます。</string>
 

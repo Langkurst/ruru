@@ -2,11 +2,15 @@ package io.github.langkurst.ruru.ios
 
 import io.github.langkurst.ruru.link.ByteTransport
 import io.github.langkurst.ruru.link.ExplainedConnectException
+import io.github.langkurst.ruru.link.GattByteTransport
+import io.github.langkurst.ruru.link.GattLinkSpec
+import io.github.langkurst.ruru.link.GattWire
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.link.HeadsetCandidate
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.HeadsetLink
 import io.github.langkurst.ruru.link.LinkRoute
+import io.github.langkurst.ruru.vendors.jbl.JblVendor
 import io.github.langkurst.ruru.link.RouteKind
 import io.github.langkurst.ruru.link.RouteNotOfferedException
 import io.github.langkurst.ruru.link.LeTransport
@@ -66,6 +70,11 @@ import platform.posix.memcpy
  * QC Ultra Headphones (1st Gen) answered this way from a Windows PC on 11 November 2026; the
  * plain characteristic stayed silent, so it is only the fallback.
  *
+ * Other makers' GATT links ([LinkRoute.Gatt], JBL's Harman service) take the same CoreBluetooth
+ * path: scan, connect, discover the spec's service, write with or without response as the spec
+ * says, subscribe to its notifying characteristics. RFCOMM routes and AirPods are refused or
+ * reported as not possible ([IosRoutes]) before anything is opened.
+ *
  * Not yet run on a real iPhone: the simulator has no Bluetooth.
  */
 @OptIn(ExperimentalForeignApi::class)
@@ -74,8 +83,11 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     override val supported: Boolean = true
     override val checksIdentity: Boolean = true
 
-    /** Bose over LE (FEBE). Other makers' GATT links come in 0.3's B6. */
-    override val routes: Set<RouteKind> = setOf(RouteKind.BOSE_LE)
+    /** Bose over LE (FEBE) and any maker's GATT pipe; iOS has no RFCOMM. */
+    override val routes: Set<RouteKind> = IosRoutes.OFFERED
+
+    /** iOS never hands an app AirPods or Beats adverts: not possible here. */
+    override val listensForAdverts: Boolean = IosRoutes.LISTENS_FOR_ADVERTS
 
     private val events = Events()
     private val known = HashMap<String, CBPeripheral>()
@@ -118,7 +130,7 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         nameClash = false
         retrievedIds.clear()
         // Headphones already linked to the iPhone over LE don't broadcast, so ask iOS for those first.
-        central.retrieveConnectedPeripheralsWithServices(listOf(BOSE_SERVICE)).filterIsInstance<CBPeripheral>().forEach {
+        central.retrieveConnectedPeripheralsWithServices(listOf(BOSE_SERVICE) + gattServices()).filterIsInstance<CBPeripheral>().forEach {
             val id = it.identifier.UUIDString
             if (id in notBose) return@forEach
             retrievedIds += id
@@ -146,7 +158,8 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
                 val looksBose = name.contains("Bose", ignoreCase = true)
                 if (looksBose) boseAdvertisers++
                 if (isAudioOutput) matched++
-                if (!looksBose && !isAudioOutput && !isSaved) return@forEach
+                val looksGatt = IosRoutes.gattSpecFor(name) != null
+                if (!looksBose && !isAudioOutput && !isSaved && !looksGatt) return@forEach
                 val candidate = Seen(p, discovered.name, connected = false, rssi = normaliseRssi(discovered.rssi), saved = isSaved)
                 candidates += candidate
                 seen[id] = candidate
@@ -190,10 +203,13 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     }
 
     override suspend fun open(candidate: HeadsetCandidate, route: LinkRoute): ByteTransport {
+        // RFCOMM and anything else iOS cannot do: plain words, before a connection is made.
+        IosRoutes.refusal(route)?.let { throw ExplainedConnectException(it, retry = false) }
+        if (route is LinkRoute.Gatt) return openGatt(candidate, route.spec)
         if (route != LinkRoute.BoseLe) throw RouteNotOfferedException(name, route)
         val p = known[candidate.key]
             ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
-        events.session?.transport?.close()
+        events.session?.closeTransports()
         val s = Session(p)
         events.session = s
         p.delegate = events
@@ -280,6 +296,104 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     }
 
     /**
+     * A maker's GATT pipe (JBL's Harman service): connect, find the spec's service and its
+     * characteristics, subscribe to each notifying one in order, and hand back a transport that
+     * writes with or without response as the spec asks. The transport exists before the first
+     * subscription, so a headset that talks as soon as it is subscribed loses nothing.
+     */
+    private suspend fun openGatt(candidate: HeadsetCandidate, spec: GattLinkSpec): ByteTransport {
+        val p = known[candidate.key]
+            ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+        events.session?.closeTransports()
+        val s = Session(p)
+        var writeLimit = GattWire.MIN_WRITE
+        val transport = GattByteTransport(
+            maxWrite = { writeLimit },
+            writePiece = { piece -> s.writeGatt(p, piece) },
+            onClose = { central.cancelPeripheralConnection(p) },
+        )
+        s.gatt = transport
+        events.session = s
+        p.delegate = events
+        central.connectPeripheral(p, null)
+        try {
+            withTimeoutOrNull(CONNECT_MS) { s.connected.await() }
+                ?: throw ExplainedConnectException(notResponding(candidate.name), retry = true)
+            val serviceId = CBUUID.UUIDWithString(spec.service)
+            p.discoverServices(listOf(serviceId))
+            withTimeoutOrNull(STEP_MS) { s.servicesFound.await() }
+                ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+            if (s.failed || p.state != CBPeripheralStateConnected) {
+                throw ExplainedConnectException(disconnectedWhileOpening(candidate.name), retry = true)
+            }
+            val service = p.services?.filterIsInstance<CBService>()?.firstOrNull { it.UUID == serviceId }
+                ?: run {
+                    if (!s.failed && p.state == CBPeripheralStateConnected) notBose += p.identifier.UUIDString
+                    throw ExplainedConnectException(noControls(candidate.name), retry = true)
+                }
+            val wanted = (listOf(spec.write) + spec.notify).distinct().map { CBUUID.UUIDWithString(it) }
+            p.discoverCharacteristics(wanted, service)
+            withTimeoutOrNull(STEP_MS) { s.characteristicsFound.await() }
+                ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+            val found = service.characteristics?.filterIsInstance<CBCharacteristic>().orEmpty()
+            val writeChar = found.firstOrNull { it.UUID == CBUUID.UUIDWithString(spec.write) }
+                ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+            val withResponse = GattWire.chooseWriteType(spec.writeWithResponse, writeChar.properties.toInt())
+                ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+            s.writeChar = writeChar
+            s.writeWithResponse = withResponse
+            writeLimit = p.maximumWriteValueLengthForType(
+                if (withResponse) CBCharacteristicWriteWithResponse else CBCharacteristicWriteWithoutResponse,
+            ).toInt().coerceAtLeast(GattWire.MIN_WRITE)
+            for (uuid in spec.notify) {
+                val c = found.firstOrNull { it.UUID == CBUUID.UUIDWithString(uuid) }
+                    ?: throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+                if (GattWire.chooseIndicate(c.properties.toInt()) == null) {
+                    throw ExplainedConnectException(otherOpenFailure(candidate.name), retry = true)
+                }
+                subscribeGatt(p, s, c, candidate.name)
+            }
+            s.subscribing = null
+            LogRing.add('I', "iOS-GATT", "${spec.name}: ready, writes up to $writeLimit bytes ${if (withResponse) "with" else "without"} response")
+            return transport
+        } catch (e: Throwable) {
+            central.cancelPeripheralConnection(p)
+            if (e is ExplainedConnectException || e is CancellationException) throw e
+            if (s.linkError.isStaleBondError()) {
+                throw ExplainedConnectException(notPaired(candidate.name), retry = false)
+            }
+            throw ExplainedConnectException(
+                if (s.failed) disconnectedWhileOpening(candidate.name) else otherOpenFailure(candidate.name),
+                retry = true,
+            )
+        }
+    }
+
+    /** Switch notifications on for one characteristic; iOS may ask the person to pair first, so allow for that. */
+    private suspend fun subscribeGatt(p: CBPeripheral, s: Session, c: CBCharacteristic, name: String) {
+        s.notifying += c
+        for (attempt in 1..2) {
+            if (s.failed || p.state != CBPeripheralStateConnected) throw ExplainedConnectException(disconnectedWhileOpening(name), retry = true)
+            s.subscribing = c
+            s.subscribed = CompletableDeferred()
+            s.lastError = null
+            p.setNotifyValue(true, c)
+            val result = withTimeoutOrNull(PAIRING_MS) { runCatching { s.subscribed.await() } }
+            if (s.failed || p.state != CBPeripheralStateConnected) {
+                if (s.linkError.isStaleBondError()) throw ExplainedConnectException(notPaired(name), retry = false)
+                throw ExplainedConnectException(disconnectedWhileOpening(name), retry = true)
+            }
+            if (result != null && result.isSuccess) return
+            // A timeout is a prompt the person ignored; only iOS's "still pairing" errors deserve a second try.
+            val retriable = result?.exceptionOrNull() != null && s.lastError.isRetriablePairingError()
+            if (retriable && attempt == 1) continue
+            throw ExplainedConnectException(if (retriable || result == null) notPaired(name) else otherOpenFailure(name), retry = false)
+        }
+    }
+
+    private fun gattServices(): List<CBUUID> = GATT_SERVICE_IDS.map { CBUUID.UUIDWithString(it) }
+
+    /**
      * The person's own set, proven by the address iOS gives for its audio output. Runs after
      * [open] and before Ruru sends anything but the address read; the addresses never leave here.
      */
@@ -326,6 +440,8 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
 
     private fun notResponding(name: String) = Words("problem_ios_not_responding", name)
 
+    private fun noControls(name: String) = Words("problem_ios_no_controls", name)
+
     private fun noBoseControls(name: String) = Words("problem_ios_no_bose_controls", name)
 
     private fun otherOpenFailure(name: String) = Words("problem_ios_no_answer", name)
@@ -360,6 +476,12 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         var failed = false
         var characteristic: CBCharacteristic? = null
         var transport: LeTransport? = null
+        /** A maker's GATT pipe ([openGatt]); null on the Bose LE path. */
+        var gatt: GattByteTransport? = null
+        var writeChar: CBCharacteristic? = null
+        var writeWithResponse = true
+        val notifying = HashSet<CBCharacteristic>()
+        private var readyToSend: CompletableDeferred<Unit>? = null
         private val writing = Mutex()
         private var written: CompletableDeferred<Unit>? = null
 
@@ -369,6 +491,34 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
             p.writeValue(piece.toNSData(), c, CBCharacteristicWriteWithResponse)
             withTimeoutOrNull(STEP_MS) { done.await() }
                 ?: throw IOException("The headphones didn't accept a write over Bluetooth LE")
+        }
+
+        fun closeTransports() {
+            transport?.close()
+            gatt?.close()
+        }
+
+        /** One piece to the GATT write characteristic, with or without response as chosen at setup. */
+        suspend fun writeGatt(p: CBPeripheral, piece: ByteArray) {
+            val c = writeChar ?: throw IOException("The headphones' write channel is not open")
+            if (writeWithResponse) return write(p, c, piece)
+            writing.withLock {
+                // iOS has no answer for a write without response; it says when its queue has room again.
+                if (!p.canSendWriteWithoutResponse) {
+                    val ready = CompletableDeferred<Unit>()
+                    readyToSend = ready
+                    if (!p.canSendWriteWithoutResponse) {
+                        withTimeoutOrNull(STEP_MS) { ready.await() }
+                            ?: throw IOException("The headphones didn't accept a write over Bluetooth LE")
+                    }
+                    readyToSend = null
+                }
+                p.writeValue(piece.toNSData(), c, CBCharacteristicWriteWithoutResponse)
+            }
+        }
+
+        fun canSendAgain() {
+            readyToSend?.complete(Unit)
         }
 
         fun wrote(error: NSError?) {
@@ -382,7 +532,9 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
             val e = IOException(reason)
             listOf(connected, servicesFound, characteristicsFound, subscribed).forEach { it.completeExceptionally(e) }
             written?.completeExceptionally(e)
+            readyToSend?.completeExceptionally(e)
             transport?.dropped(reason)
+            gatt?.dropped(reason)
         }
     }
 
@@ -445,8 +597,14 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
         @ObjCSignatureOverride
         override fun peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic: CBCharacteristic, error: NSError?) {
             val s = session?.takeIf { it.peripheral == peripheral } ?: return
-            if (error != null || didUpdateValueForCharacteristic != s.characteristic) return
-            didUpdateValueForCharacteristic.value?.toByteArray()?.let { s.transport?.deliver(it) }
+            if (error != null) return
+            val bytes = didUpdateValueForCharacteristic.value?.toByteArray() ?: return
+            if (didUpdateValueForCharacteristic == s.characteristic) s.transport?.deliver(bytes)
+            else if (didUpdateValueForCharacteristic in s.notifying) s.gatt?.deliver(bytes)
+        }
+
+        override fun peripheralIsReadyToSendWriteWithoutResponse(peripheral: CBPeripheral) {
+            session?.takeIf { it.peripheral == peripheral }?.canSendAgain()
         }
 
         @ObjCSignatureOverride
@@ -458,6 +616,8 @@ class IosLeHeadsetPlatform : HeadsetPlatform {
     private companion object {
         val BOSE_SERVICE: CBUUID = CBUUID.UUIDWithString("FEBE")
         val ENCRYPTED: CBUUID = CBUUID.UUIDWithString("C65B8F2F-AEE2-4C89-B758-BC4892D6F2D8")
+        /** Services of the makers' GATT pipes ([IosRoutes.gattSpecFor]), for asking iOS which are already connected. */
+        val GATT_SERVICE_IDS: List<String> = listOf(JblVendor.HARMAN.service)
         val PLAIN: CBUUID = CBUUID.UUIDWithString("D417C028-9818-4354-99D1-2AC09D074591")
         const val DISCONNECTED = "The headphones disconnected"
         const val POWER_MS = 3_000L

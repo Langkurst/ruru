@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">L'abbinamento di %1$s con Ruru non è riuscito. Tocca Riprova e scegli Abbina quando l'iPhone lo chiede. Se non lo chiede, scegli Dissocia questo dispositivo per %1$s in Impostazioni &gt; Bluetooth, poi ripeti la connessione.</string>
     <string name="problem_ios_not_responding">%1$s non ha risposto via Bluetooth. Tieni il dispositivo vicino a questo iPhone. Ruru continuerà a provare.</string>
     <string name="problem_ios_no_bose_controls">%1$s non offre i controlli Bose via Bluetooth, quindi Ruru non può controllare questo dispositivo.</string>
+    <string name="problem_ios_classic_only">L'iPhone non permette alle app di usare questo tipo di connessione Bluetooth, quindi Ruru non può controllare queste cuffie su un iPhone.</string>'
+    <string name="problem_ios_no_controls">%1$s non offre controlli Bluetooth LE che Ruru conosca, quindi Ruru non può controllare questo dispositivo.</string>'
     <string name="problem_ios_no_answer">%1$s non ha risposto a Ruru via Bluetooth. Ruru continuerà a provare.</string>
     <string name="problem_ios_disconnected">La connessione con %1$s è stata interrotta. Ruru continuerà a provare.</string>
 

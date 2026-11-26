@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">Le jumelage de %1$s avec Ruru a échoué. Appuyez sur Réessayer et choisissez Jumeler quand l'iPhone le demande. S'il ne le demande pas, choisissez Oublier cet appareil pour %1$s dans Réglages &gt; Bluetooth, puis reconnectez l'appareil.</string>
     <string name="problem_ios_not_responding">%1$s n'a pas répondu en Bluetooth. Gardez l'appareil près de cet iPhone. Ruru va continuer d'essayer.</string>
     <string name="problem_ios_no_bose_controls">%1$s ne propose pas les commandes Bose en Bluetooth, donc Ruru ne peut pas contrôler cet appareil.</string>
+    <string name="problem_ios_classic_only">L'iPhone ne laisse pas les apps utiliser ce type de connexion Bluetooth, donc Ruru ne peut pas contrôler ces écouteurs sur un iPhone.</string>'
+    <string name="problem_ios_no_controls">%1$s ne propose pas de commandes Bluetooth LE que Ruru connaît, donc Ruru ne peut pas contrôler cet appareil.</string>'
     <string name="problem_ios_no_answer">%1$s n'a pas répondu à Ruru en Bluetooth. Ruru va continuer d'essayer.</string>
     <string name="problem_ios_disconnected">La connexion avec %1$s a été interrompue. Ruru va continuer d'essayer.</string>
 

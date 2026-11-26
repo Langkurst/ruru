@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">Nie udało się sparować %1$s z Ruru. Naciśnij „Spróbuj ponownie” i wybierz „Sparuj”, gdy iPhone zapyta. Jeśli iPhone nie zapyta, w Ustawienia &gt; Bluetooth wybierz dla %1$s opcję „Zapomnij to urządzenie”, a potem połącz słuchawki ponownie.</string>
     <string name="problem_ios_not_responding">Urządzenie %1$s nie odpowiada przez Bluetooth. Trzymaj słuchawki blisko tego iPhone'a. Ruru będzie próbować dalej.</string>
     <string name="problem_ios_no_bose_controls">Urządzenie %1$s nie udostępnia sterowania Bose przez Bluetooth, więc Ruru nie może sterować tym urządzeniem.</string>
+    <string name="problem_ios_classic_only">iPhone nie pozwala aplikacjom używać tego rodzaju połączenia Bluetooth, więc Ruru nie może sterować tymi słuchawkami na iPhonie.</string>'
+    <string name="problem_ios_no_controls">Urządzenie %1$s nie udostępnia sterowania przez Bluetooth LE, które zna Ruru, więc Ruru nie może nim sterować.</string>'
     <string name="problem_ios_no_answer">Urządzenie %1$s nie odpowiada na polecenia Ruru przez Bluetooth. Ruru będzie próbować dalej.</string>
     <string name="problem_ios_disconnected">Połączenie z %1$s zostało przerwane. Ruru będzie próbować dalej.</string>
 

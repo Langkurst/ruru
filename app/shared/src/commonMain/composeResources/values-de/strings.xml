@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">Das Koppeln von %1$s mit Ruru hat nicht geklappt. Tippe auf Erneut versuchen und wähle Koppeln, wenn das iPhone fragt. Fragt das iPhone nicht, wähle unter Einstellungen &gt; Bluetooth für %1$s die Option Dieses Gerät ignorieren und verbinde die Kopfhörer dann erneut.</string>
     <string name="problem_ios_not_responding">Keine Reaktion von %1$s über Bluetooth. Halte die Kopfhörer in der Nähe dieses iPhones. Ruru versucht es weiter.</string>
     <string name="problem_ios_no_bose_controls">Für %1$s gibt es keine Bose-Steuerung über Bluetooth, daher kann Ruru das Gerät nicht steuern.</string>
+    <string name="problem_ios_classic_only">Das iPhone erlaubt Apps diese Art von Bluetooth-Verbindung nicht, deshalb kann Ruru diese Kopfhörer auf dem iPhone nicht steuern.</string>'
+    <string name="problem_ios_no_controls">%1$s bietet keine Steuerung über Bluetooth LE an, die Ruru kennt, daher kann Ruru das Gerät nicht steuern.</string>'
     <string name="problem_ios_no_answer">Von %1$s kam über Bluetooth keine Antwort an Ruru. Ruru versucht es weiter.</string>
     <string name="problem_ios_disconnected">Die Verbindung zu %1$s wurde getrennt. Ruru versucht es weiter.</string>
 

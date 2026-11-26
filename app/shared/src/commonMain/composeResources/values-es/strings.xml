@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">No se pudo enlazar %1$s con Ruru. Elige Reintentar y luego Enlazar cuando el iPhone te lo pida. Si no te lo pide, elige Olvidar este dispositivo para %1$s en Configuración &gt; Bluetooth y vuelve a conectar los auriculares.</string>
     <string name="problem_ios_not_responding">Ruru no recibió respuesta de %1$s por Bluetooth. Mantén los auriculares cerca de este iPhone. Ruru seguirá intentándolo.</string>
     <string name="problem_ios_no_bose_controls">Los controles de Bose por Bluetooth no están disponibles en %1$s, así que Ruru no puede controlar ese dispositivo.</string>
+    <string name="problem_ios_classic_only">El iPhone no permite que las apps usen este tipo de conexión Bluetooth, así que Ruru no puede controlar estos auriculares en un iPhone.</string>'
+    <string name="problem_ios_no_controls">%1$s no ofrece controles por Bluetooth LE que Ruru conozca, así que Ruru no puede controlar ese dispositivo.</string>'
     <string name="problem_ios_no_answer">Ruru no recibió respuesta de %1$s por Bluetooth. Ruru seguirá intentándolo.</string>
     <string name="problem_ios_disconnected">Se perdió la conexión con %1$s. Ruru seguirá intentándolo.</string>
 

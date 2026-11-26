@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">%1$s 没有与 Ruru 配对。请点“重试”，并在 iPhone 询问时选择“配对”。如果 iPhone 没有询问，请在“设置”&gt;“蓝牙”中对 %1$s 选择“忽略此设备”，然后重新连接。</string>
     <string name="problem_ios_not_responding">%1$s 没有通过蓝牙响应。请让耳机靠近这台 iPhone。Ruru 会继续尝试。</string>
     <string name="problem_ios_no_bose_controls">%1$s 不提供 Bose 的蓝牙控制功能，所以 Ruru 无法控制它。</string>
+    <string name="problem_ios_classic_only">iPhone 不允许应用使用这种蓝牙连接，所以 Ruru 无法在 iPhone 上控制这副耳机。</string>'
+    <string name="problem_ios_no_controls">%1$s 没有提供 Ruru 支持的蓝牙 LE 控制功能，所以 Ruru 无法控制它。</string>'
     <string name="problem_ios_no_answer">%1$s 没有通过蓝牙回应 Ruru。Ruru 会继续尝试。</string>
     <string name="problem_ios_disconnected">%1$s 已断开连接。Ruru 会继续尝试。</string>
 

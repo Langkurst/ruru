@@ -76,6 +76,8 @@
     <string name="problem_ios_not_paired">%1$s didn't pair with Ruru. Press Try again and choose Pair when iPhone asks. If iPhone doesn't ask, choose Forget This Device for %1$s in Settings &gt; Bluetooth, then connect them again.</string>
     <string name="problem_ios_not_responding">%1$s didn't respond over Bluetooth. Keep them near this iPhone. Ruru will keep trying.</string>
     <string name="problem_ios_no_bose_controls">%1$s doesn't offer Bose's controls over Bluetooth, so Ruru can't control it.</string>
+    <string name="problem_ios_classic_only">iPhone doesn't let apps use this kind of Bluetooth connection, so Ruru can't control these headphones on an iPhone.</string>'
+    <string name="problem_ios_no_controls">%1$s doesn't offer controls over Bluetooth LE that Ruru knows, so Ruru can't control it.</string>'
     <string name="problem_ios_no_answer">%1$s didn't answer Ruru over Bluetooth. Ruru will keep trying.</string>
     <string name="problem_ios_disconnected">%1$s disconnected. Ruru will keep trying.</string>
 

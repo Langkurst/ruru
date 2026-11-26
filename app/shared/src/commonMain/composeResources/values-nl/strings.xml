@@ -75,6 +75,8 @@
     <string name="problem_ios_not_paired">Koppelen van %1$s met Ruru is niet gelukt. Tik op Opnieuw proberen en kies Koppel als de iPhone erom vraagt. Vraagt de iPhone het niet, kies dan in Instellingen &gt; Bluetooth bij %1$s de optie Vergeet dit apparaat en verbind de koptelefoon daarna opnieuw.</string>
     <string name="problem_ios_not_responding">%1$s reageerde niet via Bluetooth. Houd de koptelefoon dicht bij deze iPhone. Ruru blijft het proberen.</string>
     <string name="problem_ios_no_bose_controls">Voor %1$s is er geen Bose-bediening via Bluetooth, dus Ruru kan het apparaat niet bedienen.</string>
+    <string name="problem_ios_classic_only">De iPhone laat apps dit soort Bluetooth-verbinding niet gebruiken, dus Ruru kan deze koptelefoon op een iPhone niet bedienen.</string>'
+    <string name="problem_ios_no_controls">%1$s heeft geen bediening via Bluetooth LE die Ruru kent, dus Ruru kan het apparaat niet bedienen.</string>'
     <string name="problem_ios_no_answer">Van %1$s kwam via Bluetooth geen antwoord aan Ruru. Ruru blijft het proberen.</string>
     <string name="problem_ios_disconnected">De verbinding met %1$s is verbroken. Ruru blijft het proberen.</string>
 
