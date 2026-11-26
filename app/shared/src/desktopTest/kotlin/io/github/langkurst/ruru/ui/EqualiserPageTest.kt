@@ -23,10 +23,13 @@ import io.github.langkurst.ruru.ui.pages.signedGain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import java.util.concurrent.ExecutionException
+import java.util.concurrent.Executors
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
@@ -44,19 +47,31 @@ class EqualiserPageTest {
         model.start()
         try {
             runBlocking { withTimeout(20_000) { model.controller.value.state.first { it.phase == Phase.Connected } } }
-            val scene = try {
-                ImageComposeScene(width = widthDp, height = 1500, density = Density(1f)) {
-                    RuruTheme(dark = true) { RuruScreen(model, "0.0.0", proEq = eq) }
-                }
-            } catch (e: UnsatisfiedLinkError) {
-                println("skipped: no native Skia here (${e.message})")
-                null
-            }
+            // One thread owns the scene: its recomposition, its frames and the test steps. With the default
+            // (Unconfined) context, a state change from the model's own threads recomposed on that thread
+            // while this one was laying out, and Compose's layout bookkeeping broke under load.
+            val ui = Executors.newSingleThreadExecutor { Thread(it, "equaliser-test-ui").apply { isDaemon = true } }
             try {
-                scene?.let { for (i in 0..10) it.render(i * 50_000_000L) }
-                block(model, eq, scene)
+                ui.submit {
+                    val scene = try {
+                        ImageComposeScene(width = widthDp, height = 1500, density = Density(1f), coroutineContext = ui.asCoroutineDispatcher()) {
+                            RuruTheme(dark = true) { RuruScreen(model, "0.0.0", proEq = eq) }
+                        }
+                    } catch (e: UnsatisfiedLinkError) {
+                        println("skipped: no native Skia here (${e.message})")
+                        null
+                    }
+                    try {
+                        scene?.let { for (i in 0..10) it.render(i * 50_000_000L) }
+                        block(model, eq, scene)
+                    } finally {
+                        scene?.close()
+                    }
+                }.get()
+            } catch (e: ExecutionException) {
+                throw e.cause ?: e
             } finally {
-                scene?.close()
+                ui.shutdown()
             }
         } finally {
             eq.close()
@@ -72,15 +87,21 @@ class EqualiserPageTest {
         scene ?: return@withScene
         scene.sendKeyEvent(ctrl(Key.Two))
         assertEquals(DeskPage.Equaliser, model.page.value, "the Equaliser is the second row on Windows")
-        val graphic = scene.render(1_000_000_000L).hashCode()
+        var now = 600_000_000L
+        fun frame() = scene.render(now).also { now += 50_000_000L }
+        // The page's own start-up effects (demo mode, the connected headphones) run during these frames; the edits below come after them.
+        repeat(4) { frame() }
+        val graphic = frame().hashCode()
         eq.setEnabled(true)
         eq.setMode(io.github.langkurst.ruru.dsp.ProEqMode.PARAMETRIC)
         eq.addBand()
-        for (i in 11..14) scene.render(i * 50_000_000L)
-        val parametric = scene.render(2_000_000_000L)
+        repeat(4) { frame() }
+        val parametric = frame()
         assertNotEquals(graphic, parametric.hashCode(), "switching the editor changed nothing on screen")
         eq.applyPreset(io.github.langkurst.ruru.dsp.BuiltInPresets.QC_ULTRA_ID)
-        for (i in 15..18) scene.render(i * 50_000_000L)
+        repeat(4) { frame() }
+        // The backend answers on its own thread; wait for that answer instead of reading the status at once.
+        runBlocking { withTimeout(5_000) { eq.settle(); eq.ui.first { it.status == EqBackendStatus.On } } }
         assertEquals(EqBackendStatus.On, eq.ui.value.status)
     }
 

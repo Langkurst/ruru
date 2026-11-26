@@ -96,11 +96,12 @@ class WinGattTransport internal constructor(
         if (!open) return
         open = false
         LogRing.add('I', WinBleHelper.TAG, "$name: $reason")
+        // Tear the link down first, then tell readers: whoever sees the stream end finds the helper already stopped.
+        runCatching { output.close() }
+        stopProcess()
         results.close(IOException(reason))
         inbox.close(IOException(reason))
         onDrop?.invoke(reason)
-        runCatching { output.close() }
-        stopProcess()
     }
 
     override suspend fun write(bytes: ByteArray) = writing.withLock {

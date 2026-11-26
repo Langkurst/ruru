@@ -78,6 +78,8 @@ class FindController(
         _state.value = FindState.Ringing
         job = scope.launch(dispatcher) {
             var open: PcmSink? = null
+            // The state is published only after the sound device is closed: whoever sees Idle (or starts again) finds it free.
+            var result: FindState = FindState.Idle
             try {
                 open = output.open(FindTone.SAMPLE_RATE, FindTone.CHANNELS)
                 sink = open
@@ -87,18 +89,18 @@ class FindController(
                     elapsed += FindTone.PERIOD_MS
                 }
                 if (isActive) open.drain()
-                finish(mine, FindState.Idle)
             } catch (e: CancellationException) {
                 throw e
             } catch (e: AudioProblem) {
-                finish(mine, FindState.Problem(e.words))
+                result = FindState.Problem(e.words)
             } catch (e: Exception) {
                 // A write that fails because stop() closed the line is not a problem to show.
-                finish(mine, if (isActive) FindState.Problem(Words("tool_audio_failed")) else FindState.Idle)
+                result = if (isActive) FindState.Problem(Words("tool_audio_failed")) else FindState.Idle
             } finally {
                 sink = null
                 runCatching { open?.close() }
             }
+            finish(mine, result)
         }
     }
 
