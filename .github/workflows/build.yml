@@ -274,10 +274,14 @@ jobs:
       - name: Bluetooth helper (universal binary)
         run: |
           mkdir -p app/desktop/resources/macos
-          swiftc -O -target arm64-apple-macos12 platform/macos/helper/main.swift -o /tmp/ruru-bt-arm64
-          swiftc -O -target x86_64-apple-macos12 platform/macos/helper/main.swift -o /tmp/ruru-bt-x64
+          swiftc -O -target arm64-apple-macos12 platform/macos/helper/*.swift -o /tmp/ruru-bt-arm64
+          swiftc -O -target x86_64-apple-macos12 platform/macos/helper/*.swift -o /tmp/ruru-bt-x64
           lipo -create /tmp/ruru-bt-arm64 /tmp/ruru-bt-x64 -output app/desktop/resources/macos/ruru-bt-mac
           chmod +x app/desktop/resources/macos/ruru-bt-mac
+          # The helper's own rules (keys, UUIDs, frames, firmware refusal) need no headset: check them here.
+          app/desktop/resources/macos/ruru-bt-mac selftest
+          app/desktop/resources/macos/ruru-bt-mac scan > /tmp/scan.txt || true
+          grep -q unsupported /tmp/scan.txt
       - run: ./gradlew :app:desktop:packageReleaseDmg --console=plain
       - name: Packaging log
         if: failure()
