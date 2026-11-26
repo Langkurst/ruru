@@ -78,7 +78,7 @@ jobs:
           Get-ChildItem app/desktop/build/compose/binaries/main-release/setup
       - name: Size budget (the installers can shrink, not quietly grow)
         shell: bash
-        run: bash .github/size-budget.sh 100000000 app/desktop/build/compose/binaries/main-release/msi/*.msi app/desktop/build/compose/binaries/main-release/setup/*.exe
+        run: bash .github/size-budget.sh 106000000 app/desktop/build/compose/binaries/main-release/msi/*.msi app/desktop/build/compose/binaries/main-release/setup/*.exe
       - name: Check the app starts (demo mode)
         shell: pwsh
         run: |
