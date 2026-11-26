@@ -6,7 +6,7 @@ Bose protocol code; see CREDITS.md.
 
 ## Layout
 
-- `core/protocol` Bose BMAP frames and tables · `core/dsp` EQ maths · `core/session` session
+- `core/protocol` Bose BMAP frames and tables · `core/dsp` EQ maths · `core/sleep` Sleep sounds, plan, alarms and the night schedule · `core/session` session
   logic, simulated headset, `HeadsetPlatform` interface and `LinkRoute`
 - `core/vendors` one `Vendor` per maker (`DeviceFamily`, `HeadsetSession`); Bose wraps the session
   code, the other makers are stubs that never open a link until 0.3 C1-C6
@@ -16,7 +16,7 @@ Bose protocol code; see CREDITS.md.
 
 ## Commands (Windows: `gradlew.bat`, JDK 21; Android needs ANDROID_HOME)
 
-- Tests: `gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :app:shared:desktopTest`
+- Tests: `gradlew :core:protocol:jvmTest :core:dsp:jvmTest :core:session:jvmTest :core:vendors:jvmTest :core:sleep:jvmTest :app:shared:desktopTest`
 - Desktop app: `gradlew :app:desktop:run` (`--args=--demo` for demo mode)
 - Screenshot of the real app: `gradlew :app:desktop:snapshot -Pout=<png> [-Pdemo] [-Plight] [-Pheight=1600]`
 - Real headphones: `gradlew :app:desktop:hardwareCheck` changes the mode and bass through the

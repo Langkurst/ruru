@@ -33,3 +33,4 @@ PLAN.md
 keystore.properties
 *.jks
 *.keystore
+tools/sleep-sounds/out/

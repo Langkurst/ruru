@@ -20,6 +20,8 @@ rootProject.name = "ruru"
 include(":core:protocol")
 include(":core:dsp")
 include(":core:session")
+// Sleep: sound engine, night plan and alarms, night schedule (0.3).
+include(":core:sleep")
 // Every headphone maker Ruru knows: how each is recognised, reached and driven (0.3).
 include(":core:vendors")
 
