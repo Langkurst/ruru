@@ -32,8 +32,10 @@ internal fun MorePage(
         if (state.phase == Phase.Connected) {
             ShortcutPanel(state.headset, controller)
             SettingsPanel(state.headset, controller)
+            if (hasDevices(state.headset)) DevicesPanel(state.headset, controller)
             AboutPanel(state.headset)
         }
+        if (hasTools(LocalAudioTools.current, state.phase == Phase.Connected)) ToolPanels(state)
         Footer(state, model, appVersion, extras, updates, onCopyReport)
     }
 }

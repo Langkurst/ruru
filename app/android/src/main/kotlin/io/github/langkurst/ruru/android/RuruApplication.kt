@@ -11,6 +11,7 @@ class RuruApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         io.github.langkurst.ruru.app.settings.AndroidSettings.init(this)
+        io.github.langkurst.ruru.app.tools.AndroidAudio.init(this)
     }
 
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)

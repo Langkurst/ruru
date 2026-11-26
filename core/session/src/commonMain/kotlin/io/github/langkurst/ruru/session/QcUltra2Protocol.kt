@@ -1178,7 +1178,7 @@ class QcUltra2Protocol(
                 }
             }
         }
-        throw HeadphoneCommandException("The headphones can't switch yet. Start playing audio on the other device, then try again.")
+        throw HeadphoneCommandException(SWITCH_NEEDS_PLAYBACK_MESSAGE)
     }
 
     /** `[4.8]` START `[1]`, fire-and-forget: the link usually drops and the manager reconnects. */
@@ -1458,6 +1458,7 @@ class QcUltra2Protocol(
         const val NOISE_PER_MODE_MESSAGE =
             "On these headphones noise settings belong to a mode: switch to a custom mode to change them"
         const val NO_FAVORITES_MESSAGE = "These headphones don't have favourite modes"
+        const val SWITCH_NEEDS_PLAYBACK_MESSAGE = "The headphones can't switch yet. Start playing audio on the other device, then try again."
         const val UNSUPPORTED_MESSAGE = "Ruru can't control these headphones"
     }
 }

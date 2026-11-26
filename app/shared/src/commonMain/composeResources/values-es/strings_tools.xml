@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Dispositivos emparejados</string>
+    <string name="devices_unnamed">Dispositivo sin nombre</string>
+    <string name="devices_state_playing">Reproduciendo ahora</string>
+    <string name="devices_state_connected">Conectado</string>
+    <string name="devices_state_not_connected">No conectado</string>
+    <string name="devices_state_paired">Emparejado</string>
+    <string name="devices_state_this_device">%1$s, este dispositivo</string>
+    <string name="devices_switch">Cambiar a este</string>
+    <string name="devices_switch_to">Pasar el sonido a %1$s</string>
+    <string name="devices_switch_hint">El cambio funciona mientras el otro dispositivo reproduce algo.</string>
+    <string name="devices_manage_note">Ruru solo pasa el sonido de un dispositivo a otro. Nunca elimina ni olvida ninguno. Para emparejar o quitar uno, usa los ajustes de Bluetooth de tu sistema.</string>
+    <string name="message_switch_needs_playback">Los auriculares aún no pueden cambiar. Reproduce audio en el otro dispositivo y vuelve a intentarlo.</string>
+    <string name="setting_touch_controls">Controles táctiles</string>
+    <string name="setting_touch_controls_hint">Desliza y toca la almohadilla para volumen, pausa y saltar</string>
+    <string name="tools_find_title">Encontrar mis auriculares</string>
+    <string name="tools_find_text">Reproduce un tono ascendente, bajo al principio y más fuerte en unos segundos. Se detiene solo a los %1$d segundos.</string>
+    <string name="tools_find_note">El tono sale por la salida de sonido de tu sistema, así que elige antes los auriculares como salida y quítatelos antes de empezar.</string>
+    <string name="tools_find_note_phone">El tono va solo a los auriculares. Quítatelos antes de empezar.</string>
+    <string name="tools_find_start">Reproducir tono</string>
+    <string name="tools_stop">Detener</string>
+    <string name="tools_find_ringing">Sonando. No te pongas los auriculares hasta detenerlo.</string>
+    <string name="tools_mic_title">Prueba de micrófono</string>
+    <string name="tools_mic_text">Graba %1$d segundos del micrófono y los reproduce, para que oigas lo que oye la otra persona en una llamada. No se guarda nada.</string>
+    <string name="tools_mic_note_windows">Mientras graba, Windows pasa los auriculares a calidad de llamada y el sonido se vuelve más fino un momento. Elige antes los auriculares como entrada en los ajustes de sonido.</string>
+    <string name="tools_mic_note_other">Mientras graba, tu sistema puede pasar los auriculares a calidad de llamada y el sonido se vuelve más fino un momento. Elige antes los auriculares como entrada en los ajustes de sonido.</string>
+    <string name="tools_mic_note_phone">Mientras graba, tu teléfono pasa los auriculares a calidad de llamada y el sonido se vuelve más fino un momento.</string>
+    <string name="tools_mic_start">Iniciar prueba</string>
+    <string name="tools_mic_recording">Grabando, quedan %1$d s. Di algo.</string>
+    <string name="tools_mic_playing">Reproduciendo la grabación.</string>
+    <string name="tools_mic_finished">Listo. Inícialo de nuevo para oír otra vez.</string>
+    <string name="tools_mic_permission">Esperando tu respuesta sobre el micrófono.</string>
+    <string name="tool_audio_failed">El sonido se detuvo de forma inesperada.</string>
+    <string name="tool_no_output">Ruru no puede reproducir sonido en este sistema ahora mismo.</string>
+    <string name="tool_no_input">Ruru no puede usar el micrófono. Comprueba que ninguna otra app lo use y que Ruru tenga permiso en los ajustes de privacidad.</string>
+    <string name="tool_mic_stopped">El micrófono se detuvo.</string>
+    <string name="tool_mic_denied">La prueba necesita permiso para usar el micrófono. Puedes darlo en los ajustes del teléfono.</string>
+    <string name="tool_find_no_headphones">Android no envía sonido a los auriculares ahora, así que el tono saldría del teléfono. Reproduce algo en los auriculares y vuelve a intentarlo.</string>
+</resources>

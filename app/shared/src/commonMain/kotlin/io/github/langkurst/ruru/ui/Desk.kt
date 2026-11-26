@@ -92,6 +92,7 @@ import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.ui.pages.Columns
 import io.github.langkurst.ruru.ui.pages.DevicesPage
 import io.github.langkurst.ruru.ui.pages.EqualiserPage
+import io.github.langkurst.ruru.ui.pages.LocalAudioTools
 import io.github.langkurst.ruru.ui.pages.NavIcon
 import io.github.langkurst.ruru.ui.pages.NavIconView
 import io.github.langkurst.ruru.ui.pages.NightPage
@@ -102,6 +103,8 @@ import io.github.langkurst.ruru.ui.pages.SleepPage
 import io.github.langkurst.ruru.ui.pages.SoundPage
 import io.github.langkurst.ruru.ui.pages.ToolsPage
 import io.github.langkurst.ruru.ui.pages.column
+import io.github.langkurst.ruru.ui.pages.hasDevices
+import io.github.langkurst.ruru.ui.pages.hasTools
 import io.github.langkurst.ruru.ui.pages.pageIcon
 import io.github.langkurst.ruru.ui.pages.pageTitle
 import io.github.langkurst.ruru.ui.res.*
@@ -144,6 +147,8 @@ internal fun DeskLayout(
     val navPages = pages.deskPages(
         sound = connected && hasSound(h),
         settings = (connected && (hasHeadphoneSettings(h) || hasShortcutChoices(h))) || extras.isNotEmpty(),
+        devices = connected && hasDevices(h),
+        tools = hasTools(LocalAudioTools.current, connected),
     )
     val shown = when {
         requested == DeskPage.About -> DeskPage.About

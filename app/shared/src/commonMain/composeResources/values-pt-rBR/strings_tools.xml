@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Dispositivos pareados</string>
+    <string name="devices_unnamed">Dispositivo sem nome</string>
+    <string name="devices_state_playing">Tocando agora</string>
+    <string name="devices_state_connected">Conectado</string>
+    <string name="devices_state_not_connected">Não conectado</string>
+    <string name="devices_state_paired">Pareado</string>
+    <string name="devices_state_this_device">%1$s, este dispositivo</string>
+    <string name="devices_switch">Mudar para este</string>
+    <string name="devices_switch_to">Mudar o som para %1$s</string>
+    <string name="devices_switch_hint">A troca funciona enquanto o outro dispositivo está tocando algo.</string>
+    <string name="devices_manage_note">O Ruru só move o som entre dispositivos. Ele nunca remove nem esquece um. Para parear ou remover, use as configurações de Bluetooth do sistema.</string>
+    <string name="message_switch_needs_playback">O fone ainda não pode trocar. Toque algo no outro dispositivo e tente de novo.</string>
+    <string name="setting_touch_controls">Controles por toque</string>
+    <string name="setting_touch_controls_hint">Deslize e toque na concha para volume, pausa e pular</string>
+    <string name="tools_find_title">Encontrar meu fone</string>
+    <string name="tools_find_text">Toca um som crescente, baixo no início e mais alto em poucos segundos. Para sozinho após %1$d segundos.</string>
+    <string name="tools_find_note">O som sai pela saída de áudio do sistema. Escolha antes o fone como saída e tire-o antes de começar.</string>
+    <string name="tools_find_note_phone">O som vai só para o fone. Tire-o antes de começar.</string>
+    <string name="tools_find_start">Tocar som</string>
+    <string name="tools_stop">Parar</string>
+    <string name="tools_find_ringing">Tocando. Não coloque o fone até parar o som.</string>
+    <string name="tools_mic_title">Teste do microfone</string>
+    <string name="tools_mic_text">Grava %1$d segundos do microfone e toca de volta, para você ouvir o que a outra pessoa ouve numa chamada. Nada é salvo.</string>
+    <string name="tools_mic_note_windows">Durante a gravação, o Windows muda o fone para qualidade de chamada e o som fica mais fino por um momento. Escolha antes o fone como entrada nas configurações de som.</string>
+    <string name="tools_mic_note_other">Durante a gravação, o sistema pode mudar o fone para qualidade de chamada e o som fica mais fino por um momento. Escolha antes o fone como entrada nas configurações de som.</string>
+    <string name="tools_mic_note_phone">Durante a gravação, o celular muda o fone para qualidade de chamada e o som fica mais fino por um momento.</string>
+    <string name="tools_mic_start">Iniciar teste</string>
+    <string name="tools_mic_recording">Gravando, faltam %1$d s. Diga algo.</string>
+    <string name="tools_mic_playing">Tocando a gravação.</string>
+    <string name="tools_mic_finished">Pronto. Inicie de novo para ouvir outra vez.</string>
+    <string name="tools_mic_permission">Aguardando sua resposta sobre o microfone.</string>
+    <string name="tool_audio_failed">O som parou inesperadamente.</string>
+    <string name="tool_no_output">O Ruru não consegue tocar som neste sistema agora.</string>
+    <string name="tool_no_input">O Ruru não consegue usar o microfone. Veja se nenhum outro app o usa e se o Ruru tem permissão nas configurações de privacidade.</string>
+    <string name="tool_mic_stopped">O microfone parou.</string>
+    <string name="tool_mic_denied">O teste precisa de permissão para usar o microfone. Você pode dar nas configurações do celular.</string>
+    <string name="tool_find_no_headphones">O Android não está enviando som ao fone agora, então o som sairia do celular. Toque algo no fone e tente de novo.</string>
+</resources>

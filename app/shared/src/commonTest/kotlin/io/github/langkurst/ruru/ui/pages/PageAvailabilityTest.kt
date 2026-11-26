@@ -10,22 +10,36 @@ class PageAvailabilityTest {
     private val everything = DeskPage.entries.toSet()
 
     @Test
-    fun `this build ships the Equaliser, listed only where a Pro EQ backend exists`() {
-        assertEquals(setOf(DeskPage.Equaliser), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
+    fun `this build ships the Equaliser, Devices and Tools, the Equaliser listed only where a Pro EQ backend exists`() {
+        assertEquals(setOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
         val windows = PageAvailability(system = SystemKind.Windows)
-        assertEquals(listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Settings), windows.deskPages(sound = true, settings = true))
+        assertEquals(
+            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools),
+            windows.deskPages(sound = true, settings = true),
+        )
         assertEquals(listOf(PhoneTab.Headphones, PhoneTab.Sound, PhoneTab.More), windows.phoneTabs())
         // A system with no backend yet (Linux and Android until theirs is built) keeps today's navigation.
         val noBackend = PageAvailability(system = SystemKind.Linux, hasProEq = false)
-        assertEquals(listOf(DeskPage.Sound, DeskPage.Settings), noBackend.deskPages(sound = true, settings = true))
+        assertEquals(listOf(DeskPage.Sound, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), noBackend.deskPages(sound = true, settings = true))
         assertEquals(listOf(PhoneTab.Headphones, PhoneTab.More), noBackend.phoneTabs())
+    }
+
+    @Test
+    fun `Devices and Tools appear only when they have content`() {
+        val windows = PageAvailability(system = SystemKind.Windows)
+        // No paired devices reported: no Devices page. No tool on this system: no Tools page.
+        assertEquals(
+            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Settings),
+            windows.deskPages(sound = true, settings = true, devices = false, tools = false),
+        )
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Tools), windows.deskPages(sound = false, settings = false, devices = false, tools = true))
     }
 
     @Test
     fun `Sound and Settings follow what the headphones give`() {
         val none = PageAvailability(system = SystemKind.Windows)
-        assertEquals(listOf(DeskPage.Equaliser), none.deskPages(sound = false, settings = false))
-        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Settings), none.deskPages(sound = false, settings = true))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools), none.deskPages(sound = false, settings = false))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), none.deskPages(sound = false, settings = true))
     }
 
     @Test

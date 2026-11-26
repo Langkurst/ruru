@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Dispositivi associati</string>
+    <string name="devices_unnamed">Dispositivo senza nome</string>
+    <string name="devices_state_playing">In riproduzione</string>
+    <string name="devices_state_connected">Connesso</string>
+    <string name="devices_state_not_connected">Non connesso</string>
+    <string name="devices_state_paired">Associato</string>
+    <string name="devices_state_this_device">%1$s, questo dispositivo</string>
+    <string name="devices_switch">Passa a questo</string>
+    <string name="devices_switch_to">Sposta l'audio su %1$s</string>
+    <string name="devices_switch_hint">Il cambio funziona mentre l'altro dispositivo riproduce qualcosa.</string>
+    <string name="devices_manage_note">Ruru sposta solo l'audio da un dispositivo all'altro. Non ne rimuove né ne dimentica mai uno. Per associare o rimuovere un dispositivo usa le impostazioni Bluetooth del sistema.</string>
+    <string name="message_switch_needs_playback">Le cuffie non possono ancora cambiare. Avvia la riproduzione sull'altro dispositivo e riprova.</string>
+    <string name="setting_touch_controls">Controlli touch</string>
+    <string name="setting_touch_controls_hint">Scorri e tocca il padiglione per volume, pausa e brano successivo</string>
+    <string name="tools_find_title">Trova le mie cuffie</string>
+    <string name="tools_find_text">Riproduce un tono crescente, piano all'inizio e più forte nel giro di qualche secondo. Si ferma da solo dopo %1$d secondi.</string>
+    <string name="tools_find_note">Il tono esce dall'uscita audio del sistema: scegli prima le cuffie come uscita e toglile prima di iniziare.</string>
+    <string name="tools_find_note_phone">Il tono va solo alle cuffie. Toglile prima di iniziare.</string>
+    <string name="tools_find_start">Riproduci tono</string>
+    <string name="tools_stop">Ferma</string>
+    <string name="tools_find_ringing">Il tono è in corso. Non indossare le cuffie finché non lo fermi.</string>
+    <string name="tools_mic_title">Prova del microfono</string>
+    <string name="tools_mic_text">Registra %1$d secondi dal microfono e li riproduce, così senti ciò che sente l'altra persona in chiamata. Non viene salvato nulla.</string>
+    <string name="tools_mic_note_windows">Durante la registrazione Windows porta le cuffie alla qualità da chiamata e il suono diventa più sottile per un momento. Scegli prima le cuffie come ingresso nelle impostazioni audio.</string>
+    <string name="tools_mic_note_other">Durante la registrazione il sistema può portare le cuffie alla qualità da chiamata e il suono diventa più sottile per un momento. Scegli prima le cuffie come ingresso nelle impostazioni audio.</string>
+    <string name="tools_mic_note_phone">Durante la registrazione il telefono porta le cuffie alla qualità da chiamata e il suono diventa più sottile per un momento.</string>
+    <string name="tools_mic_start">Avvia la prova</string>
+    <string name="tools_mic_recording">Registrazione, mancano %1$d s. Di' qualcosa.</string>
+    <string name="tools_mic_playing">Riproduzione della registrazione.</string>
+    <string name="tools_mic_finished">Fatto. Riavvia per riascoltare.</string>
+    <string name="tools_mic_permission">In attesa della tua risposta sul microfono.</string>
+    <string name="tool_audio_failed">L'audio si è fermato in modo inatteso.</string>
+    <string name="tool_no_output">Ruru non può riprodurre audio su questo sistema in questo momento.</string>
+    <string name="tool_no_input">Ruru non può usare il microfono. Controlla che nessun'altra app lo usi e che Ruru abbia il permesso nelle impostazioni della privacy.</string>
+    <string name="tool_mic_stopped">Il microfono si è fermato.</string>
+    <string name="tool_mic_denied">La prova richiede il permesso di usare il microfono. Puoi darlo nelle impostazioni del telefono.</string>
+    <string name="tool_find_no_headphones">Android non sta inviando l'audio alle cuffie, quindi il tono uscirebbe dal telefono. Riproduci qualcosa sulle cuffie e riprova.</string>
+</resources>

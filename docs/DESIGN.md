@@ -100,15 +100,25 @@ its own page file and adds its page to `PageAvailability.ShippedPages`.
 | Sound | listening modes, noise, the headphones' own 3-band equaliser | when the headphones have any |
 | Equaliser | the Pro EQ | Windows, Linux, Android |
 | Night | the night schedule | every system |
-| Devices | paired devices and switching | every system |
+| Devices | paired devices and "Switch to this" | when the headphones report paired devices |
 | Settings | the headphones' settings and shortcut button, then the settings for this computer | when there are any |
-| Tools | Find my headphones, mic check, Lab | every system |
+| Tools | Find my headphones (while connected), mic check, Lab | where a tool works |
 | Sleep | timer, sounds and alarms | phones (a bottom bar tab) |
 | More | settings, about the headphones, updates, report, support | bottom bar only |
 
 - A page appears only when it has content. Until its feature is built, a page file holds a plain
   placeholder (title, one sentence of what will be there, "This page isn't ready yet.") and the page is
   left out of the sidebar and the bar. Nothing is drawn that does not work.
+- Devices lists each paired device (name, then "Playing now", "Connected" or "Not connected", and "this device"
+  for the one running Ruru). A connected device that is not playing has one quiet button, "Switch to this". There
+  is no remove, forget or clear anywhere in Ruru, and the page says so and points to the system's Bluetooth
+  settings. The multipoint switch stays in Settings with the touch controls switch (shown only when the
+  headphones report it).
+- Tools holds one panel per tool, each with a sentence, a note and one button. Find plays a rising tone that
+  starts quiet, gets louder over 6 s and stops by itself after 30 s; it is listed only while connected and
+  stops when the page is left. Mic check records 5 s, plays it back and keeps nothing; Windows (and often
+  other systems) switch the headphones to call quality while it records, and the panel says so. On a phone
+  both panels sit in More. The iPhone has neither yet, so it shows neither.
 - About stays at the foot of the sidebar, next to the version.
 - Bottom bar (phones and windows under 880dp): up to four tabs, in this order: Headphones, Sound (the
   Pro EQ, only where the Equaliser page exists), Sleep (phones), More. A tab appears only if it has

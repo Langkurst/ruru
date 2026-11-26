@@ -14,12 +14,18 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import io.github.langkurst.ruru.app.RURU_VERSION
+import io.github.langkurst.ruru.app.tools.AndroidAudio
 import io.github.langkurst.ruru.ui.RuruScreen
 import io.github.langkurst.ruru.ui.RuruTheme
 
 class MainActivity : ComponentActivity() {
     private val askNearby = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted ->
         if (granted.values.any { it }) app.model.controller.value.retryNow()
+    }
+
+    // Mic check asks for the microphone only when the person taps it.
+    private val askMicrophone = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        AndroidAudio.micPermissionAnswered(granted)
     }
 
     private val app get() = application as RuruApplication
@@ -30,6 +36,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        AndroidAudio.requestMicPermission = { askMicrophone.launch(Manifest.permission.RECORD_AUDIO) }
         // Android 12 and newer: "Nearby devices" covers connecting and scanning, so one dialog asks for both.
         // The scan is only ever used to hear AirPods and Beats battery adverts and to find a headset's LE address.
         if (Build.VERSION.SDK_INT >= 31) {

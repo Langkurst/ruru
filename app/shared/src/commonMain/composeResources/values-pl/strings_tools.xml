@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Sparowane urządzenia</string>
+    <string name="devices_unnamed">Urządzenie bez nazwy</string>
+    <string name="devices_state_playing">Teraz odtwarza</string>
+    <string name="devices_state_connected">Połączone</string>
+    <string name="devices_state_not_connected">Niepołączone</string>
+    <string name="devices_state_paired">Sparowane</string>
+    <string name="devices_state_this_device">%1$s, to urządzenie</string>
+    <string name="devices_switch">Przełącz na to</string>
+    <string name="devices_switch_to">Przełącz dźwięk na %1$s</string>
+    <string name="devices_switch_hint">Przełączanie działa, gdy drugie urządzenie coś odtwarza.</string>
+    <string name="devices_manage_note">Ruru tylko przenosi dźwięk między urządzeniami. Nigdy żadnego nie usuwa ani nie zapomina. Aby sparować lub usunąć urządzenie, użyj ustawień Bluetooth w systemie.</string>
+    <string name="message_switch_needs_playback">Słuchawki nie mogą jeszcze się przełączyć. Włącz odtwarzanie na drugim urządzeniu i spróbuj ponownie.</string>
+    <string name="setting_touch_controls">Sterowanie dotykiem</string>
+    <string name="setting_touch_controls_hint">Przesuwaj i stukaj w muszlę, by zmienić głośność, wstrzymać lub pominąć</string>
+    <string name="tools_find_title">Znajdź moje słuchawki</string>
+    <string name="tools_find_text">Odtwarza narastający dźwięk, najpierw cicho, potem coraz głośniej przez kilka sekund. Sam się kończy po %1$d s.</string>
+    <string name="tools_find_note">Dźwięk wychodzi przez wyjście audio systemu. Najpierw wybierz słuchawki jako wyjście i zdejmij je przed startem.</string>
+    <string name="tools_find_note_phone">Dźwięk trafia tylko do słuchawek. Zdejmij je przed startem.</string>
+    <string name="tools_find_start">Odtwórz dźwięk</string>
+    <string name="tools_stop">Zatrzymaj</string>
+    <string name="tools_find_ringing">Dźwięk gra. Nie zakładaj słuchawek, dopóki go nie zatrzymasz.</string>
+    <string name="tools_mic_title">Test mikrofonu</string>
+    <string name="tools_mic_text">Nagrywa %1$d s z mikrofonu i odtwarza, byś usłyszał, co słyszy rozmówca w czasie rozmowy. Nic nie jest zapisywane.</string>
+    <string name="tools_mic_note_windows">Podczas nagrywania Windows przełącza słuchawki na jakość rozmowy, więc dźwięk na chwilę staje się cieńszy. Najpierw wybierz słuchawki jako wejście w ustawieniach dźwięku.</string>
+    <string name="tools_mic_note_other">Podczas nagrywania system może przełączyć słuchawki na jakość rozmowy, więc dźwięk na chwilę staje się cieńszy. Najpierw wybierz słuchawki jako wejście w ustawieniach dźwięku.</string>
+    <string name="tools_mic_note_phone">Podczas nagrywania telefon przełącza słuchawki na jakość rozmowy, więc dźwięk na chwilę staje się cieńszy.</string>
+    <string name="tools_mic_start">Uruchom test</string>
+    <string name="tools_mic_recording">Nagrywanie, jeszcze %1$d s. Powiedz coś.</string>
+    <string name="tools_mic_playing">Odtwarzanie nagrania.</string>
+    <string name="tools_mic_finished">Gotowe. Uruchom ponownie, by posłuchać jeszcze raz.</string>
+    <string name="tools_mic_permission">Czekam na twoją odpowiedź w sprawie mikrofonu.</string>
+    <string name="tool_audio_failed">Dźwięk nieoczekiwanie się zatrzymał.</string>
+    <string name="tool_no_output">Ruru nie może teraz odtwarzać dźwięku w tym systemie.</string>
+    <string name="tool_no_input">Ruru nie może użyć mikrofonu. Sprawdź, czy nie używa go inna aplikacja i czy Ruru ma zgodę w ustawieniach prywatności.</string>
+    <string name="tool_mic_stopped">Mikrofon się zatrzymał.</string>
+    <string name="tool_mic_denied">Test wymaga zgody na użycie mikrofonu. Możesz ją dać w ustawieniach telefonu.</string>
+    <string name="tool_find_no_headphones">Android nie wysyła teraz dźwięku do słuchawek, więc dźwięk wyszedłby z telefonu. Najpierw odtwórz coś na słuchawkach i spróbuj ponownie.</string>
+</resources>

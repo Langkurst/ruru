@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">已配对的设备</string>
+    <string name="devices_unnamed">未命名设备</string>
+    <string name="devices_state_playing">正在播放</string>
+    <string name="devices_state_connected">已连接</string>
+    <string name="devices_state_not_connected">未连接</string>
+    <string name="devices_state_paired">已配对</string>
+    <string name="devices_state_this_device">%1$s，此设备</string>
+    <string name="devices_switch">切换到此设备</string>
+    <string name="devices_switch_to">把声音切换到 %1$s</string>
+    <string name="devices_switch_hint">另一台设备正在播放内容时，才能切换。</string>
+    <string name="devices_manage_note">Ruru 只在设备之间转移声音，从不移除或忘记设备。要配对或移除设备，请使用系统的蓝牙设置。</string>
+    <string name="message_switch_needs_playback">耳机暂时无法切换。请先在另一台设备上播放音频，再试一次。</string>
+    <string name="setting_touch_controls">触控</string>
+    <string name="setting_touch_controls_hint">在耳罩上滑动或点按，可调音量、暂停和切歌</string>
+    <string name="tools_find_title">查找我的耳机</string>
+    <string name="tools_find_text">播放一段逐渐升高的音调，先轻后响，几秒内渐强。%1$d 秒后自动停止。</string>
+    <string name="tools_find_note">声音从系统的声音输出播放。请先把耳机选为输出，并摘下耳机再开始。</string>
+    <string name="tools_find_note_phone">声音只发送到耳机。请摘下耳机再开始。</string>
+    <string name="tools_find_start">播放提示音</string>
+    <string name="tools_stop">停止</string>
+    <string name="tools_find_ringing">正在播放。停止前请不要戴上耳机。</string>
+    <string name="tools_mic_title">麦克风检查</string>
+    <string name="tools_mic_text">从麦克风录音 %1$d 秒再播放，让你听到通话时对方听到的声音。不会保存任何内容。</string>
+    <string name="tools_mic_note_windows">录音时 Windows 会把耳机切换到通话音质，声音会暂时变薄。请先在声音设置中把耳机选为输入。</string>
+    <string name="tools_mic_note_other">录音时系统可能会把耳机切换到通话音质，声音会暂时变薄。请先在声音设置中把耳机选为输入。</string>
+    <string name="tools_mic_note_phone">录音时手机会把耳机切换到通话音质，声音会暂时变薄。</string>
+    <string name="tools_mic_start">开始检查</string>
+    <string name="tools_mic_recording">正在录音，还剩 %1$d 秒。请说点什么。</string>
+    <string name="tools_mic_playing">正在播放录音。</string>
+    <string name="tools_mic_finished">完成。再次开始可以重新听一遍。</string>
+    <string name="tools_mic_permission">正在等待你对麦克风权限的回答。</string>
+    <string name="tool_audio_failed">声音意外停止了。</string>
+    <string name="tool_no_output">Ruru 现在无法在此系统上播放声音。</string>
+    <string name="tool_no_input">Ruru 无法使用麦克风。请检查是否有其他应用正在使用，以及隐私设置是否允许 Ruru 使用。</string>
+    <string name="tool_mic_stopped">麦克风已停止。</string>
+    <string name="tool_mic_denied">麦克风检查需要使用麦克风的权限。你可以在手机设置中允许。</string>
+    <string name="tool_find_no_headphones">Android 目前没有把声音发送到耳机，声音会从手机发出。请先在耳机上播放内容，再试一次。</string>
+</resources>

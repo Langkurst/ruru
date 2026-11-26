@@ -595,7 +595,7 @@ private fun signed(v: Int) = when {
 
 /** Whether the headphones have any of the settings the Settings panel shows. */
 internal fun hasHeadphoneSettings(h: HeadphoneState) = h.sidetone != null || h.multipointEnabled != null || h.autoOffMinutes != null ||
-    h.autoPlayPause != null || h.autoAnswer != null || h.voicePrompts != null
+    h.autoPlayPause != null || h.autoAnswer != null || h.voicePrompts != null || h.touchControlsEnabled != null
 
 @Composable
 internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, modifier: Modifier = Modifier, title: String = stringResource(Res.string.panel_settings)) {
@@ -606,6 +606,7 @@ internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, mod
     val autoPlayPause = stringResource(Res.string.setting_auto_play_pause)
     val autoAnswer = stringResource(Res.string.setting_auto_answer)
     val voicePrompts = stringResource(Res.string.setting_voice_prompts)
+    val touchControls = stringResource(Res.string.setting_touch_controls)
     Panel(title, modifier) {
         h.sidetone?.let { level ->
             Txt(selfVoice, Ruru.type.body, c.ink)
@@ -634,6 +635,10 @@ internal fun SettingsPanel(h: HeadphoneState, controller: HeadsetController, mod
         }
         h.voicePrompts?.let { prompts ->
             SettingRow(voicePrompts, stringResource(Res.string.setting_voice_prompts_hint)) { Toggle(prompts.enabled, controller::setVoicePrompts, voicePrompts) }
+        }
+        // Only headphones that answer the touch setting have the row; the 1st Gen answers "not supported", so it has none.
+        h.touchControlsEnabled?.let { on ->
+            SettingRow(touchControls, stringResource(Res.string.setting_touch_controls_hint)) { Toggle(on, controller::setTouchControls, touchControls) }
         }
     }
 }

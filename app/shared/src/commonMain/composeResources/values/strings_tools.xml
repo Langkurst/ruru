@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Paired devices</string>
+    <string name="devices_unnamed">Unnamed device</string>
+    <string name="devices_state_playing">Playing now</string>
+    <string name="devices_state_connected">Connected</string>
+    <string name="devices_state_not_connected">Not connected</string>
+    <string name="devices_state_paired">Paired</string>
+    <string name="devices_state_this_device">%1$s, this device</string>
+    <string name="devices_switch">Switch to this</string>
+    <string name="devices_switch_to">Switch the sound to %1$s</string>
+    <string name="devices_switch_hint">Switching works while the other device is playing something.</string>
+    <string name="devices_manage_note">Ruru only moves the sound between devices. It never removes or forgets one. To pair or remove a device, use your system's Bluetooth settings.</string>
+    <string name="message_switch_needs_playback">The headphones can't switch yet. Start playing audio on the other device, then try again.</string>
+    <string name="setting_touch_controls">Touch controls</string>
+    <string name="setting_touch_controls_hint">Swipe and tap the ear cup for volume, pause and skip</string>
+    <string name="tools_find_title">Find my headphones</string>
+    <string name="tools_find_text">Plays a rising tone, quiet at first and louder over a few seconds. It stops by itself after %1$d seconds.</string>
+    <string name="tools_find_note">The tone comes out of your system's sound output, so choose the headphones as the output first, and take them off before you start.</string>
+    <string name="tools_find_note_phone">The tone goes to the headphones only. Take them off before you start.</string>
+    <string name="tools_find_start">Play tone</string>
+    <string name="tools_stop">Stop</string>
+    <string name="tools_find_ringing">Playing. Don't put the headphones on until you stop it.</string>
+    <string name="tools_mic_title">Mic check</string>
+    <string name="tools_mic_text">Records %1$d seconds from the microphone, then plays it back, so you hear what the other person hears on a call. Nothing is saved.</string>
+    <string name="tools_mic_note_windows">While it records, Windows switches the headphones to call quality, so the sound gets thinner for a moment. Choose the headphones as the input in your sound settings first.</string>
+    <string name="tools_mic_note_other">While it records, your system may switch the headphones to call quality, so the sound gets thinner for a moment. Choose the headphones as the input in your sound settings first.</string>
+    <string name="tools_mic_note_phone">While it records, your phone switches the headphones to call quality, so the sound gets thinner for a moment.</string>
+    <string name="tools_mic_start">Start mic check</string>
+    <string name="tools_mic_recording">Recording, %1$d s left. Say something.</string>
+    <string name="tools_mic_playing">Playing it back.</string>
+    <string name="tools_mic_finished">Done. Start it again to hear another.</string>
+    <string name="tools_mic_permission">Waiting for your answer about the microphone.</string>
+    <string name="tool_audio_failed">The sound stopped unexpectedly.</string>
+    <string name="tool_no_output">Ruru can't play sound on this system right now.</string>
+    <string name="tool_no_input">Ruru can't use the microphone. Check that no other app is using it and that Ruru is allowed to in your privacy settings.</string>
+    <string name="tool_mic_stopped">The microphone stopped.</string>
+    <string name="tool_mic_denied">The mic check needs permission to use the microphone. You can allow it in your phone's settings.</string>
+    <string name="tool_find_no_headphones">Android isn't sending sound to the headphones right now, so the tone would come from the phone. Play something on the headphones first, then try again.</string>
+</resources>

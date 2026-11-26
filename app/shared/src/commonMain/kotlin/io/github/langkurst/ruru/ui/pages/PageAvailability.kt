@@ -50,13 +50,16 @@ class PageAvailability(
 
     /**
      * The sidebar's pages, top to bottom (Ctrl+1 is the first). [sound] and [settings] say whether the
-     * headphones give those pages anything; the rest wait for their feature.
+     * headphones give those pages anything; the rest wait for their feature. [devices] is whether the
+     * headphones report paired devices and [tools] whether this system has a tool to show; both pages
+     * need their feature shipped as well.
      */
-    fun deskPages(sound: Boolean, settings: Boolean): List<DeskPage> = buildList {
+    fun deskPages(sound: Boolean, settings: Boolean, devices: Boolean = true, tools: Boolean = true): List<DeskPage> = buildList {
         if (sound) add(DeskPage.Sound)
-        for (page in listOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices)) if (shows(page)) add(page)
+        for (page in listOf(DeskPage.Equaliser, DeskPage.Night)) if (shows(page)) add(page)
+        if (devices && shows(DeskPage.Devices)) add(DeskPage.Devices)
         if (settings) add(DeskPage.Settings)
-        if (shows(DeskPage.Tools)) add(DeskPage.Tools)
+        if (tools && shows(DeskPage.Tools)) add(DeskPage.Tools)
     }
 
     /**
@@ -75,6 +78,6 @@ class PageAvailability(
          * The pages that have content in this build. A feature milestone adds its page here, which is
          * the only change outside its own page file.
          */
-        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser)
+        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools)
     }
 }

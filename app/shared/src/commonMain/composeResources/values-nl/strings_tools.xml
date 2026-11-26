@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Gekoppelde apparaten</string>
+    <string name="devices_unnamed">Apparaat zonder naam</string>
+    <string name="devices_state_playing">Speelt nu af</string>
+    <string name="devices_state_connected">Verbonden</string>
+    <string name="devices_state_not_connected">Niet verbonden</string>
+    <string name="devices_state_paired">Gekoppeld</string>
+    <string name="devices_state_this_device">%1$s, dit apparaat</string>
+    <string name="devices_switch">Hierheen schakelen</string>
+    <string name="devices_switch_to">Geluid naar %1$s schakelen</string>
+    <string name="devices_switch_hint">Schakelen werkt zolang het andere apparaat iets afspeelt.</string>
+    <string name="devices_manage_note">Ruru verplaatst alleen het geluid tussen apparaten. Het verwijdert of vergeet er nooit een. Gebruik de Bluetooth-instellingen van je systeem om te koppelen of te verwijderen.</string>
+    <string name="message_switch_needs_playback">De koptelefoon kan nog niet schakelen. Speel iets af op het andere apparaat en probeer het opnieuw.</string>
+    <string name="setting_touch_controls">Aanraakbediening</string>
+    <string name="setting_touch_controls_hint">Veeg en tik op de oorschelp voor volume, pauze en overslaan</string>
+    <string name="tools_find_title">Zoek mijn koptelefoon</string>
+    <string name="tools_find_text">Speelt een stijgende toon af, eerst zacht en in een paar seconden luider. Hij stopt vanzelf na %1$d seconden.</string>
+    <string name="tools_find_note">De toon komt uit de geluidsuitgang van je systeem. Kies eerst de koptelefoon als uitgang en zet hem af voordat je begint.</string>
+    <string name="tools_find_note_phone">De toon gaat alleen naar de koptelefoon. Zet hem af voordat je begint.</string>
+    <string name="tools_find_start">Toon afspelen</string>
+    <string name="tools_stop">Stop</string>
+    <string name="tools_find_ringing">De toon speelt. Zet de koptelefoon pas op als je hem stopt.</string>
+    <string name="tools_mic_title">Microfoontest</string>
+    <string name="tools_mic_text">Neemt %1$d seconden op via de microfoon en speelt het af, zodat je hoort wat de ander tijdens een gesprek hoort. Er wordt niets bewaard.</string>
+    <string name="tools_mic_note_windows">Tijdens het opnemen zet Windows de koptelefoon op gesprekskwaliteit, waardoor het geluid even dunner klinkt. Kies eerst de koptelefoon als ingang in je geluidsinstellingen.</string>
+    <string name="tools_mic_note_other">Tijdens het opnemen kan je systeem de koptelefoon op gesprekskwaliteit zetten, waardoor het geluid even dunner klinkt. Kies eerst de koptelefoon als ingang in je geluidsinstellingen.</string>
+    <string name="tools_mic_note_phone">Tijdens het opnemen zet je telefoon de koptelefoon op gesprekskwaliteit, waardoor het geluid even dunner klinkt.</string>
+    <string name="tools_mic_start">Test starten</string>
+    <string name="tools_mic_recording">Opnemen, nog %1$d s. Zeg iets.</string>
+    <string name="tools_mic_playing">Wordt afgespeeld.</string>
+    <string name="tools_mic_finished">Klaar. Start opnieuw om het nog eens te horen.</string>
+    <string name="tools_mic_permission">Wachten op je antwoord over de microfoon.</string>
+    <string name="tool_audio_failed">Het geluid stopte onverwacht.</string>
+    <string name="tool_no_output">Ruru kan op dit systeem nu geen geluid afspelen.</string>
+    <string name="tool_no_input">Ruru kan de microfoon niet gebruiken. Controleer of geen andere app hem gebruikt en of Ruru dat mag volgens je privacy-instellingen.</string>
+    <string name="tool_mic_stopped">De microfoon is gestopt.</string>
+    <string name="tool_mic_denied">De test heeft toestemming nodig om de microfoon te gebruiken. Je kunt die geven in de instellingen van je telefoon.</string>
+    <string name="tool_find_no_headphones">Android stuurt nu geen geluid naar de koptelefoon, dus de toon zou uit de telefoon komen. Speel eerst iets af op de koptelefoon en probeer het opnieuw.</string>
+</resources>

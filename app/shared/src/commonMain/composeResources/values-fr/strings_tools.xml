@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Appareils jumelés</string>
+    <string name="devices_unnamed">Appareil sans nom</string>
+    <string name="devices_state_playing">Lecture en cours</string>
+    <string name="devices_state_connected">Connecté</string>
+    <string name="devices_state_not_connected">Non connecté</string>
+    <string name="devices_state_paired">Jumelé</string>
+    <string name="devices_state_this_device">%1$s, cet appareil</string>
+    <string name="devices_switch">Passer sur celui-ci</string>
+    <string name="devices_switch_to">Basculer le son sur %1$s</string>
+    <string name="devices_switch_hint">Le basculement fonctionne tant que l'autre appareil lit quelque chose.</string>
+    <string name="devices_manage_note">Ruru ne fait que déplacer le son d'un appareil à l'autre. Il n'en supprime ni n'en oublie jamais. Pour jumeler ou retirer un appareil, utilisez les réglages Bluetooth de votre système.</string>
+    <string name="message_switch_needs_playback">Le casque ne peut pas encore basculer. Lancez une lecture sur l'autre appareil, puis réessayez.</string>
+    <string name="setting_touch_controls">Commandes tactiles</string>
+    <string name="setting_touch_controls_hint">Glissez et touchez l'écouteur pour le volume, la pause et le titre suivant</string>
+    <string name="tools_find_title">Retrouver mon casque</string>
+    <string name="tools_find_text">Joue un son montant, faible au début puis plus fort en quelques secondes. Il s'arrête seul après %1$d secondes.</string>
+    <string name="tools_find_note">Le son sort par la sortie audio de votre système : choisissez d'abord le casque comme sortie et retirez-le avant de commencer.</string>
+    <string name="tools_find_note_phone">Le son va uniquement au casque. Retirez-le avant de commencer.</string>
+    <string name="tools_find_start">Jouer le son</string>
+    <string name="tools_stop">Arrêter</string>
+    <string name="tools_find_ringing">Le son joue. Ne remettez pas le casque avant de l'arrêter.</string>
+    <string name="tools_mic_title">Test du micro</string>
+    <string name="tools_mic_text">Enregistre %1$d secondes au micro puis les rejoue, pour entendre ce que l'autre personne entend pendant un appel. Rien n'est conservé.</string>
+    <string name="tools_mic_note_windows">Pendant l'enregistrement, Windows passe le casque en qualité appel et le son devient plus mince un instant. Choisissez d'abord le casque comme entrée dans les réglages son.</string>
+    <string name="tools_mic_note_other">Pendant l'enregistrement, votre système peut passer le casque en qualité appel et le son devient plus mince un instant. Choisissez d'abord le casque comme entrée dans les réglages son.</string>
+    <string name="tools_mic_note_phone">Pendant l'enregistrement, votre téléphone passe le casque en qualité appel et le son devient plus mince un instant.</string>
+    <string name="tools_mic_start">Lancer le test</string>
+    <string name="tools_mic_recording">Enregistrement, encore %1$d s. Dites quelque chose.</string>
+    <string name="tools_mic_playing">Lecture de l'enregistrement.</string>
+    <string name="tools_mic_finished">Terminé. Relancez pour réécouter.</string>
+    <string name="tools_mic_permission">En attente de votre réponse pour le micro.</string>
+    <string name="tool_audio_failed">Le son s'est arrêté de façon inattendue.</string>
+    <string name="tool_no_output">Ruru ne peut pas jouer de son sur ce système pour le moment.</string>
+    <string name="tool_no_input">Ruru ne peut pas utiliser le micro. Vérifiez qu'aucune autre appli ne l'utilise et que Ruru y est autorisé dans les réglages de confidentialité.</string>
+    <string name="tool_mic_stopped">Le micro s'est arrêté.</string>
+    <string name="tool_mic_denied">Le test a besoin de l'autorisation d'utiliser le micro. Vous pouvez l'accorder dans les réglages du téléphone.</string>
+    <string name="tool_find_no_headphones">Android n'envoie pas le son au casque pour le moment : il sortirait du téléphone. Lancez quelque chose sur le casque, puis réessayez.</string>
+</resources>

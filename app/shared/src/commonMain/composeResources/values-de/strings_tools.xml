@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Devices page, touch controls, and the Tools page (Find my headphones, mic check). -->
+    <string name="devices_panel_title">Gekoppelte Geräte</string>
+    <string name="devices_unnamed">Unbenanntes Gerät</string>
+    <string name="devices_state_playing">Spielt gerade</string>
+    <string name="devices_state_connected">Verbunden</string>
+    <string name="devices_state_not_connected">Nicht verbunden</string>
+    <string name="devices_state_paired">Gekoppelt</string>
+    <string name="devices_state_this_device">%1$s, dieses Gerät</string>
+    <string name="devices_switch">Hierher wechseln</string>
+    <string name="devices_switch_to">Ton auf %1$s umschalten</string>
+    <string name="devices_switch_hint">Das Umschalten klappt, solange das andere Gerät etwas abspielt.</string>
+    <string name="devices_manage_note">Ruru verschiebt nur den Ton zwischen Geräten. Es entfernt oder vergisst nie eines. Zum Koppeln oder Entfernen nutze die Bluetooth-Einstellungen deines Systems.</string>
+    <string name="message_switch_needs_playback">Die Kopfhörer können noch nicht wechseln. Starte auf dem anderen Gerät eine Wiedergabe und versuche es dann erneut.</string>
+    <string name="setting_touch_controls">Touch-Steuerung</string>
+    <string name="setting_touch_controls_hint">Wische und tippe auf die Ohrmuschel für Lautstärke, Pause und Weiter</string>
+    <string name="tools_find_title">Kopfhörer finden</string>
+    <string name="tools_find_text">Spielt einen steigenden Ton, erst leise, dann über einige Sekunden lauter. Er endet nach %1$d Sekunden von selbst.</string>
+    <string name="tools_find_note">Der Ton kommt aus dem Soundausgang deines Systems. Wähle zuerst die Kopfhörer als Ausgang und nimm sie ab, bevor du startest.</string>
+    <string name="tools_find_note_phone">Der Ton geht nur an die Kopfhörer. Nimm sie ab, bevor du startest.</string>
+    <string name="tools_find_start">Ton abspielen</string>
+    <string name="tools_stop">Stopp</string>
+    <string name="tools_find_ringing">Der Ton läuft. Setze die Kopfhörer erst auf, wenn du ihn gestoppt hast.</string>
+    <string name="tools_mic_title">Mikrofontest</string>
+    <string name="tools_mic_text">Nimmt %1$d Sekunden vom Mikrofon auf und spielt es ab, damit du hörst, was dein Gegenüber im Gespräch hört. Es wird nichts gespeichert.</string>
+    <string name="tools_mic_note_windows">Während der Aufnahme schaltet Windows die Kopfhörer auf Telefonqualität, der Klang wird kurz dünner. Wähle zuerst die Kopfhörer als Eingang in den Soundeinstellungen.</string>
+    <string name="tools_mic_note_other">Während der Aufnahme schaltet dein System die Kopfhörer eventuell auf Telefonqualität, der Klang wird kurz dünner. Wähle zuerst die Kopfhörer als Eingang in den Soundeinstellungen.</string>
+    <string name="tools_mic_note_phone">Während der Aufnahme schaltet dein Handy die Kopfhörer auf Telefonqualität, der Klang wird kurz dünner.</string>
+    <string name="tools_mic_start">Mikrofontest starten</string>
+    <string name="tools_mic_recording">Aufnahme läuft, noch %1$d s. Sag etwas.</string>
+    <string name="tools_mic_playing">Wiedergabe läuft.</string>
+    <string name="tools_mic_finished">Fertig. Starte erneut, um noch einmal zu hören.</string>
+    <string name="tools_mic_permission">Warte auf deine Antwort zum Mikrofon.</string>
+    <string name="tool_audio_failed">Der Ton wurde unerwartet beendet.</string>
+    <string name="tool_no_output">Ruru kann auf diesem System gerade keinen Ton abspielen.</string>
+    <string name="tool_no_input">Ruru kann das Mikrofon nicht nutzen. Prüfe, dass keine andere App es belegt und Ruru es in den Datenschutzeinstellungen nutzen darf.</string>
+    <string name="tool_mic_stopped">Das Mikrofon wurde gestoppt.</string>
+    <string name="tool_mic_denied">Der Mikrofontest braucht die Erlaubnis, das Mikrofon zu nutzen. Du kannst sie in den Einstellungen deines Handys erteilen.</string>
+    <string name="tool_find_no_headphones">Android sendet den Ton gerade nicht an die Kopfhörer, er käme also aus dem Handy. Spiele zuerst etwas auf den Kopfhörern ab und versuche es dann erneut.</string>
+</resources>

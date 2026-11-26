@@ -147,6 +147,16 @@ class HeadsetController(
     /** Set the whole favourites set at once (the hardware check restores the exact original set with this). */
     fun setFavorites(indices: Set<Int>) = command("favourite modes", HeadsetCommand.SetFavorites(indices))
 
+    /** Touch controls on the headphones, for the ones that report them. */
+    fun setTouchControls(on: Boolean) = command("touch controls", HeadsetCommand.SetTouchControls(on))
+
+    /**
+     * Move the sound to another device the headphones are connected to (by the address the headphones
+     * listed it with). This is the only change the Devices page makes: there is no command here
+     * (or anywhere in Ruru) that unpairs or clears a device, and the write guard refuses those frames.
+     */
+    fun switchDevice(address: String) = command("switch device", HeadsetCommand.SwitchDevice(address))
+
     fun transport(control: TransportControl) = command("playback", HeadsetCommand.Transport(control))
 
     /**
@@ -418,6 +428,7 @@ class HeadsetController(
                 text == QcUltra2Protocol.NOISE_READ_ONLY_MESSAGE -> Words("message_noise_read_only")
                 text == QcUltra2Protocol.NOISE_PER_MODE_MESSAGE -> Words("message_noise_per_mode")
                 text == QcUltra2Protocol.NO_FAVORITES_MESSAGE -> Words("message_no_favorites")
+                text == QcUltra2Protocol.SWITCH_NEEDS_PLAYBACK_MESSAGE -> Words("message_switch_needs_playback")
                 text == QcUltra2Protocol.UNSUPPORTED_MESSAGE -> Words("message_unsupported")
                 else -> supportNoteKey(text)?.let { Words(it) } ?: Words("message_verbatim", text)
             }
