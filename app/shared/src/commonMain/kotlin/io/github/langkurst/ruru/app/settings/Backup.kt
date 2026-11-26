@@ -13,6 +13,8 @@ object BackupKeys {
         BackupKey("modes.favourites", SettingType.STRING_LIST),
         BackupKey("night.schedule", SettingType.STRING),
         BackupKey("sleep.plan", SettingType.STRING),
+        BackupKey("sleep.alarms", SettingType.STRING),
+        BackupKey("sleep.mixes", SettingType.STRING),
     )
 }
 

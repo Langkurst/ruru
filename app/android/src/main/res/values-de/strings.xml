@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru wartet auf die Kopfhörer</string>
     <string name="notif_open">Öffnen</string>
     <string name="notif_stop">Stopp</string>
+    <string name="sleep_channel_name">Schlaf</string>
+    <string name="sleep_channel_description">Wird angezeigt, solange der Schlaf-Timer und seine Klänge laufen.</string>
+    <string name="sleep_alarm_channel_name">Wecker</string>
+    <string name="sleep_alarm_channel_description">Lässt deine Wecker aus dem Schlaf-Tab klingeln.</string>
+    <string name="sleep_notif_sleeping">Schlaf-Timer läuft</string>
+    <string name="sleep_notif_plus">+%1$d Min</string>
+    <string name="sleep_notif_alarm">Wecker</string>
+    <string name="sleep_notif_snooze">Schlummern</string>
 </resources>

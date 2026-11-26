@@ -1,0 +1,5 @@
+rain 2880000
+ocean 3600000
+stream 2880000
+fire 2880000
+alarm_birds 2880000

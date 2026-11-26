@@ -25,7 +25,16 @@ import io.github.langkurst.ruru.core.ModeRef
 import io.github.langkurst.ruru.link.Words
 import io.github.langkurst.ruru.sleep.DayMode
 import io.github.langkurst.ruru.sleep.NightSchedule
+import io.github.langkurst.ruru.sleep.AlarmOutput
+import io.github.langkurst.ruru.sleep.SavedMix
+import io.github.langkurst.ruru.sleep.SleepAlarm
+import io.github.langkurst.ruru.sleep.SleepLayer
+import io.github.langkurst.ruru.sleep.SleepPlan
+import io.github.langkurst.ruru.sleep.SleepSessionState
 import io.github.langkurst.ruru.sleep.SleepStorage
+import io.github.langkurst.ruru.app.sleep.FakeSleepEngine
+import io.github.langkurst.ruru.app.sleep.SleepModel
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.LocalTime
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
 import io.github.langkurst.ruru.ui.PlatformSwitch
@@ -138,9 +147,30 @@ fun main(args: Array<String>) {
         it.putString(SleepStorage.NIGHT_SCHEDULE_KEY, SleepStorage.encodeSchedule(schedule))
     }
     val night = NightRunner(nightSettings, scope, model.nightHeadset())
+    // The Sleep tab runs on a stand-in engine and in-memory settings. --sleep=idle (default) shows tonight's plan with two alarms,
+    // empty a first-time tab, running a night under way, ringing an alarm that is ringing, blocked exact alarms not yet allowed.
+    val sleepState = args.firstOrNull { it.startsWith("--sleep=") }?.substringAfter('=') ?: "idle"
+    val sleepClock = 1_800_000_000_000L // a fixed moment, so the shot shows the same times every run
+    val sleepZone = TimeZone.UTC
+    val sleepSettings = MemorySettingsStore().also { store ->
+        if (sleepState != "empty") {
+            store.putString(SleepStorage.SLEEP_PLAN_KEY, SleepStorage.encodePlan(SleepPlan(durationMinutes = 120, layers = listOf(SleepLayer("rain", 0.7f), SleepLayer("ocean", 0.4f)))))
+            store.putString(SleepStorage.SLEEP_ALARMS_KEY, SleepStorage.encodeAlarms(listOf(
+                SleepAlarm("a1", 7, 0, days = setOf(1, 2, 3, 4, 5), label = null),
+                SleepAlarm("a2", 8, 30, days = setOf(6, 7), output = AlarmOutput.BOTH, enabled = false),
+            )))
+            store.putString(SleepStorage.SLEEP_MIXES_KEY, SleepStorage.encodeMixes(listOf(SavedMix("m1", "Rain + Ocean", listOf(SleepLayer("rain", 0.7f), SleepLayer("ocean", 0.4f))))))
+        }
+    }
+    val sleepEngine = FakeSleepEngine(clock = { sleepClock }, alarmsAllowed = sleepState != "blocked")
+    val sleep = SleepModel(sleepSettings, sleepEngine, now = { sleepClock }, zone = { sleepZone })
+    when (sleepState) {
+        "running" -> sleepEngine.start(sleep.plan.value)
+        "ringing" -> sleepEngine.set(SleepSessionState.Ringing("a1", null, sleepClock, AlarmOutput.EARBUDS, snoozeMinutes = 10))
+    }
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq, night = night) }
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq, night = night, sleep = sleep) }
         }
     }
     var image = scene.render(0)

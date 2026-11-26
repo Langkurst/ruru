@@ -1,5 +1,6 @@
 package io.github.langkurst.ruru.sleep
 
+import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.json.Json
 
 /**
@@ -13,6 +14,13 @@ import kotlinx.serialization.json.Json
 object SleepStorage {
     const val SLEEP_PLAN_KEY = "sleep.plan"
     const val NIGHT_SCHEDULE_KEY = "night.schedule"
+
+    /** The wake-up alarms (a JSON list of [SleepAlarm]) and the saved mixes (a JSON list of [SavedMix]); both are in the backup. */
+    const val SLEEP_ALARMS_KEY = "sleep.alarms"
+    const val SLEEP_MIXES_KEY = "sleep.mixes"
+
+    /** What a night changed on the headset and still has to put back ([RestoreRecord]); deliberately not in the backup. */
+    const val SLEEP_RESTORE_KEY = "sleep.restore"
 
     /** Where a runner may keep its [NightProgress]; deliberately not in the backup. */
     const val NIGHT_PROGRESS_KEY = "night.progress"
@@ -39,4 +47,29 @@ object SleepStorage {
 
     fun decodeProgress(text: String?): NightProgress =
         text?.let { runCatching { json.decodeFromString(NightProgress.serializer(), it) }.getOrNull() } ?: NightProgress()
+
+    private val alarmList = ListSerializer(SleepAlarm.serializer())
+    private val mixList = ListSerializer(SavedMix.serializer())
+
+    fun encodeAlarms(alarms: List<SleepAlarm>): String = json.encodeToString(alarmList, alarms)
+
+    /** The saved alarms; an alarm with an out-of-range time or a repeated id is dropped, never the whole list. */
+    fun decodeAlarms(text: String?): List<SleepAlarm> =
+        text?.let { runCatching { json.decodeFromString(alarmList, it) }.getOrNull() }.orEmpty()
+            .filter { it.hour in 0..23 && it.minute in 0..59 && it.id.isNotBlank() }
+            .distinctBy { it.id }
+            .map { it.copy(days = it.days.filter { d -> d in 1..7 }.toSet()) }
+
+    fun encodeMixes(mixes: List<SavedMix>): String = json.encodeToString(mixList, mixes)
+
+    fun decodeMixes(text: String?): List<SavedMix> =
+        text?.let { runCatching { json.decodeFromString(mixList, it) }.getOrNull() }.orEmpty()
+            .filter { it.id.isNotBlank() }
+            .distinctBy { it.id }
+            .map { it.copy(layers = it.layers.take(SleepPlan.MAX_LAYERS).map { l -> l.copy(gain = l.gain.coerceIn(0f, 1f)) }) }
+
+    fun encodeRestore(record: RestoreRecord): String = json.encodeToString(RestoreRecord.serializer(), record)
+
+    fun decodeRestore(text: String?): RestoreRecord =
+        text?.let { runCatching { json.decodeFromString(RestoreRecord.serializer(), it) }.getOrNull() } ?: RestoreRecord()
 }

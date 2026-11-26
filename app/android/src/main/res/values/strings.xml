@@ -11,4 +11,13 @@
     <string name="notif_waiting">Ruru is waiting for your headphones</string>
     <string name="notif_open">Open</string>
     <string name="notif_stop">Stop</string>
+    <!-- The sleep timer's notification and the wake-up alarm's. -->
+    <string name="sleep_channel_name">Sleep</string>
+    <string name="sleep_channel_description">Shown while the sleep timer and its sounds run.</string>
+    <string name="sleep_alarm_channel_name">Alarms</string>
+    <string name="sleep_alarm_channel_description">Rings your wake-up alarms from the Sleep tab.</string>
+    <string name="sleep_notif_sleeping">Sleep timer running</string>
+    <string name="sleep_notif_plus">+%1$d min</string>
+    <string name="sleep_notif_alarm">Alarm</string>
+    <string name="sleep_notif_snooze">Snooze</string>
 </resources>

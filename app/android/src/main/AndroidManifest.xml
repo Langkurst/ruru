@@ -23,6 +23,17 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Sleep: sounds from the sleep timer play in a foreground service of type mediaPlayback. Wake-up alarms are clock
+         alarms (they need no permission); the night's own stages and the night schedule use exact alarms, which an
+         alarm app is allowed on Android 13 and newer (USE_EXACT_ALARM) and asks for before that. The phone restarting
+         sets every alarm again. The alarm screen opens over a locked phone. No network is used for any of it. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".RuruApplication"
@@ -47,6 +58,35 @@
             android:name=".service.RuruService"
             android:exported="false"
             android:foregroundServiceType="connectedDevice" />
+
+        <!-- Plays the sleep sounds and rings the alarms (sleep/SleepService) -->
+        <service
+            android:name=".sleep.SleepService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
+
+        <!-- The alarm screen: over the lock screen, with Stop and Snooze (sleep/AlarmActivity) -->
+        <activity
+            android:name=".sleep.AlarmActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:showWhenLocked="true"
+            android:turnScreenOn="true" />
+
+        <!-- Our own alarms going off, and the restart or clock change that means they are set again (sleep/SleepReceiver) -->
+        <receiver
+            android:name=".sleep.SleepReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.app.action.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Music and video apps hand over their audio session so the equaliser can filter it (eq/) -->
         <receiver

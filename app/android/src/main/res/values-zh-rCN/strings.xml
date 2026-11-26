@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru 正在等待耳机</string>
     <string name="notif_open">打开</string>
     <string name="notif_stop">停止</string>
+    <string name="sleep_channel_name">睡眠</string>
+    <string name="sleep_channel_description">睡眠定时器及其声音运行期间显示。</string>
+    <string name="sleep_alarm_channel_name">闹钟</string>
+    <string name="sleep_alarm_channel_description">响起你在睡眠标签页里设置的起床闹钟。</string>
+    <string name="sleep_notif_sleeping">睡眠定时器运行中</string>
+    <string name="sleep_notif_plus">+%1$d 分钟</string>
+    <string name="sleep_notif_alarm">闹钟</string>
+    <string name="sleep_notif_snooze">贪睡</string>
 </resources>

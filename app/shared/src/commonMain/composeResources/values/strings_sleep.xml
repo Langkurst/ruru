@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Sleep tab (phones): tonight's summary, the timer, sounds, saved mixes, alarms and the end of the night. -->
+    <string name="sleep_tonight_title">Tonight</string>
+    <string name="sleep_tonight_sounds">Plays %1$s for %2$s, then fades out over %3$s.</string>
+    <string name="sleep_tonight_timer_only">No sounds, just a timer for %1$s. Play a podcast or music from another app.</string>
+    <string name="sleep_tonight_alarm_earbuds">Alarm at %1$s, in your earbuds.</string>
+    <string name="sleep_tonight_alarm_phone">Alarm at %1$s, on the phone.</string>
+    <string name="sleep_tonight_alarm_both">Alarm at %1$s, in your earbuds and on the phone.</string>
+    <string name="sleep_tonight_no_alarm">No alarm is set.</string>
+    <string name="sleep_end_stays">Your headphones stay connected when the sounds stop.</string>
+    <string name="sleep_end_disconnects">Your headphones disconnect when the sounds stop.</string>
+    <string name="sleep_end_switches_off">Your headphones switch off when the sounds stop.</string>
+    <string name="sleep_end_cant">This phone can't disconnect your headphones from Ruru, so they stay connected.</string>
+    <string name="sleep_alarm_moves_phone">The alarm will ring on the phone, because the earbuds will be off.</string>
+    <string name="sleep_and">%1$s and %2$s</string>
+    <string name="sleep_start">Start sleep</string>
+
+    <string name="sleep_running_title">Sleeping</string>
+    <string name="sleep_running_left">%1$s left</string>
+    <string name="sleep_running_ends">The sounds stop at %1$s.</string>
+    <string name="sleep_running_timer_only">The timer ends at %1$s.</string>
+    <string name="sleep_plus">+%1$d min</string>
+    <string name="sleep_stop">Stop</string>
+    <string name="sleep_ringing_title">Alarm</string>
+    <string name="sleep_ringing_snooze">Snooze %1$d min</string>
+    <string name="sleep_snoozed">Snoozed. It rings again at %1$s.</string>
+
+    <string name="sleep_timer_title">Timer</string>
+    <string name="sleep_timer_hint">How long the sounds play before they fade out.</string>
+    <string name="sleep_chip_minutes">%1$d min</string>
+    <string name="sleep_chip_hours">%1$d h</string>
+
+    <string name="sleep_sounds_title">Sounds</string>
+    <string name="sleep_sounds_hint">Pick up to three. Each one has its own level.</string>
+    <string name="sleep_sounds_none">No sound picked. Ruru will only run the timer.</string>
+    <string name="sleep_sound_white">White noise</string>
+    <string name="sleep_sound_pink">Pink noise</string>
+    <string name="sleep_sound_brown">Brown noise</string>
+    <string name="sleep_sound_rain">Rain</string>
+    <string name="sleep_sound_heavy_rain">Heavy rain</string>
+    <string name="sleep_sound_ocean">Ocean</string>
+    <string name="sleep_sound_stream">Stream</string>
+    <string name="sleep_sound_wind">Wind</string>
+    <string name="sleep_sound_fire">Fireplace</string>
+    <string name="sleep_sound_fan">Fan</string>
+    <string name="sleep_layer_level">%1$s level</string>
+    <string name="sleep_remove_sound">Remove %1$s</string>
+    <string name="sleep_volume">Sounds level</string>
+    <string name="sleep_volume_hint">On top of the volume of your headphones.</string>
+
+    <string name="sleep_mixes_title">Saved mixes</string>
+    <string name="sleep_mixes_empty">Save a mix to bring it back with one tap.</string>
+    <string name="sleep_mix_save">Save this mix</string>
+    <string name="sleep_mix_delete">Delete %1$s</string>
+
+    <string name="sleep_alarms_title">Alarms</string>
+    <string name="sleep_alarms_empty">No alarms yet.</string>
+    <string name="sleep_alarm_add">Add alarm</string>
+    <string name="sleep_alarm_edit">Edit</string>
+    <string name="sleep_alarm_done">Done</string>
+    <string name="sleep_alarm_delete">Delete</string>
+    <string name="sleep_alarm_on">Alarm at %1$s</string>
+    <string name="sleep_alarm_once">Once</string>
+    <string name="sleep_alarm_every_day">Every day</string>
+    <string name="sleep_alarm_weekdays">Weekdays</string>
+    <string name="sleep_alarm_weekends">Weekends</string>
+    <string name="sleep_alarm_time">Time</string>
+    <string name="sleep_alarm_repeat">Repeat</string>
+    <string name="sleep_alarm_rings">Rings in</string>
+    <string name="sleep_alarm_earbuds_hint">If nobody stops it within a minute, it rings on the phone as well.</string>
+    <string name="sleep_out_earbuds">Earbuds</string>
+    <string name="sleep_out_phone">Phone</string>
+    <string name="sleep_out_both">Both</string>
+    <string name="sleep_alarm_sound">Sound</string>
+    <string name="sleep_tone_chime">Chime</string>
+    <string name="sleep_tone_birds">Birdsong</string>
+    <string name="sleep_tone_classic">Classic beep</string>
+    <string name="sleep_tone_system">Phone's alarm sound</string>
+    <string name="sleep_alarm_snooze">Snooze</string>
+    <string name="sleep_snooze_off">Off</string>
+    <string name="sleep_snooze_minutes">%1$d min</string>
+    <string name="sleep_alarms_blocked">Android needs your OK before Ruru can ring an alarm at the right minute. Until then your alarms stay switched off.</string>
+    <string name="sleep_alarms_allow">Allow alarms</string>
+
+    <string name="sleep_end_title">When the timer ends</string>
+    <string name="sleep_end_action">Headphones</string>
+    <string name="sleep_end_action_stop">Just stop the sounds</string>
+    <string name="sleep_end_action_disconnect">Disconnect them</string>
+    <string name="sleep_end_action_off">Switch them off</string>
+    <string name="sleep_fade_title">Fade out</string>
+    <string name="sleep_noise_title">Noise cancelling</string>
+    <string name="sleep_noise_keep">Leave as it is</string>
+    <string name="sleep_noise_now">Off when I start</string>
+    <string name="sleep_noise_after">Off after %1$s</string>
+    <string name="sleep_noise_end">Off when the timer ends</string>
+    <string name="sleep_extra_touch">Lock the touch controls</string>
+    <string name="sleep_extra_touch_hint">So a pillow can't pause or skip.</string>
+    <string name="sleep_extra_prompts">Turn voice prompts off</string>
+    <string name="sleep_extra_prompts_hint">So a spoken battery warning can't wake you.</string>
+    <string name="sleep_extra_restored">Everything is put back in the morning.</string>
+
+    <string name="sleep_log_title">Last night</string>
+    <string name="sleep_note_touch_locked">Touch controls were locked.</string>
+    <string name="sleep_note_prompts_off">Voice prompts were turned off.</string>
+    <string name="sleep_note_noise_off">Noise cancelling was turned off.</string>
+    <string name="sleep_note_noise_already_off">Noise cancelling was already off.</string>
+    <string name="sleep_note_powered_off">Your headphones were switched off.</string>
+    <string name="sleep_note_disconnected">Your headphones were disconnected.</string>
+    <string name="sleep_note_restored">Your headphone settings were put back.</string>
+    <string name="sleep_note_failed">One step didn't work, so Ruru skipped it.</string>
+    <string name="sleep_note_cant_change">Ruru can't change these headphones' settings right now.</string>
+    <string name="sleep_note_unsupported">These headphones can't do that from an app.</string>
+    <string name="sleep_note_no_disconnect">This phone can't disconnect your headphones from Ruru.</string>
+    <string name="sleep_note_power_off_refused">The headphones didn't switch off, so they stayed connected.</string>
+
+    <string name="about_sound_credits">The sleep sounds rain, ocean, stream, fire and birdsong are public domain field recordings from radio aporee ::: maps, by Duane Null, melissapons, Piotrek Zyla, Hoerma and kaoss012.</string>
+    <string name="night_runs_android">Ruru wakes itself at bedtime and in the morning to change the mode, even when it is closed. Your headphones need to be connected then. If they connect after bedtime, the night mode is applied then.</string>
+</resources>

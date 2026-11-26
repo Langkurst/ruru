@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruruはヘッドホンを待っています</string>
     <string name="notif_open">開く</string>
     <string name="notif_stop">停止</string>
+    <string name="sleep_channel_name">睡眠</string>
+    <string name="sleep_channel_description">睡眠タイマーとサウンドの動作中に表示されます。</string>
+    <string name="sleep_alarm_channel_name">アラーム</string>
+    <string name="sleep_alarm_channel_description">睡眠タブで設定した起床アラームを鳴らします。</string>
+    <string name="sleep_notif_sleeping">睡眠タイマー動作中</string>
+    <string name="sleep_notif_plus">+%1$d分</string>
+    <string name="sleep_notif_alarm">アラーム</string>
+    <string name="sleep_notif_snooze">スヌーズ</string>
 </resources>

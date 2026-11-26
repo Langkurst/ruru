@@ -78,7 +78,7 @@ import kotlin.time.Instant
 val LocalNight = staticCompositionLocalOf<NightRunner?> { null }
 
 private const val WHAT_IT_WAS = "what-it-was"
-private val DayNames = listOf(
+internal val DayNames = listOf(
     Res.string.night_day_1, Res.string.night_day_2, Res.string.night_day_3, Res.string.night_day_4,
     Res.string.night_day_5, Res.string.night_day_6, Res.string.night_day_7,
 )
@@ -184,7 +184,11 @@ private fun WhenPanel(night: NightRunner, state: AppState, extras: List<Platform
             Txt(lastText(it, zone), Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
         }
         Spacer(Modifier.height(10.dp))
-        val note = if (LocalSystemKind.current.phone) Res.string.night_runs_phone else Res.string.night_runs_only
+        val note = when (LocalSystemKind.current) {
+            SystemKind.Android -> Res.string.night_runs_android
+            SystemKind.IPhone -> Res.string.night_runs_phone
+            else -> Res.string.night_runs_only
+        }
         Txt(stringResource(note), Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
         val signIn = extras.filter { it.id == PlatformSwitch.START_AT_SIGN_IN }
         if (signIn.isNotEmpty()) {
@@ -249,7 +253,7 @@ private fun lastText(last: NightLast, zone: TimeZone): String {
 
 /** A time of day to set: the hour and the minutes each with a step either way, and am or pm on a 12-hour clock. */
 @Composable
-private fun TimeRow(label: String, time: LocalTime, twelve: Boolean, enabled: Boolean, onChange: (LocalTime) -> Unit) {
+internal fun TimeRow(label: String, time: LocalTime, twelve: Boolean, enabled: Boolean, onChange: (LocalTime) -> Unit) {
     val c = Ruru.colors
     val labelText: @Composable (Modifier) -> Unit = { m -> Txt(label, Ruru.type.body, if (enabled) c.ink else c.ink3, m) }
     val controls: @Composable () -> Unit = {
@@ -298,7 +302,7 @@ private fun Stepper(value: String, downLabel: String, upLabel: String, enabled: 
 
 /** Seven pills, Monday first; a lit one is a night the schedule runs. */
 @Composable
-private fun DayChips(days: Set<Int>, enabled: Boolean, onToggle: (Int) -> Unit) {
+internal fun DayChips(days: Set<Int>, enabled: Boolean, onToggle: (Int) -> Unit) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         for (day in 1..7) {
             val name = stringResource(DayNames[day - 1])
@@ -308,7 +312,7 @@ private fun DayChips(days: Set<Int>, enabled: Boolean, onToggle: (Int) -> Unit) 
 }
 
 @Composable
-private fun DayChip(name: String, on: Boolean, enabled: Boolean, modifier: Modifier, onClick: () -> Unit) {
+internal fun DayChip(name: String, on: Boolean, enabled: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val c = Ruru.colors
     val shape = RoundedCornerShape(7.dp)
     val interaction = remember { MutableInteractionSource() }

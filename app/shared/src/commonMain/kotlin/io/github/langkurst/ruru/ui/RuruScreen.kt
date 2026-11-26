@@ -87,7 +87,9 @@ import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.pages.BottomBar
 import io.github.langkurst.ruru.app.eq.ProEqModel
 import io.github.langkurst.ruru.app.night.NightRunner
+import io.github.langkurst.ruru.app.sleep.SleepModel
 import io.github.langkurst.ruru.ui.pages.LocalNight
+import io.github.langkurst.ruru.ui.pages.LocalSleep
 import io.github.langkurst.ruru.ui.pages.EqNotPossibleNote
 import io.github.langkurst.ruru.ui.pages.EqualiserPage
 import io.github.langkurst.ruru.ui.pages.LocalProEq
@@ -130,10 +132,11 @@ fun RuruScreen(
     pages: PageAvailability? = null,
     proEq: ProEqModel? = null,
     night: NightRunner? = null,
+    sleep: SleepModel? = null,
 ) {
     val controller by model.controller.collectAsState()
     val system = SystemKind.of(model.platformName)
-    val available = pages ?: remember(model, proEq, night) { PageAvailability(system = system, hasProEq = proEq != null, hasNightRunner = night != null && !system.phone) }
+    val available = pages ?: remember(model, proEq, night, sleep) { PageAvailability(system = system, hasProEq = proEq != null, hasNightRunner = night != null, hasSleep = sleep != null) }
     val state by controller.state.collectAsState()
     val c = Ruru.colors
     val browser = LocalUriHandler.current
@@ -143,7 +146,7 @@ fun RuruScreen(
     val copyReport = { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
     // The page colour goes on before the caller's modifier, so it also fills the strips behind a
     // phone's status and navigation bars that the safe-area padding in [modifier] leaves.
-    CompositionLocalProvider(LocalProEq provides proEq, LocalNight provides night, LocalSystemKind provides available.system) {
+    CompositionLocalProvider(LocalProEq provides proEq, LocalNight provides night, LocalSleep provides sleep, LocalSystemKind provides available.system) {
     BoxWithConstraints(Modifier.fillMaxSize().background(c.night).then(modifier)) {
         if (maxWidth >= DeskMinWidth) {
             // A computer window: sidebar and pages, as in docs/DESIGN.md.
@@ -747,6 +750,11 @@ internal fun Footer(state: AppState, model: AppModel, appVersion: String, extras
             Txt(stringResource(Res.string.footer_support_hint), Ruru.type.small, c.ink3, Modifier.weight(1f).padding(end = 8.dp))
             // Opens the page in the browser. With no browser to hand, the button does nothing.
             QuietButton(stringResource(Res.string.footer_support), { runCatching { browser.openUri(SUPPORT_URL) } })
+        }
+        // The sleep sounds are recordings by people who gave them away; phones have them, so phones say who made them.
+        if (LocalSleep.current != null && LocalSystemKind.current.phone) {
+            Spacer(Modifier.height(10.dp))
+            Txt(stringResource(Res.string.about_sound_credits), Ruru.type.small, c.ink3)
         }
     }
 }

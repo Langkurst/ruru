@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru attend le casque</string>
     <string name="notif_open">Ouvrir</string>
     <string name="notif_stop">Arrêter</string>
+    <string name="sleep_channel_name">Sommeil</string>
+    <string name="sleep_channel_description">Affichée pendant que la minuterie de sommeil et ses sons tournent.</string>
+    <string name="sleep_alarm_channel_name">Réveils</string>
+    <string name="sleep_alarm_channel_description">Fait sonner vos réveils depuis l'onglet Sommeil.</string>
+    <string name="sleep_notif_sleeping">Minuterie de sommeil en cours</string>
+    <string name="sleep_notif_plus">+%1$d min</string>
+    <string name="sleep_notif_alarm">Réveil</string>
+    <string name="sleep_notif_snooze">Répéter</string>
 </resources>

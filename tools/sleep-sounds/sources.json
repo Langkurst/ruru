@@ -1,5 +1,5 @@
 {
-  "about": "The Sleep tab's bundled recordings. Each loop (tools/sleep-sounds/out/<id>.ogg, then re-encoded for the apps) is cut from the original below by make_loops.py (start/length/crossfade in seconds, high-pass in Hz, level as RMS dBFS). All are field recordings released by their recordists into the public domain (Creative Commons Public Domain Mark 1.0 on radio aporee ::: maps, mirrored on archive.org): no credit is required, but each is credited in Ruru's About screen and CREDITS.md. Chosen 2026-10-26 by measurement and spectrogram; listen before changing a start point. White, pink and brown noise and the fan stay synthesised (no clean, freely licensed airborne fan recording was found).",
+  "about": "The Sleep tab's bundled recordings. Each loop (app/shared/src/commonMain/composeResources/files/sleep/<id>.m4a) is cut from the original below by make_loops.py (start/length/crossfade in seconds, high-pass in Hz, level as RMS dBFS). All are field recordings released by their recordists into the public domain (Creative Commons Public Domain Mark 1.0 on radio aporee ::: maps, mirrored on archive.org): no credit is required, but each is credited in Ruru's About screen and CREDITS.md. Chosen 2026-10-26 by measurement and spectrogram; listen before changing a start point. White, pink and brown noise and the fan stay synthesised (no clean, freely licensed airborne fan recording was found).",
   "recordings": [
     {
       "id": "rain",
@@ -10,18 +10,11 @@
       "file": "ZOOM0003LRA.wav",
       "license": "Public Domain Mark 1.0",
       "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 327, "length_s": 60, "crossfade_s": 4, "highpass_hz": 80, "target_rms_db": -20
-    },
-    {
-      "id": "heavy_rain",
-      "title": "Šmiti, Latvia, balcony, heavy rain",
-      "author": "alas23/sala",
-      "page": "https://archive.org/details/aporee_61123_70270",
-      "url": "https://archive.org/download/aporee_61123_70270/smitirainbalcony.wav",
-      "file": "smitirainbalcony.wav",
-      "license": "Public Domain Mark 1.0",
-      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 123, "length_s": 60, "crossfade_s": 4, "highpass_hz": 60, "target_rms_db": -19
+      "start_s": 327,
+      "length_s": 60,
+      "crossfade_s": 4,
+      "highpass_hz": 80,
+      "target_rms_db": -20
     },
     {
       "id": "ocean",
@@ -32,7 +25,11 @@
       "file": "GotskaSandon161020beachshore.wav",
       "license": "Public Domain Mark 1.0",
       "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 30, "length_s": 75, "crossfade_s": 8, "highpass_hz": 40, "target_rms_db": -21
+      "start_s": 30,
+      "length_s": 75,
+      "crossfade_s": 8,
+      "highpass_hz": 40,
+      "target_rms_db": -21
     },
     {
       "id": "stream",
@@ -43,18 +40,11 @@
       "file": "878eTARGOSZOWmountainbrookinthewinterDPATascam2112280521.wav",
       "license": "Public Domain Mark 1.0",
       "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 30, "length_s": 60, "crossfade_s": 4, "highpass_hz": 60, "target_rms_db": -20
-    },
-    {
-      "id": "wind",
-      "title": "Jindřichovice pod Smrkem, Czechia - wind in the forest trees",
-      "author": "john grzinich",
-      "page": "https://archive.org/details/aporee_37592_43037",
-      "url": "https://archive.org/download/aporee_37592_43037/170806JindrichoviceAldertreeswind02.mp3",
-      "file": "170806JindrichoviceAldertreeswind02.mp3",
-      "license": "Public Domain Mark 1.0",
-      "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 21, "length_s": 60, "crossfade_s": 4, "highpass_hz": 50, "target_rms_db": -21
+      "start_s": 30,
+      "length_s": 60,
+      "crossfade_s": 4,
+      "highpass_hz": 60,
+      "target_rms_db": -20
     },
     {
       "id": "fire",
@@ -65,7 +55,11 @@
       "file": "Knistern20201204215349.wav",
       "license": "Public Domain Mark 1.0",
       "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 130, "length_s": 60, "crossfade_s": 4, "highpass_hz": 80, "target_rms_db": -22
+      "start_s": 130,
+      "length_s": 60,
+      "crossfade_s": 4,
+      "highpass_hz": 80,
+      "target_rms_db": -22
     },
     {
       "id": "alarm_birds",
@@ -76,7 +70,46 @@
       "file": "birdsonginthewoodSidobre02.wav",
       "license": "Public Domain Mark 1.0",
       "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
-      "start_s": 24, "length_s": 60, "crossfade_s": 4, "highpass_hz": 150, "target_rms_db": -20
+      "start_s": 24,
+      "length_s": 60,
+      "crossfade_s": 4,
+      "highpass_hz": 150,
+      "target_rms_db": -20
     }
-  ]
+  ],
+  "not_bundled": {
+    "about": "Wind and heavy rain are synthesised in Ruru 0.3 (they are small); these recordings are kept here for a later release. They are not shipped and not credited in the app.",
+    "recordings": [
+      {
+        "id": "heavy_rain",
+        "title": "Šmiti, Latvia, balcony, heavy rain",
+        "author": "alas23/sala",
+        "page": "https://archive.org/details/aporee_61123_70270",
+        "url": "https://archive.org/download/aporee_61123_70270/smitirainbalcony.wav",
+        "file": "smitirainbalcony.wav",
+        "license": "Public Domain Mark 1.0",
+        "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "start_s": 123,
+        "length_s": 60,
+        "crossfade_s": 4,
+        "highpass_hz": 60,
+        "target_rms_db": -19
+      },
+      {
+        "id": "wind",
+        "title": "Jindřichovice pod Smrkem, Czechia - wind in the forest trees",
+        "author": "john grzinich",
+        "page": "https://archive.org/details/aporee_37592_43037",
+        "url": "https://archive.org/download/aporee_37592_43037/170806JindrichoviceAldertreeswind02.mp3",
+        "file": "170806JindrichoviceAldertreeswind02.mp3",
+        "license": "Public Domain Mark 1.0",
+        "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "start_s": 21,
+        "length_s": 60,
+        "crossfade_s": 4,
+        "highpass_hz": 50,
+        "target_rms_db": -21
+      }
+    ]
+  }
 }

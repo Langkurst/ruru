@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru aspetta le cuffie</string>
     <string name="notif_open">Apri</string>
     <string name="notif_stop">Ferma</string>
+    <string name="sleep_channel_name">Sonno</string>
+    <string name="sleep_channel_description">Mostrata mentre il timer del sonno e i suoi suoni sono in corso.</string>
+    <string name="sleep_alarm_channel_name">Sveglie</string>
+    <string name="sleep_alarm_channel_description">Fa suonare le tue sveglie dalla scheda Sonno.</string>
+    <string name="sleep_notif_sleeping">Timer del sonno in corso</string>
+    <string name="sleep_notif_plus">+%1$d min</string>
+    <string name="sleep_notif_alarm">Sveglia</string>
+    <string name="sleep_notif_snooze">Posticipa</string>
 </resources>

@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru czeka na słuchawki</string>
     <string name="notif_open">Otwórz</string>
     <string name="notif_stop">Zatrzymaj</string>
+    <string name="sleep_channel_name">Sen</string>
+    <string name="sleep_channel_description">Widoczne, gdy działa timer snu i jego dźwięki.</string>
+    <string name="sleep_alarm_channel_name">Budziki</string>
+    <string name="sleep_alarm_channel_description">Dzwoni budzikami ustawionymi na karcie Sen.</string>
+    <string name="sleep_notif_sleeping">Timer snu działa</string>
+    <string name="sleep_notif_plus">+%1$d min</string>
+    <string name="sleep_notif_alarm">Budzik</string>
+    <string name="sleep_notif_snooze">Drzemka</string>
 </resources>

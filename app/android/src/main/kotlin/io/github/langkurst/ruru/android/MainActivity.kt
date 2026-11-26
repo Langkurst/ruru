@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.Modifier
 import io.github.langkurst.ruru.android.service.ServiceNeed
+import io.github.langkurst.ruru.android.sleep.SleepService
 import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.tools.AndroidAudio
 import io.github.langkurst.ruru.ui.PlatformSwitch
@@ -76,6 +77,12 @@ class MainActivity : ComponentActivity() {
             app.model.setDemo(true)
             app.proEq.setDemo(true)
         }
+        // "--ei sleepDemoSeconds 60" also starts a short sleep session (the emulator check looks for its notification).
+        val sleepDemo = intent?.getIntExtra("sleepDemoSeconds", 0) ?: 0
+        if (demo && sleepDemo > 0) {
+            SleepService.pendingDemoSeconds = sleepDemo
+            app.sleepModel.engine.start(app.sleepModel.plan.value)
+        }
         app.model.start()
         // What was on when Ruru last closed runs again (and starts the service); the equaliser's first switch-on asks for notifications.
         app.proEq
@@ -101,7 +108,7 @@ class MainActivity : ComponentActivity() {
         val reduceMotion = Settings.Global.getFloat(contentResolver, Settings.Global.ANIMATOR_DURATION_SCALE, 1f) == 0f
         setContent {
             RuruTheme(reduceMotion = reduceMotion) {
-                RuruScreen(app.model, RURU_VERSION, Modifier.windowInsetsPadding(WindowInsets.safeDrawing), extras = extras, proEq = app.proEq)
+                RuruScreen(app.model, RURU_VERSION, Modifier.windowInsetsPadding(WindowInsets.safeDrawing), extras = extras, proEq = app.proEq, night = app.night, sleep = app.sleepModel)
             }
         }
     }

@@ -10,4 +10,12 @@
     <string name="notif_waiting">Ruru wacht op de koptelefoon</string>
     <string name="notif_open">Openen</string>
     <string name="notif_stop">Stoppen</string>
+    <string name="sleep_channel_name">Slaap</string>
+    <string name="sleep_channel_description">Zichtbaar zolang de slaaptimer en de geluiden lopen.</string>
+    <string name="sleep_alarm_channel_name">Wekkers</string>
+    <string name="sleep_alarm_channel_description">Laat je wekkers van het tabblad Slaap afgaan.</string>
+    <string name="sleep_notif_sleeping">Slaaptimer loopt</string>
+    <string name="sleep_notif_plus">+%1$d min</string>
+    <string name="sleep_notif_alarm">Wekker</string>
+    <string name="sleep_notif_snooze">Snoozen</string>
 </resources>

@@ -41,12 +41,14 @@ class PageAvailability(
      * a phone keeps the Night page hidden until its own runner exists, so it never shows a schedule that nothing runs.
      */
     val hasNightRunner: Boolean = !system.phone,
+    /** Whether this build has a sleep engine for [system] (Android now; an iPhone build joins when its engine does). The Sleep tab is listed only then. */
+    val hasSleep: Boolean = true,
 ) {
 
     /** Whether [page] belongs on this system at all: the Equaliser needs a way to filter the sound, Sleep is for phones. */
     fun existsOn(page: DeskPage): Boolean = when (page) {
         DeskPage.Equaliser -> system != SystemKind.Mac && system != SystemKind.IPhone && hasProEq
-        DeskPage.Sleep -> system.phone
+        DeskPage.Sleep -> system.phone && hasSleep
         DeskPage.Night -> hasNightRunner
         else -> true
     }
@@ -84,6 +86,6 @@ class PageAvailability(
          * The pages that have content in this build. A feature milestone adds its page here, which is
          * the only change outside its own page file.
          */
-        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Tools)
+        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Tools, DeskPage.Sleep)
     }
 }
