@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android zeigt für diese Kopfhörer den Steuerdienst nicht an, den Ruru braucht. Ruru hat ihnen deshalb nichts gesendet. Sie funktionieren vielleicht noch nicht mit Ruru.</string>
+    <string name="eq_android_unsupported">Dieses Telefon hat den Klangeffekt nicht, den der Equalizer von Ruru nutzt.</string>
+    <string name="eq_android_note">Funktioniert mit Musik- und Video-Apps, die Android ihren Ton melden, und nur, solange der Ton an Bluetooth-Kopfhörer geht. Solange er an ist, zeigt Ruru eine kleine Benachrichtigung, damit Android ihn nicht beendet.</string>
+    <string name="eq_android_global_label">Experimentell: jede App</string>
+    <string name="eq_android_global_hint">Versucht auch die gesamte Tonausgabe des Telefons, für Apps, die Android ihren Ton nicht melden. Die meisten Telefone erlauben das nicht.</string>
 </resources>

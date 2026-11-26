@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android nie pokazuje w tych słuchawkach usługi sterowania, której potrzebuje Ruru, więc Ruru nic im nie wysłał. Mogą jeszcze nie działać z Ruru.</string>
+    <string name="eq_android_unsupported">Ten telefon nie ma efektu dźwiękowego, którego używa korektor Ruru.</string>
+    <string name="eq_android_note">Działa z aplikacjami muzycznymi i wideo, które zgłaszają Androidowi swój dźwięk, i tylko gdy dźwięk idzie do słuchawek Bluetooth. Gdy jest włączony, Ruru pokazuje małe powiadomienie, żeby Android go nie zatrzymał.</string>
+    <string name="eq_android_global_label">Eksperyment: każda aplikacja</string>
+    <string name="eq_android_global_hint">Próbuje też całego wyjścia dźwięku telefonu, dla aplikacji, które nie zgłaszają Androidowi swojego dźwięku. Większość telefonów na to nie pozwala.</string>
 </resources>

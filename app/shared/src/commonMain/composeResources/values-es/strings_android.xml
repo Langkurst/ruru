@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android no muestra en estos auriculares el servicio de control que Ruru necesita, así que Ruru no les envió nada. Puede que aún no funcionen con Ruru.</string>
+    <string name="eq_android_unsupported">Este teléfono no tiene el efecto de sonido que usa el ecualizador de Ruru.</string>
+    <string name="eq_android_note">Funciona con aplicaciones de música y vídeo que avisan a Android de su sonido, y solo mientras el sonido va a unos auriculares Bluetooth. Mientras está activado, Ruru mantiene una notificación pequeña para que Android no lo detenga.</string>
+    <string name="eq_android_global_label">Experimental: todas las apps</string>
+    <string name="eq_android_global_hint">También prueba toda la salida de sonido del teléfono, para las aplicaciones que no avisan a Android de su sonido. La mayoría de los teléfonos no lo permiten.</string>
 </resources>

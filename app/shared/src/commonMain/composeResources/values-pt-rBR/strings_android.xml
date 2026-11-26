@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">O Android não mostra nesses fones o serviço de controle de que o Ruru precisa, então o Ruru não enviou nada. Eles podem ainda não funcionar com o Ruru.</string>
+    <string name="eq_android_unsupported">Este celular não tem o efeito de som que o equalizador do Ruru usa.</string>
+    <string name="eq_android_note">Funciona com apps de música e vídeo que avisam o Android sobre o som deles, e só enquanto o som vai para fones Bluetooth. Enquanto está ligado, o Ruru mantém uma notificação pequena para o Android não encerrá-lo.</string>
+    <string name="eq_android_global_label">Experimental: todos os apps</string>
+    <string name="eq_android_global_hint">Também tenta toda a saída de som do celular, para apps que não avisam o Android sobre o som. A maioria dos celulares não permite.</string>
 </resources>

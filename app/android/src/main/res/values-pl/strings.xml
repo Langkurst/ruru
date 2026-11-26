@@ -4,4 +4,10 @@
          Android that Ruru speaks that language, so the system hands the app that locale (the screens' words
          come from the shared strings.xml, not from here). -->
     <string name="app_name" translatable="false">Ruru</string>
+    <string name="notif_channel_name">Ruru w tle</string>
+    <string name="notif_channel_description">Widoczne, gdy Ruru utrzymuje działanie korektora lub planu nocnego.</string>
+    <string name="notif_connected">Ruru jest połączony z %1$s</string>
+    <string name="notif_waiting">Ruru czeka na słuchawki</string>
+    <string name="notif_open">Otwórz</string>
+    <string name="notif_stop">Zatrzymaj</string>
 </resources>

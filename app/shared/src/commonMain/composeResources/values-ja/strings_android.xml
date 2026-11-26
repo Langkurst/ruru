@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Ruruに必要な制御サービスがこのヘッドホンでAndroidに見つからないため、Ruruは何も送っていません。まだRuruに対応していない可能性があります。</string>
+    <string name="eq_android_unsupported">この端末には、Ruruのイコライザーが使うサウンドエフェクトがありません。</string>
+    <string name="eq_android_note">Androidに音声を知らせる音楽・動画アプリで動作し、音がBluetoothヘッドホンに出ているときだけ働きます。オンの間は、Androidに止められないよう小さな通知を表示します。</string>
+    <string name="eq_android_global_label">試験的: すべてのアプリ</string>
+    <string name="eq_android_global_hint">Androidに音声を知らせないアプリのために、端末全体の音声出力も試します。ほとんどの端末では許可されません。</string>
 </resources>

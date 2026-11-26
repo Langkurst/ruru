@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android n'indique pas, sur ce casque, le service de contrôle dont Ruru a besoin. Ruru ne lui a donc rien envoyé. Il ne fonctionne peut-être pas encore avec Ruru.</string>
+    <string name="eq_android_unsupported">Ce téléphone n'a pas l'effet sonore qu'utilise l'égaliseur de Ruru.</string>
+    <string name="eq_android_note">Fonctionne avec les applications de musique et de vidéo qui signalent leur son à Android, et seulement quand le son va vers un casque Bluetooth. Tant qu'il est activé, Ruru garde une petite notification affichée pour qu'Android ne l'arrête pas.</string>
+    <string name="eq_android_global_label">Expérimental : toutes les applis</string>
+    <string name="eq_android_global_hint">Essaie aussi toute la sortie audio du téléphone, pour les applications qui ne signalent pas leur son à Android. La plupart des téléphones ne le permettent pas.</string>
 </resources>

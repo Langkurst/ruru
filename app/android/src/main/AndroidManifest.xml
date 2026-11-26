@@ -18,6 +18,11 @@
     <!-- Mic check records five seconds from the microphone, only after the person taps it and allows it; nothing is kept. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <!-- The equaliser (and later the night schedule) keeps Ruru running with one quiet notification: a foreground
+         service of type connectedDevice. Android 13 and newer ask before showing the notification. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".RuruApplication"
@@ -36,5 +41,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Keeps the connection and the equaliser alive while a feature needs it (service/RuruService) -->
+        <service
+            android:name=".service.RuruService"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice" />
+
+        <!-- Music and video apps hand over their audio session so the equaliser can filter it (eq/) -->
+        <receiver
+            android:name=".eq.AudioSessionReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.action.OPEN_AUDIO_EFFECT_CONTROL_SESSION" />
+                <action android:name="android.media.action.CLOSE_AUDIO_EFFECT_CONTROL_SESSION" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

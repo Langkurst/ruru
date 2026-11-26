@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android toont voor deze koptelefoon de besturingsdienst niet die Ruru nodig heeft, dus Ruru heeft niets gestuurd. Hij werkt misschien nog niet met Ruru.</string>
+    <string name="eq_android_unsupported">Deze telefoon heeft het geluidseffect niet dat de equalizer van Ruru gebruikt.</string>
+    <string name="eq_android_note">Werkt met muziek- en video-apps die Android over hun geluid vertellen, en alleen terwijl het geluid naar een bluetooth-koptelefoon gaat. Zolang hij aanstaat, toont Ruru een kleine melding zodat Android hem niet stopt.</string>
+    <string name="eq_android_global_label">Experimenteel: elke app</string>
+    <string name="eq_android_global_hint">Probeert ook de hele geluidsuitvoer van de telefoon, voor apps die Android niets over hun geluid vertellen. De meeste telefoons staan dat niet toe.</string>
 </resources>

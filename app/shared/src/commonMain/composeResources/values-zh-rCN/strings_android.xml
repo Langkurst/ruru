@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android 在这副耳机上没有列出 Ruru 需要的控制服务，所以 Ruru 没有向它发送任何内容。它可能还不支持 Ruru。</string>
+    <string name="eq_android_unsupported">这部手机没有 Ruru 均衡器所用的音效功能。</string>
+    <string name="eq_android_note">适用于会向 Android 报告声音的音乐和视频应用，且仅在声音输出到蓝牙耳机时生效。开启期间，Ruru 会显示一条小通知，以免被 Android 停止。</string>
+    <string name="eq_android_global_label">实验性：所有应用</string>
+    <string name="eq_android_global_hint">也会尝试手机的整个声音输出，用于不向 Android 报告声音的应用。大多数手机不允许这样做。</string>
 </resources>

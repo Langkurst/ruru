@@ -2,4 +2,8 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Ruru에 필요한 제어 서비스가 이 헤드폰에서 Android에 나타나지 않아 Ruru는 아무것도 보내지 않았어요. 아직 Ruru에서 지원되지 않는 모델일 수 있어요.</string>
+    <string name="eq_android_unsupported">이 휴대전화에는 Ruru 이퀄라이저가 쓰는 음향 효과가 없습니다.</string>
+    <string name="eq_android_note">소리를 Android에 알리는 음악·동영상 앱에서 작동하며, 소리가 블루투스 헤드폰으로 나갈 때만 적용됩니다. 켜져 있는 동안 Android가 멈추지 않도록 Ruru가 작은 알림을 표시합니다.</string>
+    <string name="eq_android_global_label">실험적: 모든 앱</string>
+    <string name="eq_android_global_hint">소리를 Android에 알리지 않는 앱을 위해 휴대전화의 전체 소리 출력도 시도합니다. 대부분의 휴대전화는 허용하지 않습니다.</string>
 </resources>

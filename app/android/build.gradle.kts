@@ -72,6 +72,7 @@ dependencies {
     implementation(project(":app:shared"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.foundation)
+    implementation(libs.compose.resources) // the Res of the shared strings, for the switches this app adds
     implementation(libs.compose.ui)
 
     // Unit tests for the pure parts of the Bluetooth code (GATT writes and notifications, UUID and advert rules).

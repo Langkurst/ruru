@@ -2,4 +2,9 @@
 <resources>
     <!-- Android only: what is said when the system lists no such service on the headphones. -->
     <string name="problem_android_no_service">Android doesn't list the control service Ruru needs on these headphones, so Ruru sent them nothing. They may not work with Ruru yet.</string>
+    <!-- Android only: the Pro equaliser. -->
+    <string name="eq_android_unsupported">This phone doesn't have the sound effect Ruru's equaliser uses.</string>
+    <string name="eq_android_note">Works with music and video apps that tell Android about their sound, and only while sound goes to Bluetooth headphones. While it's on, Ruru keeps a small notification showing so Android doesn't stop it.</string>
+    <string name="eq_android_global_label">Experimental: every app</string>
+    <string name="eq_android_global_hint">Also tries the phone's whole sound output, for apps that don't tell Android about their sound. Most phones don't allow it.</string>
 </resources>
