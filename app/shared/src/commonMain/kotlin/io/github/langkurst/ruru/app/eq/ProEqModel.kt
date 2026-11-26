@@ -112,6 +112,7 @@ class ProEqModel(
      * person had it, edits included).
      */
     fun setHeadphone(name: String?) {
+        backend?.setHeadphone(name)
         val key = name?.let { PresetStore.headsetKey(it) }
         if (key == current.value.headphone?.let { PresetStore.headsetKey(it) }) return
         current.update { it.copy(headphone = name) }

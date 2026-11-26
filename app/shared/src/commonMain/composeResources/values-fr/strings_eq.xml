@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Courbe de réponse</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Un égaliseur complet n'est pas possible ici : ce système ne laisse pas une appli modifier le son des autres applis. Les trois bandes ci-dessus sont celles du casque.</string>
+    <string name="eq_pw_checking">Ruru cherche PipeWire.</string>
+    <string name="eq_pw_missing">L'égaliseur a besoin de PipeWire, et ce système ne semble pas l'utiliser (PulseAudio seulement ?). Ruru n'installe rien : il n'y a donc rien à presser ici.</string>
+    <string name="eq_pw_old">L'égaliseur a besoin de PipeWire %2$s ou plus récent. Ce système a la version %1$s.</string>
+    <string name="eq_pw_no_tools">L'égaliseur a besoin de deux outils fournis avec PipeWire et WirePlumber : pw-dump et wpctl. Au moins l'un des deux est introuvable.</string>
+    <string name="eq_pw_not_running">PipeWire est installé mais ne tourne pas pour votre compte : il n'y a donc encore rien à filtrer.</string>
+    <string name="eq_pw_no_headphones">Connectez d'abord votre casque. Ruru trouvera alors sa sortie audio et la filtrera.</string>
+    <string name="eq_pw_no_sink">Ruru ne trouve pas de sortie audio pour %1$s. Vérifiez que le casque est connecté pour l'audio (pas seulement pour l'appli), puis vérifiez à nouveau.</string>
+    <string name="eq_pw_cant_write">Ruru ne peut pas enregistrer son fichier de filtre dans %1$s. Rendez ce dossier modifiable par votre compte, puis vérifiez à nouveau.</string>
+    <string name="eq_pw_failed">L'égaliseur n'a pas démarré. Vérifiez que PipeWire tourne et que le casque est toujours connecté, puis vérifiez à nouveau.</string>
+    <string name="eq_pw_use_output">Ruru EQ tourne, mais votre son ne passe pas encore par lui. Utilisez-le comme sortie. Ruru remet votre ancienne sortie quand vous éteignez l'égaliseur ou quittez Ruru.</string>
+    <string name="eq_pw_use_output_button">Utiliser comme sortie</string>
+    <string name="eq_pw_note">Ruru ajoute une sortie audio appelée Ruru EQ. Elle filtre le son et le transmet à votre casque. Rien n'est installé ni téléchargé.</string>
+    <string name="eq_status_not_routed">Activé, mais votre son ne passe pas encore par lui</string>
 </resources>

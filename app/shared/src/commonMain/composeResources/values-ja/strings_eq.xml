@@ -51,4 +51,17 @@
     <string name="eq_curve_label">周波数特性</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">ここでは本格的なイコライザーは使えません。このシステムでは、アプリが他のアプリの音を変えることができないためです。上の3バンドはヘッドホン自体のものです。</string>
+    <string name="eq_pw_checking">PipeWire を探しています。</string>
+    <string name="eq_pw_missing">イコライザーには PipeWire が必要ですが、このシステムでは使われていないようです（PulseAudio のみ？）。Ruru は何もインストールしないため、ここで押せるボタンはありません。</string>
+    <string name="eq_pw_old">イコライザーには PipeWire %2$s 以降が必要です。このシステムは %1$s です。</string>
+    <string name="eq_pw_no_tools">イコライザーには、PipeWire と WirePlumber に付属する pw-dump と wpctl の 2 つのツールが必要です。少なくとも 1 つが見つかりませんでした。</string>
+    <string name="eq_pw_not_running">PipeWire はインストールされていますが、あなたのアカウントでは動いていないため、まだフィルターをかけるものがありません。</string>
+    <string name="eq_pw_no_headphones">先にヘッドホンを接続してください。Ruru がその音声出力を見つけてフィルターをかけます。</string>
+    <string name="eq_pw_no_sink">%1$s の音声出力が見つかりません。ヘッドホンがアプリだけでなく音声用にも接続されているか確認してから、もう一度確認してください。</string>
+    <string name="eq_pw_cant_write">Ruru は %1$s にフィルターのファイルを保存できません。そのフォルダーをあなたのアカウントで書き込めるようにしてから、もう一度確認してください。</string>
+    <string name="eq_pw_failed">イコライザーが起動しませんでした。PipeWire が動いていて、ヘッドホンがまだ接続されているか確認してから、もう一度確認してください。</string>
+    <string name="eq_pw_use_output">Ruru EQ は動いていますが、音はまだ通っていません。出力として使ってください。イコライザーをオフにするか Ruru を終了すると、元の出力に戻します。</string>
+    <string name="eq_pw_use_output_button">出力として使う</string>
+    <string name="eq_pw_note">Ruru は「Ruru EQ」という音声出力を追加します。音をフィルターしてヘッドホンへ渡します。何もインストールやダウンロードはしません。</string>
+    <string name="eq_status_not_routed">オン。ただし音はまだ通っていません</string>
 </resources>

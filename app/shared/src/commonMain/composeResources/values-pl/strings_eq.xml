@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Krzywa odpowiedzi</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Pełny equalizer nie jest tu możliwy: ten system nie pozwala aplikacji zmieniać dźwięku innych aplikacji. Trzy pasma powyżej to wbudowane pasma słuchawek.</string>
+    <string name="eq_pw_checking">Ruru szuka PipeWire.</string>
+    <string name="eq_pw_missing">Korektor potrzebuje PipeWire, a ten system chyba go nie używa (tylko PulseAudio?). Ruru niczego nie instaluje, więc nie ma tu czego nacisnąć.</string>
+    <string name="eq_pw_old">Korektor potrzebuje PipeWire %2$s lub nowszego. Ten system ma %1$s.</string>
+    <string name="eq_pw_no_tools">Korektor potrzebuje dwóch narzędzi dołączanych do PipeWire i WirePlumber: pw-dump i wpctl. Co najmniej jednego nie znaleziono.</string>
+    <string name="eq_pw_not_running">PipeWire jest zainstalowany, ale nie działa na Twoim koncie, więc nie ma jeszcze czego filtrować.</string>
+    <string name="eq_pw_no_headphones">Najpierw połącz słuchawki. Ruru znajdzie wtedy ich wyjście dźwięku i je przefiltruje.</string>
+    <string name="eq_pw_no_sink">Ruru nie znajduje wyjścia dźwięku dla %1$s. Sprawdź, czy słuchawki są połączone do audio (nie tylko z aplikacją), i sprawdź ponownie.</string>
+    <string name="eq_pw_cant_write">Ruru nie może zapisać pliku filtra w %1$s. Spraw, by to konto mogło zapisywać w tym folderze, i sprawdź ponownie.</string>
+    <string name="eq_pw_failed">Korektor się nie uruchomił. Sprawdź, czy PipeWire działa i słuchawki są nadal połączone, i sprawdź ponownie.</string>
+    <string name="eq_pw_use_output">Ruru EQ działa, ale Twój dźwięk jeszcze przez niego nie płynie. Użyj go jako wyjścia. Ruru przywróci poprzednie wyjście, gdy wyłączysz korektor lub zamkniesz Ruru.</string>
+    <string name="eq_pw_use_output_button">Użyj jako wyjścia</string>
+    <string name="eq_pw_note">Ruru dodaje wyjście dźwięku o nazwie Ruru EQ. Filtruje dźwięk i przekazuje go do słuchawek. Nic nie jest instalowane ani pobierane.</string>
+    <string name="eq_status_not_routed">Włączony, ale dźwięk jeszcze nie przez niego płynie</string>
 </resources>

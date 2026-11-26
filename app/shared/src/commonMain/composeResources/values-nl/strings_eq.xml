@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Frequentieresponsie</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Een volledige equalizer kan hier niet: dit systeem laat een app het geluid van andere apps niet veranderen. De drie banden hierboven zijn die van de koptelefoon zelf.</string>
+    <string name="eq_pw_checking">Ruru zoekt PipeWire.</string>
+    <string name="eq_pw_missing">De equalizer heeft PipeWire nodig en dit systeem lijkt het niet te gebruiken (alleen PulseAudio?). Ruru installeert niets, dus er is hier niets om op te drukken.</string>
+    <string name="eq_pw_old">De equalizer heeft PipeWire %2$s of nieuwer nodig. Dit systeem heeft %1$s.</string>
+    <string name="eq_pw_no_tools">De equalizer heeft twee hulpmiddelen nodig die bij PipeWire en WirePlumber horen: pw-dump en wpctl. Minstens één is niet gevonden.</string>
+    <string name="eq_pw_not_running">PipeWire is geïnstalleerd maar draait niet voor je account, dus er is nog niets om te filteren.</string>
+    <string name="eq_pw_no_headphones">Sluit eerst je koptelefoon aan. Ruru vindt dan de geluidsuitgang en filtert die.</string>
+    <string name="eq_pw_no_sink">Ruru vindt geen geluidsuitgang voor %1$s. Controleer of de koptelefoon voor audio is verbonden (niet alleen voor de app) en controleer opnieuw.</string>
+    <string name="eq_pw_cant_write">Ruru kan zijn filterbestand niet opslaan in %1$s. Maak die map beschrijfbaar voor je account en controleer opnieuw.</string>
+    <string name="eq_pw_failed">De equalizer is niet gestart. Controleer of PipeWire draait en de koptelefoon nog verbonden is, en controleer opnieuw.</string>
+    <string name="eq_pw_use_output">Ruru EQ draait, maar je geluid loopt er nog niet via. Gebruik het als uitgang. Ruru zet je oude uitgang terug als je de equalizer uitzet of Ruru afsluit.</string>
+    <string name="eq_pw_use_output_button">Gebruiken als uitgang</string>
+    <string name="eq_pw_note">Ruru voegt een geluidsuitgang toe die Ruru EQ heet. Die filtert het geluid en geeft het door aan je koptelefoon. Er wordt niets geïnstalleerd of gedownload.</string>
+    <string name="eq_status_not_routed">Aan, maar je geluid loopt er nog niet via</string>
 </resources>

@@ -51,4 +51,17 @@
     <string name="eq_curve_label">响应曲线</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">这里无法使用完整的均衡器：这个系统不允许应用改变其他应用的声音。上面的三个频段是耳机自带的。</string>
+    <string name="eq_pw_checking">Ruru 正在查找 PipeWire。</string>
+    <string name="eq_pw_missing">均衡器需要 PipeWire，而这个系统似乎没有使用它（只有 PulseAudio？）。Ruru 不会安装任何东西，所以这里没有可按的按钮。</string>
+    <string name="eq_pw_old">均衡器需要 PipeWire %2$s 或更新版本。此系统是 %1$s。</string>
+    <string name="eq_pw_no_tools">均衡器需要 PipeWire 和 WirePlumber 自带的两个工具：pw-dump 和 wpctl。至少有一个没有找到。</string>
+    <string name="eq_pw_not_running">PipeWire 已安装，但没有在你的账户下运行，所以暂时没有可过滤的声音。</string>
+    <string name="eq_pw_no_headphones">请先连接耳机。之后 Ruru 会找到它的声音输出并加以过滤。</string>
+    <string name="eq_pw_no_sink">Ruru 找不到 %1$s 的声音输出。请确认耳机已连接用于音频（不只是连接了应用），然后重新检查。</string>
+    <string name="eq_pw_cant_write">Ruru 无法把滤波文件保存到 %1$s。请让你的账户可以写入该文件夹，然后重新检查。</string>
+    <string name="eq_pw_failed">均衡器没有启动。请确认 PipeWire 正在运行且耳机仍在连接，然后重新检查。</string>
+    <string name="eq_pw_use_output">Ruru EQ 正在运行，但你的声音还没有经过它。请把它用作输出。关闭均衡器或退出 Ruru 时，Ruru 会恢复原来的输出。</string>
+    <string name="eq_pw_use_output_button">用作输出</string>
+    <string name="eq_pw_note">Ruru 会添加一个名为 Ruru EQ 的声音输出。它过滤声音后再交给你的耳机。不会安装或下载任何东西。</string>
+    <string name="eq_status_not_routed">已开启，但你的声音还没有经过它</string>
 </resources>

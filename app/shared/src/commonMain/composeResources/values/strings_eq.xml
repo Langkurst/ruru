@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Response curve</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">A full equaliser isn't possible here: this system doesn't let an app change the sound of other apps. The three bands above are the headphones' own.</string>
+    <string name="eq_pw_checking">Looking for PipeWire.</string>
+    <string name="eq_pw_missing">The equaliser needs PipeWire, and this system doesn't seem to use it (only PulseAudio?). Ruru installs nothing, so there is nothing to press here.</string>
+    <string name="eq_pw_old">The equaliser needs PipeWire %2$s or newer. This system has %1$s.</string>
+    <string name="eq_pw_no_tools">The equaliser needs two tools that come with PipeWire and WirePlumber: pw-dump and wpctl. At least one of them wasn't found.</string>
+    <string name="eq_pw_not_running">PipeWire is installed but isn't running for your account, so there is nothing to filter yet.</string>
+    <string name="eq_pw_no_headphones">Connect your headphones first. Ruru then finds their sound output and filters it.</string>
+    <string name="eq_pw_no_sink">Ruru can't find a sound output for %1$s. Check that the headphones are connected for audio (not just for the app), then check again.</string>
+    <string name="eq_pw_cant_write">Ruru can't save its filter file in %1$s. Make that folder writable for your account, then check again.</string>
+    <string name="eq_pw_failed">The equaliser didn't start. Check that PipeWire is running and that the headphones are still connected, then check again.</string>
+    <string name="eq_pw_use_output">Ruru EQ is running, but your sound doesn't go through it yet. Use it as your output. Ruru puts your old output back when you switch the equaliser off or quit.</string>
+    <string name="eq_pw_use_output_button">Use as the output</string>
+    <string name="eq_pw_note">Ruru adds a sound output called Ruru EQ. It filters the sound and passes it on to your headphones. Nothing is installed or downloaded.</string>
+    <string name="eq_status_not_routed">On, but your sound doesn't go through it yet</string>
 </resources>

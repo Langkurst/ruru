@@ -191,7 +191,11 @@ private fun StatusPanel(ui: ProEqUi, model: ProEqModel) {
                 when (status) {
                     EqBackendStatus.On -> Res.string.eq_status_on
                     EqBackendStatus.Ready -> Res.string.eq_status_off
-                    is EqBackendStatus.NeedsSetup -> if (status.action.kind == EqSetupKind.ALLOW) Res.string.eq_status_off else Res.string.eq_status_setup
+                    is EqBackendStatus.NeedsSetup -> when {
+                        status.action.running -> Res.string.eq_status_not_routed
+                        status.action.kind == EqSetupKind.ALLOW -> Res.string.eq_status_off
+                        else -> Res.string.eq_status_setup
+                    }
                     is EqBackendStatus.Unavailable -> Res.string.eq_status_unavailable
                 },
             ),

@@ -8,13 +8,38 @@ import kotlin.math.exp
  *
  * The chain is a gain node for the preamp (`linear`, Mult = 10^(dB/20)) followed by one
  * `bq_peaking` / `bq_lowshelf` / `bq_highshelf` node per band, each with Freq, Q and Gain.
- * Left and right get their own copy of the chain from `audio.position = [ FL FR ]`.
+ * Left and right get their own copy of the chain from `audio.position = [ FL FR ]` (`inputs`/`outputs` are left
+ * out: PipeWire then uses all inputs of the first node and all outputs of the last, once per channel).
+ *
+ * Checked against PipeWire's filter-chain documentation (docs.pipewire.org, 1.6) and its `sink-eq6.conf` example:
+ * `linear` has ports In/Out and controls "Mult" and "Add" (out = in * Mult + Add); the `bq_*` nodes have In/Out
+ * and "Freq", "Q", "Gain". `target.object` needs PipeWire 0.3.64 or newer (older ones used `node.target`).
  * [write]'s `targetNodeName` is the headphones' sink `node.name`; without it PipeWire picks the default output.
  */
 object FilterChainWriter {
     const val SINK_NODE_NAME = "ruru_eq"
     const val SINK_DESCRIPTION = "Ruru EQ"
     const val HEADER = "# Written by Ruru. Changes are overwritten."
+
+    /**
+     * What `pipewire -c` needs besides the filter itself: the same spa libraries and modules as PipeWire's own
+     * `filter-chain.conf` (src/daemon/filter-chain.conf.in), without which the process cannot reach the
+     * running PipeWire. Ends inside `context.modules = [`.
+     */
+    private val BOILERPLATE = listOf(
+        "context.spa-libs = {",
+        "    audio.convert.* = audioconvert/libspa-audioconvert",
+        "    support.*       = support/libspa-support",
+        "}",
+        "context.modules = [",
+        "    { name = libpipewire-module-rt",
+        "        args = { }",
+        "        flags = [ ifexists nofail ]",
+        "    }",
+        "    { name = libpipewire-module-protocol-native }",
+        "    { name = libpipewire-module-client-node }",
+        "    { name = libpipewire-module-adapter }",
+    ).joinToString("\n", postfix = "\n")
 
     private const val LN10 = 2.302585092994046
 
@@ -37,7 +62,7 @@ object FilterChainWriter {
 
         val sb = StringBuilder()
         sb.append(HEADER).append('\n')
-        sb.append("context.modules = [\n")
+        sb.append(BOILERPLATE)
         sb.append("    { name = libpipewire-module-filter-chain\n")
         sb.append("        args = {\n")
         sb.append("            node.description = \"$SINK_DESCRIPTION\"\n")

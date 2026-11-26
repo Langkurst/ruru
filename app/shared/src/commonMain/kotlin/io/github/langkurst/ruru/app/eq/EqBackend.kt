@@ -43,7 +43,14 @@ enum class EqSetupKind {
 }
 
 /** The one thing the person can do about a [EqBackendStatus.NeedsSetup]: a sentence and a button. */
-data class EqSetupAction(val kind: EqSetupKind, val message: Words, val button: Words, val url: String? = null)
+data class EqSetupAction(
+    val kind: EqSetupKind,
+    val message: Words,
+    val button: Words,
+    val url: String? = null,
+    /** The equaliser is already running and only this step is left (the page says so instead of "Off"). */
+    val running: Boolean = false,
+)
 
 /**
  * The part of the system that filters the sound: Equalizer APO on Windows, later PipeWire on Linux and
@@ -66,6 +73,9 @@ interface EqBackend {
 
     /** The person pressed the button of [action] (except [EqSetupKind.OPEN_WEBSITE], which the page opens itself). */
     fun perform(action: EqSetupAction)
+
+    /** The headphones now connected (their name; null for none), for a backend that has to find their output. */
+    fun setHeadphone(name: String?) {}
 
     /** Look again at the system (the person may have installed or fixed something). */
     fun refresh()

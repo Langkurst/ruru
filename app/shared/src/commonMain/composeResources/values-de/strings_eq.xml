@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Frequenzgang</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Ein vollständiger Equalizer ist hier nicht möglich: Dieses System erlaubt einer App nicht, den Klang anderer Apps zu ändern. Die drei Bänder oben sind die der Kopfhörer.</string>
+    <string name="eq_pw_checking">Ruru sucht PipeWire.</string>
+    <string name="eq_pw_missing">Der Equalizer braucht PipeWire, und dieses System scheint es nicht zu nutzen (nur PulseAudio?). Ruru installiert nichts, deshalb gibt es hier nichts zu drücken.</string>
+    <string name="eq_pw_old">Der Equalizer braucht PipeWire %2$s oder neuer. Dieses System hat %1$s.</string>
+    <string name="eq_pw_no_tools">Der Equalizer braucht zwei Werkzeuge, die zu PipeWire und WirePlumber gehören: pw-dump und wpctl. Mindestens eines wurde nicht gefunden.</string>
+    <string name="eq_pw_not_running">PipeWire ist installiert, läuft aber nicht für dein Konto, daher gibt es noch nichts zu filtern.</string>
+    <string name="eq_pw_no_headphones">Verbinde zuerst deine Kopfhörer. Ruru findet dann ihren Klangausgang und filtert ihn.</string>
+    <string name="eq_pw_no_sink">Ruru findet keinen Klangausgang für %1$s. Prüfe, ob die Kopfhörer für Audio verbunden sind (nicht nur für die App), und prüfe dann erneut.</string>
+    <string name="eq_pw_cant_write">Ruru kann seine Filterdatei nicht in %1$s speichern. Mach den Ordner für dein Konto beschreibbar und prüfe dann erneut.</string>
+    <string name="eq_pw_failed">Der Equalizer ist nicht gestartet. Prüfe, ob PipeWire läuft und die Kopfhörer noch verbunden sind, und prüfe dann erneut.</string>
+    <string name="eq_pw_use_output">Ruru EQ läuft, aber dein Ton läuft noch nicht darüber. Nutze es als Ausgang. Ruru stellt deinen alten Ausgang wieder ein, wenn du den Equalizer ausschaltest oder Ruru beendest.</string>
+    <string name="eq_pw_use_output_button">Als Ausgang verwenden</string>
+    <string name="eq_pw_note">Ruru fügt einen Klangausgang namens Ruru EQ hinzu. Er filtert den Ton und gibt ihn an deine Kopfhörer weiter. Es wird nichts installiert oder heruntergeladen.</string>
+    <string name="eq_status_not_routed">An, aber dein Ton läuft noch nicht darüber</string>
 </resources>

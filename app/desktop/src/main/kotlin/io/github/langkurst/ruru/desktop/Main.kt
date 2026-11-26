@@ -32,8 +32,11 @@ import io.github.langkurst.ruru.desktop.chrome.WindowChromeState
 import io.github.langkurst.ruru.app.Updates
 import io.github.langkurst.ruru.app.update.DesktopUpdates
 import io.github.langkurst.ruru.app.eq.ApoEqBackend
+import io.github.langkurst.ruru.app.eq.EqBackend
+import io.github.langkurst.ruru.app.eq.LinuxPipeWireEqBackend
 import io.github.langkurst.ruru.app.eq.DesktopEqFiles
 import io.github.langkurst.ruru.app.eq.ProEqModel
+import io.github.langkurst.ruru.app.settings.SettingsStore
 import io.github.langkurst.ruru.app.settings.createSettingsStore
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
@@ -112,13 +115,17 @@ fun main(args: Array<String>) {
         },
         log = { if (debug) System.err.println("update $it") },
     )
-    // The Equaliser page's model, made when the window first needs it. Windows has a backend (Equalizer APO); the other systems get theirs later.
+    // The Equaliser page's model, made when the window first needs it. Windows filters through Equalizer APO and
+    // Linux through PipeWire; a Mac has no way to.
     val proEq = lazy {
-        if (os.startsWith("Windows")) {
+        val backend: ((SettingsStore) -> EqBackend)? = when {
+            os.startsWith("Windows") -> { s -> ApoEqBackend(s, scope) }
+            os.startsWith("Linux") -> { s -> LinuxPipeWireEqBackend(s, scope) }
+            else -> null
+        }
+        backend?.let {
             val settings = createSettingsStore()
-            ProEqModel(settings, scope, ApoEqBackend(settings, scope), files = DesktopEqFiles())
-        } else {
-            null
+            ProEqModel(settings, scope, it(settings), files = DesktopEqFiles())
         }
     }
     val quit = {

@@ -185,6 +185,24 @@ jobs:
             app/desktop/build/compose/binaries/main-release/deb/*.deb
             app/desktop/build/compose/binaries/main-release/rpm/*.rpm
 
+  # The Linux Pro EQ file is checked by a real PipeWire: it runs `pipewire -c` on the generated config for a few
+  # seconds in an empty runtime folder (no sound card, no root) and fails on any logged error. Not part of the
+  # release gate: it says whether the file parses, nothing else.
+  pipewire-config:
+    needs: test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with: { distribution: temurin, java-version: "21" }
+      - uses: gradle/actions/setup-gradle@v6
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends pipewire
+      - run: pipewire --version
+      - name: Generated filter chain loads in a real PipeWire
+        env:
+          RURU_PIPEWIRE_CI: "1"
+        run: ./gradlew :app:shared:desktopTest --tests '*PipeWireConfigCheck*' --console=plain -i
+
   android:
     needs: test
     runs-on: ubuntu-latest

@@ -13,7 +13,18 @@ Preamp: 0.0 dB
 """.lf()
 
     val pwFlat = """# Written by Ruru. Changes are overwritten.
+context.spa-libs = {
+    audio.convert.* = audioconvert/libspa-audioconvert
+    support.*       = support/libspa-support
+}
 context.modules = [
+    { name = libpipewire-module-rt
+        args = { }
+        flags = [ ifexists nofail ]
+    }
+    { name = libpipewire-module-protocol-native }
+    { name = libpipewire-module-client-node }
+    { name = libpipewire-module-adapter }
     { name = libpipewire-module-filter-chain
         args = {
             node.description = "Ruru EQ"
@@ -54,7 +65,18 @@ Filter 10: ON PK Fc 36 Hz Gain -0.5 dB Q 2.83
 """.lf()
 
     val pwTuned = """# Written by Ruru. Changes are overwritten.
+context.spa-libs = {
+    audio.convert.* = audioconvert/libspa-audioconvert
+    support.*       = support/libspa-support
+}
 context.modules = [
+    { name = libpipewire-module-rt
+        args = { }
+        flags = [ ifexists nofail ]
+    }
+    { name = libpipewire-module-protocol-native }
+    { name = libpipewire-module-client-node }
+    { name = libpipewire-module-adapter }
     { name = libpipewire-module-filter-chain
         args = {
             node.description = "Ruru EQ"
@@ -111,7 +133,18 @@ Filter 4: ON HSC Fc 9000 Hz Gain 2.0 dB Q 0.71
 """.lf()
 
     val pwCustom = """# Written by Ruru. Changes are overwritten.
+context.spa-libs = {
+    audio.convert.* = audioconvert/libspa-audioconvert
+    support.*       = support/libspa-support
+}
 context.modules = [
+    { name = libpipewire-module-rt
+        args = { }
+        flags = [ ifexists nofail ]
+    }
+    { name = libpipewire-module-protocol-native }
+    { name = libpipewire-module-client-node }
+    { name = libpipewire-module-adapter }
     { name = libpipewire-module-filter-chain
         args = {
             node.description = "Ruru EQ"

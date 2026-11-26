@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Curva de respuesta</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Aquí no es posible un ecualizador completo: este sistema no deja que una app cambie el sonido de otras apps. Las tres bandas de arriba son las propias de los auriculares.</string>
+    <string name="eq_pw_checking">Ruru busca PipeWire.</string>
+    <string name="eq_pw_missing">El ecualizador necesita PipeWire y este sistema no parece usarlo (¿solo PulseAudio?). Ruru no instala nada, así que aquí no hay nada que pulsar.</string>
+    <string name="eq_pw_old">El ecualizador necesita PipeWire %2$s o posterior. Este sistema tiene %1$s.</string>
+    <string name="eq_pw_no_tools">El ecualizador necesita dos herramientas que vienen con PipeWire y WirePlumber: pw-dump y wpctl. No se encontró al menos una.</string>
+    <string name="eq_pw_not_running">PipeWire está instalado pero no se está ejecutando para tu cuenta, así que aún no hay nada que filtrar.</string>
+    <string name="eq_pw_no_headphones">Conecta primero tus auriculares. Ruru encontrará entonces su salida de sonido y la filtrará.</string>
+    <string name="eq_pw_no_sink">Ruru no encuentra una salida de sonido para %1$s. Comprueba que los auriculares estén conectados para audio (no solo para la app) y vuelve a comprobar.</string>
+    <string name="eq_pw_cant_write">Ruru no puede guardar su archivo de filtro en %1$s. Haz que esa carpeta sea escribible para tu cuenta y vuelve a comprobar.</string>
+    <string name="eq_pw_failed">El ecualizador no se inició. Comprueba que PipeWire se esté ejecutando y que los auriculares sigan conectados, y vuelve a comprobar.</string>
+    <string name="eq_pw_use_output">Ruru EQ está en marcha, pero tu sonido aún no pasa por él. Úsalo como salida. Ruru vuelve a poner tu salida anterior cuando apagas el ecualizador o cierras Ruru.</string>
+    <string name="eq_pw_use_output_button">Usar como salida</string>
+    <string name="eq_pw_note">Ruru añade una salida de sonido llamada Ruru EQ. Filtra el sonido y lo pasa a tus auriculares. No se instala ni se descarga nada.</string>
+    <string name="eq_status_not_routed">Activado, pero tu sonido aún no pasa por él</string>
 </resources>

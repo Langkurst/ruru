@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Curva de resposta</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Um equalizador completo não é possível aqui: este sistema não deixa um app mudar o som de outros apps. As três bandas acima são as próprias dos fones.</string>
+    <string name="eq_pw_checking">O Ruru está procurando o PipeWire.</string>
+    <string name="eq_pw_missing">O equalizador precisa do PipeWire, e este sistema parece não usá-lo (só PulseAudio?). O Ruru não instala nada, então não há nada para apertar aqui.</string>
+    <string name="eq_pw_old">O equalizador precisa do PipeWire %2$s ou mais novo. Este sistema tem o %1$s.</string>
+    <string name="eq_pw_no_tools">O equalizador precisa de duas ferramentas que vêm com o PipeWire e o WirePlumber: pw-dump e wpctl. Pelo menos uma não foi encontrada.</string>
+    <string name="eq_pw_not_running">O PipeWire está instalado, mas não está rodando para a sua conta, então ainda não há nada para filtrar.</string>
+    <string name="eq_pw_no_headphones">Conecte primeiro os fones. O Ruru então encontra a saída de som deles e a filtra.</string>
+    <string name="eq_pw_no_sink">O Ruru não encontra uma saída de som para %1$s. Confira se os fones estão conectados para áudio (não só para o app) e verifique de novo.</string>
+    <string name="eq_pw_cant_write">O Ruru não consegue salvar o arquivo do filtro em %1$s. Deixe essa pasta gravável para a sua conta e verifique de novo.</string>
+    <string name="eq_pw_failed">O equalizador não iniciou. Confira se o PipeWire está rodando e se os fones continuam conectados, e verifique de novo.</string>
+    <string name="eq_pw_use_output">O Ruru EQ está rodando, mas o seu som ainda não passa por ele. Use-o como saída. O Ruru devolve a saída antiga quando você desliga o equalizador ou fecha o Ruru.</string>
+    <string name="eq_pw_use_output_button">Usar como saída</string>
+    <string name="eq_pw_note">O Ruru adiciona uma saída de som chamada Ruru EQ. Ela filtra o som e o passa para os seus fones. Nada é instalado nem baixado.</string>
+    <string name="eq_status_not_routed">Ligado, mas o seu som ainda não passa por ele</string>
 </resources>

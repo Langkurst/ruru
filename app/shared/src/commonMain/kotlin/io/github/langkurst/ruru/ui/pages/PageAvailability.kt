@@ -34,7 +34,7 @@ enum class SystemKind {
 class PageAvailability(
     val ready: Set<DeskPage> = ShippedPages,
     val system: SystemKind = SystemKind.Other,
-    /** Whether this build has a Pro EQ backend for [system] (Windows today). The Equaliser page is listed only then. */
+    /** Whether this build has a Pro EQ backend for [system] (Windows and Linux). The Equaliser page is listed only then. */
     val hasProEq: Boolean = true,
 ) {
 

@@ -51,4 +51,17 @@
     <string name="eq_curve_label">Curva di risposta</string>
     <string name="eq_zero_db">0 dB</string>
     <string name="eq_not_possible_here">Qui un equalizzatore completo non è possibile: questo sistema non permette a un'app di cambiare il suono delle altre app. Le tre bande qui sopra sono quelle delle cuffie.</string>
+    <string name="eq_pw_checking">Ruru cerca PipeWire.</string>
+    <string name="eq_pw_missing">L'equalizzatore ha bisogno di PipeWire e questo sistema non sembra usarlo (solo PulseAudio?). Ruru non installa nulla, quindi qui non c'è niente da premere.</string>
+    <string name="eq_pw_old">L'equalizzatore ha bisogno di PipeWire %2$s o più recente. Questo sistema ha la %1$s.</string>
+    <string name="eq_pw_no_tools">L'equalizzatore ha bisogno di due strumenti che arrivano con PipeWire e WirePlumber: pw-dump e wpctl. Almeno uno non è stato trovato.</string>
+    <string name="eq_pw_not_running">PipeWire è installato ma non è in esecuzione per il tuo account, quindi non c'è ancora nulla da filtrare.</string>
+    <string name="eq_pw_no_headphones">Collega prima le cuffie. Ruru troverà poi la loro uscita audio e la filtrerà.</string>
+    <string name="eq_pw_no_sink">Ruru non trova un'uscita audio per %1$s. Controlla che le cuffie siano collegate per l'audio (non solo per l'app), poi controlla di nuovo.</string>
+    <string name="eq_pw_cant_write">Ruru non può salvare il suo file di filtro in %1$s. Rendi quella cartella scrivibile dal tuo account, poi controlla di nuovo.</string>
+    <string name="eq_pw_failed">L'equalizzatore non si è avviato. Controlla che PipeWire sia in esecuzione e che le cuffie siano ancora collegate, poi controlla di nuovo.</string>
+    <string name="eq_pw_use_output">Ruru EQ è in funzione, ma il tuo audio non passa ancora da lì. Usalo come uscita. Ruru rimette la tua uscita precedente quando spegni l'equalizzatore o chiudi Ruru.</string>
+    <string name="eq_pw_use_output_button">Usa come uscita</string>
+    <string name="eq_pw_note">Ruru aggiunge un'uscita audio chiamata Ruru EQ. Filtra il suono e lo passa alle tue cuffie. Non viene installato né scaricato nulla.</string>
+    <string name="eq_status_not_routed">Attivo, ma il tuo audio non passa ancora da lì</string>
 </resources>

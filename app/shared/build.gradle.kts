@@ -36,6 +36,10 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.resources)
         }
+        // Reads pw-dump's JSON for the Linux equaliser (a library the app already ships).
+        val desktopMain by getting {
+            dependencies { implementation(libs.kotlinx.serialization.json) }
+        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
