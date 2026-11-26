@@ -197,7 +197,7 @@ internal fun DeskLayout(
                 when (page) {
                     DeskPage.Sound -> SoundPage(state, controller)
                     DeskPage.Equaliser -> EqualiserPage(state, controller)
-                    DeskPage.Night -> NightPage(state, controller)
+                    DeskPage.Night -> NightPage(state, controller, extras)
                     DeskPage.Devices -> DevicesPage(state, controller)
                     DeskPage.Settings -> SettingsPage(state, controller, extras)
                     DeskPage.Tools -> ToolsPage(state, controller)

@@ -27,6 +27,8 @@ internal fun MorePage(
     extras: List<PlatformSwitch>,
     updates: Updates,
     onCopyReport: () -> Unit,
+    /** The night schedule's panels, for a narrow window that has no sidebar to open the Night page from. */
+    showNight: Boolean = false,
 ) {
     PageFrame(stringResource(Res.string.page_more), stringResource(Res.string.page_more_lead), state, controller) {
         if (state.phase == Phase.Connected) {
@@ -35,6 +37,7 @@ internal fun MorePage(
             if (hasDevices(state.headset)) DevicesPanel(state.headset, controller)
             AboutPanel(state.headset)
         }
+        if (showNight) LocalNight.current?.let { NightPanels(it, state, emptyList()) }
         if (hasTools(LocalAudioTools.current, state.phase == Phase.Connected)) ToolPanels(state)
         Footer(state, model, appVersion, extras, updates, onCopyReport)
     }

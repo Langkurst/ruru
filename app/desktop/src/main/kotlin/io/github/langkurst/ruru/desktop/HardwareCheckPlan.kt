@@ -2,17 +2,26 @@ package io.github.langkurst.ruru.desktop
 
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
+import io.github.langkurst.ruru.core.ModeRef
 import io.github.langkurst.ruru.core.PlaybackState
 import io.github.langkurst.ruru.core.TransportControl
+import io.github.langkurst.ruru.sleep.DayMode
+import io.github.langkurst.ruru.sleep.NightSchedule
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import java.io.File
+import kotlin.time.Instant
 
 /** One thing the hardware check can change and put back. */
 internal enum class Step(val flag: String) {
     MODE("mode"), BASS("bass"), FAVOURITES("favourites"), VOLUME("volume"),
+
+    /** The night schedule, set to begin in about a minute, switches the mode and then puts it back. It takes about three minutes, so only `--only=night` runs it. */
+    NIGHT("night"),
 }
 
 /**
- * Which steps a run does. Default: mode and bass. `--all` adds favourites and volume (with pause/play).
+ * Which steps a run does. Default: mode and bass. `--all` adds favourites and volume (with pause/play), not the night step.
  * `--only=<step>` runs that one step alone. Null (with [error] set) when `--only` names no step.
  */
 internal class StepChoice(val steps: Set<Step>, val error: String? = null)
@@ -24,7 +33,22 @@ internal fun chooseSteps(args: List<String>): StepChoice {
             ?: return StepChoice(emptySet(), "--only=$only is not a step (use ${Step.entries.joinToString("|") { it.flag }})")
         return StepChoice(setOf(step))
     }
-    return StepChoice(if ("--all" in args) Step.entries.toSet() else setOf(Step.MODE, Step.BASS))
+    return StepChoice(if ("--all" in args) Step.entries.toSet() - Step.NIGHT else setOf(Step.MODE, Step.BASS))
+}
+
+/** The night step's schedule: a two-minute window that begins at the next whole minute at least 20 s away, every night of the week. */
+internal class NightPlan(val schedule: NightSchedule, val bedMillis: Long, val wakeMillis: Long)
+
+internal fun planNightSchedule(nowMillis: Long, zone: TimeZone, nightMode: ModeRef): NightPlan {
+    val minute = 60_000L
+    val bed = ((nowMillis + 20_000L) / minute + 1) * minute
+    val wake = bed + 2 * minute
+    fun clock(ms: Long) = Instant.fromEpochMilliseconds(ms).toLocalDateTime(zone).time
+    val schedule = NightSchedule(
+        on = true, bedtime = clock(bed), wake = clock(wake), days = (1..7).toSet(),
+        nightMode = nightMode, dayMode = DayMode.WhatItWas,
+    )
+    return NightPlan(schedule, bed, wake)
 }
 
 /** The favourite set before and while a test changes it. */

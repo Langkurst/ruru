@@ -4,9 +4,16 @@ import io.github.langkurst.ruru.core.HeadphoneCapabilities
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.core.ListeningMode
+import io.github.langkurst.ruru.core.ModeMeaning
+import io.github.langkurst.ruru.core.ModeRef
 import io.github.langkurst.ruru.core.Playback
 import io.github.langkurst.ruru.core.PlaybackState
 import io.github.langkurst.ruru.core.TransportControl
+import io.github.langkurst.ruru.sleep.DayMode
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -42,8 +49,30 @@ class HardwareCheckPlanTest {
     @Test fun `the default run is mode and bass`() =
         assertEquals(setOf(Step.MODE, Step.BASS), chooseSteps(emptyList()).steps)
 
-    @Test fun `all adds favourites and volume`() =
-        assertEquals(Step.entries.toSet(), chooseSteps(listOf("--all")).steps)
+    @Test fun `all adds favourites and volume but not the three-minute night step`() =
+        assertEquals(setOf(Step.MODE, Step.BASS, Step.FAVOURITES, Step.VOLUME), chooseSteps(listOf("--all")).steps)
+
+    @Test fun `only night runs the night step alone`() =
+        assertEquals(setOf(Step.NIGHT), chooseSteps(listOf("--only=night", "--all")).steps)
+
+    @Test fun `the night schedule begins at the next whole minute at least twenty seconds away and lasts two minutes`() {
+        val zone = TimeZone.of("Pacific/Auckland")
+        fun ms(h: Int, m: Int, s: Int) = LocalDateTime(2026, 10, 30, h, m, s).toInstant(zone).toEpochMilliseconds()
+        val quiet = ModeRef(ModeMeaning.QUIET)
+        val a = planNightSchedule(ms(12, 0, 30), zone, quiet)
+        assertEquals(LocalTime(12, 1), a.schedule.bedtime)
+        assertEquals(LocalTime(12, 3), a.schedule.wake)
+        assertEquals(ms(12, 1, 0), a.bedMillis)
+        assertEquals(ms(12, 3, 0), a.wakeMillis)
+        // 45 s into a minute is too close to count on: the minute after it.
+        assertEquals(LocalTime(12, 2), planNightSchedule(ms(12, 0, 45), zone, quiet).schedule.bedtime)
+        // Just before midnight the window crosses it, which the schedule allows.
+        val late = planNightSchedule(ms(23, 59, 0), zone, quiet)
+        assertEquals(LocalTime(0, 0), late.schedule.bedtime)
+        assertEquals(LocalTime(0, 2), late.schedule.wake)
+        assertTrue(late.schedule.on && late.schedule.days.size == 7 && late.schedule.nightMode == quiet)
+        assertEquals(DayMode.WhatItWas, late.schedule.dayMode)
+    }
 
     @Test fun `only picks one step`() {
         assertEquals(setOf(Step.FAVOURITES), chooseSteps(listOf("--only=favourites")).steps)

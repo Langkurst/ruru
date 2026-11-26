@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Night page: the night schedule, and the start-at-sign-in switch for Mac and Linux. -->
+    <string name="night_panel_title">Programma notturno</string>
+    <string name="night_on">Usa il programma notturno</string>
+    <string name="night_on_hint">Cambia la modalità di ascolto all'ora di andare a letto e di nuovo al mattino.</string>
+    <string name="night_bedtime">Ora di andare a letto</string>
+    <string name="night_wake">Ora della sveglia</string>
+    <string name="night_days">Notti</string>
+    <string name="night_days_hint">Una notte conta dalla sera in cui inizia. Il venerdì comprende la notte tra venerdì e sabato.</string>
+    <string name="night_day_1">lun</string>
+    <string name="night_day_2">mar</string>
+    <string name="night_day_3">mer</string>
+    <string name="night_day_4">gio</string>
+    <string name="night_day_5">ven</string>
+    <string name="night_day_6">sab</string>
+    <string name="night_day_7">dom</string>
+    <string name="night_mode_night">Di notte</string>
+    <string name="night_mode_morning">Al mattino</string>
+    <string name="night_what_it_was">Ripristina la modalità precedente</string>
+    <string name="night_what_it_was_short">la modalità precedente</string>
+    <string name="night_mode_quiet">Cancellazione del rumore</string>
+    <string name="night_mode_aware">Aware</string>
+    <string name="night_mode_off">Disattivata</string>
+    <string name="night_am">AM</string>
+    <string name="night_pm">PM</string>
+    <string name="night_ampm_label">AM o PM</string>
+    <string name="night_hour_up">Un'ora dopo</string>
+    <string name="night_hour_down">Un'ora prima</string>
+    <string name="night_minute_up">Più minuti</string>
+    <string name="night_minute_down">Meno minuti</string>
+    <string name="night_when_title">Quando funziona</string>
+    <string name="night_runs_only">Il programma notturno funziona solo mentre Ruru è in esecuzione. Lascia Ruru nell'area di notifica o avvialo quando accedi, e tieni le cuffie connesse. Se si connettono dopo l'ora di andare a letto, la modalità notturna viene applicata in quel momento.</string>
+    <string name="night_runs_phone">Per ora solo Ruru su un computer esegue il programma notturno.</string>
+    <string name="night_next_off">Il programma notturno è disattivato.</string>
+    <string name="night_next_same">L'ora di andare a letto e quella della sveglia coincidono, quindi non cambierà nulla.</string>
+    <string name="night_next_no_days">Scegli almeno una notte per usare il programma.</string>
+    <string name="night_next_to">Passa a %1$s alle %2$s</string>
+    <string name="night_next_to_on">Passa a %1$s il %3$s alle %2$s</string>
+    <string name="night_next_back">Torna a %1$s alle %2$s</string>
+    <string name="night_next_back_on">Torna a %1$s il %3$s alle %2$s</string>
+    <string name="night_note_night_applied">Alle %1$s è passato alla modalità notturna.</string>
+    <string name="night_note_night_already">Alle %1$s le cuffie erano già in modalità notturna.</string>
+    <string name="night_note_night_missing">Alle %1$s queste cuffie non avevano una modalità simile a quella notturna, quindi non è cambiato nulla.</string>
+    <string name="night_note_day_applied">Alle %1$s è passato alla modalità del mattino.</string>
+    <string name="night_note_day_already">Alle %1$s le cuffie erano già in modalità del mattino.</string>
+    <string name="night_note_day_missing">Alle %1$s queste cuffie non avevano una modalità simile a quella del mattino, quindi non è cambiato nulla.</string>
+    <string name="night_note_nothing_to_restore">Alle %1$s non c'era una modalità precedente a cui tornare.</string>
+    <string name="night_note_not_ready">In attesa che le cuffie si connettano.</string>
+    <string name="desktop_start_at_sign_in">Avvia all'accesso</string>
+    <string name="desktop_start_at_sign_in_hint">Si apre in background quando accedi</string>
+</resources>

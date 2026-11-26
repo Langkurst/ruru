@@ -25,6 +25,7 @@ internal object StartWithWindows {
                 if (on) reg("add", KEY, "/v", VALUE, "/t", "REG_SZ", "/d", "\"$exe\" --hidden", "/f")
                 else reg("delete", KEY, "/v", VALUE, "/f")
             },
+            id = PlatformSwitch.START_AT_SIGN_IN,
         )
     }
 

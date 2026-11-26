@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Night page: the night schedule, and the start-at-sign-in switch for Mac and Linux. -->
+    <string name="night_panel_title">Plan nocny</string>
+    <string name="night_on">Używaj planu nocnego</string>
+    <string name="night_on_hint">Zmienia tryb słuchania przed snem i ponownie rano.</string>
+    <string name="night_bedtime">Pora snu</string>
+    <string name="night_wake">Pora pobudki</string>
+    <string name="night_days">Noce</string>
+    <string name="night_days_hint">Noc liczy się od wieczoru, w którym się zaczyna. Piątek obejmuje noc z piątku na sobotę.</string>
+    <string name="night_day_1">pon</string>
+    <string name="night_day_2">wt</string>
+    <string name="night_day_3">śr</string>
+    <string name="night_day_4">czw</string>
+    <string name="night_day_5">pt</string>
+    <string name="night_day_6">sob</string>
+    <string name="night_day_7">niedz</string>
+    <string name="night_mode_night">W nocy</string>
+    <string name="night_mode_morning">Rano</string>
+    <string name="night_what_it_was">Przywróć poprzedni tryb</string>
+    <string name="night_what_it_was_short">poprzedni tryb</string>
+    <string name="night_mode_quiet">Redukcja hałasu</string>
+    <string name="night_mode_aware">Aware</string>
+    <string name="night_mode_off">Wyłączony</string>
+    <string name="night_am">AM</string>
+    <string name="night_pm">PM</string>
+    <string name="night_ampm_label">AM lub PM</string>
+    <string name="night_hour_up">Godzina później</string>
+    <string name="night_hour_down">Godzina wcześniej</string>
+    <string name="night_minute_up">Więcej minut</string>
+    <string name="night_minute_down">Mniej minut</string>
+    <string name="night_when_title">Kiedy działa</string>
+    <string name="night_runs_only">Plan nocny działa tylko wtedy, gdy Ruru jest uruchomiony. Zostaw Ruru w zasobniku albo uruchamiaj go po zalogowaniu i trzymaj słuchawki połączone. Jeśli połączą się po porze snu, tryb nocny zostanie wtedy ustawiony.</string>
+    <string name="night_runs_phone">Na razie plan nocny wykonuje tylko Ruru na komputerze.</string>
+    <string name="night_next_off">Plan nocny jest wyłączony.</string>
+    <string name="night_next_same">Pora snu i pora pobudki są takie same, więc nic się nie zmieni.</string>
+    <string name="night_next_no_days">Wybierz co najmniej jedną noc, aby używać planu.</string>
+    <string name="night_next_to">Przełączy na %1$s o %2$s</string>
+    <string name="night_next_to_on">Przełączy na %1$s w dniu %3$s o %2$s</string>
+    <string name="night_next_back">Wróci do %1$s o %2$s</string>
+    <string name="night_next_back_on">Wróci do %1$s w dniu %3$s o %2$s</string>
+    <string name="night_note_night_applied">O %1$s przełączono na tryb nocny.</string>
+    <string name="night_note_night_already">O %1$s słuchawki były już w trybie nocnym.</string>
+    <string name="night_note_night_missing">O %1$s te słuchawki nie miały trybu podobnego do nocnego, więc nic się nie zmieniło.</string>
+    <string name="night_note_day_applied">O %1$s przełączono na tryb poranny.</string>
+    <string name="night_note_day_already">O %1$s słuchawki były już w trybie porannym.</string>
+    <string name="night_note_day_missing">O %1$s te słuchawki nie miały trybu podobnego do porannego, więc nic się nie zmieniło.</string>
+    <string name="night_note_nothing_to_restore">O %1$s nie było wcześniejszego trybu, do którego można wrócić.</string>
+    <string name="night_note_not_ready">Czekam na połączenie słuchawek.</string>
+    <string name="desktop_start_at_sign_in">Uruchamiaj po zalogowaniu</string>
+    <string name="desktop_start_at_sign_in_hint">Otwiera się w tle po zalogowaniu</string>
+</resources>

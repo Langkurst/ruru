@@ -36,12 +36,18 @@ class PageAvailability(
     val system: SystemKind = SystemKind.Other,
     /** Whether this build has a Pro EQ backend for [system] (Windows and Linux). The Equaliser page is listed only then. */
     val hasProEq: Boolean = true,
+    /**
+     * Whether something on this system carries out the night schedule. Computers do (the tray process);
+     * a phone keeps the Night page hidden until its own runner exists, so it never shows a schedule that nothing runs.
+     */
+    val hasNightRunner: Boolean = !system.phone,
 ) {
 
     /** Whether [page] belongs on this system at all: the Equaliser needs a way to filter the sound, Sleep is for phones. */
     fun existsOn(page: DeskPage): Boolean = when (page) {
         DeskPage.Equaliser -> system != SystemKind.Mac && system != SystemKind.IPhone && hasProEq
         DeskPage.Sleep -> system.phone
+        DeskPage.Night -> hasNightRunner
         else -> true
     }
 
@@ -78,6 +84,6 @@ class PageAvailability(
          * The pages that have content in this build. A feature milestone adds its page here, which is
          * the only change outside its own page file.
          */
-        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools)
+        val ShippedPages: Set<DeskPage> = setOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Tools)
     }
 }

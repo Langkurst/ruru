@@ -144,6 +144,7 @@ tasks.register<JavaExec>("snapshot") {
             providers.gradleProperty("update").orNull?.let { "--update=$it" },
             providers.gradleProperty("eq").orNull?.let { "--eq=$it" },
             providers.gradleProperty("eqView").orNull?.let { "--eq-view=$it" },
+            providers.gradleProperty("night").orNull?.let { "--night=$it" },
         ),
     )
 }

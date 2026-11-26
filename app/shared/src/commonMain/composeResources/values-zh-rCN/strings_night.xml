@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Night page: the night schedule, and the start-at-sign-in switch for Mac and Linux. -->
+    <string name="night_panel_title">夜间计划</string>
+    <string name="night_on">使用夜间计划</string>
+    <string name="night_on_hint">在睡前和早上切换聆听模式。</string>
+    <string name="night_bedtime">睡觉时间</string>
+    <string name="night_wake">起床时间</string>
+    <string name="night_days">夜晚</string>
+    <string name="night_days_hint">一个夜晚从它开始的那个傍晚算起。周五是周五夜里到周六早上。</string>
+    <string name="night_day_1">周一</string>
+    <string name="night_day_2">周二</string>
+    <string name="night_day_3">周三</string>
+    <string name="night_day_4">周四</string>
+    <string name="night_day_5">周五</string>
+    <string name="night_day_6">周六</string>
+    <string name="night_day_7">周日</string>
+    <string name="night_mode_night">夜间</string>
+    <string name="night_mode_morning">早上</string>
+    <string name="night_what_it_was">恢复原来的模式</string>
+    <string name="night_what_it_was_short">原来的模式</string>
+    <string name="night_mode_quiet">降噪</string>
+    <string name="night_mode_aware">Aware</string>
+    <string name="night_mode_off">关闭</string>
+    <string name="night_am">上午</string>
+    <string name="night_pm">下午</string>
+    <string name="night_ampm_label">上午或下午</string>
+    <string name="night_hour_up">小时加一</string>
+    <string name="night_hour_down">小时减一</string>
+    <string name="night_minute_up">分钟增加</string>
+    <string name="night_minute_down">分钟减少</string>
+    <string name="night_when_title">何时运行</string>
+    <string name="night_runs_only">夜间计划只在 Ruru 运行时执行。请让 Ruru 留在托盘中，或设为登录时启动，并保持耳机连接。如果耳机在睡觉时间之后才连接，会在那时切换到夜间模式。</string>
+    <string name="night_runs_phone">目前只有电脑上的 Ruru 会执行夜间计划。</string>
+    <string name="night_next_off">夜间计划已关闭。</string>
+    <string name="night_next_same">睡觉时间和起床时间相同，所以不会有任何变化。</string>
+    <string name="night_next_no_days">请至少选择一个夜晚来使用计划。</string>
+    <string name="night_next_to">%2$s 切换到%1$s</string>
+    <string name="night_next_to_on">%3$s %2$s 切换到%1$s</string>
+    <string name="night_next_back">%2$s 恢复为%1$s</string>
+    <string name="night_next_back_on">%3$s %2$s 恢复为%1$s</string>
+    <string name="night_note_night_applied">%1$s 已切换到夜间模式。</string>
+    <string name="night_note_night_already">%1$s 耳机已经在夜间模式。</string>
+    <string name="night_note_night_missing">%1$s 这副耳机没有类似夜间模式的模式，所以没有更改。</string>
+    <string name="night_note_day_applied">%1$s 已切换到早上模式。</string>
+    <string name="night_note_day_already">%1$s 耳机已经在早上模式。</string>
+    <string name="night_note_day_missing">%1$s 这副耳机没有类似早上模式的模式，所以没有更改。</string>
+    <string name="night_note_nothing_to_restore">%1$s 没有可以恢复的先前模式。</string>
+    <string name="night_note_not_ready">正在等待耳机连接。</string>
+    <string name="desktop_start_at_sign_in">登录时启动</string>
+    <string name="desktop_start_at_sign_in_hint">登录时在后台打开</string>
+</resources>

@@ -1,9 +1,16 @@
 package io.github.langkurst.ruru.app
 
+import io.github.langkurst.ruru.app.night.NightHeadset
+import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.vendors.HeadsetCommand
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 
 /**
  * The pages of the app, in sidebar order (docs/DESIGN.md, "Pages"). [Sleep] and [More] are the phone's
@@ -42,6 +49,16 @@ class AppModel(
     }
 
     fun stop() = current.value.stop()
+
+    /**
+     * The headset the night schedule drives: whichever controller is running now, so turning demo mode
+     * on or off moves the schedule between the simulated headset and the real one.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun nightHeadset(): NightHeadset = object : NightHeadset {
+        override val headset: Flow<HeadphoneState> = current.flatMapLatest { c -> c.state.map { it.headset } }
+        override suspend fun send(command: HeadsetCommand): Boolean = current.value.send(command)
+    }
 
     private fun create(demo: Boolean) = HeadsetController(if (demo) DemoPlatform() else platform, scope, demo)
 }

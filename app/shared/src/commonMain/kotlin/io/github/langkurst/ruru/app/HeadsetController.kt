@@ -171,6 +171,20 @@ class HeadsetController(
         }
     }
 
+    /**
+     * Runs one command for the night schedule and says whether the headphones took it. A refusal is
+     * left to the caller (the schedule tries again and keeps its own note), not shown as the red bar.
+     */
+    suspend fun send(command: HeadsetCommand): Boolean = try {
+        commands.run("night schedule") { s, state -> s.run(command, state) }
+        true
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: HeadphoneCommandException) {
+        log.w("${command::class.simpleName} was not taken: ${e.message}")
+        false
+    }
+
     private fun command(name: String, command: HeadsetCommand) {
         scope.launch {
             try {

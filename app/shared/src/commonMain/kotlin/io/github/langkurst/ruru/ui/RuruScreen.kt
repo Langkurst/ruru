@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.dp
 import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.ConnectionReport
+import io.github.langkurst.ruru.app.DeskPage
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.app.PhoneTab
@@ -85,6 +86,8 @@ import io.github.langkurst.ruru.protocol.bose.AutoOffOptions
 import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.pages.BottomBar
 import io.github.langkurst.ruru.app.eq.ProEqModel
+import io.github.langkurst.ruru.app.night.NightRunner
+import io.github.langkurst.ruru.ui.pages.LocalNight
 import io.github.langkurst.ruru.ui.pages.EqNotPossibleNote
 import io.github.langkurst.ruru.ui.pages.EqualiserPage
 import io.github.langkurst.ruru.ui.pages.LocalProEq
@@ -98,7 +101,18 @@ import org.jetbrains.compose.resources.pluralStringResource
 import org.jetbrains.compose.resources.stringResource
 
 /** A switch only some platforms have, such as "Start with Windows". */
-class PlatformSwitch(val label: StringResource, val hint: StringResource?, val isOn: () -> Boolean, val set: (Boolean) -> Unit)
+class PlatformSwitch(
+    val label: StringResource,
+    val hint: StringResource?,
+    val isOn: () -> Boolean,
+    val set: (Boolean) -> Unit,
+    /** [START_AT_SIGN_IN] for the switch that starts Ruru when the person signs in; the Night page shows that one too. */
+    val id: String? = null,
+) {
+    companion object {
+        const val START_AT_SIGN_IN = "start-at-sign-in"
+    }
+}
 
 /**
  * The whole app. From 880dp wide it is the sidebar and its pages; narrower (phones, narrow windows) it is
@@ -115,10 +129,11 @@ fun RuruScreen(
     updates: Updates? = null,
     pages: PageAvailability? = null,
     proEq: ProEqModel? = null,
+    night: NightRunner? = null,
 ) {
     val controller by model.controller.collectAsState()
     val system = SystemKind.of(model.platformName)
-    val available = pages ?: remember(model, proEq) { PageAvailability(system = system, hasProEq = proEq != null) }
+    val available = pages ?: remember(model, proEq, night) { PageAvailability(system = system, hasProEq = proEq != null, hasNightRunner = night != null && !system.phone) }
     val state by controller.state.collectAsState()
     val c = Ruru.colors
     val browser = LocalUriHandler.current
@@ -128,7 +143,7 @@ fun RuruScreen(
     val copyReport = { clipboard.setText(AnnotatedString(ConnectionReport.build(state, appVersion))) }
     // The page colour goes on before the caller's modifier, so it also fills the strips behind a
     // phone's status and navigation bars that the safe-area padding in [modifier] leaves.
-    CompositionLocalProvider(LocalProEq provides proEq, LocalSystemKind provides available.system) {
+    CompositionLocalProvider(LocalProEq provides proEq, LocalNight provides night, LocalSystemKind provides available.system) {
     BoxWithConstraints(Modifier.fillMaxSize().background(c.night).then(modifier)) {
         if (maxWidth >= DeskMinWidth) {
             // A computer window: sidebar and pages, as in docs/DESIGN.md.
@@ -160,7 +175,7 @@ fun RuruScreen(
                                 }
                                 PhoneTab.Sound -> EqualiserPage(state, controller)
                                 PhoneTab.Sleep -> SleepPage(state, controller)
-                                PhoneTab.More -> MorePage(model, state, controller, appVersion, extras, updater, copyReport)
+                                PhoneTab.More -> MorePage(model, state, controller, appVersion, extras, updater, copyReport, showNight = available.shows(DeskPage.Night))
                             }
                         }
                     }

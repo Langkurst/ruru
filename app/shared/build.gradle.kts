@@ -31,6 +31,7 @@ kotlin {
             api(project(":core:session"))
             api(project(":core:vendors"))
             api(project(":core:dsp"))
+            api(project(":core:sleep"))
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.ui)
@@ -42,6 +43,7 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
         }
         // The wide layout is tested by drawing it off screen (an ImageComposeScene), which needs the native renderer.
         val desktopTest by getting {

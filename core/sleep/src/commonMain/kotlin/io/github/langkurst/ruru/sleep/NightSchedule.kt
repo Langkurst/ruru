@@ -142,7 +142,7 @@ object NightScheduler {
 
     /**
      * The next action to take, or null when the schedule is off or has nothing to do. In order:
-     *  1. a night mode still on whose window has ended: its day mode (overdue until it is done);
+     *  1. a night mode still on whose window has ended (by the schedule as it is now): its day mode (overdue until it is done);
      *  2. inside a night: its night mode if not yet applied, else its day mode at the window's end;
      *  3. otherwise the next night's night mode at its bedtime.
      */
@@ -150,8 +150,12 @@ object NightScheduler {
         if (!schedule.isActive) return null
         val start = progress.nightStartMillis
         val end = progress.nightEndMillis
-        if (progress.dayPending && start != null && end != null && nowMillis >= end) {
-            return NightAction.ApplyDay(end, NightWindow(start, end))
+        if (progress.dayPending && start != null && end != null) {
+            // The wake time may have been edited since the night began: the same night under today's schedule
+            // ends when it says, so an earlier wake time ends it earlier (and a later one keeps it going).
+            val edited = windowFor(schedule, dateOf(start, zone), zone)?.takeIf { it.startMillis == start }
+            val dayAt = edited?.endMillis ?: end
+            if (nowMillis >= dayAt) return NightAction.ApplyDay(dayAt, NightWindow(start, dayAt))
         }
         val current = windowAt(schedule, nowMillis, zone)
         if (current != null) {

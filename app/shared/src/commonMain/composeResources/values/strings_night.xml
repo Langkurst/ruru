@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Night page: the night schedule, and the start-at-sign-in switch for Mac and Linux. -->
+    <string name="night_panel_title">Night schedule</string>
+    <string name="night_on">Use the night schedule</string>
+    <string name="night_on_hint">Changes your listening mode at bedtime and again in the morning.</string>
+    <string name="night_bedtime">Bedtime</string>
+    <string name="night_wake">Wake time</string>
+    <string name="night_days">Nights</string>
+    <string name="night_days_hint">A night counts from the evening it begins. Friday covers Friday night into Saturday morning.</string>
+    <string name="night_day_1">Mon</string>
+    <string name="night_day_2">Tue</string>
+    <string name="night_day_3">Wed</string>
+    <string name="night_day_4">Thu</string>
+    <string name="night_day_5">Fri</string>
+    <string name="night_day_6">Sat</string>
+    <string name="night_day_7">Sun</string>
+    <string name="night_mode_night">At night</string>
+    <string name="night_mode_morning">In the morning</string>
+    <string name="night_what_it_was">Put back what it was</string>
+    <string name="night_what_it_was_short">what it was</string>
+    <string name="night_mode_quiet">Noise cancelling</string>
+    <string name="night_mode_aware">Aware</string>
+    <string name="night_mode_off">Off</string>
+    <string name="night_am">am</string>
+    <string name="night_pm">pm</string>
+    <string name="night_ampm_label">am or pm</string>
+    <string name="night_hour_up">Hour up</string>
+    <string name="night_hour_down">Hour down</string>
+    <string name="night_minute_up">Minutes up</string>
+    <string name="night_minute_down">Minutes down</string>
+    <string name="night_when_title">When it runs</string>
+    <string name="night_runs_only">The night schedule runs only while Ruru is running. Keep Ruru in the tray or start it when you sign in, and keep your headphones connected. If they connect after bedtime, the night mode is applied then.</string>
+    <string name="night_runs_phone">For now only Ruru on a computer carries out the night schedule.</string>
+    <string name="night_next_off">The night schedule is off.</string>
+    <string name="night_next_same">Bedtime and wake time are the same, so nothing will change.</string>
+    <string name="night_next_no_days">Pick at least one night to use the schedule.</string>
+    <string name="night_next_to">Switches to %1$s at %2$s</string>
+    <string name="night_next_to_on">Switches to %1$s on %3$s at %2$s</string>
+    <string name="night_next_back">Goes back to %1$s at %2$s</string>
+    <string name="night_next_back_on">Goes back to %1$s on %3$s at %2$s</string>
+    <string name="night_note_night_applied">At %1$s it switched to the night mode.</string>
+    <string name="night_note_night_already">At %1$s the headphones were already in the night mode.</string>
+    <string name="night_note_night_missing">At %1$s these headphones had no mode like the night one, so nothing changed.</string>
+    <string name="night_note_day_applied">At %1$s it switched to the morning mode.</string>
+    <string name="night_note_day_already">At %1$s the headphones were already in the morning mode.</string>
+    <string name="night_note_day_missing">At %1$s these headphones had no mode like the morning one, so nothing changed.</string>
+    <string name="night_note_nothing_to_restore">At %1$s there was no earlier mode to go back to.</string>
+    <string name="night_note_not_ready">Waiting for your headphones to connect.</string>
+    <string name="desktop_start_at_sign_in">Start when you sign in</string>
+    <string name="desktop_start_at_sign_in_hint">Opens in the background when you sign in</string>
+</resources>

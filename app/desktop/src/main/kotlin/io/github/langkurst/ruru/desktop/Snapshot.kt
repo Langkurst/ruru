@@ -17,9 +17,16 @@ import io.github.langkurst.ruru.app.eq.EqBackendStatus
 import io.github.langkurst.ruru.app.eq.EqStatuses
 import io.github.langkurst.ruru.app.eq.FakeEqBackend
 import io.github.langkurst.ruru.app.eq.ProEqModel
+import io.github.langkurst.ruru.app.night.NightRunner
 import io.github.langkurst.ruru.app.settings.MemorySettingsStore
 import io.github.langkurst.ruru.dsp.BuiltInPresets
+import io.github.langkurst.ruru.core.ModeMeaning
+import io.github.langkurst.ruru.core.ModeRef
 import io.github.langkurst.ruru.link.Words
+import io.github.langkurst.ruru.sleep.DayMode
+import io.github.langkurst.ruru.sleep.NightSchedule
+import io.github.langkurst.ruru.sleep.SleepStorage
+import kotlinx.datetime.LocalTime
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
 import io.github.langkurst.ruru.ui.PlatformSwitch
 import io.github.langkurst.ruru.ui.RuruScreen
@@ -41,7 +48,7 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--eq=notinstalled|off|on] [--eq-view=graphic|parametric] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--eq=notinstalled|off|on] [--eq-view=graphic|parametric] [--night=on|off|aware] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
@@ -72,7 +79,7 @@ fun main(args: Array<String>) {
     // --all-pages shows the pages that are not built yet too (as placeholders), as on the system named by --system.
     val system = args.firstOrNull { it.startsWith("--system=") }?.substringAfter('=')?.let { name -> SystemKind.entries.firstOrNull { it.name.equals(name, ignoreCase = true) } }
     val pages = when {
-        "--all-pages" in args -> PageAvailability(DeskPage.entries.toSet(), system ?: SystemKind.Windows)
+        "--all-pages" in args -> PageAvailability(DeskPage.entries.toSet(), system ?: SystemKind.Windows, hasNightRunner = true)
         system != null -> PageAvailability(system = system)
         else -> null
     }
@@ -103,7 +110,7 @@ fun main(args: Array<String>) {
     }
     // The switches a real Windows window offers, so the wide layout's "This computer" panel is drawn as people see it.
     val extras = if (widthDp >= 880) listOf(
-        PlatformSwitch(Res.string.desktop_start_with_windows, Res.string.desktop_start_with_windows_hint, { false }, {}),
+        PlatformSwitch(Res.string.desktop_start_with_windows, Res.string.desktop_start_with_windows_hint, { false }, {}, id = PlatformSwitch.START_AT_SIGN_IN),
         PlatformSwitch(Res.string.desktop_keep_in_tray, Res.string.desktop_keep_in_tray_hint, { true }, {}),
     ) else emptyList()
     val chrome = WindowChromeState(if (frame) ChromeKind.Windows else ChromeKind.None) {}
@@ -119,9 +126,21 @@ fun main(args: Array<String>) {
         listOf(4.0, 3.5, 2.0, 0.0, -1.5, 0.0, 1.0, 2.5, 3.0, 1.5).forEachIndexed { i, g -> proEq.setGraphicGain(i, g) }
     }
     if (eqState == "on") proEq.setEnabled(true)
+    // The Night page runs on in-memory settings and is not started, so a snapshot never changes the headset or the real schedule.
+    // --night=on (default) shows a typical schedule, off shows it switched off, aware a schedule that goes to Aware and back to Quiet.
+    val nightState = args.firstOrNull { it.startsWith("--night=") }?.substringAfter('=') ?: "on"
+    val nightSettings = MemorySettingsStore().also {
+        val schedule = NightSchedule(
+            on = nightState != "off", bedtime = LocalTime(22, 30), wake = LocalTime(7, 0),
+            nightMode = ModeRef(if (nightState == "aware") ModeMeaning.AWARE else ModeMeaning.QUIET),
+            dayMode = if (nightState == "aware") DayMode.Mode(ModeRef(ModeMeaning.QUIET)) else DayMode.WhatItWas,
+        )
+        it.putString(SleepStorage.NIGHT_SCHEDULE_KEY, SleepStorage.encodeSchedule(schedule))
+    }
+    val night = NightRunner(nightSettings, scope, model.nightHeadset())
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq) }
+            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq, night = night) }
         }
     }
     var image = scene.render(0)

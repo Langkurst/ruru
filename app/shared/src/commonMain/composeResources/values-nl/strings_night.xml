@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Night page: the night schedule, and the start-at-sign-in switch for Mac and Linux. -->
+    <string name="night_panel_title">Nachtschema</string>
+    <string name="night_on">Het nachtschema gebruiken</string>
+    <string name="night_on_hint">Wijzigt de luisterstand bij het slapengaan en weer 's ochtends.</string>
+    <string name="night_bedtime">Bedtijd</string>
+    <string name="night_wake">Wektijd</string>
+    <string name="night_days">Nachten</string>
+    <string name="night_days_hint">Een nacht telt vanaf de avond waarop hij begint. Vrijdag omvat de nacht van vrijdag op zaterdag.</string>
+    <string name="night_day_1">ma</string>
+    <string name="night_day_2">di</string>
+    <string name="night_day_3">wo</string>
+    <string name="night_day_4">do</string>
+    <string name="night_day_5">vr</string>
+    <string name="night_day_6">za</string>
+    <string name="night_day_7">zo</string>
+    <string name="night_mode_night">'s Nachts</string>
+    <string name="night_mode_morning">'s Ochtends</string>
+    <string name="night_what_it_was">Terug naar wat het was</string>
+    <string name="night_what_it_was_short">wat het was</string>
+    <string name="night_mode_quiet">Ruisonderdrukking</string>
+    <string name="night_mode_aware">Aware</string>
+    <string name="night_mode_off">Uit</string>
+    <string name="night_am">a.m.</string>
+    <string name="night_pm">p.m.</string>
+    <string name="night_ampm_label">a.m. of p.m.</string>
+    <string name="night_hour_up">Een uur later</string>
+    <string name="night_hour_down">Een uur eerder</string>
+    <string name="night_minute_up">Meer minuten</string>
+    <string name="night_minute_down">Minder minuten</string>
+    <string name="night_when_title">Wanneer het draait</string>
+    <string name="night_runs_only">Het nachtschema werkt alleen zolang Ruru draait. Laat Ruru in het systeemvak draaien of start het bij het inloggen, en houd je koptelefoon verbonden. Verbindt die na bedtijd, dan wordt de nachtstand op dat moment gezet.</string>
+    <string name="night_runs_phone">Voorlopig voert alleen Ruru op een computer het nachtschema uit.</string>
+    <string name="night_next_off">Het nachtschema staat uit.</string>
+    <string name="night_next_same">Bedtijd en wektijd zijn gelijk, dus er verandert niets.</string>
+    <string name="night_next_no_days">Kies minstens één nacht om het schema te gebruiken.</string>
+    <string name="night_next_to">Schakelt om %2$s over op %1$s</string>
+    <string name="night_next_to_on">Schakelt op %3$s om %2$s over op %1$s</string>
+    <string name="night_next_back">Gaat om %2$s terug naar %1$s</string>
+    <string name="night_next_back_on">Gaat op %3$s om %2$s terug naar %1$s</string>
+    <string name="night_note_night_applied">Om %1$s is overgeschakeld op de nachtstand.</string>
+    <string name="night_note_night_already">Om %1$s stond de koptelefoon al in de nachtstand.</string>
+    <string name="night_note_night_missing">Om %1$s had deze koptelefoon geen stand zoals de nachtstand, dus er is niets veranderd.</string>
+    <string name="night_note_day_applied">Om %1$s is overgeschakeld op de ochtendstand.</string>
+    <string name="night_note_day_already">Om %1$s stond de koptelefoon al in de ochtendstand.</string>
+    <string name="night_note_day_missing">Om %1$s had deze koptelefoon geen stand zoals de ochtendstand, dus er is niets veranderd.</string>
+    <string name="night_note_nothing_to_restore">Om %1$s was er geen eerdere stand om naar terug te gaan.</string>
+    <string name="night_note_not_ready">Wachten tot je koptelefoon verbindt.</string>
+    <string name="desktop_start_at_sign_in">Starten bij het inloggen</string>
+    <string name="desktop_start_at_sign_in_hint">Opent op de achtergrond als je inlogt</string>
+</resources>

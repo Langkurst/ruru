@@ -171,6 +171,24 @@ class NightScheduleTest {
     }
 
     @Test
+    fun `moving the wake time earlier in the night ends that night at the new time`() {
+        val night = NightScheduler.apply(
+            NightScheduler.nextAction(everyNight, NightProgress(), at(london, 2026, 10, 30, 22, 30), london)!!,
+            everyNight, NightProgress(), headset(current = 1),
+        )
+        // At 23:00 the wake time is changed from 07:00 to 23:45.
+        val edited = everyNight.copy(wake = LocalTime(23, 45))
+        val before = assertIs<NightAction.ApplyDay>(NightScheduler.nextAction(edited, night.progress, at(london, 2026, 10, 30, 23, 0), london))
+        assertEquals(at(london, 2026, 10, 30, 23, 45), before.atMillis)
+        // Later than the new wake time the day mode is overdue, not left until 07:00 and not another night.
+        val after = assertIs<NightAction.ApplyDay>(NightScheduler.nextAction(edited, night.progress, at(london, 2026, 10, 30, 23, 50), london))
+        assertTrue(after.atMillis <= at(london, 2026, 10, 30, 23, 50))
+        // A later wake time keeps the night going.
+        val later = everyNight.copy(wake = LocalTime(9, 0))
+        assertEquals(at(london, 2026, 10, 31, 9, 0), assertIs<NightAction.ApplyDay>(NightScheduler.nextAction(later, night.progress, at(london, 2026, 10, 31, 7, 30), london)).atMillis)
+    }
+
+    @Test
     fun `an explicit day mode is used instead of what it was`() {
         val schedule = everyNight.copy(dayMode = DayMode.Mode(ModeRef(ModeMeaning.AWARE)))
         val w = NightScheduler.windowFor(schedule, LocalDate(2026, 10, 30), london)!!

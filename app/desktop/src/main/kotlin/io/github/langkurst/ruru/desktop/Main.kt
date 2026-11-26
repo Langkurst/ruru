@@ -37,6 +37,7 @@ import io.github.langkurst.ruru.app.eq.LinuxPipeWireEqBackend
 import io.github.langkurst.ruru.app.eq.DesktopEqFiles
 import io.github.langkurst.ruru.app.eq.ProEqModel
 import io.github.langkurst.ruru.app.settings.SettingsStore
+import io.github.langkurst.ruru.app.night.NightRunner
 import io.github.langkurst.ruru.app.settings.createSettingsStore
 import io.github.langkurst.ruru.link.HeadsetPlatform
 import io.github.langkurst.ruru.link.Logging
@@ -102,6 +103,9 @@ fun main(args: Array<String>) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val model = AppModel(platformForThisSystem(), scope, startInDemo = "--demo" in args)
     model.start()
+    // The night schedule: carried out here, in the tray process, for as long as Ruru runs. Idle (no timer
+    // beyond a minute's wake) when the schedule is off.
+    val night = NightRunner(createSettingsStore(), scope, model.nightHeadset()).also { it.start() }
     StartTiming.mark("model started")
     val hasTray = runCatching { SystemTray.isSupported() }.getOrDefault(false)
     // The only way Ruru reaches the internet: the Check for updates button. Nothing runs until it is pressed.
@@ -134,7 +138,7 @@ fun main(args: Array<String>) {
         exitProcess(0)
     }
     var trayMenu: TrayMenu? = null
-    val window = WindowHost(model, updates, proEq, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() }, exitAfterFirstFrame = "--warm-up" in args)
+    val window = WindowHost(model, updates, proEq, night, TrayPreference(), hasTray, onQuit = quit, onFirstTrayClose = { trayMenu?.notifyStillRunning() }, exitAfterFirstFrame = "--warm-up" in args)
     show.set(window::open)
     macAppHooks(window::open)
 
@@ -170,6 +174,7 @@ private class WindowHost(
     private val model: AppModel,
     private val updates: Updates,
     private val proEq: Lazy<ProEqModel?>,
+    private val night: NightRunner,
     private val closing: TrayPreference,
     private val hasTray: Boolean,
     private val onQuit: () -> Unit,
@@ -179,7 +184,7 @@ private class WindowHost(
     private val open = AtomicBoolean(false)
     private val memory = WindowMemory()
     private val reduceMotion = os.startsWith("Windows") && !WinSystem.animationsEnabled()
-    private val extras = listOfNotNull(StartWithWindows.switchOrNull(), keepInTraySwitch(closing, hasTray))
+    private val extras = listOfNotNull(StartWithWindows.switchOrNull(), StartAtSignIn.switchOrNull(), keepInTraySwitch(closing, hasTray))
 
     @Volatile
     private var frame: Frame? = null
@@ -321,7 +326,7 @@ private class WindowHost(
                     if (exitAfterFirstFrame) onQuit()
                 }
                 RuruTheme(dark = dark, reduceMotion = reduceMotion) {
-                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates, proEq = proEq.value) }
+                    RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = updates, proEq = proEq.value, night = night) }
                 }
             }
         }

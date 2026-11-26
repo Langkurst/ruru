@@ -10,17 +10,17 @@ class PageAvailabilityTest {
     private val everything = DeskPage.entries.toSet()
 
     @Test
-    fun `this build ships the Equaliser, Devices and Tools, the Equaliser listed only where a Pro EQ backend exists`() {
-        assertEquals(setOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
+    fun `this build ships the Equaliser, Night, Devices and Tools, the Equaliser listed only where a Pro EQ backend exists`() {
+        assertEquals(setOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Tools), PageAvailability.ShippedPages, "a feature that ships a page updates this test with it")
         val windows = PageAvailability(system = SystemKind.Windows)
         assertEquals(
-            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools),
+            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools),
             windows.deskPages(sound = true, settings = true),
         )
         assertEquals(listOf(PhoneTab.Headphones, PhoneTab.Sound, PhoneTab.More), windows.phoneTabs())
         // A system with no backend yet (Linux and Android until theirs is built) keeps today's navigation.
         val noBackend = PageAvailability(system = SystemKind.Linux, hasProEq = false)
-        assertEquals(listOf(DeskPage.Sound, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), noBackend.deskPages(sound = true, settings = true))
+        assertEquals(listOf(DeskPage.Sound, DeskPage.Night, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), noBackend.deskPages(sound = true, settings = true))
         assertEquals(listOf(PhoneTab.Headphones, PhoneTab.More), noBackend.phoneTabs())
     }
 
@@ -29,17 +29,17 @@ class PageAvailabilityTest {
         val windows = PageAvailability(system = SystemKind.Windows)
         // No paired devices reported: no Devices page. No tool on this system: no Tools page.
         assertEquals(
-            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Settings),
+            listOf(DeskPage.Sound, DeskPage.Equaliser, DeskPage.Night, DeskPage.Settings),
             windows.deskPages(sound = true, settings = true, devices = false, tools = false),
         )
-        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Tools), windows.deskPages(sound = false, settings = false, devices = false, tools = true))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Tools), windows.deskPages(sound = false, settings = false, devices = false, tools = true))
     }
 
     @Test
     fun `Sound and Settings follow what the headphones give`() {
         val none = PageAvailability(system = SystemKind.Windows)
-        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Tools), none.deskPages(sound = false, settings = false))
-        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), none.deskPages(sound = false, settings = true))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Tools), none.deskPages(sound = false, settings = false))
+        assertEquals(listOf(DeskPage.Equaliser, DeskPage.Night, DeskPage.Devices, DeskPage.Settings, DeskPage.Tools), none.deskPages(sound = false, settings = true))
     }
 
     @Test
@@ -61,11 +61,20 @@ class PageAvailabilityTest {
     }
 
     @Test
-    fun `Night, Devices and Tools are on every system and Sleep only on phones`() {
+    fun `Devices and Tools are on every system and Sleep only on phones`() {
         for (system in SystemKind.entries) {
             val pages = PageAvailability(everything, system)
-            for (page in listOf(DeskPage.Night, DeskPage.Devices, DeskPage.Tools)) assertTrue(pages.shows(page), "$page on $system")
+            for (page in listOf(DeskPage.Devices, DeskPage.Tools)) assertTrue(pages.shows(page), "$page on $system")
             assertEquals(system.phone, pages.shows(DeskPage.Sleep), "Sleep on $system")
+        }
+    }
+
+    @Test
+    fun `Night is on computers, and on a phone only once that phone has a runner for it`() {
+        for (system in SystemKind.entries) {
+            assertEquals(!system.phone, PageAvailability(everything, system).shows(DeskPage.Night), "Night on $system without a runner")
+            assertTrue(PageAvailability(everything, system, hasNightRunner = true).shows(DeskPage.Night), "Night on $system with a runner")
+            assertTrue(!PageAvailability(everything, system, hasNightRunner = false).shows(DeskPage.Night), "Night on $system with the runner said to be missing")
         }
     }
 

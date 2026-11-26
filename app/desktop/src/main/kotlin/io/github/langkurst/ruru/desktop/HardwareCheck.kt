@@ -5,19 +5,28 @@ import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
 import io.github.langkurst.ruru.core.HeadphoneEq
 import io.github.langkurst.ruru.core.HeadphoneState
+import io.github.langkurst.ruru.core.ModeResolver
 import io.github.langkurst.ruru.core.PlaybackState
 import io.github.langkurst.ruru.core.TransportControl
+import io.github.langkurst.ruru.app.night.NightHeadset
+import io.github.langkurst.ruru.app.night.NightRunner
+import io.github.langkurst.ruru.app.settings.MemorySettingsStore
 import io.github.langkurst.ruru.platform.windows.WinAdverts
 import io.github.langkurst.ruru.platform.windows.WinBleHelper
 import io.github.langkurst.ruru.platform.windows.WindowsHeadsetPlatform
+import io.github.langkurst.ruru.sleep.SleepStorage
 import io.github.langkurst.ruru.ui.resolve
+import io.github.langkurst.ruru.vendors.HeadsetCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.datetime.TimeZone
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -34,6 +43,11 @@ import kotlin.system.exitProcess
  * restores the exact set) and the volume step (+1, or -1 at the top, then back; then pause and play, only when
  * something is already playing and both are supported: playback is never started). `--only=mode|bass|favourites|volume`
  * runs one step alone. The note records every original (mode, bass, favourites, volume, whether playback was paused).
+ *
+ * `--only=night` (not part of `--all`, it takes about three minutes) checks the night schedule: the app's own
+ * NightRunner, on a schedule held in memory (the real schedule is not touched) that begins in about a minute and
+ * lasts two, must switch to a second mode (Aware) at bedtime and put the original mode back at the wake time.
+ * The mode is then put back by hand if the schedule did not, as in the mode step. Keep the headphones worn all the time.
  *
  * `--le` (`./gradlew :app:desktop:hardwareCheck --args=--le`) runs over Bluetooth LE through
  * ruru-ble-win.exe instead of RFCOMM, and changes the bass only. The note is the same file, so a
@@ -119,7 +133,7 @@ fun main(args: Array<String>) {
     }
     val run = if (overLe) steps.filter { it == Step.BASS }.toSet() else steps
 
-    val target = if (Step.MODE in run) {
+    val target = if (Step.MODE in run || Step.NIGHT in run) {
         start.modes.firstOrNull { it.isConfigured && it.index != originalMode && it.name == "Aware" }
             ?: start.modes.firstOrNull { it.isConfigured && it.index != originalMode }
     } else null
@@ -146,6 +160,32 @@ fun main(args: Array<String>) {
             allBack = back == null
         } else {
             check("none found", "found a second mode to switch to")
+        }
+    }
+
+    // H7: the night schedule. Set to begin in about a minute: the mode must switch, and come back at the wake time.
+    if (Step.NIGHT in run) {
+        if (target != null && originalMode != null) {
+            val plan = planNightSchedule(System.currentTimeMillis(), TimeZone.currentSystemDefault(), ModeResolver.refFor(target, start.connection.deviceAddress))
+            println("night schedule: bedtime ${plan.schedule.bedtime}, wake ${plan.schedule.wake}; waiting about three minutes (keep the headphones on)")
+            val ran = runNightSchedule(plan, target.index, originalMode)
+            check(
+                when {
+                    ran == null -> "could not reach the headphones"
+                    ran.night -> null
+                    else -> "the mode did not switch to ${target.name} by bedtime"
+                },
+                "night schedule switched to ${target.name} at bedtime",
+            )
+            if (ran != null && ran.night) {
+                check(if (ran.back) null else "the mode was not put back at the wake time", "night schedule put the mode back to ${start.currentMode?.name} at the wake time")
+            }
+            // Whatever the schedule did, the headphones end where they started (confirmed on a new connection).
+            val back = putBack({ it.setMode(originalMode) }) { it.currentModeIndex == originalMode }
+            check(back, "mode confirmed back to ${start.currentMode?.name}")
+            allBack = back == null
+        } else {
+            check("none found", "found a second mode to run the night schedule with")
         }
     }
 
@@ -263,6 +303,39 @@ private fun command(action: (HeadsetController) -> Unit): Boolean =
         controller.state.value.message?.let { println("  headphones said: ${runBlocking { it.resolve() }}") }
         true
     } ?: false
+
+/** What the night step saw: the mode switched at bedtime, and came back at the wake time. */
+private class NightRun(val night: Boolean, val back: Boolean)
+
+/**
+ * Runs the app's NightRunner against the connected headphones on [plan]'s schedule (kept in memory, so the real settings
+ * are not touched). Null if it could not connect.
+ */
+private fun runNightSchedule(plan: NightPlan, nightSlot: Int, originalSlot: Int): NightRun? =
+    withController { controller, _ ->
+        val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        val settings = MemorySettingsStore().also { it.putString(SleepStorage.NIGHT_SCHEDULE_KEY, SleepStorage.encodeSchedule(plan.schedule)) }
+        val headset = object : NightHeadset {
+            override val headset: Flow<HeadphoneState> = controller.state.map { it.headset }
+            override suspend fun send(command: HeadsetCommand) = controller.send(command)
+        }
+        val runner = NightRunner(settings, scope, headset)
+        runner.start()
+        try {
+            runBlocking {
+                val night = withTimeoutOrNull(plan.bedMillis - System.currentTimeMillis() + 90_000) {
+                    controller.state.first { it.headset.currentModeIndex == nightSlot }
+                } != null
+                val back = night && withTimeoutOrNull(plan.wakeMillis - System.currentTimeMillis() + 90_000) {
+                    controller.state.first { it.headset.currentModeIndex == originalSlot }
+                } != null
+                NightRun(night, back)
+            }
+        } finally {
+            runner.stop()
+            scope.cancel()
+        }
+    }
 
 /** Set by `--le`: every connection goes over Bluetooth LE through the helper. */
 private var overLe = false
