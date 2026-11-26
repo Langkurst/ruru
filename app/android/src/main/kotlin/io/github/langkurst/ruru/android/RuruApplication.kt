@@ -14,5 +14,6 @@ class RuruApplication : Application() {
     }
 
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    val model: AppModel by lazy { AppModel(AndroidHeadsetPlatform(this), scope) }
+    val platform: AndroidHeadsetPlatform by lazy { AndroidHeadsetPlatform(this) }
+    val model: AppModel by lazy { AppModel(platform, scope) }
 }

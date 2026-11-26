@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android only: what is said when the system lists no such service on the headphones. -->
+    <string name="problem_android_no_service">Android nie pokazuje w tych słuchawkach usługi sterowania, której potrzebuje Ruru, więc Ruru nic im nie wysłał. Mogą jeszcze nie działać z Ruru.</string>
+</resources>

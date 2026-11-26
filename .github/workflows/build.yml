@@ -201,7 +201,7 @@ jobs:
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > release.jks
           printf 'storeFile=release.jks\nstorePassword=%s\nkeyAlias=ruru\nkeyPassword=%s\n' "$KEYSTORE_PASSWORD" "$KEYSTORE_PASSWORD" > keystore.properties
-      - run: ./gradlew :app:android:assembleRelease --console=plain
+      - run: ./gradlew :app:android:testDebugUnitTest :app:android:assembleRelease --console=plain
       - name: Name the file (a release must be signed)
         run: |
           version=$(grep '^ruru.version=' gradle.properties | cut -d= -f2)
@@ -233,6 +233,7 @@ jobs:
           script: |
             adb install -r out/ruru-*.apk
             adb shell pm grant io.github.langkurst.ruru android.permission.BLUETOOTH_CONNECT
+            adb shell pm grant io.github.langkurst.ruru android.permission.BLUETOOTH_SCAN
             adb shell am start -W -n io.github.langkurst.ruru/io.github.langkurst.ruru.android.MainActivity --ez demo true
             sleep 15
             adb exec-out screencap -p > out/android-demo.png

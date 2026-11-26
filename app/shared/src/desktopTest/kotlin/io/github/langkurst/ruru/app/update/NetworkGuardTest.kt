@@ -46,6 +46,29 @@ class NetworkGuardTest {
         assertTrue("android.permission.INTERNET" !in manifest.lines().filterNot { it.trim().startsWith("<!--") }.joinToString("\n"))
     }
 
+    /**
+     * The manifest in the source can stay clean while a library adds a permission when the APK is
+     * merged, so a built APK is checked too, with the SDK's `aapt2 dump permissions`. It runs when an
+     * APK and the SDK are both there (a build of the Android app came first); otherwise there is
+     * nothing to check and the test passes on the manifest test above.
+     */
+    @Test
+    fun `a built Android APK declares no internet permission`() {
+        val apks = File(root, "app/android/build/outputs/apk").walkTopDown().filter { it.isFile && it.extension == "apk" }.toList()
+        val sdk = listOfNotNull(System.getenv("ANDROID_HOME"), System.getenv("ANDROID_SDK_ROOT")).map(::File).firstOrNull { it.isDirectory }
+        val tool = sdk?.let { File(it, "build-tools").listFiles()?.sortedDescending() }.orEmpty().asSequence()
+            .flatMap { dir -> sequenceOf("aapt2.exe", "aapt2", "aapt.exe", "aapt").map { File(dir, it) } }
+            .firstOrNull { it.isFile }
+        if (apks.isEmpty() || tool == null) return
+        for (apk in apks) {
+            val process = ProcessBuilder(tool.path, "dump", "permissions", apk.path).redirectErrorStream(true).start()
+            val out = process.inputStream.bufferedReader().readText()
+            assertEquals(0, process.waitFor(), "aapt could not read ${apk.name}: $out")
+            assertTrue("uses-permission" in out, "aapt printed no permissions for ${apk.name}: $out")
+            assertTrue("android.permission.INTERNET" !in out, "${apk.name} asks for the internet permission:\n$out")
+        }
+    }
+
     @Test
     fun `on phones the button opens the website and nothing is opened before it is pressed`() {
         val opened = mutableListOf<String>()

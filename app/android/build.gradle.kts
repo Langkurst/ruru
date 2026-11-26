@@ -73,4 +73,9 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.compose.foundation)
     implementation(libs.compose.ui)
+
+    // Unit tests for the pure parts of the Bluetooth code (GATT writes and notifications, UUID and advert rules).
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test)
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:${libs.versions.kotlin.get()}")
 }

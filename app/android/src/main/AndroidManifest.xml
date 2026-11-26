@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Talking to paired headphones only: no scanning, no location, no internet. -->
+    <!-- Paired headphones and earbuds only: no internet. Scanning (Nearby devices) is used to hear
+         AirPods and Beats battery adverts and to find a headset's Bluetooth LE address, and is
+         declared never for location. Android 11 and older cannot scan without the location
+         permission, so that one is asked for there only, and only when a scan is needed. -->
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:maxSdkVersion="30" />
     <uses-feature android:name="android.hardware.bluetooth" android:required="true" />
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
 
     <application
         android:name=".RuruApplication"

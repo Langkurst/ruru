@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android only: what is said when the system lists no such service on the headphones. -->
+    <string name="problem_android_no_service">Android toont voor deze koptelefoon de besturingsdienst niet die Ruru nodig heeft, dus Ruru heeft niets gestuurd. Hij werkt misschien nog niet met Ruru.</string>
+</resources>
