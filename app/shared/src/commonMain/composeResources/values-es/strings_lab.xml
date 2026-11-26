@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Probado</string>
+    <string name="support_chip_experimental">Experimental</string>
+    <string name="support_chip_battery">Solo batería</string>
+    <string name="support_level_not_possible">No es posible</string>
+    <string name="support_explain_tested">Ruru se ha probado con estos auriculares en este sistema, y cada cambio se comprobó en una conexión nueva.</string>
+    <string name="support_explain_experimental">Ruru se creó para estos auriculares a partir de investigación publicada y un auricular simulado. Todavía no se ha probado con el aparato real, así que algo puede fallar.</string>
+    <string name="support_explain_battery">Ruru muestra la batería de este auricular. No puede cambiar nada más en él.</string>
+    <string name="support_send_report">Enviar un informe</string>
+    <string name="support_report_copied">Informe copiado</string>
+    <string name="support_report_paste">Pégalo en la página que se abrió en tu navegador.</string>
+    <string name="support_table_title">Qué funciona dónde</string>
+    <string name="support_legend_tested">Probado: con los auriculares reales. Solo los %1$s en Windows.</string>
+    <string name="support_legend_experimental">Experimental: creado a partir de investigación publicada y un auricular virtual, aún no probado en hardware real.</string>
+    <string name="support_why_service">No es posible: un iPhone no puede abrir el servicio Bluetooth que usan estos auriculares.</string>
+    <string name="support_why_adverts">No es posible: Apple no deja que una app de Mac o iPhone lea AirPods o Beats.</string>
+    <string name="tools_lab_title">Laboratorio</string>
+    <string name="tools_lab_text">Lee lo que informan tus auriculares, un dato a la vez, y lo enumera. Solo lee: no cambia nada en los auriculares.</string>
+    <string name="tools_lab_note">La lista omite direcciones y números de serie. Revísala antes de compartirla.</string>
+    <string name="tools_lab_start">Iniciar análisis</string>
+    <string name="tools_lab_scanning">Leyendo. Puede tardar medio minuto.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d dato leído</item>
+        <item quantity="other">%1$d datos leídos</item>
+    </plurals>
+    <string name="tools_lab_copy">Copiar informe</string>
+    <string name="tools_lab_copied">Copiado</string>
+    <string name="tools_lab_unavailable">El laboratorio aún no puede analizar estos auriculares.</string>
+    <string name="tools_lab_failed">El análisis se detuvo. Comprueba que los auriculares siguen conectados e inténtalo de nuevo.</string>
+    <string name="pairing_title">¿Vincular tus auriculares?</string>
+    <string name="pairing_question_code">Tus auriculares piden vincularse con Ruru. Comprueba que el código de abajo coincide con el que anuncian y elige Vincular.</string>
+    <string name="pairing_question_plain">Tus auriculares piden vincularse con Ruru. Elige Vincular solo si lo iniciaste tú.</string>
+    <string name="pairing_pair">Vincular</string>
+    <string name="pairing_not_now">Ahora no</string>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Przetestowane</string>
+    <string name="support_chip_experimental">Eksperymentalne</string>
+    <string name="support_chip_battery">Tylko bateria</string>
+    <string name="support_level_not_possible">Niemożliwe</string>
+    <string name="support_explain_tested">Ruru wypróbowano z tymi słuchawkami w tym systemie, a każdą zmianę sprawdzono na nowym połączeniu.</string>
+    <string name="support_explain_experimental">Ruru zbudowano dla tych słuchawek na podstawie opublikowanych badań i symulowanego zestawu. Nie wypróbowano go jeszcze na prawdziwym urządzeniu, więc coś może nie działać.</string>
+    <string name="support_explain_battery">Ruru pokazuje baterię tego zestawu. Niczego więcej w nim nie zmieni.</string>
+    <string name="support_send_report">Wyślij raport</string>
+    <string name="support_report_copied">Raport skopiowany</string>
+    <string name="support_report_paste">Wklej go na stronie, która otworzyła się w przeglądarce.</string>
+    <string name="support_table_title">Co działa gdzie</string>
+    <string name="support_legend_tested">Przetestowane: wypróbowane na prawdziwych słuchawkach. Tylko %1$s w Windows.</string>
+    <string name="support_legend_experimental">Eksperymentalne: zbudowane z opublikowanych badań i wirtualnego zestawu, jeszcze niewypróbowane na prawdziwym sprzęcie.</string>
+    <string name="support_why_service">Niemożliwe: iPhone nie otworzy usługi Bluetooth tych słuchawek.</string>
+    <string name="support_why_adverts">Niemożliwe: Apple nie pozwala aplikacji na Maca ani iPhone'a odczytać AirPods ani Beats.</string>
+    <string name="tools_lab_title">Laboratorium</string>
+    <string name="tools_lab_text">Odczytuje to, co zgłaszają słuchawki, pozycja po pozycji, i wypisuje listę. Tylko czyta: nic w słuchawkach się nie zmienia.</string>
+    <string name="tools_lab_note">Lista pomija adresy i numery seryjne. Przejrzyj ją, zanim ją udostępnisz.</string>
+    <string name="tools_lab_start">Uruchom skan</string>
+    <string name="tools_lab_scanning">Odczyt trwa. Może zająć pół minuty.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">Odczytano %1$d pozycję</item>
+        <item quantity="few">Odczytano %1$d pozycje</item>
+        <item quantity="many">Odczytano %1$d pozycji</item>
+        <item quantity="other">Odczytano %1$d pozycji</item>
+    </plurals>
+    <string name="tools_lab_copy">Kopiuj raport</string>
+    <string name="tools_lab_copied">Skopiowano</string>
+    <string name="tools_lab_unavailable">Laboratorium nie potrafi jeszcze przeskanować tych słuchawek.</string>
+    <string name="tools_lab_failed">Skan się zatrzymał. Sprawdź, czy słuchawki są nadal połączone, i spróbuj ponownie.</string>
+    <string name="pairing_title">Sparować słuchawki?</string>
+    <string name="pairing_question_code">Słuchawki proszą o sparowanie z Ruru. Sprawdź, czy kod poniżej zgadza się z tym, który ogłaszają, i wybierz Sparuj.</string>
+    <string name="pairing_question_plain">Słuchawki proszą o sparowanie z Ruru. Wybierz Sparuj tylko wtedy, gdy sam to zacząłeś.</string>
+    <string name="pairing_pair">Sparuj</string>
+    <string name="pairing_not_now">Nie teraz</string>
+</resources>

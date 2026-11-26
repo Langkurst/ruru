@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Tested</string>
+    <string name="support_chip_experimental">Experimental</string>
+    <string name="support_chip_battery">Battery only</string>
+    <string name="support_level_not_possible">Not possible</string>
+    <string name="support_explain_tested">Ruru has been tried with these headphones on this system, and each change was checked on a fresh connection.</string>
+    <string name="support_explain_experimental">Ruru was built for these headphones from published research and a simulated headset. It hasn't been tried on the real thing yet, so something may be off.</string>
+    <string name="support_explain_battery">Ruru shows this headset's battery. It can't change anything else on it.</string>
+    <string name="support_send_report">Send a report</string>
+    <string name="support_report_copied">Report copied</string>
+    <string name="support_report_paste">Paste it into the page that opened in your browser.</string>
+    <string name="support_table_title">What works where</string>
+    <string name="support_legend_tested">Tested: tried on the real headphones. Only the %1$s on Windows.</string>
+    <string name="support_legend_experimental">Experimental: built from published research and a virtual headset, not yet tried on real hardware.</string>
+    <string name="support_why_service">Not possible: an iPhone can't open the Bluetooth service these headphones use.</string>
+    <string name="support_why_adverts">Not possible: Apple doesn't let a Mac or an iPhone app read AirPods or Beats.</string>
+    <string name="tools_lab_title">Lab</string>
+    <string name="tools_lab_text">Reads what your headphones report, one item at a time, and lists it. It only reads: nothing on the headphones changes.</string>
+    <string name="tools_lab_note">The list leaves out addresses and serial numbers. Look it over before you share it.</string>
+    <string name="tools_lab_start">Run scan</string>
+    <string name="tools_lab_scanning">Reading. This can take half a minute.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">Read %1$d item</item>
+        <item quantity="other">Read %1$d items</item>
+    </plurals>
+    <string name="tools_lab_copy">Copy report</string>
+    <string name="tools_lab_copied">Copied</string>
+    <string name="tools_lab_unavailable">The Lab can't scan these headphones yet.</string>
+    <string name="tools_lab_failed">The scan stopped. Check the headphones are still connected, then try again.</string>
+    <string name="pairing_title">Pair with your headphones?</string>
+    <string name="pairing_question_code">Your headphones are asking to pair with Ruru. Check that the code below matches the one they announce, then choose Pair.</string>
+    <string name="pairing_question_plain">Your headphones are asking to pair with Ruru. Choose Pair only if you started this.</string>
+    <string name="pairing_pair">Pair</string>
+    <string name="pairing_not_now">Not now</string>
+</resources>

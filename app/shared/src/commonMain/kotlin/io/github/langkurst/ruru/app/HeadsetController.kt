@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.concurrent.Volatile
 
@@ -183,6 +184,21 @@ class HeadsetController(
     } catch (e: HeadphoneCommandException) {
         log.w("${command::class.simpleName} was not taken: ${e.message}")
         false
+    }
+
+    /**
+     * The Lab's read-only scan on the open session: one line per read, GETs only (every session sends
+     * them through its own write guard). Held under the command lock, so it never overlaps a change.
+     * Throws [HeadphoneCommandException] when nothing is connected or the session can't be scanned.
+     */
+    suspend fun scanLab(): List<String> {
+        val s = session?.takeIf { it.isOpen } ?: throw HeadphoneCommandException(NOT_CONNECTED)
+        try {
+            return mutex.withLock { s.scanLab() }
+        } finally {
+            // Pushes that arrived during the scan were parked behind the lock.
+            commands.drainIfFree()
+        }
     }
 
     private fun command(name: String, command: HeadsetCommand) {

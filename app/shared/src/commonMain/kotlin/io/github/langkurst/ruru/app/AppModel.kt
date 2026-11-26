@@ -3,6 +3,7 @@ package io.github.langkurst.ruru.app
 import io.github.langkurst.ruru.app.night.NightHeadset
 import io.github.langkurst.ruru.core.HeadphoneState
 import io.github.langkurst.ruru.link.HeadsetPlatform
+import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.HeadsetCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,6 +27,8 @@ class AppModel(
     private val platform: HeadsetPlatform,
     private val scope: CoroutineScope,
     startInDemo: Boolean = false,
+    /** Which maker's simulated headset demo mode shows. Chosen by a hidden setting or the snapshot task, never in the UI. */
+    private val demoFamily: DeviceFamily = DeviceFamily.BOSE,
 ) {
     private val current = MutableStateFlow(create(startInDemo))
     val controller: StateFlow<HeadsetController> = current
@@ -60,5 +63,5 @@ class AppModel(
         override suspend fun send(command: HeadsetCommand): Boolean = current.value.send(command)
     }
 
-    private fun create(demo: Boolean) = HeadsetController(if (demo) DemoPlatform() else platform, scope, demo)
+    private fun create(demo: Boolean) = HeadsetController(if (demo) DemoHeadsets.platform(demoFamily) else platform, scope, demo)
 }

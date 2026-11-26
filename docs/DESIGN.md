@@ -73,7 +73,10 @@ The accent appears in at most two places on a screen. Switches and sliders are i
   - Only what the headphones report is drawn. The sidebar's battery gets a second line, "about 14 h left", when
     the headphones give a time left (the QC Ultra 1st Gen does not). A small "Mic muted" chip (7dp radius, 1px
     line, bark fill, ink-2 text) sits after the connected status only while the mic is muted. The phone header
-    shows the same two, on one line.
+    shows the same two, on one line. Next to them a support chip of the same look says "Tested", "Experimental" or "Battery only"
+    (from `SupportTier.of(state, platform)`: Tested only for the QC Ultra Headphones (1st Gen) on Windows). Pressing it opens a
+    card (11dp corners) under the name with one plain sentence; for Experimental headphones a link-style "Send a report" button
+    copies the connection report and opens GitHub's new-issue page in the browser (the person pastes it; nothing is sent by Ruru).
   - Sound: a now playing strip first, one panel, one row: previous, play or pause and next (36dp buttons, 7dp
     radius, 1px line, glyphs drawn in the app, ink), what the headphones are doing in ink-2, then the volume
     slider with "8 of 31" in a fixed-width slot. A button the headphones do not list is not drawn, and there
@@ -118,7 +121,13 @@ its own page file and adds its page to `PageAvailability.ShippedPages`.
   starts quiet, gets louder over 6 s and stops by itself after 30 s; it is listed only while connected and
   stops when the page is left. Mic check records 5 s, plays it back and keeps nothing; Windows (and often
   other systems) switch the headphones to call quality while it records, and the panel says so. On a phone
-  both panels sit in More. The iPhone has neither yet, so it shows neither.
+  both panels sit in More. The iPhone has neither yet, so it shows neither. The Lab panel (any headphones Ruru has a
+  session for; not AirPods or Beats) runs the session's read-only scan, GET only through the write guards, and lists what it
+  read in a scrolling box (addresses masked); Copy report puts the list on the clipboard.
+- About has a "What works where" table beside the version panel: every maker against every system, from `SupportMatrix` (the
+  same data the README and the site are generated from). A phone shows only its own system.
+- A pairing question (Skullcandy Crusher) covers the window: a title, one sentence, the six-digit code in 20sp with wide
+  letter spacing (when there is one), then Not now and Pair. Nothing pairs until Pair is pressed.
 - About stays at the foot of the sidebar, next to the version.
 - Bottom bar (phones and windows under 880dp): up to four tabs, in this order: Headphones, Sound (the
   Pro EQ, only where the Equaliser page exists), Sleep (phones), More. A tab appears only if it has

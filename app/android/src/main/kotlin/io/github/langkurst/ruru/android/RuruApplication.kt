@@ -7,6 +7,12 @@ import io.github.langkurst.ruru.android.eq.SessionRegistry
 import io.github.langkurst.ruru.android.service.RuruService
 import io.github.langkurst.ruru.android.service.ServiceNeeds
 import io.github.langkurst.ruru.app.AppModel
+import io.github.langkurst.ruru.app.DemoHeadsets
+import io.github.langkurst.ruru.app.PairingRequests
+import io.github.langkurst.ruru.app.settings.SettingsBragiStorage
+import io.github.langkurst.ruru.vendors.bragi.BragiSecurity
+import io.github.langkurst.ruru.vendors.bragi.PairingPrompt
+import io.github.langkurst.ruru.vendors.bragi.StoredBragiTrustStore
 import io.github.langkurst.ruru.app.eq.FakeEqBackend
 import io.github.langkurst.ruru.app.eq.ProEqModel
 import io.github.langkurst.ruru.app.settings.createSettingsStore
@@ -24,6 +30,9 @@ class RuruApplication : Application() {
         super.onCreate()
         io.github.langkurst.ruru.app.settings.AndroidSettings.init(this)
         io.github.langkurst.ruru.app.tools.AndroidAudio.init(this)
+        // Skullcandy pairing: the keys live in the settings, and a Crusher's request to pair is asked on screen.
+        BragiSecurity.trustStore = StoredBragiTrustStore(SettingsBragiStorage(createSettingsStore()))
+        BragiSecurity.pairingPrompt = PairingPrompt { code, digits -> PairingRequests.shared.ask(code, digits) }
         // RuruService runs while any feature needs it (the equaliser now, the night schedule later) and not otherwise.
         scope.launch {
             serviceNeeds.needs.map { it.isNotEmpty() }.distinctUntilChanged().collect { wanted ->
@@ -34,7 +43,7 @@ class RuruApplication : Application() {
 
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     val platform: AndroidHeadsetPlatform by lazy { AndroidHeadsetPlatform(this) }
-    val model: AppModel by lazy { AppModel(platform, scope) }
+    val model: AppModel by lazy { AppModel(platform, scope, demoFamily = DemoHeadsets.familyOf(createSettingsStore().getString(DemoHeadsets.SETTING_KEY))) }
 
     /** The reasons the foreground service should run. Features add theirs; the notification's Stop tells them to let go. */
     val serviceNeeds = ServiceNeeds()

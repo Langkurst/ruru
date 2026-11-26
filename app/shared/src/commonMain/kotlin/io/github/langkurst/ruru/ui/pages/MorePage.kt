@@ -11,6 +11,7 @@ import io.github.langkurst.ruru.ui.Footer
 import io.github.langkurst.ruru.ui.PlatformSwitch
 import io.github.langkurst.ruru.ui.SettingsPanel
 import io.github.langkurst.ruru.ui.ShortcutPanel
+import io.github.langkurst.ruru.ui.SupportTablePanel
 import io.github.langkurst.ruru.ui.res.*
 import org.jetbrains.compose.resources.stringResource
 
@@ -38,7 +39,8 @@ internal fun MorePage(
             AboutPanel(state.headset)
         }
         if (showNight) LocalNight.current?.let { NightPanels(it, state, emptyList()) }
-        if (hasTools(LocalAudioTools.current, state.phase == Phase.Connected)) ToolPanels(state)
+        if (hasTools(LocalAudioTools.current, state.phase == Phase.Connected, hasLab(state.headset))) ToolPanels(state, controller, appVersion)
+        SupportTablePanel()
         Footer(state, model, appVersion, extras, updates, onCopyReport)
     }
 }

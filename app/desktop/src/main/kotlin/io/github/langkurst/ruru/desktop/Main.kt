@@ -17,6 +17,12 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import io.github.langkurst.ruru.app.AppModel
+import io.github.langkurst.ruru.app.DemoHeadsets
+import io.github.langkurst.ruru.app.PairingRequests
+import io.github.langkurst.ruru.app.settings.SettingsBragiStorage
+import io.github.langkurst.ruru.vendors.bragi.BragiSecurity
+import io.github.langkurst.ruru.vendors.bragi.PairingPrompt
+import io.github.langkurst.ruru.vendors.bragi.StoredBragiTrustStore
 import io.github.langkurst.ruru.app.RURU_VERSION
 import io.github.langkurst.ruru.app.SingleInstance
 import io.github.langkurst.ruru.app.UnsupportedPlatform
@@ -101,7 +107,14 @@ fun main(args: Array<String>) {
         exitProcess(0)
     }
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
-    val model = AppModel(platformForThisSystem(), scope, startInDemo = "--demo" in args)
+    // Skullcandy pairing: the keys live in the settings, and a Crusher's request to pair is asked on screen.
+    val settings = createSettingsStore()
+    BragiSecurity.trustStore = StoredBragiTrustStore(SettingsBragiStorage(settings))
+    BragiSecurity.pairingPrompt = PairingPrompt { code, digits -> PairingRequests.shared.ask(code, digits) }
+    // Demo mode shows Bose's simulated headphones, or another maker's when --demo=<maker> or the hidden "demo.brand" setting says so.
+    val demoArg = args.firstOrNull { it == "--demo" || it.startsWith("--demo=") }
+    val demoFamily = DemoHeadsets.familyOf(demoArg?.substringAfter('=', "")?.ifBlank { null } ?: settings.getString(DemoHeadsets.SETTING_KEY))
+    val model = AppModel(platformForThisSystem(), scope, startInDemo = demoArg != null, demoFamily = demoFamily)
     model.start()
     // The night schedule: carried out here, in the tray process, for as long as Ruru runs. Idle (no timer
     // beyond a minute's wake) when the schedule is off.

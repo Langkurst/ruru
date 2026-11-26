@@ -2,11 +2,30 @@ package io.github.langkurst.ruru.ui.pages
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
+import io.github.langkurst.ruru.app.RURU_VERSION
+import io.github.langkurst.ruru.app.tools.LabController
+import io.github.langkurst.ruru.app.tools.LabReport
+import io.github.langkurst.ruru.app.tools.LabState
+import io.github.langkurst.ruru.core.HeadphoneState
+import io.github.langkurst.ruru.ui.ButtonRow
+import io.github.langkurst.ruru.ui.QuietButton
+import org.jetbrains.compose.resources.pluralStringResource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -31,6 +50,9 @@ import io.github.langkurst.ruru.ui.res.*
 import io.github.langkurst.ruru.ui.text
 import org.jetbrains.compose.resources.stringResource
 
+/** True in a snapshot that should show the Lab with its result: the scan starts by itself. */
+val LocalLabAutoStart = staticCompositionLocalOf { false }
+
 /** The sound tools of this system. Tests and snapshots can provide their own. */
 val LocalAudioTools = staticCompositionLocalOf { audioTools() }
 
@@ -38,24 +60,84 @@ val LocalAudioTools = staticCompositionLocalOf { audioTools() }
  * Whether the Tools page has anything to show: Find needs the headphones connected (a tone for headphones
  * Ruru can't reach is no use), and the mic check works with whatever microphone the system has.
  */
-internal fun hasTools(tools: AudioTools, connected: Boolean): Boolean = tools.mic != null || (connected && tools.find != null)
+internal fun hasTools(tools: AudioTools, connected: Boolean, lab: Boolean = false): Boolean = tools.mic != null || (connected && tools.find != null) || (connected && lab)
 
-/** Tools: Find my headphones and the mic check. */
+/**
+ * Whether the Lab has something to scan: headphones Ruru drives with a session of their own. AirPods and Beats
+ * (battery from adverts, no session) and any headset Ruru does not open have nothing to read.
+ */
+internal fun hasLab(h: HeadphoneState): Boolean = h.capabilities.ownSettings && !h.capabilities.batteryOnly
+
+/** Tools: Find my headphones, the mic check and the Lab. */
 @Composable
-internal fun ToolsPage(state: AppState, controller: HeadsetController) {
+internal fun ToolsPage(state: AppState, controller: HeadsetController, appVersion: String = RURU_VERSION) {
     PageFrame(stringResource(Res.string.page_tools), stringResource(Res.string.page_tools_lead), state, controller) {
-        ToolPanels(state)
+        ToolPanels(state, controller, appVersion)
     }
 }
 
 /** The tools' panels, one under the other: on the Tools page and, on a phone, in More. */
 @Composable
-internal fun ToolPanels(state: AppState) {
+internal fun ToolPanels(state: AppState, controller: HeadsetController, appVersion: String = RURU_VERSION) {
     val tools = LocalAudioTools.current
     val connected = state.phase == Phase.Connected
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         tools.find?.let { if (connected) FindPanel(it) }
         tools.mic?.let { MicCheckPanel(it) }
+        if (connected && hasLab(state.headset)) LabPanel(state, controller, appVersion)
+    }
+}
+
+/**
+ * The Lab: a scan that only reads. It asks the open session to read what the headphones report (GET only,
+ * through the session's write guards) and lists the answers; Copy report puts the list on the clipboard.
+ */
+@Composable
+private fun LabPanel(state: AppState, controller: HeadsetController, appVersion: String) {
+    val c = Ruru.colors
+    val scope = rememberCoroutineScope()
+    val lab = remember(controller) { LabController(scope, controller) }
+    val phase = lab.state.collectAsState().value
+    DisposableEffect(lab) { onDispose { lab.clear() } }
+    val autoStart = LocalLabAutoStart.current
+    LaunchedEffect(lab) { if (autoStart) lab.start() }
+    @Suppress("DEPRECATION")
+    val clipboard = LocalClipboardManager.current
+    var copied by remember(phase) { mutableStateOf(false) }
+    Panel(stringResource(Res.string.tools_lab_title), Modifier.widthIn(max = 620.dp)) {
+        Txt(stringResource(Res.string.tools_lab_text), Ruru.type.body, c.ink2, Modifier.widthIn(max = HintMaxWidth))
+        Spacer(Modifier.height(4.dp))
+        Txt(stringResource(Res.string.tools_lab_note), Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
+        Spacer(Modifier.height(12.dp))
+        ButtonRow {
+            PrimaryButton(stringResource(Res.string.tools_lab_start), lab::start, enabled = phase != LabState.Scanning)
+            if (phase is LabState.Done) {
+                val system = LocalSystemKind.current.platformName.ifEmpty { state.platformName }
+                QuietButton(stringResource(if (copied) Res.string.tools_lab_copied else Res.string.tools_lab_copy), {
+                    clipboard.setText(AnnotatedString(LabReport.build(appVersion, system, state.headset.info?.modelName, phase.lines)))
+                    copied = true
+                })
+            }
+        }
+        when (phase) {
+            LabState.Idle -> Unit
+            LabState.Scanning -> {
+                Spacer(Modifier.height(8.dp))
+                Txt(stringResource(Res.string.tools_lab_scanning), Ruru.type.small, c.ink3, Modifier.widthIn(max = HintMaxWidth))
+            }
+            is LabState.Problem -> {
+                Spacer(Modifier.height(8.dp))
+                Txt(phase.words.text(), Ruru.type.small, c.ink2, Modifier.widthIn(max = HintMaxWidth))
+            }
+            is LabState.Done -> {
+                Spacer(Modifier.height(8.dp))
+                Txt(pluralStringResource(Res.plurals.tools_lab_done, phase.lines.size, phase.lines.size), Ruru.type.small, c.ink3)
+                Spacer(Modifier.height(8.dp))
+                Column(Modifier.fillMaxWidth().heightIn(max = 320.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    phase.lines.forEach { Txt(it, Ruru.type.small, c.ink2) }
+                }
+            }
+        }
     }
 }
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Testado</string>
+    <string name="support_chip_experimental">Experimental</string>
+    <string name="support_chip_battery">Só bateria</string>
+    <string name="support_level_not_possible">Não é possível</string>
+    <string name="support_explain_tested">O Ruru foi testado com este fone neste sistema, e cada mudança foi conferida em uma conexão nova.</string>
+    <string name="support_explain_experimental">O Ruru foi feito para este fone a partir de pesquisa publicada e de um fone simulado. Ainda não foi testado no aparelho real, então algo pode falhar.</string>
+    <string name="support_explain_battery">O Ruru mostra a bateria deste fone. Não consegue mudar mais nada nele.</string>
+    <string name="support_send_report">Enviar um relatório</string>
+    <string name="support_report_copied">Relatório copiado</string>
+    <string name="support_report_paste">Cole na página que abriu no seu navegador.</string>
+    <string name="support_table_title">O que funciona onde</string>
+    <string name="support_legend_tested">Testado: experimentado no fone real. Só o %1$s no Windows.</string>
+    <string name="support_legend_experimental">Experimental: feito a partir de pesquisa publicada e de um fone virtual, ainda não testado em hardware real.</string>
+    <string name="support_why_service">Não é possível: um iPhone não consegue abrir o serviço Bluetooth deste fone.</string>
+    <string name="support_why_adverts">Não é possível: a Apple não deixa um app de Mac ou iPhone ler AirPods ou Beats.</string>
+    <string name="tools_lab_title">Laboratório</string>
+    <string name="tools_lab_text">Lê o que o seu fone informa, item por item, e lista tudo. Só lê: nada muda no fone.</string>
+    <string name="tools_lab_note">A lista deixa de fora endereços e números de série. Confira antes de compartilhar.</string>
+    <string name="tools_lab_start">Iniciar análise</string>
+    <string name="tools_lab_scanning">Lendo. Pode levar meio minuto.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d item lido</item>
+        <item quantity="other">%1$d itens lidos</item>
+    </plurals>
+    <string name="tools_lab_copy">Copiar relatório</string>
+    <string name="tools_lab_copied">Copiado</string>
+    <string name="tools_lab_unavailable">O laboratório ainda não consegue analisar este fone.</string>
+    <string name="tools_lab_failed">A análise parou. Veja se o fone continua conectado e tente de novo.</string>
+    <string name="pairing_title">Parear com o seu fone?</string>
+    <string name="pairing_question_code">O seu fone quer parear com o Ruru. Confira se o código abaixo é igual ao que ele anuncia e escolha Parear.</string>
+    <string name="pairing_question_plain">O seu fone quer parear com o Ruru. Escolha Parear só se foi você que iniciou.</string>
+    <string name="pairing_pair">Parear</string>
+    <string name="pairing_not_now">Agora não</string>
+</resources>

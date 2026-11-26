@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">已测试</string>
+    <string name="support_chip_experimental">实验性</string>
+    <string name="support_chip_battery">仅电量</string>
+    <string name="support_level_not_possible">无法支持</string>
+    <string name="support_explain_tested">Ruru 已在这个系统上与这款耳机一起试过,每次更改都通过新连接核对过。</string>
+    <string name="support_explain_experimental">Ruru 是根据公开的研究资料和模拟耳机为这款耳机开发的,还没有在真机上试过,所以可能会有问题。</string>
+    <string name="support_explain_battery">Ruru 会显示这副耳机的电量,其他设置都无法更改。</string>
+    <string name="support_send_report">发送报告</string>
+    <string name="support_report_copied">报告已复制</string>
+    <string name="support_report_paste">请粘贴到浏览器中打开的页面里。</string>
+    <string name="support_table_title">各系统支持情况</string>
+    <string name="support_legend_tested">已测试:在真机上试过。仅限 Windows 上的 %1$s。</string>
+    <string name="support_legend_experimental">实验性:根据公开研究资料和虚拟耳机开发,尚未在真机上试过。</string>
+    <string name="support_why_service">无法支持:iPhone 无法打开这款耳机使用的蓝牙服务。</string>
+    <string name="support_why_adverts">无法支持:Apple 不允许 Mac 或 iPhone 应用读取 AirPods 或 Beats。</string>
+    <string name="tools_lab_title">实验室</string>
+    <string name="tools_lab_text">逐项读取耳机报告的内容并列出来。只读取,不会更改耳机上的任何设置。</string>
+    <string name="tools_lab_note">列表不含地址和序列号。分享前请先看一遍。</string>
+    <string name="tools_lab_start">开始扫描</string>
+    <string name="tools_lab_scanning">正在读取,可能需要半分钟。</string>
+    <plurals name="tools_lab_done">
+        <item quantity="other">已读取 %1$d 项</item>
+    </plurals>
+    <string name="tools_lab_copy">复制报告</string>
+    <string name="tools_lab_copied">已复制</string>
+    <string name="tools_lab_unavailable">实验室暂时无法扫描这款耳机。</string>
+    <string name="tools_lab_failed">扫描已停止。请确认耳机仍在连接中,然后重试。</string>
+    <string name="pairing_title">要与耳机配对吗?</string>
+    <string name="pairing_question_code">耳机请求与 Ruru 配对。请核对下面的代码与耳机播报的是否一致,然后选择配对。</string>
+    <string name="pairing_question_plain">耳机请求与 Ruru 配对。只有在你自己发起时才选择配对。</string>
+    <string name="pairing_pair">配对</string>
+    <string name="pairing_not_now">暂不</string>
+</resources>

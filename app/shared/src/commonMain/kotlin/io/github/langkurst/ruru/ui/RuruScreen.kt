@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.dp
 import io.github.langkurst.ruru.app.AppModel
 import io.github.langkurst.ruru.app.AppState
 import io.github.langkurst.ruru.app.ConnectionReport
+import io.github.langkurst.ruru.app.PairingRequests
 import io.github.langkurst.ruru.app.DeskPage
 import io.github.langkurst.ruru.app.HeadsetController
 import io.github.langkurst.ruru.app.Phase
@@ -130,6 +131,7 @@ fun RuruScreen(
     pages: PageAvailability? = null,
     proEq: ProEqModel? = null,
     night: NightRunner? = null,
+    pairing: PairingRequests = PairingRequests.shared,
 ) {
     val controller by model.controller.collectAsState()
     val system = SystemKind.of(model.platformName)
@@ -169,7 +171,7 @@ fun RuruScreen(
                         ) {
                             when (tab) {
                                 PhoneTab.Headphones -> {
-                                    Header(state)
+                                    Header(state, copyReport)
                                     state.message?.let { MessageBar(it.text(), controller::dismissMessage) }
                                     if (state.phase == Phase.Connected) Connected(state.headset, controller) else NotConnected(state, controller, model)
                                 }
@@ -183,6 +185,7 @@ fun RuruScreen(
                 if (tabs.size > 1) BottomBar(tabs, tab) { model.tab.value = it }
             }
         }
+        PairingOverlay(pairing)
     }
     }
 }
@@ -208,10 +211,12 @@ internal fun statusLine(state: AppState, connected: String): String = when (stat
 }
 
 @Composable
-private fun Header(state: AppState) {
+private fun Header(state: AppState, onCopyReport: () -> Unit) {
     val c = Ruru.colors
     val t = Ruru.type
     val h = state.headset
+    val tier = supportTier(state)
+    var supportOpen by remember { mutableStateOf(false) }
     val name = deviceName(state)
     val line = statusLine(state, h.info?.modelName ?: stringResource(Res.string.header_connected))
     Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -225,9 +230,14 @@ private fun Header(state: AppState) {
                     Spacer(Modifier.width(8.dp))
                     MicChip()
                 }
+                if (tier != null) {
+                    Spacer(Modifier.width(8.dp))
+                    SupportChip(tier, supportOpen, { supportOpen = !supportOpen })
+                }
             }
         }
     }
+    if (tier != null && supportOpen) SupportNote(tier, onCopyReport)
     if (state.phase == Phase.Connected) h.batteryPercent?.let { Battery(it, h.isCharging == true, minutesLeft(h)) }
 }
 

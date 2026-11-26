@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Getestet</string>
+    <string name="support_chip_experimental">Experimentell</string>
+    <string name="support_chip_battery">Nur Akku</string>
+    <string name="support_level_not_possible">Nicht möglich</string>
+    <string name="support_explain_tested">Ruru wurde mit diesen Kopfhörern auf diesem System ausprobiert, und jede Änderung wurde über eine neue Verbindung geprüft.</string>
+    <string name="support_explain_experimental">Ruru wurde für diese Kopfhörer aus veröffentlichter Forschung und einem simulierten Headset gebaut. Mit dem echten Gerät wurde es noch nicht ausprobiert, daher kann etwas nicht stimmen.</string>
+    <string name="support_explain_battery">Ruru zeigt den Akku dieses Headsets an. Sonst kann es nichts daran ändern.</string>
+    <string name="support_send_report">Bericht senden</string>
+    <string name="support_report_copied">Bericht kopiert</string>
+    <string name="support_report_paste">Füge ihn in die Seite ein, die sich im Browser geöffnet hat.</string>
+    <string name="support_table_title">Was wo funktioniert</string>
+    <string name="support_legend_tested">Getestet: mit den echten Kopfhörern ausprobiert. Nur die %1$s unter Windows.</string>
+    <string name="support_legend_experimental">Experimentell: aus veröffentlichter Forschung und einem virtuellen Headset gebaut, noch nicht an echter Hardware getestet.</string>
+    <string name="support_why_service">Nicht möglich: Ein iPhone kann den Bluetooth-Dienst dieser Kopfhörer nicht öffnen.</string>
+    <string name="support_why_adverts">Nicht möglich: Apple lässt eine Mac- oder iPhone-App AirPods und Beats nicht auslesen.</string>
+    <string name="tools_lab_title">Labor</string>
+    <string name="tools_lab_text">Liest, was deine Kopfhörer melden, Eintrag für Eintrag, und listet es auf. Es wird nur gelesen: Nichts an den Kopfhörern ändert sich.</string>
+    <string name="tools_lab_note">Die Liste lässt Adressen und Seriennummern weg. Sieh sie dir an, bevor du sie weitergibst.</string>
+    <string name="tools_lab_start">Scan starten</string>
+    <string name="tools_lab_scanning">Lese aus. Das kann eine halbe Minute dauern.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d Eintrag gelesen</item>
+        <item quantity="other">%1$d Einträge gelesen</item>
+    </plurals>
+    <string name="tools_lab_copy">Bericht kopieren</string>
+    <string name="tools_lab_copied">Kopiert</string>
+    <string name="tools_lab_unavailable">Das Labor kann diese Kopfhörer noch nicht scannen.</string>
+    <string name="tools_lab_failed">Der Scan wurde abgebrochen. Prüfe, ob die Kopfhörer noch verbunden sind, und versuche es erneut.</string>
+    <string name="pairing_title">Mit deinen Kopfhörern koppeln?</string>
+    <string name="pairing_question_code">Deine Kopfhörer möchten sich mit Ruru koppeln. Prüfe, ob der Code unten mit dem angesagten übereinstimmt, und wähle dann Koppeln.</string>
+    <string name="pairing_question_plain">Deine Kopfhörer möchten sich mit Ruru koppeln. Wähle Koppeln nur, wenn du das gestartet hast.</string>
+    <string name="pairing_pair">Koppeln</string>
+    <string name="pairing_not_now">Nicht jetzt</string>
+</resources>

@@ -104,6 +104,7 @@ import io.github.langkurst.ruru.ui.pages.SoundPage
 import io.github.langkurst.ruru.ui.pages.ToolsPage
 import io.github.langkurst.ruru.ui.pages.column
 import io.github.langkurst.ruru.ui.pages.hasDevices
+import io.github.langkurst.ruru.ui.pages.hasLab
 import io.github.langkurst.ruru.ui.pages.hasTools
 import io.github.langkurst.ruru.ui.pages.pageIcon
 import io.github.langkurst.ruru.ui.pages.pageTitle
@@ -148,7 +149,7 @@ internal fun DeskLayout(
         sound = connected && hasSound(h),
         settings = (connected && (hasHeadphoneSettings(h) || hasShortcutChoices(h))) || extras.isNotEmpty(),
         devices = connected && hasDevices(h),
-        tools = hasTools(LocalAudioTools.current, connected),
+        tools = hasTools(LocalAudioTools.current, connected, hasLab(h)),
     )
     val shown = when {
         requested == DeskPage.About -> DeskPage.About
@@ -173,7 +174,7 @@ internal fun DeskLayout(
                 true
             },
     ) {
-        Sidebar(model, state, navPages, shown, updates, appVersion)
+        Sidebar(model, state, navPages, shown, updates, appVersion, onCopyReport)
         val c = Ruru.colors
         Box(Modifier.weight(1f).fillMaxHeight().deskSurface(c.bough, c.line)) {
             val reduce = LocalReduceMotion.current
@@ -200,7 +201,7 @@ internal fun DeskLayout(
                     DeskPage.Night -> NightPage(state, controller, extras)
                     DeskPage.Devices -> DevicesPage(state, controller)
                     DeskPage.Settings -> SettingsPage(state, controller, extras)
-                    DeskPage.Tools -> ToolsPage(state, controller)
+                    DeskPage.Tools -> ToolsPage(state, controller, appVersion)
                     // The phone's tabs: never chosen in the sidebar, but a remembered page may name one.
                     DeskPage.Sleep -> SleepPage(state, controller)
                     DeskPage.More -> SettingsPage(state, controller, extras)
@@ -238,10 +239,13 @@ private fun Sidebar(
     shown: DeskPage,
     updates: Updates,
     appVersion: String,
+    onCopyReport: () -> Unit,
 ) {
     val c = Ruru.colors
     val t = Ruru.type
     val h = state.headset
+    val tier = supportTier(state)
+    var supportOpen by remember { mutableStateOf(false) }
     val connected = state.phase == Phase.Connected
     val browser = LocalUriHandler.current
     val update by updates.state.collectAsState()
@@ -266,8 +270,15 @@ private fun Sidebar(
                         Spacer(Modifier.width(8.dp))
                         MicChip()
                     }
+                    if (tier != null) {
+                        Spacer(Modifier.width(8.dp))
+                        SupportChip(tier, supportOpen, { supportOpen = !supportOpen })
+                    }
                 }
             }
+        }
+        if (tier != null && supportOpen) {
+            SupportNote(tier, onCopyReport, Modifier.padding(start = 6.dp, end = 6.dp, bottom = 14.dp))
         }
         if (connected) h.batteryPercent?.let { SidebarBattery(it, h.isCharging == true, minutesLeft(h)) }
         val pagesLabel = stringResource(Res.string.nav_pages)
@@ -435,6 +446,8 @@ private fun AboutPage(model: AppModel, state: AppState, appVersion: String, upda
             }
             if (headphones) AboutPanel(state.headset, column())
         }
+        Spacer(Modifier.height(16.dp))
+        SupportTablePanel(Modifier.widthIn(max = 760.dp))
     }
 }
 

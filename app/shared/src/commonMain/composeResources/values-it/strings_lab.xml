@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Testato</string>
+    <string name="support_chip_experimental">Sperimentale</string>
+    <string name="support_chip_battery">Solo batteria</string>
+    <string name="support_level_not_possible">Non possibile</string>
+    <string name="support_explain_tested">Ruru è stato provato con queste cuffie su questo sistema, e ogni modifica è stata verificata su una nuova connessione.</string>
+    <string name="support_explain_experimental">Ruru è stato creato per queste cuffie da ricerche pubblicate e da una cuffia simulata. Non è ancora stato provato sull'apparecchio vero, quindi qualcosa potrebbe non andare.</string>
+    <string name="support_explain_battery">Ruru mostra la batteria di queste cuffie. Non può cambiare nient'altro.</string>
+    <string name="support_send_report">Invia un rapporto</string>
+    <string name="support_report_copied">Rapporto copiato</string>
+    <string name="support_report_paste">Incollalo nella pagina aperta nel browser.</string>
+    <string name="support_table_title">Cosa funziona dove</string>
+    <string name="support_legend_tested">Testato: provato sulle cuffie vere. Solo le %1$s su Windows.</string>
+    <string name="support_legend_experimental">Sperimentale: creato da ricerche pubblicate e da una cuffia virtuale, non ancora provato su hardware vero.</string>
+    <string name="support_why_service">Non possibile: un iPhone non può aprire il servizio Bluetooth di queste cuffie.</string>
+    <string name="support_why_adverts">Non possibile: Apple non lascia che un'app per Mac o iPhone legga AirPods o Beats.</string>
+    <string name="tools_lab_title">Laboratorio</string>
+    <string name="tools_lab_text">Legge ciò che le tue cuffie riportano, voce per voce, e lo elenca. Legge soltanto: sulle cuffie non cambia nulla.</string>
+    <string name="tools_lab_note">L'elenco omette indirizzi e numeri di serie. Controllalo prima di condividerlo.</string>
+    <string name="tools_lab_start">Avvia scansione</string>
+    <string name="tools_lab_scanning">Lettura in corso. Può volerci mezzo minuto.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d voce letta</item>
+        <item quantity="other">%1$d voci lette</item>
+    </plurals>
+    <string name="tools_lab_copy">Copia rapporto</string>
+    <string name="tools_lab_copied">Copiato</string>
+    <string name="tools_lab_unavailable">Il laboratorio non può ancora analizzare queste cuffie.</string>
+    <string name="tools_lab_failed">La scansione si è fermata. Controlla che le cuffie siano ancora connesse e riprova.</string>
+    <string name="pairing_title">Associare le tue cuffie?</string>
+    <string name="pairing_question_code">Le tue cuffie chiedono di associarsi a Ruru. Controlla che il codice qui sotto corrisponda a quello che annunciano, poi scegli Associa.</string>
+    <string name="pairing_question_plain">Le tue cuffie chiedono di associarsi a Ruru. Scegli Associa solo se l'hai avviato tu.</string>
+    <string name="pairing_pair">Associa</string>
+    <string name="pairing_not_now">Non ora</string>
+</resources>

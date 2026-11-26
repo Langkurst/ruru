@@ -46,6 +46,19 @@ enum class SupportTier {
             return of(caps)
         }
 
+        /**
+         * The tier on the system called [platformName] ("Windows", "macOS", ...): [of] for the state,
+         * except that Tested holds only on Windows, where the QC Ultra Headphones (1st Gen) were run on
+         * for real. The same headphones on any other system are Experimental there. Null as in [of].
+         */
+        fun of(state: HeadphoneState, platformName: String): SupportTier? {
+            val tier = of(state) ?: return null
+            return if (tier == TESTED && platformName != TESTED_PLATFORM) EXPERIMENTAL else tier
+        }
+
+        /** The only system a model has been run on for real. */
+        const val TESTED_PLATFORM = "Windows"
+
         /** The tier these capabilities describe, whatever the connection does. */
         fun of(caps: HeadphoneCapabilities): SupportTier = when {
             !caps.ownSettings -> if (caps.batteryOnly) BATTERY_ONLY else ANY_HEADSET

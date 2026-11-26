@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Getest</string>
+    <string name="support_chip_experimental">Experimenteel</string>
+    <string name="support_chip_battery">Alleen accu</string>
+    <string name="support_level_not_possible">Niet mogelijk</string>
+    <string name="support_explain_tested">Ruru is met deze koptelefoon op dit systeem uitgeprobeerd, en elke wijziging is gecontroleerd op een nieuwe verbinding.</string>
+    <string name="support_explain_experimental">Ruru is voor deze koptelefoon gebouwd op basis van gepubliceerd onderzoek en een gesimuleerde headset. Het is nog niet op het echte apparaat geprobeerd, dus er kan iets misgaan.</string>
+    <string name="support_explain_battery">Ruru toont de accu van deze headset. Meer kan het er niet mee.</string>
+    <string name="support_send_report">Rapport sturen</string>
+    <string name="support_report_copied">Rapport gekopieerd</string>
+    <string name="support_report_paste">Plak het op de pagina die in je browser is geopend.</string>
+    <string name="support_table_title">Wat werkt waar</string>
+    <string name="support_legend_tested">Getest: op de echte koptelefoon uitgeprobeerd. Alleen de %1$s op Windows.</string>
+    <string name="support_legend_experimental">Experimenteel: gebouwd op gepubliceerd onderzoek en een virtuele headset, nog niet op echte hardware geprobeerd.</string>
+    <string name="support_why_service">Niet mogelijk: een iPhone kan de Bluetooth-service van deze koptelefoon niet openen.</string>
+    <string name="support_why_adverts">Niet mogelijk: Apple laat een Mac- of iPhone-app AirPods of Beats niet uitlezen.</string>
+    <string name="tools_lab_title">Lab</string>
+    <string name="tools_lab_text">Leest wat je koptelefoon meldt, item voor item, en zet het in een lijst. Het leest alleen: er verandert niets aan de koptelefoon.</string>
+    <string name="tools_lab_note">De lijst laat adressen en serienummers weg. Bekijk hem voordat je hem deelt.</string>
+    <string name="tools_lab_start">Scan starten</string>
+    <string name="tools_lab_scanning">Bezig met lezen. Dit kan een halve minuut duren.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d item gelezen</item>
+        <item quantity="other">%1$d items gelezen</item>
+    </plurals>
+    <string name="tools_lab_copy">Rapport kopiëren</string>
+    <string name="tools_lab_copied">Gekopieerd</string>
+    <string name="tools_lab_unavailable">Het lab kan deze koptelefoon nog niet scannen.</string>
+    <string name="tools_lab_failed">De scan is gestopt. Controleer of de koptelefoon nog verbonden is en probeer het opnieuw.</string>
+    <string name="pairing_title">Koppelen met je koptelefoon?</string>
+    <string name="pairing_question_code">Je koptelefoon wil koppelen met Ruru. Controleer of de code hieronder overeenkomt met de code die hij aankondigt en kies dan Koppelen.</string>
+    <string name="pairing_question_plain">Je koptelefoon wil koppelen met Ruru. Kies Koppelen alleen als jij dit hebt gestart.</string>
+    <string name="pairing_pair">Koppelen</string>
+    <string name="pairing_not_now">Niet nu</string>
+</resources>

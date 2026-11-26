@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">Testé</string>
+    <string name="support_chip_experimental">Expérimental</string>
+    <string name="support_chip_battery">Batterie seule</string>
+    <string name="support_level_not_possible">Impossible</string>
+    <string name="support_explain_tested">Ruru a été essayé avec ce casque sur ce système, et chaque changement a été vérifié sur une nouvelle connexion.</string>
+    <string name="support_explain_experimental">Ruru a été conçu pour ce casque à partir de recherches publiées et d'un casque simulé. Il n'a pas encore été essayé sur le vrai appareil, donc quelque chose peut clocher.</string>
+    <string name="support_explain_battery">Ruru affiche la batterie de ce casque. Il ne peut rien y changer d'autre.</string>
+    <string name="support_send_report">Envoyer un rapport</string>
+    <string name="support_report_copied">Rapport copié</string>
+    <string name="support_report_paste">Collez-le dans la page ouverte dans votre navigateur.</string>
+    <string name="support_table_title">Ce qui marche où</string>
+    <string name="support_legend_tested">Testé : essayé sur le vrai casque. Seulement le %1$s sous Windows.</string>
+    <string name="support_legend_experimental">Expérimental : conçu d'après des recherches publiées et un casque virtuel, pas encore essayé sur du vrai matériel.</string>
+    <string name="support_why_service">Impossible : un iPhone ne peut pas ouvrir le service Bluetooth de ce casque.</string>
+    <string name="support_why_adverts">Impossible : Apple ne laisse pas une app Mac ou iPhone lire les AirPods ou Beats.</string>
+    <string name="tools_lab_title">Labo</string>
+    <string name="tools_lab_text">Lit ce que votre casque indique, élément par élément, et en dresse la liste. Il ne fait que lire : rien ne change sur le casque.</string>
+    <string name="tools_lab_note">La liste omet les adresses et les numéros de série. Relisez-la avant de la partager.</string>
+    <string name="tools_lab_start">Lancer l'analyse</string>
+    <string name="tools_lab_scanning">Lecture en cours. Cela peut prendre une demi-minute.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="one">%1$d élément lu</item>
+        <item quantity="other">%1$d éléments lus</item>
+    </plurals>
+    <string name="tools_lab_copy">Copier le rapport</string>
+    <string name="tools_lab_copied">Copié</string>
+    <string name="tools_lab_unavailable">Le labo ne peut pas encore analyser ce casque.</string>
+    <string name="tools_lab_failed">L'analyse s'est arrêtée. Vérifiez que le casque est toujours connecté, puis réessayez.</string>
+    <string name="pairing_title">Associer votre casque ?</string>
+    <string name="pairing_question_code">Votre casque demande à s'associer à Ruru. Vérifiez que le code ci-dessous correspond à celui qu'il annonce, puis choisissez Associer.</string>
+    <string name="pairing_question_plain">Votre casque demande à s'associer à Ruru. Choisissez Associer seulement si c'est vous qui l'avez lancé.</string>
+    <string name="pairing_pair">Associer</string>
+    <string name="pairing_not_now">Pas maintenant</string>
+</resources>

@@ -9,6 +9,7 @@ import io.github.langkurst.ruru.session.QcUltra2Protocol
 import io.github.langkurst.ruru.vendors.DeviceFamily
 import io.github.langkurst.ruru.vendors.HeadsetCommand
 import io.github.langkurst.ruru.vendors.HeadsetSession
+import io.github.langkurst.ruru.vendors.LabProfile
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -68,6 +69,10 @@ class BoseSession(
             is HeadsetCommand.SetVendorControl -> throw HeadphoneCommandException(NO_VENDOR_CONTROLS)
         }
     }
+
+    override suspend fun labProfile(): LabProfile = BoseLab.profile()
+
+    override suspend fun scanLab(): List<String> = BoseLab.scan(connection)
 
     override suspend fun awaitClosed(): Throwable? = connection.awaitClosed()
 

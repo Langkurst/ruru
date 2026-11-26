@@ -3,6 +3,11 @@ package io.github.langkurst.ruru.desktop
 import androidx.compose.ui.ImageComposeScene
 import androidx.compose.ui.unit.Density
 import io.github.langkurst.ruru.app.AppModel
+import io.github.langkurst.ruru.app.DemoHeadsets
+import io.github.langkurst.ruru.app.PairingRequests
+import androidx.compose.runtime.CompositionLocalProvider
+import io.github.langkurst.ruru.ui.pages.LocalLabAutoStart
+import kotlinx.coroutines.launch
 import io.github.langkurst.ruru.app.DeskPage
 import io.github.langkurst.ruru.desktop.chrome.ChromeKind
 import io.github.langkurst.ruru.desktop.chrome.RuruWindowFrame
@@ -48,12 +53,15 @@ import kotlin.system.exitProcess
 
 /**
  * Renders the real app off-screen to a PNG, for checking the design and for README screenshots.
- * Usage: Snapshot <out.png> [--demo] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--eq=notinstalled|off|on] [--eq-view=graphic|parametric] [--night=on|off|aware] [--none] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
+ * Usage: Snapshot <out.png> [--demo[=<maker>]] [--light] [--width=<dp>] [--height=<dp>] [--scale=<n>] [--page=sound|equaliser|night|devices|settings|tools|about] [--tab=headphones|sound|sleep|more] [--system=windows|linux|mac|android|iphone] [--all-pages] [--frame] [--mode=<index>] [--eq=notinstalled|off|on] [--eq-view=graphic|parametric] [--night=on|off|aware] [--none] [--lab] [--pairing[=plain]] [--update=checking|downloading|ready|installing|uptodate|failed]. Without --demo it connects to the
  * headphones like the app does and waits for them.
  */
 fun main(args: Array<String>) {
     val out = File(args.first())
-    val demo = "--demo" in args
+    // --demo shows Bose's simulated headphones; --demo=<maker> (sony, sennheiser, soundcore, jbl, skullcandy, airpods) another maker's.
+    val demoArg = args.firstOrNull { it == "--demo" || it.startsWith("--demo=") }
+    val demo = demoArg != null
+    val demoFamily = DemoHeadsets.familyOf(demoArg?.substringAfter('=', ""))
     val dark = "--light" !in args
     val heightDp = args.firstOrNull { it.startsWith("--height=") }?.substringAfter('=')?.toInt() ?: 1600
     // 400 is the single column; from 880 up the sidebar layout is drawn. --frame adds Ruru's own title bar above it,
@@ -95,7 +103,7 @@ fun main(args: Array<String>) {
     val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     // --none shows the screen for a system with no headphones to control, without touching real Bluetooth.
     val none = "--none" in args
-    val model = AppModel(if (none) UnsupportedPlatform("this system") else WindowsHeadsetPlatform(), scope, startInDemo = demo)
+    val model = AppModel(if (none) UnsupportedPlatform("this system") else WindowsHeadsetPlatform(), scope, startInDemo = demo, demoFamily = demoFamily)
     model.page.value = page
     model.tab.value = tab
     model.start()
@@ -138,9 +146,19 @@ fun main(args: Array<String>) {
         it.putString(SleepStorage.NIGHT_SCHEDULE_KEY, SleepStorage.encodeSchedule(schedule))
     }
     val night = NightRunner(nightSettings, scope, model.nightHeadset())
+    // --pairing[=plain] shows the question a Skullcandy Crusher asks when it wants to pair (with a code, or a plain yes or no).
+    args.firstOrNull { it == "--pairing" || it.startsWith("--pairing=") }?.let { arg ->
+        val plain = arg.substringAfter('=', "") == "plain"
+        scope.launch { PairingRequests.shared.ask(if (plain) null else 40213, if (plain) 0 else 6) }
+        Thread.sleep(200)
+    }
     val scene = ImageComposeScene(width = (widthDp * scale).toInt(), height = (heightDp * scale).toInt(), density = Density(scale)) {
         RuruTheme(dark = dark) {
-            RuruWindowFrame(chrome) { RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq, night = night) }
+            RuruWindowFrame(chrome) {
+                CompositionLocalProvider(LocalLabAutoStart provides ("--lab" in args)) {
+                    RuruScreen(model, RURU_VERSION, extras = extras, updates = update?.let(::StillUpdates), pages = pages, proEq = proEq, night = night)
+                }
+            }
         }
     }
     var image = scene.render(0)

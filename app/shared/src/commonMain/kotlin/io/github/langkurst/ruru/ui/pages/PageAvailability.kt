@@ -13,6 +13,16 @@ enum class SystemKind {
 
     val phone: Boolean get() = this == Android || this == IPhone
 
+    /** The name the support table and the support tier use for this system ("macOS", "iPhone"...); empty for [Other]. */
+    val platformName: String get() = when (this) {
+        Windows -> "Windows"
+        Linux -> "Linux"
+        Mac -> "macOS"
+        Android -> "Android"
+        IPhone -> "iPhone"
+        Other -> ""
+    }
+
     companion object {
         fun of(platformName: String): SystemKind = when (platformName) {
             "Windows" -> Windows

@@ -118,7 +118,7 @@ compose.desktop {
     }
 }
 
-// Renders the real app to a PNG: ./gradlew :app:desktop:snapshot -Pout=shots/home.png -Pdemo -Plight
+// Renders the real app to a PNG: ./gradlew :app:desktop:snapshot -Pout=shots/home.png -Pdemo[=sony|sennheiser|soundcore|jbl|skullcandy|airpods] -Plight
 // Wide layout: add -Pwidth=1100 -Pheight=720 -Pframe (and -Ppage=settings, -Pscale=1). Narrow: -Ptab=more. Pages not built yet: -PallPages [-Psystem=android]. Equaliser page: -Ppage=equaliser [-Peq=notinstalled|off|on] [-PeqView=graphic|parametric]
 tasks.register<JavaExec>("snapshot") {
     group = "ruru"
@@ -139,12 +139,15 @@ tasks.register<JavaExec>("snapshot") {
             if (providers.gradleProperty("frame").isPresent) "--frame" else null,
             providers.gradleProperty("mode").orNull?.let { "--mode=$it" },
             if (providers.gradleProperty("none").isPresent) "--none" else null,
-            if (providers.gradleProperty("demo").isPresent) "--demo" else null,
+            // -Pdemo for Bose's simulated headphones, -Pdemo=<maker> (sony, sennheiser, soundcore, jbl, skullcandy, airpods) for another maker's.
+            providers.gradleProperty("demo").orNull?.let { if (it.isBlank() || it == "true") "--demo" else "--demo=$it" },
             if (providers.gradleProperty("light").isPresent) "--light" else null,
             providers.gradleProperty("update").orNull?.let { "--update=$it" },
             providers.gradleProperty("eq").orNull?.let { "--eq=$it" },
             providers.gradleProperty("eqView").orNull?.let { "--eq-view=$it" },
             providers.gradleProperty("night").orNull?.let { "--night=$it" },
+            if (providers.gradleProperty("lab").isPresent) "--lab" else null,
+            providers.gradleProperty("pairing").orNull?.let { if (it.isBlank() || it == "true") "--pairing" else "--pairing=$it" },
         ),
     )
 }

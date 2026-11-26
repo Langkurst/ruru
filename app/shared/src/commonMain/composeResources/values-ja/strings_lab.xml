@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">検証済み</string>
+    <string name="support_chip_experimental">試験的</string>
+    <string name="support_chip_battery">バッテリーのみ</string>
+    <string name="support_level_not_possible">非対応</string>
+    <string name="support_explain_tested">このヘッドホンはこのシステムで Ruru を試し、変更のたびに新しい接続で確認しています。</string>
+    <string name="support_explain_experimental">Ruru はこのヘッドホン向けに、公開された調査資料と模擬ヘッドセットで作られています。実機ではまだ試していないため、うまく動かないことがあります。</string>
+    <string name="support_explain_battery">Ruru はこのヘッドセットのバッテリー残量を表示します。それ以外は変更できません。</string>
+    <string name="support_send_report">レポートを送る</string>
+    <string name="support_report_copied">レポートをコピーしました</string>
+    <string name="support_report_paste">ブラウザーで開いたページに貼り付けてください。</string>
+    <string name="support_table_title">対応状況</string>
+    <string name="support_legend_tested">検証済み: 実機で試したもの。Windows の %1$s のみ。</string>
+    <string name="support_legend_experimental">試験的: 公開された調査資料と仮想ヘッドセットで作成。実機ではまだ試していません。</string>
+    <string name="support_why_service">非対応: iPhone はこのヘッドホンの Bluetooth サービスを開けません。</string>
+    <string name="support_why_adverts">非対応: Apple は Mac や iPhone のアプリに AirPods や Beats を読み取らせません。</string>
+    <string name="tools_lab_title">ラボ</string>
+    <string name="tools_lab_text">ヘッドホンが報告する内容を1項目ずつ読み取り、一覧にします。読み取るだけで、ヘッドホンは何も変わりません。</string>
+    <string name="tools_lab_note">一覧にはアドレスとシリアル番号は含まれません。共有する前に確認してください。</string>
+    <string name="tools_lab_start">スキャンを実行</string>
+    <string name="tools_lab_scanning">読み取り中です。30秒ほどかかることがあります。</string>
+    <plurals name="tools_lab_done">
+        <item quantity="other">%1$d 項目を読み取りました</item>
+    </plurals>
+    <string name="tools_lab_copy">レポートをコピー</string>
+    <string name="tools_lab_copied">コピーしました</string>
+    <string name="tools_lab_unavailable">ラボはこのヘッドホンをまだスキャンできません。</string>
+    <string name="tools_lab_failed">スキャンが止まりました。ヘッドホンがまだ接続されているか確認して、もう一度お試しください。</string>
+    <string name="pairing_title">ヘッドホンとペアリングしますか?</string>
+    <string name="pairing_question_code">ヘッドホンが Ruru とのペアリングを求めています。下のコードがヘッドホンの案内と同じか確認して、ペアリングを選んでください。</string>
+    <string name="pairing_question_plain">ヘッドホンが Ruru とのペアリングを求めています。自分で開始した場合のみペアリングを選んでください。</string>
+    <string name="pairing_pair">ペアリング</string>
+    <string name="pairing_not_now">今はしない</string>
+</resources>

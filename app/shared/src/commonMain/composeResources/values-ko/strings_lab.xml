@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Support labels, the Lab on the Tools page, and the Skullcandy pairing question. -->
+    <string name="support_chip_tested">검증됨</string>
+    <string name="support_chip_experimental">실험적</string>
+    <string name="support_chip_battery">배터리만</string>
+    <string name="support_level_not_possible">불가능</string>
+    <string name="support_explain_tested">이 헤드폰은 이 시스템에서 Ruru로 사용해 보았고, 변경할 때마다 새 연결로 확인했습니다.</string>
+    <string name="support_explain_experimental">Ruru는 공개된 연구 자료와 시뮬레이션 헤드셋으로 이 헤드폰용으로 만들었습니다. 실제 기기에서는 아직 써 보지 않아서 문제가 있을 수 있습니다.</string>
+    <string name="support_explain_battery">Ruru는 이 헤드셋의 배터리를 보여 줍니다. 그 외에는 바꿀 수 없습니다.</string>
+    <string name="support_send_report">보고서 보내기</string>
+    <string name="support_report_copied">보고서 복사됨</string>
+    <string name="support_report_paste">브라우저에서 열린 페이지에 붙여 넣으세요.</string>
+    <string name="support_table_title">어디서 무엇이 되는지</string>
+    <string name="support_legend_tested">검증됨: 실제 헤드폰으로 써 봄. Windows의 %1$s만 해당합니다.</string>
+    <string name="support_legend_experimental">실험적: 공개된 연구 자료와 가상 헤드셋으로 만들었으며 실제 기기에서는 아직 써 보지 않았습니다.</string>
+    <string name="support_why_service">불가능: iPhone은 이 헤드폰의 블루투스 서비스를 열 수 없습니다.</string>
+    <string name="support_why_adverts">불가능: Apple은 Mac이나 iPhone 앱이 AirPods와 Beats를 읽지 못하게 합니다.</string>
+    <string name="tools_lab_title">랩</string>
+    <string name="tools_lab_text">헤드폰이 알려 주는 내용을 항목별로 읽어 목록으로 보여 줍니다. 읽기만 하며 헤드폰은 바뀌지 않습니다.</string>
+    <string name="tools_lab_note">목록에는 주소와 일련번호가 빠져 있습니다. 공유하기 전에 확인하세요.</string>
+    <string name="tools_lab_start">스캔 실행</string>
+    <string name="tools_lab_scanning">읽는 중입니다. 30초쯤 걸릴 수 있습니다.</string>
+    <plurals name="tools_lab_done">
+        <item quantity="other">%1$d개 항목을 읽었습니다</item>
+    </plurals>
+    <string name="tools_lab_copy">보고서 복사</string>
+    <string name="tools_lab_copied">복사됨</string>
+    <string name="tools_lab_unavailable">랩은 아직 이 헤드폰을 스캔할 수 없습니다.</string>
+    <string name="tools_lab_failed">스캔이 멈췄습니다. 헤드폰이 계속 연결되어 있는지 확인하고 다시 시도하세요.</string>
+    <string name="pairing_title">헤드폰과 페어링할까요?</string>
+    <string name="pairing_question_code">헤드폰이 Ruru와 페어링하려 합니다. 아래 코드가 헤드폰이 알려 주는 코드와 같은지 확인한 뒤 페어링을 선택하세요.</string>
+    <string name="pairing_question_plain">헤드폰이 Ruru와 페어링하려 합니다. 직접 시작한 경우에만 페어링을 선택하세요.</string>
+    <string name="pairing_pair">페어링</string>
+    <string name="pairing_not_now">나중에</string>
+</resources>
